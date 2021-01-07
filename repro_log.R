@@ -8,7 +8,6 @@ repro::use_repro_template()
 repro::check_make()
 repro::check_docker()
 repro::automate()
-# remind git add correct files
 
 # add git:
 repro::check_git()
@@ -47,7 +46,7 @@ system("make DOCKER=TRUE")
 git2r::add("." ,"README.md")
 git2r::commit(".", "usethis::use_code_of_conduct()")
 
-# use github
+# use github:
 repro::check_github()
 # ISSUE: https://github.com/aaronpeikert/repro/issues/55
 usethis::use_github()
