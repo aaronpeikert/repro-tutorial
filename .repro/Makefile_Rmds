@@ -1,0 +1,3 @@
+install.md: install.Rmd R/link.R
+	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
+
