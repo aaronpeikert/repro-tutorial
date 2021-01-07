@@ -2,7 +2,7 @@ PROJECT := reprotutorial
 WORKDIR := $(CURDIR)
 
 # list below your targets and their recipies
-all: install.md
+all: install.md README.md
 
 ### Wrap Commands ###
 # if a command is to be send to another process e.g. a container/scheduler use:
