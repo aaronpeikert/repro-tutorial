@@ -65,3 +65,5 @@ git2r::push()
 git2r::branch_create(git2r::commits()[[1]] ,"plan")
 git2r::checkout(branch = "plan")
 file.create("manuscript.Rmd")
+
+usethis::use_git_ignore("*.pdf")
