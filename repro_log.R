@@ -60,3 +60,8 @@ git2r::push()
 git2r::add("." , c("repro_log.R"))
 git2r::commit(".", "update repro_log.R")
 git2r::push()
+
+# switch to a new branch to plan the content:
+git2r::branch_create(git2r::commits()[[1]] ,"plan")
+git2r::checkout(branch = "plan")
+file.create("manuscript.Rmd")
