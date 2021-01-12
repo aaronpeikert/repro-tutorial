@@ -1,0 +1,185 @@
+---
+title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
+output: pdf_document
+repro:
+  packages:
+    - usethis
+---
+
+<!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
+<!-- each sentence below a heading summarizes what I want to say there --->
+<!-- "Hands-on:" means concrete practical application, they roughly proceed from easy/familiar to hard/unfamiliar-->
+
+# Why you should care about reproducibility
+
+<!-- define reproducibility -->
+
+## Productivity
+
+<!-- lure the reader in -->
+
+Adherence to best practices promises to increase productivity for individual researchers and the community as a whole.
+
+## Metascientific Arguments
+
+<!-- present reproducibility as something that fits right into the researchers' objectives-->
+
+Reproducibility is caused by openness, enables replication, and all three together warrant trust in science. 
+
+# The lifecycle of an open research project
+
+<!-- many small steps archive reproducibility -->
+
+## Setup
+
+<!-- keep it brief, let `repro` do the work -->
+
+We assume that you have already installed R and RStudio (if not check the installation guide).
+Additionally, you'll need the [`repro`-package](https://github.com/aaronpeikert/repro):
+
+```r
+if(!requireNamespace("remotes"))install.packages("remotes")
+remotes::install_github("aaronpeikert/repro")
+```
+
+## Planing
+
+<!-- researcher should begin early to enjoy most benefits -->
+
+Organize files in one place.
+
+<!-- Hands-on: Introducing RProjects-->
+
+Keep notes.
+
+<!-- Hands on: Introduce Markdown -->
+
+Record changes.
+
+<!-- Hands-on: Introduce Git -->
+
+<!-- This is maybe the place to introduce the example-->
+<!-- something roughly as complex as a bachelor thesis, like:
+
+Hypothesis: Machivallianism is higher in male persons
+Sample: Adults from western countries
+Analytic strategy: Multigroup CFA + Partial Measurement Invariance
+Data from: https://openpsychometrics.org/_rawdata/ either SD3 or MACH-IV
+-->
+
+```{r}
+library("repro")
+check_git()
+```
+
+
+### Simulation (optional)
+
+<!-- impress with neatness → sample size planning, preregistration and analysis in one 😎-->
+<!-- but explain that good science is often not as neat, strive for the ideal -->
+
+Simulating data helps prevent unpleasant surprises and lets you double-check that the data you expect to gather and your analysis fit together.
+
+<!--Hands-on: build simple functions tailored for your analysis-->
+
+### Preregestration (optional)
+
+A preregistration is a tool that may help to increase the credibility of empirical results.
+
+<!--Hands on: Introduce RMarkdown-->
+<!--Hands on: gitignore resulting .html/pdf-->
+<!-- A preregistration needs to be public -->
+
+## Prepare public release (optional)
+
+<!--Hands on: Add a readme-->
+```r
+usethis::use_readme_rmd()
+```
+
+<!--Hands on: Add a license-->
+```r
+usethis::use_cc0_license()
+```
+
+<!--Hands on: Add a code of conduct-->
+```r
+usethis::use_code_of_conduct()
+```
+
+## Collaboration
+
+### GitHub
+
+GitHub/GitLab are great as a shared information basis: sharing and editing files, discussing and distributing tasks via issues and documenting the project via wikis even before data collection starts.
+
+<!--Hands-on: Introduce Github-->
+
+```{r}
+check_github()
+```
+
+```r
+usethis::use_github()
+```
+
+<!--Hands on: Introduce GitHub Issues-->
+<!--Hands on: Introduce GitHub Projects-->
+
+### Internal Dependencies
+
+A well defined "entry point" that automatically reproduces everything eases collaboration.
+
+<!--I am not sure this is the right place, should we introduce this earlier? -->
+
+<!--Hands on: Introduce Make-->
+<!--Hands on: Add targets for README.Rmd, preregistration.Rmd -->
+
+``` r
+automate_make()
+```
+
+### External Dependencies
+
+A considerable number of external dependencies may hinder collaboration and long term reproducibility, but automated solutions can "bundle" and fix dependencies.
+
+<!-- Hands on: Introduce Docker -->
+
+``` r
+automate_docker()
+```
+
+<-- after this everything is optional? -->
+
+#### renv (alternative)
+
+#### Singularity (optional)
+
+## Analyzing Data
+
+<!-- Hands on: add data via automate() -->
+<!-- Hands on: automatically download data via manually editing the Makefile -->
+
+### Data Integrety (optional)
+
+<!-- Hands-on: check changed hash -->
+
+### Anonymising Data (optional)
+
+<!-- Should we add a section on synthetic data generation? -->
+<!-- Hands on: Create synthetic data -->
+
+## Releasing a Preprint (optional)
+
+<!-- Hands on: add commit hash to results-->
+<!-- Hands on: git tag + github release-->
+
+## Peer Review (optional)
+
+## Post Publication Review (optional)
+
+## Archiving
+
+<!-- Hands on: explain how to archive data-->
+<!-- Hands on: explain how to archive docker images-->
+
