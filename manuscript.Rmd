@@ -161,7 +161,7 @@ automate_docker()
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
 
-### Data Integrety (optional)
+### Data Integrity (optional)
 
 <!-- Hands-on: check changed hash -->
 
@@ -184,3 +184,6 @@ automate_docker()
 <!-- Hands on: explain how to archive data-->
 <!-- Hands on: explain how to archive docker images-->
 
+## Checklist
+
+<!-- Should we design a checklist? -->`
