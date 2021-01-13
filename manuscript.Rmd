@@ -4,6 +4,7 @@ output: pdf_document
 repro:
   packages:
     - usethis
+    - repro
 ---
 
 <!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
@@ -40,6 +41,7 @@ Additionally, you'll need the [`repro`-package](https://github.com/aaronpeikert/
 ```r
 if(!requireNamespace("remotes"))install.packages("remotes")
 remotes::install_github("aaronpeikert/repro")
+library("repro")
 ```
 
 ## Planing
@@ -68,7 +70,6 @@ Data from: https://openpsychometrics.org/_rawdata/ either SD3 or MACH-IV
 -->
 
 ```{r}
-library("repro")
 check_git()
 ```
 
