@@ -8,7 +8,7 @@ repro:
     - here
 ---
 
-<<!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
+<!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
 <!-- each sentence below a heading summarizes what I want to say there --->
 <!-- "Hands-on:" means concrete practical application, they roughly proceed from easy/familiar to hard/unfamiliar-->
 
