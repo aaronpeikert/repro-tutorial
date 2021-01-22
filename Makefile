@@ -2,7 +2,16 @@ PROJECT := reprotutorial
 WORKDIR := $(CURDIR)
 
 # list below your targets and their recipies
-all: install.md README.md
+all: install.md README.md manuscript.pdf
+
+manuscript.pdf: images/nutshell.pdf
+
+images/nutshell.svg:
+	mkdir -p images && \
+	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.svg
+images/nutshell.pdf:
+	mkdir -p images && \
+	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.pdf
 
 ### Wrap Commands ###
 # if a command is to be send to another process e.g. a container/scheduler use:

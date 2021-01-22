@@ -5,27 +5,63 @@ repro:
   packages:
     - usethis
     - repro
+    - here
 ---
 
-<!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
+<<!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
 <!-- each sentence below a heading summarizes what I want to say there --->
 <!-- "Hands-on:" means concrete practical application, they roughly proceed from easy/familiar to hard/unfamiliar-->
+
+```{r setup, include=FALSE}
+library(repro)
+source(here::here("R", "link.R"))
+```
 
 # Why you should care about reproducibility
 
 <!-- define reproducibility -->
-
-## Productivity
-
+<!-- is a direct quote from my master thesis -->
+<!-- I wouldn't want to cite it. @brandmaier, would you please rewrite? -->
+A reproducible scientific product allows other researchers to obtain the same results from the same dataset in a way that enables substantive criticism and therefore facilitates replication.
 <!-- lure the reader in -->
+This notion of independent verifiability has long been part of "good scientific practice", but has not reached its full potential to benefit the scientific community.
+<!-- expand: who is calling it a requirement, maybe metascientific arguments-->
+Reproducing an empirical study is often tedious and frustrating work for the researcher.
+However, if reproduction would require mere minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
+<!-- Guiding principle: spending machine compute time instead of human research time -->
+To archive this boost, we must place the burden of reproducing something upon computers instead of human researchers.
+A scientific document should therefore be understood by researchers but reproduced by computers.
 
-Adherence to best practices promises to increase productivity for individual researchers and the community as a whole.
+This tutorial walks through the creation of such a document that can be reproduced automatically.
+Though reproducibility is but a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
+Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
+Still, the reader can safely skip sections marked as optional, when unfit for their research question or methods.
+However, any empirical data analysis will suffer from the following threats to reproducibility:
+<!-- Which problems are solved by which tool (like in Andreas talk)-->
+<!--stolen from: https://brandmaier.github.io/reproducible-data-analysis-materials/KULeuvenQuantPsy2020.html#11 -->
 
-## Metascientific Arguments
+1. Multiple versions of scripts/data (e.g., dataset has changed over time, i.e., was further cleaned or extended)
+2. Copy&paste errors (e.g., inconsistency between reported result and reproduced result)
+3. unclear which scripts should be executed in which order
+4. Broken software dependencies (e.g., analysis broken after update, missing package)
 
-<!-- present reproducibility as something that fits right into the researchers' objectives-->
+It is common to rely on the craftiness of the researcher to debug these problems, but we could prevent them altogether with:
 
-Reproducibility is caused by openness, enables replication, and all three together warrant trust in science. 
+1. Version control
+2. Dynamic document creation
+3. Dependency tracking
+4. Software management
+
+We deem each concept necessary to archive longterm reproducibility.
+However, the tools you use to archive them are a mere matter of taste and project requirements.
+This tutorial will follow the recommendations of @peikertMissing and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking and Docker for software management.
+Their interplay is shown in Figure \@ref(fig:schematic).
+At several points we suggest other viable alternatives.
+
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container, in which the final report is built using dynamic document generation in R Markdown. Reproduced from @peikertMissing  "}
+# file gets downloaded in Makefile
+knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
+```
 
 # The lifecycle of an open research project
 
