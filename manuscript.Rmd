@@ -40,10 +40,10 @@ However, any empirical data analysis will suffer from the following threats to r
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
 <!--stolen from: https://brandmaier.github.io/reproducible-data-analysis-materials/KULeuvenQuantPsy2020.html#11 -->
 
-1. Multiple versions of scripts/data (e.g., dataset has changed over time, i.e., was further cleaned or extended)
+1. Multiple versions of scripts/data (e.g., the dataset has changed over time, i.e., was further cleaned or extended)
 2. Copy&paste errors (e.g., inconsistency between reported result and reproduced result)
 3. unclear which scripts should be executed in which order
-4. Broken software dependencies (e.g., analysis broken after update, missing package)
+4. Broken software dependencies (e.g., analysis broken after an update, missing package)
 
 It is common to rely on the craftiness of the researcher to debug these problems, but we could prevent them altogether with:
 
@@ -56,9 +56,9 @@ We deem each concept necessary to archive longterm reproducibility.
 However, the tools you use to archive them are a mere matter of taste and project requirements.
 This tutorial will follow the recommendations of @peikertMissing and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
-At several points we suggest other viable alternatives.
+At several points, we suggest other viable alternatives.
 
-```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container, in which the final report is built using dynamic document generation in R Markdown. Reproduced from @peikertMissing  "}
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @peikertMissing  "}
 # file gets downloaded in Makefile
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
@@ -79,7 +79,7 @@ library("repro")
 ```
 
 The [`repro`-package](https://github.com/aaronpeikert/repro) contains several helpers to work with reproducibility tools.
-For example, it can check if you computer is set up to use the tools we rely on:
+For example, it can check if your computer is set up to use the tools we rely on:
 
 ```{r}
 check_git()
@@ -93,8 +93,8 @@ check_make()
 check_docker()
 ```
 
-If these commands detect that something is not installed or set up, they will give you detailed instructions (tailored to your operating system) on how to remedy the situation.
-Follow the instructions, then rerun the command, till it tells you to not worry.
+If these commands detect that something is not installed or set up, they will give you detailed instructions (tailored to your operating system) to remedy the situation.
+Follow the instructions, then rerun the command, until it tells you not to worry.
 
 ## Planing
 
@@ -102,11 +102,11 @@ Follow the instructions, then rerun the command, till it tells you to not worry.
 It can be tempting to leave considerations of reproducibility till the very last when you finish a project.
 <!-- weird sentence structure, I'll leave it as a placeholder-->
 However, reproducibility is invaluable for collaboration---including with the version of yourself from a few weeks ago.
-We therefore suggest to start early, ideally from the moment you decide to pursue a project to gradually incorporate tools to help you archive reproducibility.
+Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
 The first step is to organize all files in one folder.
-This way you never loose anything and you can easily share the files.
+This way, you never lose anything, and you can easily share the files.
 <!-- Hands-on: Introducing RProjects-->
-This concept of a project folder is facilitated by RStudio's RProjects.
+RStudio's RProjects facilitate this concept of a project folder.
 To create one, click on:
 
 > File → New Project... → New Directory → New Project
@@ -137,11 +137,11 @@ cat("``` markdown", markdown_example, "```", sep = "")
 ```
 
 We will later see how this simplicity enables us to create many different document formats (Word, PDF, HTML) and incorporate code (R, Python, Julia).
-Another advantage of Markdown is, that you can easily version control it with Git.
-You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in its basic idea, but more powerful in its features.
-Instead of tracking only one file, you can keep track of the whole project directory and instead of loosing all changes when you agree to them, the whole history is preserved transparently.
+Another advantage of Markdown is that you can easily version-control it with Git.
+You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in its basic idea but more potent in its features.
+Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
 For example this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
-To activate Git in a given project you can call:
+To activate Git in a given project, you can call:
 <!-- Hands-on: Introduce Git -->
 
 ```r
@@ -149,15 +149,15 @@ To activate Git in a given project you can call:
 usethis::use_git()
 ```
 
-Recording each change you made, helps you to iterate more quickly because you know that you can go back to previous versions easily.
-For example you can write down a rough project idea, knowing your collaborators and you will iterate and improve.
+Recording each change you made helps you to iterate more quickly because you know that you can effortlessly go back to previous versions.
+For example, you can write down a rough project idea, knowing your collaborators and you will iterate and improve.
 <!-- This is maybe the place to introduce the example-->
-First you could create a new file named `idea.md` that looks like this:
+First, you could create a new markdown file named `idea.md` that looks like this:
 
 ```markdown
 # Hypothesis
 
-Machivallianism is higher in male persons
+Machiavellianism is higher in male persons.
 
 # Analytic Strategy
 
@@ -165,10 +165,11 @@ t-test
 
 # Sample
 
-We could use openpsychometrics.org data?
+Could we use openpsychometrics.org data?
 ```
 
 And you could commit it in Git:
+<!--I am leaning towards doing everything in R, not sure though-->
 
 ```r
 git2r::add(".", "idea.md")
@@ -180,7 +181,7 @@ But then you realize that the new literature suggests that there could be a bias
 ``` markdown
 # Hypothesis
 
-Machivallianism is higher in male persons
+Machiavellianism is higher in male persons.
 
 # Analytic Strategy
 
@@ -188,7 +189,7 @@ Multigroup CFA + Measurement Invariance
 
 # Sample
 
-We could use openpsychometrics.org data?
+Could we use openpsychometrics.org data?
 ```
 
 Commit this version:
@@ -274,7 +275,7 @@ A considerable number of external dependencies may hinder collaboration and long
 automate_docker()
 ```
 
-<-- after this everything is optional? -->
+<!-- after this everything is optional? -->
 
 #### renv (alternative)
 
