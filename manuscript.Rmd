@@ -311,3 +311,7 @@ automate_docker()
 ## Checklist
 
 <!-- Should we design a checklist? -->`
+
+```{r, results='asis', echo=FALSE}
+link_index()
+```
