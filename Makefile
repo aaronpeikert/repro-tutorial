@@ -4,7 +4,7 @@ WORKDIR := $(CURDIR)
 # list below your targets and their recipies
 all: install.md README.md manuscript.pdf
 
-manuscript.pdf: images/nutshell.pdf
+manuscript.pdf: images/nutshell.pdf apa7.csl
 
 images/nutshell.svg:
 	mkdir -p images && \
@@ -12,6 +12,9 @@ images/nutshell.svg:
 images/nutshell.pdf:
 	mkdir -p images && \
 	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.pdf
+
+apa7.csl:
+	wget -O $@ https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 
 ### Wrap Commands ###
 # if a command is to be send to another process e.g. a container/scheduler use:

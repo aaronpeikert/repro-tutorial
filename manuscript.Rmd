@@ -6,6 +6,8 @@ repro:
     - usethis
     - repro
     - here
+csl: apa7.csl
+bibliography: references.bib
 ---
 
 <!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
@@ -54,11 +56,11 @@ It is common to rely on the craftiness of the researcher to debug these problems
 
 We deem each concept necessary to archive longterm reproducibility.
 However, the tools you use to archive them are a mere matter of taste and project requirements.
-This tutorial will follow the recommendations of @peikertMissing and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking and Docker for software management.
+This tutorial will follow the recommendations of @Peikert2019 and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
-```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @peikertMissing  "}
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
 # file gets downloaded in Makefile
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
@@ -96,7 +98,7 @@ check_docker()
 If these commands detect that something is not installed or set up, they will give you detailed instructions (tailored to your operating system) to remedy the situation.
 Follow the instructions, then rerun the command, until it tells you not to worry.
 
-## Planing
+# Planing
 
 <!-- researcher should begin early to enjoy most benefits -->
 It can be tempting to leave considerations of reproducibility till the very last when you finish a project.
@@ -145,7 +147,7 @@ To activate Git in a given project, you can call:
 <!-- Hands-on: Introduce Git -->
 
 ```r
-# package::function → use function from package without library(package)
+# `package::function()` → use function from package without `library(package)`
 usethis::use_git()
 ```
 
@@ -170,6 +172,7 @@ Could we use openpsychometrics.org data?
 
 And you could commit it in Git:
 <!--I am leaning towards doing everything in R, not sure though-->
+<!--For Git we maybe should use RStudio's Git pane-->
 
 ```r
 git2r::add(".", "idea.md")
@@ -203,12 +206,17 @@ And Git can tell you anytime what has changed.
 
 <!--insert screenshot-->
 
+We recommend to attend an online lecture or workshop to learn the ins and outs of Git.
+
 ### Simulation (optional)
 
 <!-- impress with neatness → sample size planning, preregistration and analysis in one 😎-->
 <!-- but explain that good science is often not as neat, strive for the ideal -->
 
-Simulating data helps prevent unpleasant surprises and lets you double-check that the data you expect to gather and your analysis fit together.
+There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
+A step to prevent unpleasant surprises is to simulate data.
+Simulated data lets you verify that the data you expect to gather and the analysis that you plan fit together.
+
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
@@ -311,8 +319,10 @@ automate_docker()
 
 ## Checklist
 
-<!-- Should we design a checklist? -->`
+<!-- Should we design a checklist? -->
 
 ```{r, results='asis', echo=FALSE}
 link_index()
 ```
+
+# References
