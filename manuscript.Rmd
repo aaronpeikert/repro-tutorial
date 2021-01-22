@@ -99,32 +99,108 @@ Follow the instructions, then rerun the command, till it tells you to not worry.
 ## Planing
 
 <!-- researcher should begin early to enjoy most benefits -->
-
-Organize files in one place.
-
+It can be tempting to leave considerations of reproducibility till the very last when you finish a project.
+<!-- weird sentence structure, I'll leave it as a placeholder-->
+However, reproducibility is invaluable for collaboration---including with the version of yourself from a few weeks ago.
+We therefore suggest to start early, ideally from the moment you decide to pursue a project to gradually incorporate tools to help you archive reproducibility.
+The first step is to organize all files in one folder.
+This way you never loose anything and you can easily share the files.
 <!-- Hands-on: Introducing RProjects-->
+This concept of a project folder is facilitated by RStudio's RProjects.
+To create one, click on:
 
-Keep notes.
+> File → New Project... → New Directory → New Project
 
+<!--Keep notes.-->
 <!-- Hands on: Introduce Markdown -->
+A great tool to capture ideas or meeting notes is Markdown.
+To create a Markdown document click on: 
 
-Record changes.
+> File → New File → Markdown File
 
-<!-- Hands-on: Introduce Git -->
+Markdown is simply text, where some characters let you add a minimal amount of structure:
 
-<!-- This is maybe the place to introduce the example-->
-<!-- something roughly as complex as a bachelor thesis, like:
+```{r, results='asis', echo=FALSE}
+# in case we want to reuse this example later
+markdown_example <- "
+# Header
+Normal text.
+Important **word**.
 
-Hypothesis: Machivallianism is higher in male persons
-Sample: Adults from western countries
-Analytic strategy: Multigroup CFA + Partial Measurement Invariance
-Data from: https://openpsychometrics.org/_rawdata/ either SD3 or MACH-IV
--->
+To do list:
 
-```{r}
-check_git()
+* do research
+* do more research
+* spend time with family
+"
+cat("``` markdown", markdown_example, "```", sep = "")
 ```
 
+We will later see how this simplicity enables us to create many different document formats (Word, PDF, HTML) and incorporate code (R, Python, Julia).
+Another advantage of Markdown is, that you can easily version control it with Git.
+You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in its basic idea, but more powerful in its features.
+Instead of tracking only one file, you can keep track of the whole project directory and instead of loosing all changes when you agree to them, the whole history is preserved transparently.
+For example this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
+To activate Git in a given project you can call:
+<!-- Hands-on: Introduce Git -->
+
+```r
+# package::function → use function from package without library(package)
+usethis::use_git()
+```
+
+Recording each change you made, helps you to iterate more quickly because you know that you can go back to previous versions easily.
+For example you can write down a rough project idea, knowing your collaborators and you will iterate and improve.
+<!-- This is maybe the place to introduce the example-->
+First you could create a new file named `idea.md` that looks like this:
+
+```markdown
+# Hypothesis
+
+Machivallianism is higher in male persons
+
+# Analytic Strategy
+
+t-test
+
+# Sample
+
+We could use openpsychometrics.org data?
+```
+
+And you could commit it in Git:
+
+```r
+git2r::add(".", "idea.md")
+git2r::commit(".", "add a first concept")
+```
+
+But then you realize that the new literature suggests that there could be a bias in measurement:
+
+``` markdown
+# Hypothesis
+
+Machivallianism is higher in male persons
+
+# Analytic Strategy
+
+Multigroup CFA + Measurement Invariance
+
+# Sample
+
+We could use openpsychometrics.org data?
+```
+
+Commit this version:
+
+```r
+git2r::add(".", "idea.md")
+git2r::commit(".", "exclude bias in measurement as possible confounder")
+```
+
+And Git can tell you anytime what has changed.
+
+<!--insert screenshot-->
 
 ### Simulation (optional)
 
