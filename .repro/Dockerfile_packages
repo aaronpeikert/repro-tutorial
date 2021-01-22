@@ -1,2 +1,4 @@
 RUN install2.r --error --skipinstalled \ 
-  here
+  here \ 
+  repro \ 
+  usethis

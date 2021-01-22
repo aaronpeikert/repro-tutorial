@@ -63,22 +63,38 @@ At several points we suggest other viable alternatives.
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
-# The lifecycle of an open research project
-
-<!-- many small steps archive reproducibility -->
-
-## Setup
+# Setup
 
 <!-- keep it brief, let `repro` do the work -->
 
-We assume that you have already installed R and RStudio (if not check the installation guide).
-Additionally, you'll need the [`repro`-package](https://github.com/aaronpeikert/repro):
+We assume that you have already installed R and RStudio (if not check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/install.md", "installation guide")`).
+Additionally, you'll need the [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
+
+[^repropackage]: https://github.com/aaronpeikert/repro
 
 ```r
 if(!requireNamespace("remotes"))install.packages("remotes")
 remotes::install_github("aaronpeikert/repro")
 library("repro")
 ```
+
+The [`repro`-package](https://github.com/aaronpeikert/repro) contains several helpers to work with reproducibility tools.
+For example, it can check if you computer is set up to use the tools we rely on:
+
+```{r}
+check_git()
+```
+
+```{r}
+check_make()
+```
+
+```{r}
+check_docker()
+```
+
+If these commands detect that something is not installed or set up, they will give you detailed instructions (tailored to your operating system) on how to remedy the situation.
+Follow the instructions, then rerun the command, till it tells you to not worry.
 
 ## Planing
 
@@ -151,10 +167,6 @@ usethis::use_code_of_conduct()
 GitHub/GitLab are great as a shared information basis: sharing and editing files, discussing and distributing tasks via issues and documenting the project via wikis even before data collection starts.
 
 <!--Hands-on: Introduce Github-->
-
-```{r}
-check_github()
-```
 
 ```r
 usethis::use_github()
