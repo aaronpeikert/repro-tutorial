@@ -1,6 +1,6 @@
 ---
 title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
-output: pdf_document
+output: bookdown::pdf_document2
 repro:
   packages:
     - usethis
