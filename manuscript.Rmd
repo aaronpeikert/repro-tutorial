@@ -245,9 +245,12 @@ source(here::here("R", "simulation.R"))
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 Simulated data lets you verify that the data you expect to gather and the analysis that you plan fit together.
-Of course one has to make a lot of educated guesses.
-Generally there are of course hundreds of different equal possibilities, but we just care about the worst reasonable settings.
-Sticking with our example about machiavilism, we simulate multivariate normal data representing the machiavilism subscale of the short dark triad (SD3).
+Of course one has to make a lot of educated guesses to simulate data that closely matches your expectation.
+These guesses strongly depend on the study you are planning and there cannot be a one fits all solution.
+However, the analytic strategy often gives you a hint about how to simulate data.
+In the machiavilism example the analytic strategy is to use structural equation modeling (SEM).
+To simulate data for SEM one simply has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
+The model parameters should mimic the machiavilism subscale of the short dark triad (SD3).
 As a starting point we can use already publishes information.
 @Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
@@ -282,15 +285,41 @@ model <- paste(measurement(
   sep = "\n")
 ```
 
-From which we can simulate data and fit a model to it:
+From which we can simulate data:
 
 ```{r, results='hide'}
-data <- lavaan::simulateData(model_truth, "cfa", sample.nobs = c(20000, 20000), meanstructure = TRUE, standardized = TRUE)
-fit <- lavaan::cfa(model, data = data, group = "group", meanstructure = TRUE, std.lv = TRUE, group.equal = c("loadings", "intercepts")) 
-lavaan::summary(fit)
+simulated <- lavaan::simulateData(
+  model_truth,
+  sample.nobs = c(1000, 1000),
+  meanstructure = TRUE,
+  standardized = TRUE
+)
 ```
 
+And then fit the statistical model:
 
+```{r}
+fit <-
+  lavaan::cfa(
+    model,
+    data = simulated,
+    group = "group",
+    meanstructure = TRUE,
+    std.lv = TRUE
+  ) 
+```
+
+But wait `lavaan` warns us that this model may not be identified.
+We overlooked a crucial assumption of this model, that is measurement invariance.
+This assumption is also baked into our simulation of the data.
+It is probably more realistic to violate this assumption and plan our analysis accordingly.
+We therefore simulate the data so that some of the items parameter differ among groups and will then alter the analysis to assume partial measurement invariance.
+While reconsidering our assumptions it is also unlikely that the data is normally distributed.
+Not only would the real items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, therefore suggesting some skewness to the items.
+@Rhemtulla2012 conclude that using Likert-like items is acceptable when they employ five or more categories.
+We therefore just continue simulating continues data.
+However, adding a little skewness to the items is easy and helps make the simulation more realistically.
+Anyhow, remember that what we consider realistically for our case could be unfit for your case.
 <!--Hands-on: build simple functions tailored for your analysis-->
 
 ### Preregestration (optional)
@@ -399,3 +428,4 @@ link_index()
 ```
 
 # References
+
