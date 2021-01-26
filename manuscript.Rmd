@@ -233,7 +233,7 @@ knitr::include_graphics(idea_change)
 <!--I am troubled by how we should recomend to learn git-->
 We recommend to attend an online lecture or workshop to learn the ins and outs of Git.
 
-### Simulation (optional)
+## Simulation (optional)
 
 <!-- impress with neatness → sample size planning, preregistration and analysis in one 😎-->
 <!-- but explain that good science is often not as neat, strive for the ideal -->
@@ -244,14 +244,14 @@ source(here::here("R", "simulation.R"))
 
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
-Simulated data lets you verify that the data you expect to gather and the analysis that you plan fit together.
-Of course one has to make a lot of educated guesses to simulate data that closely matches your expectation.
-These guesses strongly depend on the study you are planning and there cannot be a one fits all solution.
+Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
+Of course, one has to make many educated guesses to simulate data that closely matches your expectation.
+These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 However, the analytic strategy often gives you a hint about how to simulate data.
-In the machiavilism example the analytic strategy is to use structural equation modeling (SEM).
-To simulate data for SEM one simply has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
-The model parameters should mimic the machiavilism subscale of the short dark triad (SD3).
-As a starting point we can use already publishes information.
+In the Machiavellism example, the analytic strategy is to use structural equation modelling (SEM).
+To simulate data for SEM, one has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
+The model parameters should mimic the Machiavellism subscale of the short dark triad (SD3).
+As a starting point, we can use already publishes information.
 @Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
 ```{r loadings, echo=FALSE}
@@ -260,8 +260,8 @@ knitr::kable(data.frame(Item = 1:9,
              caption = "Factor loadings from an Exploratory Structrural Equation Model as reported in Jones \\& Paulhus (2013)")
 ```
 
-It is probably better to assume values that are more pessimistic.
-Instead of taking these values as they are we will therefore assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
+It is probably better to assume more pessimistic values.
+Therefore, we will assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
 These assumption can be simply translated into [`lavaan` [@lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
 [^lavaan]: https://lavaan.ugent.be
@@ -313,11 +313,11 @@ But wait `lavaan` warns us that this model may not be identified.
 We overlooked a crucial assumption of this model, that is measurement invariance.
 This assumption is also baked into our simulation of the data.
 It is probably more realistic to violate this assumption and plan our analysis accordingly.
-We therefore simulate the data so that some of the items parameter differ among groups and will then alter the analysis to assume partial measurement invariance.
-While reconsidering our assumptions it is also unlikely that the data is normally distributed.
-Not only would the real items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, therefore suggesting some skewness to the items.
+Therefore, we simulate the data so that some of the items parameter differ among groups and then alter the analysis to assume partial measurement invariance.
+While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
+Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
 @Rhemtulla2012 conclude that using Likert-like items is acceptable when they employ five or more categories.
-We therefore just continue simulating continues data.
+Hence, we continue simulating continues data.
 However, adding a little skewness to the items is easy and helps make the simulation more realistically.
 Anyhow, remember that what we consider realistically for our case could be unfit for your case.
 <!--Hands-on: build simple functions tailored for your analysis-->
