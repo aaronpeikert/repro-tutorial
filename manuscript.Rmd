@@ -236,9 +236,55 @@ We recommend to attend an online lecture or workshop to learn the ins and outs o
 <!-- impress with neatness → sample size planning, preregistration and analysis in one 😎-->
 <!-- but explain that good science is often not as neat, strive for the ideal -->
 
+```{r, include=FALSE}
+source(here::here("R", "simulation.R"))
+```
+
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 Simulated data lets you verify that the data you expect to gather and the analysis that you plan fit together.
+Of course one has to make a lot of educated guesses.
+Generally there are of course hundreds of different equal possibilities, but we just care about the worst reasonable settings.
+Sticking with our example about machiavilism, we simulate multivariate normal data representing the machiavilism subscale of the short dark triad (SD3).
+As a starting point we can use already publishes information.
+@Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
+
+```{r loadings, echo=FALSE}
+knitr::kable(data.frame(Item = 1:9,
+                        Loading = loadings_jones_paulhus),
+             caption = "Factor loadings from an Exploratory Structrural Equation Model as reported in Jones \\& Paulhus (2013)")
+```
+
+It is probably better to assume values that are more pessimistic.
+Instead of taking these values as they are we will therefore assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
+These assumption can be simply translated into `lavaan` model syntax:
+
+```{r, results='asis', echo=FALSE}
+model_truth <- paste(measurement(
+  "MACH",
+  paste0("x", 1:9),
+  loadings = round(loadings_jones_paulhus * 0.7, 2)
+),
+intercepts("MACH", list(0, 0.1)),
+collapse = "\n", sep = "\n")
+cat("``` r",
+    model_truth,
+    "```",
+    sep = "\n")
+model <- paste(measurement(
+  "MACH",
+  paste0("x", 1:9)),
+  intercepts("MACH", list(0, "NA")),
+  sep = "\n")
+```
+
+From which we can simulate data and fit a model to it:
+
+```{r, results='hide'}
+data <- lavaan::simulateData(model_truth, "cfa", sample.nobs = c(20000, 20000), meanstructure = TRUE, standardized = TRUE)
+fit <- lavaan::cfa(model, data = data, group = "group", meanstructure = TRUE, std.lv = TRUE, group.equal = c("loadings", "intercepts")) 
+lavaan::summary(fit)
+```
 
 
 <!--Hands-on: build simple functions tailored for your analysis-->
@@ -349,3 +395,4 @@ link_index()
 ```
 
 # References
+
