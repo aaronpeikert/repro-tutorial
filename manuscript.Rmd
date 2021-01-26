@@ -217,10 +217,12 @@ And Git can show you what has changed, like in Figure \@ref(fig:idea-change).
 ```{r idea-change-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
 idea_change <- here::here("images", "idea-change.png")
-webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f4641ff542158184f85d458880c35e8f09f3c?diff=split",
+if(!file.exists(idea_change)){
+  webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f4641ff542158184f85d458880c35e8f09f3c?diff=split",
                   file = idea_change,
                   selector = "div#diff-2f8beaa39e5c98706d8abb3361a8383776f8df8a195a21c0e6eeb25e5aa48f45", # only select file change
                   zoom = 2)# higher resolution
+}
 ```
 
 
