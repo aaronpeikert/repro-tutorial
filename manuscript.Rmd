@@ -261,6 +261,7 @@ knitr::kable(data.frame(Item = 1:9,
 ```
 
 It is probably better to assume more pessimistic values.
+This way, we make sure that our analytic strategy is viable even in non-optimal circumstances.
 Therefore, we will assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
 These assumption can be simply translated into [`lavaan` [@lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
