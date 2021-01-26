@@ -75,6 +75,7 @@ Additionally, you'll need the [`repro`-package](https://github.com/aaronpeikert/
 [^repropackage]: https://github.com/aaronpeikert/repro
 
 ```r
+# -- type this on the R console --
 if(!requireNamespace("remotes"))install.packages("remotes")
 remotes::install_github("aaronpeikert/repro")
 library("repro")
@@ -84,14 +85,17 @@ The [`repro`-package](https://github.com/aaronpeikert/repro) contains several he
 For example, it can check if your computer is set up to use the tools we rely on:
 
 ```{r}
+# -- type this on the R console --
 check_git()
 ```
 
 ```{r}
+# -- type this on the R console --
 check_make()
 ```
 
 ```{r}
+# -- type this on the R console --
 check_docker()
 ```
 
@@ -125,6 +129,7 @@ Markdown is simply text, where some characters let you add a minimal amount of s
 ```{r, results='asis', echo=FALSE}
 # in case we want to reuse this example later
 markdown_example <- "
+<!--this is a Markdown file -->
 # Header
 Normal text.
 Important **word**.
@@ -157,6 +162,8 @@ For example, you can write down a rough project idea, knowing your collaborators
 First, you could create a new markdown file named `idea.md` that looks like this:
 
 ```markdown
+<!--this is a Markdown file -->
+
 # Hypothesis
 
 Machiavellianism is higher in male persons.
@@ -182,6 +189,8 @@ git2r::commit(".", "add a first concept")
 But then you realize that the new literature suggests that there could be a bias in measurement:
 
 ``` markdown
+<!--this is a Markdown file -->
+
 # Hypothesis
 
 Machiavellianism is higher in male persons.
@@ -198,6 +207,7 @@ Could we use openpsychometrics.org data?
 Commit this version:
 
 ```r
+# -- type this on the R console --
 git2r::add(".", "idea.md")
 git2r::commit(".", "exclude bias in measurement as possible confounder")
 ```
