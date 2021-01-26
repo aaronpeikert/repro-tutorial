@@ -7,7 +7,7 @@ repro:
     - repro
     - here
 csl: apa7.csl
-bibliography: references.bib
+bibliography: ["references.bib", "packages.bib"]
 ---
 
 <!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
@@ -257,7 +257,9 @@ knitr::kable(data.frame(Item = 1:9,
 
 It is probably better to assume values that are more pessimistic.
 Instead of taking these values as they are we will therefore assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
-These assumption can be simply translated into `lavaan` model syntax:
+These assumption can be simply translated into [`lavaan` [@lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
+
+[^lavaan]: https://lavaan.ugent.be
 
 ```{r, results='asis', echo=FALSE}
 model_truth <- paste(measurement(
@@ -395,4 +397,3 @@ link_index()
 ```
 
 # References
-
