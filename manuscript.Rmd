@@ -6,6 +6,10 @@ repro:
     - usethis
     - repro
     - here
+  scripts:
+    - R/lavaan_helper.R
+    - R/simulation.R
+    - R/link.R
 csl: apa7.csl
 bibliography: ["references.bib", "packages.bib"]
 ---
@@ -16,6 +20,7 @@ bibliography: ["references.bib", "packages.bib"]
 
 ```{r setup, include=FALSE}
 library(repro)
+automate_load_scripts()
 source(here::here("R", "link.R"))
 ```
 
@@ -268,22 +273,22 @@ These assumption can be simply translated into [`lavaan` [@lavaan]](https://lava
 [^lavaan]: https://lavaan.ugent.be
 
 ```{r, results='asis', echo=FALSE}
-model_truth <- paste(measurement(
-  "MACH",
-  paste0("x", 1:9),
-  loadings = round(loadings_jones_paulhus * 0.7, 2)
-),
-intercepts("MACH", list(0, 0.1)),
-collapse = "\n", sep = "\n")
+model_truth <- combine(
+  measurement(
+    "MACH",
+    items("x", 9),
+    loadings = round(loadings_jones_paulhus * 0.7, 2)
+    ),
+  intercepts("MACH", list(0, 0.1))
+  )
 cat("``` r",
     model_truth,
     "```",
     sep = "\n")
-model <- paste(measurement(
+model <- combine(measurement(
   "MACH",
-  paste0("x", 1:9)),
-  intercepts("MACH", list(0, "NA")),
-  sep = "\n")
+  items("x", 9)),
+  intercepts("MACH", list(0, "NA")))
 ```
 
 From which we can simulate data:
@@ -429,4 +434,3 @@ link_index()
 ```
 
 # References
-
