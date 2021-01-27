@@ -55,8 +55,8 @@ It is common to rely on the craftiness of the researcher to debug these problems
 4. Software management
 
 We deem each concept necessary to archive longterm reproducibility.
-However, which tools you use to implement this concepts are mere matter of taste and project requirements.
-This tutorial will follow the recommendations of @Peikert2019 and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking and Docker for software management.
+However, which tools you use to implement these concepts are mere matter of taste and project requirements.
+This tutorial will follow the recommendations of @Peikert2019 and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
