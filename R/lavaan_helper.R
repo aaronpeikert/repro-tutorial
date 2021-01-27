@@ -4,7 +4,7 @@ items <- function(item, n){
 
 intercepts <- function(variables, intercepts){
   stopifnot(is.character(variables))
-  stringr::str_c(variables, " ~ ", modifier(intercepts), "1")
+  stringr::str_c(variables, " ~ ", modifier(intercepts), "1", collapse = "\n")
 }
 
 modifier <- function(values){
@@ -20,7 +20,7 @@ modifier <- function(values){
 }
 
 measurement <- function(latent, variables, loadings){
-  stopifnot(is.character(latent),
+stopifnot(is.character(latent),
             is.character(variables),
             length(latent) == 1)
   loadings <- modifier(loadings)

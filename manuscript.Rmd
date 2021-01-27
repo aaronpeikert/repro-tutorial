@@ -324,9 +324,38 @@ While reconsidering our assumptions, it is also unlikely that the data is normal
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
 @Rhemtulla2012 conclude that using Likert-like items is acceptable when they employ five or more categories.
 Hence, we continue simulating continues data.
-However, adding a little skewness to the items is easy and helps make the simulation more realistically.
-Anyhow, remember that what we consider realistically for our case could be unfit for your case.
+However, adding a little skewness to the items is easy and helps make the simulation more realistic.
+Anyhow, remember that what we consider realistic for our case could be unfit for your case.
+If you are satisfied with your assumptions it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
+
+```{r generate}
+```
+
+Note however that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/R/simulation.R", "GitHub")`.
+
+With its help we can simulate 500 cases with a mean difference between groups of 0.1, where the intercepts of three random items vary by .3 and three loadings vary by 30% and five random items have a skew.
+
+```{r}
+simulated <- generate(n = 500,
+                      diff = 0.1,
+                      vary_intercepts = rep(0.3, 3),
+                      vary_loadings = rep(0.3, 3),
+                      skewness = rep(5, -0.5))
+```
+
+```{r}
+fit <-
+  lavaan::cfa(
+    model,
+    data = simulated,
+    group = "group",
+    meanstructure = TRUE,
+    std.lv = TRUE,
+    group.equal = c("intercepts", "loadings")
+  ) 
+```
+
 
 ### Preregestration (optional)
 
