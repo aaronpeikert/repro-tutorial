@@ -55,12 +55,12 @@ It is common to rely on the craftiness of the researcher to debug these problems
 4. Software management
 
 We deem each concept necessary to archive longterm reproducibility.
-However, which tools you use to implement these concepts are mere matter of taste and project requirements.
+However, which tools you use to implement these concepts is a matter of taste and project requirements.
 This tutorial will follow the recommendations of @Peikert2019 and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
-```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency management (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
 # file gets downloaded in Makefile
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
@@ -106,7 +106,7 @@ Follow the instructions, then rerun the command, until it tells you not to worry
 
 <!-- researcher should begin early to enjoy most benefits -->
 It can be tempting to leave considerations of reproducibility for when you finish a project.
-<!-- weird sentence structure, I'll leave it as a placeholder-->
+<!-- weird sentence, I'll leave it as a placeholder-->
 However, reproducibility is invaluable for collaboration---including with the version of yourself from a few weeks ago.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
 The first step is to organize all files in one folder.
@@ -227,6 +227,7 @@ webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f464
 ```{r idea-change, echo=FALSE, fig.cap="A screenshot of how a change tracked in Git is represented by GitHub.  ", out.width='100%'}
 knitr::include_graphics(idea_change)
 ```
+
 <!--I am troubled by how we should recomend to learn git-->
 We recommend to attend an online lecture or workshop to learn the ins and outs of Git.
 
