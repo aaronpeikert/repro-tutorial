@@ -285,6 +285,19 @@ webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
 knitr::include_graphics(readme)
 ```
 
+Even when other researchers are excited to use your code or materials, they are usually legally inhibited from to doing so.
+That is because in many countries (i.e. the USA) the creator of something has exclusive right to use their creation.
+A license allows other people to use what you have created.
+<!---exact copy from our previous manuscript, do we need to change? -->
+In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media, whereas scripts and any other computer code are often best shared under the [MIT license](https://opensource.org/licenses/MIT) (or similar permissive licenses).
+Both licenses assure maximal freedom for future users while requiring the attribution of the original authors in derivative work.
+These licenses are also in line with the recommendations by the Reproducible Research Standard [@stoddenEnhancingReproducibilityComputational2016; @stoddenEnablingReproducibleResearch2009].
+A great resource to choose a license is [choosealicense.com](https://choosealicense.com), however, no resource, including our recommendation, replaces legal advice.
+<!-- plagiary end -->
+It is important to get written consent from collaborators when you change/add the license.
+However, if they contribute to the project, after you have added a license, they give their consent by contributing.
+To add a license to your project simply run:
+
 <!--Hands on: Add a license-->
 ```r
 usethis::use_ccby_license()
