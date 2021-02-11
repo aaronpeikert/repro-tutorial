@@ -344,16 +344,24 @@ simulated <- generate(n = 500,
                       skewness = rep(5, -0.5))
 ```
 
+Note, that this certainly results in different numbers each time we run it.
+To consistently get the same results it is good practice to use a seed.
+The function `seeded_generate()` will always generate the same pseudo-random numbers, when given the same seed.
+
 ```{r}
-fit <-
-  lavaan::cfa(
-    model,
-    data = simulated,
-    group = "group",
-    meanstructure = TRUE,
-    std.lv = TRUE,
-    group.equal = c("intercepts", "loadings")
-  ) 
+seeded_generate <-  function(seed, ...)withr::with_seed(seed, generate(...))
+simulated <- seeded_generate(
+  seed = 1234,
+  n = 100000,
+  diff = 0.1,
+  vary_intercepts = rep(0.3, 3),
+  vary_loadings = rep(0.3, 3),
+  skewness = rep(5,-0.5)
+)
+```
+
+```{r}
+lavaan::summary(analyze(simulated))
 ```
 
 

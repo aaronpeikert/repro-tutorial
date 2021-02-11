@@ -41,6 +41,13 @@ varying_modifer <- function(modifier, n, rel_change, abs_change){
   }
 }
 
+covariances <- function(x, y, covariances){
+  stopifnot(is.character(x), is.character(y))
+  stringr::str_c(x, " ~~ ", modifier(covariances), y, collapse = "\n")
+}
+
+variances <- function(x, variances)covariances(x, x, covariances = variances)
+
 combine <- function(...)stringr::str_c(..., sep = "\n", collapse = "\n")
 shuffle <- function(x)sample(x, length(x))
 pad <- function(x, replace, length)c(x, rep(replace, length))
