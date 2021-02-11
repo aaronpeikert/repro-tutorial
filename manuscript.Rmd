@@ -228,7 +228,7 @@ webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f464
 knitr::include_graphics(idea_change)
 ```
 
-<!--I am troubled by how we should recomend to learn git-->
+<!--I am troubled by how we should recommend to learn git-->
 We recommend to attend an online lecture or workshop to learn the ins and outs of Git.
 
 ### Simulation (optional)
@@ -253,14 +253,41 @@ A preregistration is a tool that may help to increase the credibility of empiric
 
 ## Prepare public release (optional)
 
+One of the greatest benefits of open research is that other people can freely reuse your materials.
+To use your materials, they first have to find them and learn how to use them.
+Interested users find out about your project via the readme.
+The readme is the first thing they see when they visit your Project.
+It should explain to them what your project is about and how to reproduce your project.
+You could for example include the abstract of your (planned) paper here.
+
+To add a readme to a repository run:
+
 <!--Hands on: Add a readme-->
 ```r
 usethis::use_readme_rmd()
 ```
 
+This will create a file with the name `README.Rmd`.
+When you knit this file, it in turn creates a `README.md`.
+That means you can include R code or plots etc. within the readme.
+The `README.md` file will look pleasant in the webbrowser, just like in Figure \@ref(fig:idea-change).
+
+```{r readme-screenshot, include=FALSE}
+# unfortunately css selectors won't work for pdf so we'll use png instead
+readme <- here::here("images", "readme.png")
+webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
+                  file = readme,
+                  selector = "div#readme", # only select file change
+                  zoom = 1)# higher resolution
+```
+
+```{r readme, echo=FALSE, fig.cap="A screenshot of how a change tracked in Git is represented by GitHub.  ", out.width='100%'}
+knitr::include_graphics(readme)
+```
+
 <!--Hands on: Add a license-->
 ```r
-usethis::use_cc0_license()
+usethis::use_ccby_license()
 ```
 
 <!--Hands on: Add a code of conduct-->
