@@ -278,8 +278,10 @@ The `README.md` file will look pleasant in the browser, just like in Figure \@re
 readme <- here::here("images", "readme.png")
 webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
                   file = readme,
+                  vwidth = 1920, # height & width are not resolution
+                  vheight = 1080, # but what website thinks the browser size is
                   selector = "div#readme",
-                  zoom = 1)# higher resolution
+                  zoom = 2) # higher resolution
 ```
 
 ```{r readme, echo=FALSE, fig.cap="A screenshot of how a change tracked in Git is represented by GitHub.  ", out.width='100%'}
