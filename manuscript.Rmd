@@ -231,7 +231,8 @@ knitr::include_graphics(idea_change)
 ```
 
 <!--I am troubled by how we should recommend to learn git-->
-We recommend to attend an online lecture or workshop to learn the ins and outs of Git.
+Git is can be challenging to learn, because we are used to learn alone and Git is best learned with others.
+We recommend to find a partner to attend an online lecture or workshop to learn the ins and outs of Git.
 
 ## Simulation (optional)
 
@@ -254,7 +255,7 @@ A preregistration is a tool that may help to increase the credibility of empiric
 
 ## Prepare public release (optional)
 
-One of the greatest benefits of open research is that other people can freely reuse your materials.
+One of the greatest benefits of open research is that other people can freely reuse materials.
 To use your materials, they first have to find them and learn how to use them.
 Interested users find out about your project via the readme.
 The readme is the first thing they see when they visit your Project.
