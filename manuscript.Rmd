@@ -7,6 +7,8 @@ repro:
     - repro
     - here
 csl: apa7.csl
+numbered_headings: true
+toc_depth: 5
 bibliography: references.bib
 ---
 
@@ -231,7 +233,7 @@ knitr::include_graphics(idea_change)
 <!--I am troubled by how we should recommend to learn git-->
 We recommend to attend an online lecture or workshop to learn the ins and outs of Git.
 
-### Simulation (optional)
+## Simulation (optional)
 
 <!-- impress with neatness → sample size planning, preregistration and analysis in one 😎-->
 <!-- but explain that good science is often not as neat, strive for the ideal -->
@@ -242,7 +244,7 @@ Simulated data lets you verify that the data you expect to gather and the analys
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-### Preregestration (optional)
+## Preregestration (optional)
 
 A preregistration is a tool that may help to increase the credibility of empirical results.
 
@@ -330,7 +332,9 @@ usethis::use_github()
 <!--Hands on: Introduce GitHub Issues-->
 <!--Hands on: Introduce GitHub Projects-->
 
-### Internal Dependencies
+# Analyzing Data
+
+## Internal Dependencies
 
 A well defined "entry point" that automatically reproduces everything eases collaboration.
 
@@ -343,7 +347,7 @@ A well defined "entry point" that automatically reproduces everything eases coll
 automate_make()
 ```
 
-### External Dependencies
+## External Dependencies
 
 A considerable number of external dependencies may hinder collaboration and long term reproducibility, but automated solutions can "bundle" and fix dependencies.
 
@@ -355,20 +359,17 @@ automate_docker()
 
 <!-- after this everything is optional? -->
 
-#### renv (alternative)
+### renv (alternative)
 
-#### Singularity (optional)
-
-## Analyzing Data
-
+### Singularity (optional)
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
 
-### Data Integrity (optional)
+## Data Integrity (optional)
 
 <!-- Hands-on: check changed hash -->
 
-### Anonymising Data (optional)
+## Anonymising Data (optional)
 
 <!-- Should we add a section on synthetic data generation? -->
 <!-- Hands on: Create synthetic data -->
@@ -378,16 +379,16 @@ automate_docker()
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
 
-## Peer Review (optional)
+# Peer Review (optional)
 
-## Post Publication Review (optional)
+# Post Publication Review (optional)
 
-## Archiving
+# Archiving
 
 <!-- Hands on: explain how to archive data-->
 <!-- Hands on: explain how to archive docker images-->
 
-## Checklist
+# Checklist
 
 <!-- Should we design a checklist? -->
 
