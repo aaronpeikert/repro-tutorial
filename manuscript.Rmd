@@ -240,7 +240,6 @@ There are probably few things as frustrating as realizing that the data that you
 A step to prevent unpleasant surprises is to simulate data.
 Simulated data lets you verify that the data you expect to gather and the analysis that you plan fit together.
 
-
 <!--Hands-on: build simple functions tailored for your analysis-->
 
 ### Preregestration (optional)
@@ -270,14 +269,14 @@ usethis::use_readme_rmd()
 This will create a file with the name `README.Rmd`.
 When you knit this file, it in turn creates a `README.md`.
 That means you can include R code or plots etc. within the readme.
-The `README.md` file will look pleasant in the webbrowser, just like in Figure \@ref(fig:idea-change).
+The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:idea-change).
 
 ```{r readme-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
 readme <- here::here("images", "readme.png")
 webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
                   file = readme,
-                  selector = "div#readme", # only select file change
+                  selector = "div#readme",
                   zoom = 1)# higher resolution
 ```
 
@@ -295,13 +294,21 @@ These licenses are also in line with the recommendations by the Reproducible Res
 A great resource to choose a license is [choosealicense.com](https://choosealicense.com), however, no resource, including our recommendation, replaces legal advice.
 <!-- plagiary end -->
 It is important to get written consent from collaborators when you change/add the license.
-However, if they contribute to the project, after you have added a license, they give their consent by contributing.
-To add a license to your project simply run:
+However, if their first contribution occurs after you have added a license, they give their consent by contributing.
+To add a CC-BY license to your project simply run (there are similar commands for other licenses):
 
 <!--Hands on: Add a license-->
 ```r
 usethis::use_ccby_license()
 ```
+
+We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
+In fact, we hope it comes naturally to you.
+To communicate that contributors can expect a welcoming and respectful environment, you can add the `r link( "https://www.contributor-covenant.org", "Contributor Covenant")`.
+The Contributor Covenant is the code of conduct used by many open source project.
+Contributing to an open project is daunting and a public pledge to value any contributions (even when you do not incorporate them) can help others to take the first step.
+
+To add the Contributor Covenant to your project use:
 
 <!--Hands on: Add a code of conduct-->
 ```r
