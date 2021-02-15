@@ -233,7 +233,7 @@ knitr::include_graphics(idea_change)
 ```
 
 <!--I am troubled by how we should recommend to learn git-->
-Git is can be challenging to learn, because we are used to learn alone and Git is best learned with others.
+Git can be challenging to learn, because we are used to learn alone and Git is best learned with others.
 We recommend to find a partner to attend an online lecture or workshop to learn the ins and outs of Git.
 
 ## Simulation (optional)
@@ -312,7 +312,7 @@ usethis::use_ccby_license()
 We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
 In fact, we hope it comes naturally to you.
 To communicate that contributors can expect a welcoming and respectful environment, you can add the `r link( "https://www.contributor-covenant.org", "Contributor Covenant")` to your repository.
-The Contributor Covenant is the code of conduct used by many open source project.
+The Contributor Covenant is a code of conduct used by many open source project.
 Contributing to an open project is daunting and a public pledge to value any contributions (even when you do not incorporate them) can help others to take the first step.
 
 To add the Contributor Covenant to your project use:
@@ -325,6 +325,7 @@ usethis::use_code_of_conduct()
 If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
 
 ## Collaboration
+
 
 ### GitHub
 
