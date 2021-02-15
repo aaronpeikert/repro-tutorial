@@ -39,6 +39,7 @@ A scientific document should therefore be understood by researchers but reproduc
 This tutorial walks through the creation of such a document that can be reproduced automatically.
 Though reproducibility is but a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
 Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
+All code chunks are meant for the reader to try out for themselves.
 Still, the reader can safely skip sections marked as optional, when unfit for their research question or methods.
 However, any empirical data analysis will suffer from the following threats to reproducibility:
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
@@ -58,7 +59,7 @@ It is common to rely on the craftiness of the researcher to debug these problems
 
 We deem each concept necessary to archive longterm reproducibility.
 However, which tools you use to implement these concepts is a matter of taste and project requirements.
-This tutorial will follow the recommendations of @Peikert2019 and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
+This tutorial will follow the recommendations of @Peikert2019 and utilize Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
@@ -309,7 +310,7 @@ usethis::use_ccby_license()
 
 We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
 In fact, we hope it comes naturally to you.
-To communicate that contributors can expect a welcoming and respectful environment, you can add the `r link( "https://www.contributor-covenant.org", "Contributor Covenant")`.
+To communicate that contributors can expect a welcoming and respectful environment, you can add the `r link( "https://www.contributor-covenant.org", "Contributor Covenant")` to your repository.
 The Contributor Covenant is the code of conduct used by many open source project.
 Contributing to an open project is daunting and a public pledge to value any contributions (even when you do not incorporate them) can help others to take the first step.
 
