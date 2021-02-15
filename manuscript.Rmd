@@ -322,6 +322,8 @@ To add the Contributor Covenant to your project use:
 usethis::use_code_of_conduct()
 ```
 
+If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
+
 ## Collaboration
 
 ### GitHub
