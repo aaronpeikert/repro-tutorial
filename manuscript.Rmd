@@ -134,6 +134,7 @@ Markdown is simply text, where some characters let you add a minimal amount of s
 markdown_example <- "
 <!--this is a Markdown file -->
 # Header
+
 Normal text.
 Important **word**.
 
