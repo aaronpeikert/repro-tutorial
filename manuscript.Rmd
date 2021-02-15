@@ -274,7 +274,7 @@ usethis::use_readme_rmd()
 This will create a file with the name `README.Rmd`.
 When you knit this file, it in turn creates a `README.md`.
 That means you can include R code or plots etc. within the readme.
-The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:idea-change).
+The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:readme).
 
 ```{r readme-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
