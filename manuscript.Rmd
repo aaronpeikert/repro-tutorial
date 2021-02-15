@@ -323,9 +323,14 @@ usethis::use_code_of_conduct()
 ```
 
 If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
+See the section on [GitHub] on how to publish your project.
 
 ## Collaboration
 
+Often, reproducibility is reduced to the merits it has for the reader.
+However, we argue that reproducibility is vital for collaboration, not only in the sense that the consumer of a scientific product build upon it, but also that the creators work together.
+The time that you invest into ensuring reproducibility, is directed at ensuring effective collaboration.
+Therefore, reproducibility is at its core about collaboration.
 
 ### GitHub
 
