@@ -287,7 +287,7 @@ webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
                   zoom = 2) # higher resolution
 ```
 
-```{r readme, echo=FALSE, fig.cap="A screenshot of how a change tracked in Git is represented by GitHub.  ", out.width='100%'}
+```{r readme, echo=FALSE, fig.cap="A screenshot of how a README.md is rendered/presented on GitHub.  ", out.width='100%'}
 knitr::include_graphics(readme)
 ```
 
