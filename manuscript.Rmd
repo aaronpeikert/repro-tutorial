@@ -4,8 +4,9 @@ output: bookdown::pdf_document2
 repro:
   packages:
     - usethis
-    - repro
+    - aaronpeikert/repro@7bfaf98
     - here
+    - rstudio/webshot2@f62e743
 csl: apa7.csl
 numbered_headings: true
 toc_depth: 5

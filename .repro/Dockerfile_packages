@@ -1,4 +1,6 @@
 RUN install2.r --error --skipinstalled \ 
   here \ 
-  repro \ 
   usethis
+RUN installGithub.r \ 
+  aaronpeikert/repro@7bfaf98 \ 
+  rstudio/webshot2@f62e743
