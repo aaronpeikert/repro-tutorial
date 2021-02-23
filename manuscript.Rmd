@@ -29,7 +29,7 @@ source(here::here("R", "link.R"))
 <!-- I wouldn't want to cite it. @brandmaier, would you please rewrite? -->
 A reproducible scientific product allows other researchers to obtain the same results from the same dataset in a way that enables substantive criticism and therefore facilitates replication.
 <!-- lure the reader in -->
-This notion of independent verifiability has long been part of "good scientific practice", but has not reached its full potential to benefit the scientific community.
+The research community has long accepted reproducibility as part of "good scientific practice", but has not has not benefited much from this self-imposed requirement.
 <!-- expand: who is calling it a requirement, maybe metascientific arguments-->
 Reproducing an empirical study is often tedious and frustrating work for the researcher.
 However, if reproduction would require mere minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
@@ -60,7 +60,7 @@ It is common to rely on the craftiness of the researcher to debug these problems
 
 We deem each concept necessary to archive longterm reproducibility.
 However, which tools you use to implement these concepts is a matter of taste and project requirements.
-This tutorial will follow the recommendations of @Peikert2019 and utilize Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
+This tutorial follows the recommendations of @Peikert2019 and utilize Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
@@ -109,9 +109,8 @@ Follow the instructions, then rerun the command, until it tells you not to worry
 # Planing
 
 <!-- researcher should begin early to enjoy most benefits -->
-It can be tempting to leave considerations of reproducibility for when you finish a project.
-<!-- weird sentence, I'll leave it as a placeholder-->
-However, reproducibility is invaluable for collaboration---including with the version of yourself from a few weeks ago.
+Reproducibility is invaluable for effective collaboration---including with your "past self".
+While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay of through your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
 The first step is to organize all files in one folder.
 This way, you never lose anything, and you can easily share the files.
@@ -152,7 +151,7 @@ We will later see how this simplicity enables us to create many different docume
 Another advantage of Markdown is that you can easily version-control it with Git.
 You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
-For example this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
+For example, this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
 To activate Git in a given project, you can call:
 <!-- Hands-on: Introduce Git -->
 
@@ -218,7 +217,7 @@ git2r::commit(".", "exclude bias in measurement as possible confounder")
 ```
 
 And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
-GitHub is in its essence a Webinterface to Git and you may learn more about how to use it under the section on [GitHub].
+GitHub is in its essence a webinterface to Git and you may learn more about how to use it under the section on [GitHub].
 
 ```{r idea-change-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
@@ -262,7 +261,7 @@ A preregistration is a tool that may help to increase the credibility of empiric
 One of the greatest benefits of open research is that other people can freely reuse materials.
 To use your materials, they first have to find them and learn how to use them.
 Interested users find out about your project via the readme.
-The readme is the first thing they see when they visit your Project.
+The readme is the first thing they see when they visit your project on [GitHub].
 It should explain to them what your project is about and how to reproduce your project.
 You could for example include the abstract of your (planned) paper here.
 
@@ -273,7 +272,8 @@ To add a readme to a repository run:
 usethis::use_readme_rmd()
 ```
 
-This will create a file with the name `README.Rmd`.
+This command will create a file with the name `README.Rmd`.
+<!--knit/rmarkdown will be explained in section above-->
 When you knit this file, it in turn creates a `README.md`.
 That means you can include R code or plots etc. within the readme.
 The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:readme).
@@ -337,7 +337,7 @@ Therefore, reproducibility is at its core about collaboration.
 ### GitHub
 
 On your local machine, you use Git to track changes.
-However, to share these changes with others, you need to use an online service like GitHub.
+Online services like GitHub allow you to share these changes with others.
 GitHub is not the only solution; there is also [GitLab](gitlab.com) or [BitBucket](https://bitbucket.org), which are as feature-rich as GitHub.
 GitLab has the advantage that your institution can host it themselves; therefore, you are not relying on commercial service providers.
 We focus on GitHub because it is the most popular service.
@@ -353,7 +353,7 @@ usethis::use_github()
 To create a private repository (only you and people you invite have access), use:
 
 ```r
-usethis::use_github()
+usethis::use_github(private = TRUE)
 ```
 
 <!--Hands on: Introduce GitHub Issues-->
