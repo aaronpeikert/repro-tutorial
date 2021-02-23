@@ -338,7 +338,7 @@ Therefore, reproducibility is at its core about collaboration.
 
 On your local machine, you use Git to track changes.
 However, to share these changes with others, you need to use an online service like GitHub.
-GitHub is not the only solution; there is also GitLab or BitBucket, which are as feature-rich as GitHub.
+GitHub is not the only solution; there is also [GitLab](gitlab.com) or [BitBucket](https://bitbucket.org), which are as feature-rich as GitHub.
 GitLab has the advantage that your institution can host it themselves; therefore, you are not relying on commercial service providers.
 We focus on GitHub because it is the most popular service.
 To upload your changes to GitHub, you need to create an account under https://github.com/join.
