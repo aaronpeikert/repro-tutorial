@@ -314,8 +314,8 @@ usethis::use_ccby_license()
 We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
 In fact, we hope it comes naturally to you.
 To communicate that contributors can expect a welcoming and respectful environment, you can add the `r link( "https://www.contributor-covenant.org", "Contributor Covenant")` to your repository.
-The Contributor Covenant is a code of conduct used by many open source project.
 Contributing to an open project is daunting and a public pledge to value any contributions (even when you do not incorporate them) can help others to take the first step.
+The Contributor Covenant is a code of conduct used by many open source project.
 
 To add the Contributor Covenant to your project use:
 
@@ -323,6 +323,9 @@ To add the Contributor Covenant to your project use:
 ```r
 usethis::use_code_of_conduct()
 ```
+
+However, there is some controversy around how to handle violations of a code of conduct.
+For that or any other reason, you may want to adapt the Contributor Covenant, to fit the needs of you project (which you are allowed to to because it is published with a CC-BY license).
 
 If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
 See the section on [GitHub] on how to publish your project.
