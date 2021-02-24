@@ -60,7 +60,7 @@ It is common to rely on the craftiness of the researcher to debug these problems
 
 We deem each concept necessary to archive longterm reproducibility.
 However, which tools you use to implement these concepts is a matter of taste and project requirements.
-This tutorial follows the recommendations of @Peikert2019 and utilize Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
+This tutorial follows the recommendations of @Peikert2019 and utilize Git for version control, R Markdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
@@ -168,7 +168,7 @@ usethis::use_git()
 Recording each change you made helps you to iterate more quickly because you know that you can effortlessly go back to previous versions.
 For example, you can write down a rough project idea, knowing your collaborators and you will iterate and improve.
 <!-- This is maybe the place to introduce the example-->
-First, you could create a new markdown file named `idea.md` that looks like this:
+First, you could create a new Markdown file named `idea.md` that looks like this:
 
 ```markdown
 <!--this is a Markdown file -->
@@ -259,7 +259,7 @@ A preregistration is a tool that may help to increase the credibility of empiric
 
 ### R Markdown
 
-<!--Hands on: Introduce RMarkdown-->
+<!--Hands on: Introduce R Markdown-->
 <!--Hands on: gitignore resulting .html/pdf-->
 <!-- A preregistration needs to be public -->
 
