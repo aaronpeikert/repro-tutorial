@@ -1,8 +1,6 @@
 ---
 title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
-output:
-  bookdown::pdf_document2:
-    keep_tex: true
+output: bookdown::pdf_document2
 repro:
   packages:
     - usethis
@@ -347,7 +345,7 @@ GitHub is not the only solution; there is also [GitLab](gitlab.com) or [BitBucke
 GitLab has the advantage that your institution can host it themselves; therefore, you are not relying on commercial service providers.
 We focus on GitHub because it is the most popular service.
 To upload your changes to GitHub, you need to create an account under https://github.com/join.
-As a researcher, you are eligible for the `r link("https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount", "Researcher/Educator discount")`.
+As a researcher, you are eligible for the `r link("https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount", "Researcher/Educator discount").
 The following command creates a new GitHub repository under your GitHub account, beware this is public:
 <!--Hands-on: Introduce Github-->
 
