@@ -332,7 +332,8 @@ usethis::use_code_of_conduct()
 ```
 
 However, there is some controversy around how to handle violations of a code of conduct.
-For that or any other reason, you may want to adapt the Contributor Covenant, to fit the needs of you project (which you are allowed to to because it is published with a CC-BY license).
+For that or any other reason, you may want to adapt the Contributor Covenant, to fit the needs of you project (which you are allowed to do because it is published with a CC-BY license).
+You can also consider alternative Codes of Conduct, like the `r link("https://opensource.microsoft.com/codeofconduct/", "Microsoft Open Source Code of Conduct")` or the `r link("https://berlincodeofconduct.org", "Berlin Code of Conduct")`.
 
 If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
 See the section on [GitHub] on how to publish your project.
@@ -350,7 +351,7 @@ On your local machine, you use Git to track changes.
 Online services like GitHub allow you to share these changes with others.
 GitHub is not the only solution; there is also [GitLab](gitlab.com) or [BitBucket](https://bitbucket.org), which are as feature-rich as GitHub.
 GitLab has the advantage that your institution can host it themselves; therefore, you are not relying on commercial service providers.
-We focus on GitHub because it is the most popular service.
+Anyhow, we focus on GitHub because it is the most popular service.
 To upload your changes to GitHub, you need to create an account under https://github.com/join.
 As a researcher, you are eligible for the `r link("https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount", "Researcher/Educator discount")`.
 The following command creates a new GitHub repository under your GitHub account, beware this is public:
@@ -375,9 +376,15 @@ While you already know how to write dynamic documents with [Markdown] and [R Mar
 
 ## Internal Dependencies
 
-A well defined "entry point" that automatically reproduces everything eases collaboration.
-
 <!--I am not sure this is the right place, should we introduce this earlier? -->
+
+First dependency management, which means that you capture the interrelations between the components of you analysis.
+You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
+Understanding these relations is often key to reproducing a project.
+A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README])
+The "components" of an analysis are often loosely mapped onto files.
+For a simple project it might be enough to have a single R Markdown.
+However, while it is easy to reproduce this approach quickly gets unwieldy.
 
 <!--Hands on: Introduce Make-->
 <!--Hands on: Add targets for README.Rmd, preregistration.Rmd -->
