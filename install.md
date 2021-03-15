@@ -44,7 +44,7 @@ Since you probably already have R and RStudio you may skip this step.
 
 1.  Open a new terminal (Press Windows key + X, click on “Windows
     Powershell (Admin)”).
-2.  Paste `choco install -y r r.studio`
+2.  Paste `choco install -y r r.studio rtools`
 3.  Press enter
 
 ## 2.4 How to install Git, Make, and Docker with a package manager?
