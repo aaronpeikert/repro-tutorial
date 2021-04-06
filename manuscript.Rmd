@@ -256,7 +256,7 @@ However, the analytic strategy often gives you a hint about how to simulate data
 In the Machiavellism example, the analytic strategy is to use structural equation modelling (SEM).
 To simulate data for SEM, one has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
 The model parameters should mimic the Machiavellism subscale of the short dark triad (SD3).
-As a starting point, we can use already publishes information.
+As a starting point, we can use already published information.
 @Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
 ```{r loadings, echo=FALSE}
