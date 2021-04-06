@@ -9,7 +9,7 @@ model_truth <- combine(
     items("x", 9),
     loadings = round(loadings_jones_paulhus * 0.7, 2)
   ),
-  intercepts("MACH", list(0, 0.1)),
+  intercepts("MACH", list(0, 0.5)),
   variances("MACH", list(1, 1))
 )
 #----models----
@@ -25,7 +25,7 @@ model_differ <-
 
 
 #----generate----
-n = 3000 
+n = 100 
 data <- lavaan::simulateData(
   model_truth,
   sample.nobs = c(n/2, n/2), 
@@ -40,9 +40,56 @@ res_differ <- cfa(model_differ, data, group = "group", group.equal = c("loadings
 
 summary(res_differ)
 
+fitMeasures(res_same, "BIC")
+fitMeasures(res_differ, "BIC")
+
+generate_data <- function(n_obs, n_sim, model_truth, model_1, model_2, ...){
+  res_n <- list()
+  for (i in 1:length(n_obs)){
+    res <- c()
+    for (j in 1:n_sim){
+      data <- lavaan::simulateData(
+        model_truth,
+        sample.nobs = c(n_obs[i]/2, n_obs[i]/2), 
+        standardized = TRUE)
+      
+      res_1 <- cfa(model_1, data, group = "group", ...)
+      res_2 <- cfa(model_2, data, group = "group", ...)
+      if(lavInspect(res_1, "converged") & lavInspect(res_2, "converged"))
+        res[j] <- (fitMeasures(res_1, "BIC") - fitMeasures(res_2, "BIC")) > 0
+      else
+        res[j] <- NA
+    }
+    res_n[[i]] <- res
+  }
+  return(res_n)
+}
+
+n_obs = c(50, 100, 200, 300, 500, 1000)
+
+res <- generate_data(
+  n_obs, 
+  100, 
+  model_truth, 
+  model_same, 
+  model_differ, 
+  group.equal = c("loadings", "intercepts"))
+
+res_data <- data.frame(n = n_obs)
+
+res_data$result = res
+res_data$p <- purrr::map_dbl(res_data$result, mean, na.rm = TRUE)
+res_data$n_conv <- purrr::map_dbl(res_data$result, ~sum(is.na(.x)))
+
+res_data$n_conv
+
+library(ggplot2)
+
+ggplot(res_data, aes(x = n, y = p)) + geom_point() + geom_line() + 
+  scale_x_continuous(breaks = n_obs)
+  
 
 #----some functions----
-
 generate <- function(n, diff, vary_intercepts, vary_loadings, skewness, ...){
   latent <- "MACH"
   items <- items("x", 9)
