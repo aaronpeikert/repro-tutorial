@@ -16,12 +16,18 @@ model_truth <- combine(
 model_same <- 
   "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
   MACH ~ c(0,0)*1
-  MACH ~~ 1*MACH"
+  MACH ~~ c(1, NA)*MACH"
+# MACH ~~ 1*MACH
+# mean(res_data$dec_p)
+# MACH ~~ c(1, NA)*MACH
+# [1] 0.466
+# mean(res_data$dec_p)
+# [1] 0.464
 
 model_differ <- 
   "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
   MACH ~ c(0,NA)*1
-  MACH ~~ 1*MACH"
+  MACH ~~ c(1, NA)*MACH"
 
 
 #----generate----
@@ -115,11 +121,11 @@ generate_data <- function(n_obs, n_sim, model_truth, model_1, model_2, ...){
     est = est_n))
 }
 
-n_obs = c(25, 50, 100, 200, 300, 500)
+n_obs = c(300)
 
 res <- generate_data(
   n_obs, 
-  20, 
+  1000, 
   model_truth, 
   model_same, 
   model_differ, 
@@ -143,7 +149,6 @@ res_data %>% group_by(n) %>%
   pivot_longer(c(bic, aic, p_aov), names_to = "metric", values_to = "power") %>% 
   ggplot(aes(x = n, y = power, color = metric)) + geom_point() + geom_line() +
   theme_minimal() + scale_x_continuous(breaks = n_obs)
-
 
 res_data %>% ggplot(aes(x = est, color = factor(n))) + geom_density() +
   theme_minimal()
