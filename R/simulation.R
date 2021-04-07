@@ -1,7 +1,11 @@
 source(here::here("R", "lavaan_helper.R"))
+library(tidyverse)
 library(lavaan)
+
+#----jones_paulhus----
 loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
+
 #----model-truth----
 model_truth <- combine(
   measurement(
@@ -12,6 +16,7 @@ model_truth <- combine(
   intercepts("MACH", list(0, 0.2)),
   variances("MACH", list(1, 1))
 )
+
 #----models----
 model_same <- 
   "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
@@ -26,12 +31,12 @@ model_same <-
 
 model_differ <- 
   "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0,NA)*1
+  MACH ~ c(0, NA)*1 + c(zero, diff)*1
   MACH ~~ c(1, NA)*MACH"
 
 
 #----generate----
-n = 500
+n = 5000
 data <- lavaan::simulateData(
   model_truth,
   sample.nobs = c(n/2, n/2), 
@@ -43,158 +48,98 @@ res_same <- cfa(
   data, group = "group", 
   group.equal = c("loadings", "intercepts"), 
   std.lv= TRUE)
-
 summary(res_same)
-
 res_differ <- cfa(
   model_differ, 
   data, 
   group = "group", 
   group.equal = c("loadings", "intercepts"), 
   std.lv= TRUE)
-
 summary(res_differ)
 
-fitMeasures(res_same, "BIC")
-fitMeasures(res_differ, "BIC")
-
-lavaan::anova(res_same, res_differ)$`Pr(>Chisq)`[2]
-
-dplyr::filter(parameterEstimates(res_differ), lhs == "MACH", op == "~1", group == 2)$est
-dplyr::filter(parameterEstimates(res_differ), lhs == "MACH", op == "~1", group == 2)$se
-dplyr::filter(parameterEstimates(res_differ), lhs == "MACH", op == "~1", group == 2)$pvalue
-
-
-generate_data <- function(n_obs, n_sim, model_truth, model_1, model_2, ...){
-  bic_n <- list()
-  aic_n <- list()
-  p_aov_n <- list()
-  se_n <- list()
-  est_n <- list()
-  p_delta_n <- list()
-  for (i in 1:length(n_obs)){
-    bic <- c()
-    aic <- c()
-    p_aov <- c()
-    se <- c()
-    est <- c()
-    p_delta <- c()
-    for (j in 1:n_sim){
-      data <- lavaan::simulateData(
-        model_truth,
-        sample.nobs = c(n_obs[i], n_obs[i]), 
-        standardized = TRUE)
-      
-      res_1 <- cfa(model_1, data, group = "group", ...)
-      res_2 <- cfa(model_2, data, group = "group", ...)
-      if(lavInspect(res_1, "converged") & lavInspect(res_2, "converged")){
-        bic[j] <- fitMeasures(res_1, "BIC") - fitMeasures(res_2, "BIC")
-        aic[j] <- fitMeasures(res_1, "AIC") - fitMeasures(res_2, "AIC")
-        p_aov[j] <- lavaan::anova(res_1, res_2)$`Pr(>Chisq)`[2]
-        
-        parrow <-dplyr::filter(parameterEstimates(res_2), lhs == "MACH", op == "~1", group == 2)
-        est[j] <- parrow$est
-        se[j] <- parrow$se
-        p_delta[j] <- parrow$pvalue
-      }else{
-        bic[j] <- NA
-        aic[j] <- NA
-        est[j] <- NA
-        p_aov[j] <- NA
-        se[j] <- NA
-        p_delta[j] <- NA
-      }
-    }
-    bic_n[[i]] <- bic
-    aic_n[[i]] <- aic
-    p_aov_n[[i]] <- p_aov
-    se_n[[i]] <- se
-    est_n[[i]] <- est
-    p_delta_n[[i]] <- p_delta
-  }
-  return(dplyr::tibble(
-    n = n_obs, 
-    bic = bic_n, 
-    aic = aic_n, 
-    p_aov = p_aov_n, 
-    se = se_n,
-    est = est_n))
+#----sim-functions----
+competing_models <- function(data, same, differ, ...){
+  list(same = cfa(same, data, ...),
+       differ = cfa(differ, data, ...))
 }
 
-n_obs = c(300)
+is_converged <- function(fit)lavInspect(fit, "converged")
+all_converged <- function(fits)all(purrr::map_lgl(fits, is_converged))
 
-res <- generate_data(
-  n_obs, 
-  1000, 
-  model_truth, 
-  model_same, 
-  model_differ, 
-  group.equal = c("loadings", "intercepts"),
-  std.lv = TRUE)
+get_fit <- function(fits, measure){
+  stopifnot(length(fits) == 2L, length(measure) == 1L)
+  if(!all_converged(fits))return(NA)
+  diff <- fitMeasures(fits$differ, measure) - fitMeasures(fits$same, measure)
+  as.numeric(diff)
+}
+get_bic <- function(fits)get_fit(fits, "BIC")
+get_aic <- function(fits)get_fit(fits, "AIC")
+get_lrt_p <- function(fits){
+  if(!all_converged(fits))return(NA)
+  lavaan::anova(fits$same, fits$differ)$`Pr(>Chisq)`[2]
+}
+get_parameter <- function(fits, what, label){
+  if(!all_converged(fits))return(NA)
+  pars <- parameterestimates(fits$differ)
+  which <- which(pars$label == label)
+  if(length(which) == 0L)stop("No parameter labeled '", label, "'.")
+  pars[which, what]
+}
+get_estimate <- function(fits, label = "diff")get_parameter(fits, "est", label)
+get_delta_p <- function(fits, label = "diff")get_parameter(fits, "pvalue", label)
 
-res_data <- tidyr::unnest(res, c(bic, aic, p_aov, se, est))
+generate_data_ <- function(n_obs, truth, same, differ, extract_fns, ...){
+  data <- lavaan::simulateData(
+    truth,
+    sample.nobs = rep(n_obs, 2), 
+    standardized = TRUE)
+  fits <- competing_models(data, same, differ, group = "group", ...)
+  as_tibble(map(extract_fns, exec, fits))
+}
 
-library(tidyverse) #reminder for the good old days with M.Z.
+generate_data <- function(n_sim, setup){
+  map(seq_len(n_sim), ~mutate(setup, results = pmap(setup, generate_data_)))
+}
 
-res_data <- mutate(
-  res_data,
-  dec_bic = bic > 0,
-  dec_aic = aic > 0,
-  dec_p = p_aov < 0.05)
+#----sim----
+extract_fns <- list(bic = get_bic, 
+                    aic = get_aic,
+                    lrt_p = get_lrt_p,
+                    delta_p = get_delta_p,
+                    estimate = get_estimate)
+n_obs <- 1:5*100
+setup <- expand_grid(n_obs = n_obs,
+                     truth = model_truth,
+                     same = model_same,
+                     differ = model_differ,
+                     extract_fns = list(extract_fns),
+                     group.equal = list(c("loadings", "intercepts")), 
+                     std.lv = TRUE)
+res_raw <- generate_data(1000, setup)
+res <- res_raw %>% 
+  bind_rows() %>% 
+  select(n_obs, results) %>% 
+  unnest(results)
 
-res_data %>% group_by(n) %>% 
-  summarise(bic = mean(dec_bic, na.rm = T),
-            aic = mean(dec_aic, na.rm = T),
-            p_aov = mean(dec_p, na.rm = T)) %>% 
-  pivot_longer(c(bic, aic, p_aov), names_to = "metric", values_to = "power") %>% 
-  ggplot(aes(x = n, y = power, color = metric)) + geom_point() + geom_line() +
-  theme_minimal() + scale_x_continuous(breaks = n_obs)
+res <- mutate(
+  res,
+  dec_bic = bic < 0,
+  dec_aic = aic < 0,
+  dec_aic2 = aic < -2,
+  dec_lrt_p = lrt_p < 0.05,
+  dec_delta_p = delta_p < 0.05)
 
-res_data %>% ggplot(aes(x = est, color = factor(n))) + geom_density() +
+res %>%
+  group_by(n_obs) %>% 
+  summarise(across(starts_with("dec"), mean, na.rm = TRUE)) %>% 
+  pivot_longer(c(-n_obs), names_to = "metric", values_to = "power") %>% 
+  ggplot(aes(x = n_obs, y = power, color = metric)) +
+  geom_point() +
+  geom_line() +
+  theme_minimal() +
+  scale_x_continuous(breaks = n_obs)
+
+res %>%
+  ggplot(aes(x = estimate, color = factor(n_obs))) +
+  geom_density() +
   theme_minimal()
-
-#----some functions----
-generate <- function(n, diff, vary_intercepts, vary_loadings, skewness, ...){
-  latent <- "MACH"
-  items <- items("x", 9)
-  model <-
-    combine(
-      measurement(
-        latent,
-        items,
-        varying_modifer(loadings_jones_paulhus, rel_change = vary_loadings)
-      ),
-      intercepts(latent, list(0, diff)),
-      intercepts(items, varying_modifer(rep(0, 9), 3, abs_change = vary_intercepts)),
-      variances(latent, list(1, 1))
-    )
-  skewness <- shuffle(pad_zero(skewness, length(items)))
-  lavaan::simulateData(model, skewness = skewness, sample.nobs = c(n/2, n/2), standardized = TRUE, ...)
-}
-
-analyze <- function(simulated){
-  latent <- "MACH"
-  items <- items("x", 9)
-  model <-
-    combine(
-      measurement(
-        latent,
-        items
-      ),
-      intercepts(latent, list(0, "NA")),
-      variances(latent, list(1, 1))
-    )
-  browser()
-    lavaan::cfa(
-      model,
-      data = simulated,
-      group = "group",
-      meanstructure = TRUE,
-      std.lv = TRUE,
-      group.equal = c("intercepts", "loadings")
-    )
-}
-#----summarise----
-summarise <- function(fit){
-  
-}
