@@ -11,6 +11,8 @@ if(fs::file_exists(hpc_config)){
   plan(list(transparent,
        tweak(multisession, workers = 4L)))
 }
+# debug:
+#   plan(transparent)
 
 #----jones_paulhus----
 loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
@@ -59,7 +61,7 @@ model_differ3 <-
   MACH ~~ c(1, NA)*MACH"
 
 #----generate----
-n = 500000
+n = 50000
 data <- lavaan::simulateData(
   model_truth,
   sample.nobs = c(n/2, n/2), 
@@ -107,7 +109,6 @@ get_parameter <- function(fits, what, label, how){
   which <- which(pars$label == label)
   if(length(which) == 0L)stop("No parameter labeled '", label, "'.")
   out <- pars[which, what]
-  if(is.null(out))browser()
   out
 }
 
@@ -133,10 +134,11 @@ generate_data_ <- function(n_obs, truth, same, differ, extract_fns, ...){
 }
 
 generate_data <- function(n_sim, setup, .furrr_options = furrr_options()){
+  without_id <- select(setup, -matches("^id\\d*$"))
   future_map(seq_len(n_sim),
              ~ mutate(
-               setup,
-               results = future_pmap(setup, generate_data_, .options = .furrr_options)
+               select(setup, -extract_fns),
+               results = future_pmap(without_id, generate_data_, .options = .furrr_options)
              ),
              .options = .furrr_options)
 }
@@ -157,6 +159,9 @@ extract_fns <- list(bic = get_bic,
                     estimate = get_estimate,
                     std_delta_p = get_std_delta_p,
                     std_estimate = get_std_estimate)
+#quick test
+#n_obs <- c(100, 10000)
+
 n_obs <- c(1:100)*100
 setup <- expand_grid(n_obs = n_obs,
                      truth = model_truth,
@@ -167,21 +172,33 @@ setup <- expand_grid(n_obs = n_obs,
                      auto.fix.first = FALSE)
 setup2 <- mutate(setup, same = model_same2, differ = model_differ2)
 setup3 <- mutate(setup, same = model_same3, differ = model_differ3)
-n_sim <- 1000
+n_sim <- 100
+#quick test
+#n_sim <- 2
+#setup_all <- mutate(setup3, id = "model3")
+setup_all <- list(model1 =  setup,
+              model2 = setup2,
+              model3 = setup3) %>%
+  bind_rows(.id = "id")
+#rm(res_raw)
 to_export <- ls_funs() %>% map(get)
-res_raw %<-%
-  map(list(
-    model1 =  setup,
-    model2 = setup2,
-    model3 = setup3
-  ),
-  ~ generate_data(n_sim, .x, furrr_options(globals = to_export, seed=TRUE, packages = c("furrr", "lavaan", "tidyverse"))))
+to_export <- c(list(setup_all = setup_all), to_export)
+#local test
+#plan(transparent)
+res_raw %<-% 
+  generate_data(n_sim,
+                setup_all,
+                furrr_options(
+                  globals = to_export,
+                  seed = TRUE,
+                  packages = c("furrr", "lavaan", "tidyverse")
+                ))
 res_raw
 
 res <- res_raw  %>%
-  map(bind_rows) %>% bind_rows(.id = "model") %>% 
+  map(bind_rows) %>% 
   bind_rows() %>% 
-  select(n_obs, model, results) %>% 
+  select(n_obs, id, results) %>% 
   unnest(results)
 
 res <- mutate(
@@ -193,26 +210,30 @@ res <- mutate(
   dec_delta_p = delta_p < 0.05)
 
 res %>%
-  group_by(n_obs, model) %>% 
-  summarise(across(starts_with("dec"), mean, na.rm = TRUE)) %>% 
-  pivot_longer(c(-n_obs, -model), names_to = "metric", values_to = "power") %>% 
+  group_by(n_obs, id) %>% 
+  summarise(across(starts_with("dec"), mean, na.rm = TRUE), .groups = "drop") %>% 
+  pivot_longer(c(-n_obs, -id), names_to = "metric", values_to = "power") %>% 
+  filter(n_obs < 2500) %>% 
   ggplot(aes(x = n_obs, y = power, color = metric)) +
   geom_point() +
   geom_line() +
-  facet_wrap(~model) +
+  facet_wrap(~id) +
   theme_minimal() +
-  scale_x_continuous(breaks = n_obs)
+  scale_x_continuous(n.breaks = 10) +
+  scale_y_continuous(trans = "log") +
+  theme(axis.text.x = element_text(angle = -90)) +
+  NULL
 
 res %>%
   ggplot(aes(x = estimate, color = factor(n_obs))) +
   geom_density() +
-  facet_wrap(~model, ncol = 1) +
+  facet_wrap(~id, ncol = 1) +
   theme_minimal()
 
 res %>%
   ggplot(aes(x = std_estimate, group = factor(n_obs), color = log10(n_obs))) +
   geom_density() +
-  facet_wrap(~model, ncol = 1) +
+  facet_wrap(~id, ncol = 1) +
   theme_minimal() +
   scale_color_viridis_c(option = "magma")
   
@@ -226,22 +247,22 @@ interval <- function(x, alpha = c(0.05)){
 }
 
 res %>%
-  select(n_obs, model, estimate) %>% 
+  select(n_obs, id, estimate) %>% 
   filter(!is.na(estimate)) %>% 
-  group_by(n_obs, model) %>% 
+  group_by(n_obs, id) %>% 
   summarise(interval = list(interval(estimate, seq(0.05, .2, 0.01))), 
             .groups = "drop") %>% 
   unnest(c(interval)) %>% 
   ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
   geom_ribbon() +
   scale_fill_viridis_c(option = "magma", begin = .2) +
-  facet_wrap(~model) +
+  facet_wrap(~id) +
   theme_minimal()
 
 res_interval <- res %>%
-  select(n_obs, model, std_estimate) %>% 
+  select(n_obs, id, std_estimate) %>% 
   filter(!is.na(std_estimate)) %>% 
-  group_by(n_obs, model) %>% 
+  group_by(n_obs, id) %>% 
   summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
             .groups = "drop") %>% 
   unnest(c(interval)) %>% 
@@ -251,12 +272,12 @@ res_interval %>%
   ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
   geom_ribbon() +
   scale_fill_viridis_c(option = "magma", begin = .2) +
-  facet_wrap(~model) +
+  facet_wrap(~id) +
   theme_minimal()
 
 res_interval %>% 
   ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
-  facet_wrap(~model) +
+  facet_wrap(~id) +
   geom_line() +
   scale_color_viridis_c(option = "viridis", begin = .2) +
   theme_minimal() +
