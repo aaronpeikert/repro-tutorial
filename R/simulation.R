@@ -1,6 +1,16 @@
 source(here::here("R", "lavaan_helper.R"))
 library(tidyverse)
 library(lavaan)
+library(furrr)
+# if you have access to a hpc envir specify this in R/hpc.R
+# if not local multicore is used
+hpc_config <- here::here("R", "hpc.R")
+if(fs::file_exists(hpc_config)){
+  source(hpc_config)
+} else {
+  plan(list(transparent,
+       tweak(multisession, workers = 4L)))
+}
 
 #----jones_paulhus----
 loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
@@ -122,8 +132,21 @@ generate_data_ <- function(n_obs, truth, same, differ, extract_fns, ...){
   as_tibble(map(extract_fns, exec, fits))
 }
 
-generate_data <- function(n_sim, setup){
-  map(seq_len(n_sim), ~mutate(setup, results = pmap(setup, generate_data_)))
+generate_data <- function(n_sim, setup, .furrr_options = furrr_options()){
+  future_map(seq_len(n_sim),
+             ~ mutate(
+               setup,
+               results = future_pmap(setup, generate_data_, .options = .furrr_options)
+             ),
+             .options = .furrr_options)
+}
+
+ls_funs <- function(pos = parent.frame(), ...){
+  everything <- ls(pos = pos, ...)
+  names(everything) <- everything
+  out <- names(keep(map(everything, get), is.function))
+  names(out) <- out
+  out
 }
 
 #----sim----
@@ -134,7 +157,7 @@ extract_fns <- list(bic = get_bic,
                     estimate = get_estimate,
                     std_delta_p = get_std_delta_p,
                     std_estimate = get_std_estimate)
-n_obs <- c(1,5, 100)*100
+n_obs <- c(1:100)*100
 setup <- expand_grid(n_obs = n_obs,
                      truth = model_truth,
                      same = model_same,
@@ -144,18 +167,19 @@ setup <- expand_grid(n_obs = n_obs,
                      auto.fix.first = FALSE)
 setup2 <- mutate(setup, same = model_same2, differ = model_differ2)
 setup3 <- mutate(setup, same = model_same3, differ = model_differ3)
-n_sim <- 2
-res_raw <-
+n_sim <- 1000
+to_export <- ls_funs() %>% map(get)
+res_raw %<-%
   map(list(
     model1 =  setup,
     model2 = setup2,
     model3 = setup3
   ),
-  ~ generate_data(n_sim, .x)) %>%
-  map(bind_rows) %>% bind_rows(.id = "model")
+  ~ generate_data(n_sim, .x, furrr_options(globals = to_export, seed=TRUE, packages = c("furrr", "lavaan", "tidyverse"))))
+res_raw
 
-
-res <- res_raw %>% 
+res <- res_raw  %>%
+  map(bind_rows) %>% bind_rows(.id = "model") %>% 
   bind_rows() %>% 
   select(n_obs, model, results) %>% 
   unnest(results)
@@ -185,6 +209,14 @@ res %>%
   facet_wrap(~model, ncol = 1) +
   theme_minimal()
 
+res %>%
+  ggplot(aes(x = std_estimate, group = factor(n_obs), color = log10(n_obs))) +
+  geom_density() +
+  facet_wrap(~model, ncol = 1) +
+  theme_minimal() +
+  scale_color_viridis_c(option = "magma")
+  
+
 interval <- function(x, alpha = c(0.05)){
   lower_alpha <- alpha/2
   upper_alpha <- 1 - lower_alpha
@@ -205,3 +237,29 @@ res %>%
   scale_fill_viridis_c(option = "magma", begin = .2) +
   facet_wrap(~model) +
   theme_minimal()
+
+res_interval <- res %>%
+  select(n_obs, model, std_estimate) %>% 
+  filter(!is.na(std_estimate)) %>% 
+  group_by(n_obs, model) %>% 
+  summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
+            .groups = "drop") %>% 
+  unnest(c(interval)) %>% 
+  mutate(width = upper - lower)
+
+res_interval %>% 
+  ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
+  geom_ribbon() +
+  scale_fill_viridis_c(option = "magma", begin = .2) +
+  facet_wrap(~model) +
+  theme_minimal()
+
+res_interval %>% 
+  ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
+  facet_wrap(~model) +
+  geom_line() +
+  scale_color_viridis_c(option = "viridis", begin = .2) +
+  theme_minimal() +
+  scale_y_log10(n.breaks = 10) +
+  theme(axis.text.x = element_text(angle = -90)) +
+  NULL
