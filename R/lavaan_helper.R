@@ -1,5 +1,9 @@
 source(here::here("R", "standardizedSolution.R"))
 
+stitch <- function(pars){
+  with(pars, str_c(lhs, op, rhs))
+}
+
 items <- function(item, n){
   stringr::str_c(item, seq_len(n))
 }

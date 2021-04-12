@@ -1,72 +1,56 @@
 source(here::here("R", "lavaan_helper.R"))
-source(here::here("R", "modind.R"))
-library(tidyverse)
-library(lavaan)
-library(furrr)
-# if you have access to a hpc envir specify this in R/hpc.R
-# if not local multicore is used
-hpc_config <- here::here("R", "hpc.R")
-if(fs::file_exists(hpc_config)){
-  source(hpc_config)
-} else {
-  plan(list(transparent,
-       tweak(multisession, workers = 4L)))
-}
-# debug:
-#   plan(transparent)
-
-#----jones_paulhus----
-loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
-cohend_jones_paulhus <- c(24, 29, 35)/100
-
-#----model-truth----
-model_truth <- combine(
-  measurement(
-    "MACH",
-    items("x", 9),
-    loadings = round(loadings_jones_paulhus * 0.7, 2)
-  ),
-  intercepts("MACH", list(0, 0.2)),
-  variances("MACH", list(1, 1))
-)
-
-#----models----
-model_same <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0,0)*1
-  MACH ~~ c(1, NA)*MACH"
-
-model_differ <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0, NA)*1 + c(zero, diff)*1
-  MACH ~~ c(1, NA)*MACH"
-
-#----generate----
-n = 50000
-data <- lavaan::simulateData(
-  model_truth,
-  sample.nobs = c(n/2, n/2), 
-  standardized = TRUE)
-
-#----analyze----
-res_same <- cfa(
-  model_same, 
-  data, group = "group", 
-  group.equal = c("loadings", "intercepts"), 
-  std.lv= TRUE)
-summary(res_same)
-res_differ <- cfa(
-  model_differ, 
-  data, 
-  group = "group", 
-  group.equal = c("loadings", "intercepts"), 
-  std.lv= TRUE)
-summary(res_differ)
 
 #----sim-functions----
 competing_models <- function(data, same, differ, ...){
   list(same = cfa(same, data, ...),
        differ = cfa(differ, data, ...))
+}
+
+filter_dots <- function(..., fun, what = names(formals(fun))){
+  dots <- list(...)
+  if(any(names(dots) == ""))stop("filter_dots does not allow unnamed args!")
+  exists <- setdiff(what, setdiff(what, names(dots)))
+  dots[exists]
+}
+
+safe_cfa <- function(...){
+  valid_args <-
+    c(names(formals(lavaan::lavaanify)),
+      names(formals(lavaan::lavaan)),
+      names(lavOptions()))
+  dots <- filter_dots(..., fun = lavaan::cfa, what = valid_args)
+  do.call("cfa", dots, envir = getNamespace("lavaan"))
+}
+
+competing_models_mod <- function(data, same, differ, mod_load = 0L, mod_int = 0L, pars = "", ...){
+  res_mod <- set_free_mod(differ, data, pars, op = "=~", depth = mod_load, ...)
+  res_mod <- set_free_mod(differ, data, res_mod$pars, op = "~1", depth = mod_int, ...)
+  fits <- list(same = safe_cfa(model = same, data = data, group.partial = res_mod$pars, ...),
+               differ = res_mod$differ)
+  
+}
+
+set_free_mod <- function(differ, data, pars, depth = 3, op = c("~1", "=~"), ...){
+  differ_fit <- safe_cfa(model = differ, data = data, group.partial = pars, ...)
+  depth <- depth - 1
+  if(depth < 0){return(list(pars = pars, differ = differ_fit))}
+  
+  parest <- parameterEstimates(differ_fit)
+  testscores <- lavTestScore(differ_fit)
+  sorted_pars <- testscores$uni %>% 
+    rename(label = lhs) %>% 
+    select(-c(op, rhs, df)) %>% 
+    left_join(parest, by = c("label")) %>% 
+    filter(group == 1, .data$op %in% !!op) %>% 
+    arrange(desc(X2))
+  sorted_pars <- sorted_pars[1,]
+  
+  if(pull(sorted_pars, X2) > qchisq(0.95, 1)){
+    pars <- append(pars, stitch(sorted_pars))
+    set_free_mod(differ, data, pars, depth, op = op, ...)
+  }else{
+    return(list(pars = pars, differ = differ_fit))
+  }
 }
 
 is_converged <- function(fit)lavInspect(fit, "converged")
@@ -105,7 +89,7 @@ get_std_delta_p <- function(fits, label = "diff"){
 get_std_estimate <- function(fits, label = "diff"){
   get_parameter(fits, "est.std", label, how = standardizedSolution)
 }
-generate_data_ <- function(n_obs, truth, same, differ, extract_fns, ...){
+generate_data_setup_ <- function(n_obs, truth, same, differ, extract_fns, ...){
   data <- lavaan::simulateData(
     truth,
     sample.nobs = rep(n_obs, 2), 
@@ -114,13 +98,14 @@ generate_data_ <- function(n_obs, truth, same, differ, extract_fns, ...){
   as_tibble(map(extract_fns, exec, fits))
 }
 
+generate_data_setup <- function(setup, .furrr_options = furrr_options()){
+  mutate(select(setup, -extract_fns),
+    results = future_pmap(setup, generate_data_setup_, .options = .furrr_options))
+}
+
 generate_data <- function(n_sim, setup, .furrr_options = furrr_options()){
-  without_id <- select(setup, -matches("^id\\d*$"))
   future_map(seq_len(n_sim),
-             ~ mutate(
-               select(setup, -extract_fns),
-               results = future_pmap(without_id, generate_data_, .options = .furrr_options)
-             ),
+             ~generate_data_setup(setup, .furrr_options = .furrr_options),
              .options = .furrr_options)
 }
 
@@ -132,59 +117,6 @@ ls_funs <- function(pos = parent.frame(), ...){
   out
 }
 
-#----sim----
-extract_fns <- list(bic = get_bic, 
-                    aic = get_aic,
-                    lrt_p = get_lrt_p,
-                    delta_p = get_delta_p,
-                    estimate = get_estimate,
-                    std_delta_p = get_std_delta_p,
-                    std_estimate = get_std_estimate)
-#quick test
-#n_obs <- c(10000)
-
-n_obs <- seq(100, 10000, 100)
-setup <- expand_grid(n_obs = n_obs,
-                     truth = model_truth,
-                     same = model_same,
-                     differ = model_differ,
-                     mod_load = c(0, 3),
-                     mod_int = c(0, 3),
-                     extract_fns = list(extract_fns),
-                     group.equal = list(c("loadings", "intercepts")),
-                     auto.fix.first = FALSE)
-n_sim <- 1000
-#quick test
-#n_sim <- 2
-
-#rm(res_raw)
-to_export <- ls_funs() %>% map(get)
-to_export <- c(list(setup = setup), to_export)
-#local test
-#plan(transparent)
-res_raw %<-% 
-  generate_data(n_sim,
-                setup,
-                furrr_options(
-                  globals = to_export,
-                  seed = TRUE,
-                  packages = c("furrr", "lavaan", "tidyverse")
-                ))
-write_rds(res_raw, "res_raw.rds")
-
-res <- res_raw  %>%
-  map(bind_rows) %>% 
-  bind_rows() %>% 
-  unnest(results)
-
-res <- mutate(
-  res,
-  dec_bic = bic < 0,
-  dec_aic = aic < 0,
-  dec_aic2 = aic < -2,
-  dec_lrt_p = lrt_p < 0.05,
-  dec_delta_p = delta_p < 0.05)
-
 interval <- function(x, alpha = c(0.05)){
   lower_alpha <- alpha/2
   upper_alpha <- 1 - lower_alpha
@@ -192,43 +124,3 @@ interval <- function(x, alpha = c(0.05)){
          lower = quantile(x, lower_alpha),
          upper = quantile(x, upper_alpha))
 }
-
-res_interval <- res %>%
-  select(n_obs, std_estimate, mod_load, mod_int) %>% 
-  filter(!is.na(std_estimate)) %>% 
-  group_by(n_obs, mod_load, mod_int) %>% 
-  summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
-            .groups = "drop") %>% 
-  unnest(c(interval)) %>% 
-  mutate(width = upper - lower)
-
-plot_interval <- res_interval %>% 
-  ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
-  geom_ribbon() +
-  scale_fill_viridis_c() +
-  scale_y_continuous(breaks = seq(-0.2, 0.7, .1)) +
-  theme_minimal()
-
-plot_interval
-ggsave("interval.png")
-
-plot_interval + facet_wrap(mod_int~mod_load)
-
-plot_width <- res_interval %>% 
-  ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
-  geom_line() +
-  scale_color_viridis_c() +
-  theme_minimal() +
-  scale_y_log10(breaks = seq(0, 0.8, .1)) +
-  theme(axis.text.x = element_text(angle = -90)) +
-  NULL
-
-plot_width
-plot_width + facet_wrap(mod_int ~ mod_load)
-ggsave("width.png")
-
-res_interval %>% 
-  filter(alpha == .2) %>% 
-  ggplot(aes(n_obs, width, color = interaction(mod_int, mod_load))) + 
-  geom_line() +
-  theme_minimal()
