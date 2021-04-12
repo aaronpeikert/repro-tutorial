@@ -4,10 +4,10 @@ author: "Aaron Peikert"
 date: "4/12/2021"
 output: html_document
 params:
-  nsim: 16
+  nsim: 1000
   nmin: 100
   nmax: 10000
-  nstep: 1000
+  nstep: 100
   seed: 1234
 ---
 
@@ -103,7 +103,8 @@ write_rds(res_raw, here::here("res_raw.rds"))
 # compute checksum using md5
 checksum <- digest::digest(res_raw, "md5")
 if(checksum != "e3b116b36c2a267d0e848e692b76fc1a"){
-  warning("Mismatch between original and current simulations!")
+  warning("Mismatch between original and current simulations!
+          Checksum now is:\n    ", checksum)
 }
 ```
 
