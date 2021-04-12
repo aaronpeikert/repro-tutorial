@@ -50,13 +50,13 @@ data <- lavaan::simulateData(
 
 #----analyze----
 res_same <- cfa(
-  model_same3, 
+  model_same, 
   data, group = "group", 
   group.equal = c("loadings", "intercepts"), 
   std.lv= TRUE)
 summary(res_same)
 res_differ <- cfa(
-  model_differ3, 
+  model_differ, 
   data, 
   group = "group", 
   group.equal = c("loadings", "intercepts"), 
@@ -110,7 +110,7 @@ generate_data_ <- function(n_obs, truth, same, differ, extract_fns, ...){
     truth,
     sample.nobs = rep(n_obs, 2), 
     standardized = TRUE)
-  fits <- competing_models(data, same, differ, group = "group", ...)
+  fits <- competing_models_mod(data, same, differ, group = "group", ...)
   as_tibble(map(extract_fns, exec, fits))
 }
 
@@ -148,10 +148,12 @@ setup <- expand_grid(n_obs = n_obs,
                      truth = model_truth,
                      same = model_same,
                      differ = model_differ,
+                     mod_load = c(0, 3),
+                     mod_int = c(0, 3),
                      extract_fns = list(extract_fns),
                      group.equal = list(c("loadings", "intercepts")),
                      auto.fix.first = FALSE)
-n_sim <- 100
+n_sim <- 1000
 #quick test
 #n_sim <- 2
 
@@ -173,7 +175,6 @@ write_rds(res_raw, "res_raw.rds")
 res <- res_raw  %>%
   map(bind_rows) %>% 
   bind_rows() %>% 
-  select(n_obs, results) %>% 
   unnest(results)
 
 res <- mutate(
@@ -193,9 +194,9 @@ interval <- function(x, alpha = c(0.05)){
 }
 
 res_interval <- res %>%
-  select(n_obs, std_estimate) %>% 
+  select(n_obs, std_estimate, mod_load, mod_int) %>% 
   filter(!is.na(std_estimate)) %>% 
-  group_by(n_obs) %>% 
+  group_by(n_obs, mod_load, mod_int) %>% 
   summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
             .groups = "drop") %>% 
   unnest(c(interval)) %>% 
@@ -211,6 +212,8 @@ plot_interval <- res_interval %>%
 plot_interval
 ggsave("interval.png")
 
+plot_interval + facet_wrap(mod_int~mod_load)
+
 plot_width <- res_interval %>% 
   ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
   geom_line() +
@@ -221,4 +224,11 @@ plot_width <- res_interval %>%
   NULL
 
 plot_width
+plot_width + facet_wrap(mod_int ~ mod_load)
 ggsave("width.png")
+
+res_interval %>% 
+  filter(alpha == .2) %>% 
+  ggplot(aes(n_obs, width, color = interaction(mod_int, mod_load))) + 
+  geom_line() +
+  theme_minimal()
