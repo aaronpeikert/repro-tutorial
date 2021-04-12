@@ -1,4 +1,5 @@
 source(here::here("R", "lavaan_helper.R"))
+source(here::here("R", "modind.R"))
 library(tidyverse)
 library(lavaan)
 library(furrr)
@@ -69,13 +70,13 @@ data <- lavaan::simulateData(
 
 #----analyze----
 res_same <- cfa(
-  model_same, 
+  model_same3, 
   data, group = "group", 
   group.equal = c("loadings", "intercepts"), 
   std.lv= TRUE)
 summary(res_same)
 res_differ <- cfa(
-  model_differ, 
+  model_differ3, 
   data, 
   group = "group", 
   group.equal = c("loadings", "intercepts"), 
@@ -160,7 +161,7 @@ extract_fns <- list(bic = get_bic,
                     std_delta_p = get_std_delta_p,
                     std_estimate = get_std_estimate)
 #quick test
-#n_obs <- c(100, 10000)
+#n_obs <- c(10000)
 
 n_obs <- c(1:100)*100
 setup <- expand_grid(n_obs = n_obs,
@@ -172,7 +173,7 @@ setup <- expand_grid(n_obs = n_obs,
                      auto.fix.first = FALSE)
 setup2 <- mutate(setup, same = model_same2, differ = model_differ2)
 setup3 <- mutate(setup, same = model_same3, differ = model_differ3)
-n_sim <- 100
+n_sim <- 1000
 #quick test
 #n_sim <- 2
 #setup_all <- mutate(setup3, id = "model3")
@@ -193,7 +194,7 @@ res_raw %<-%
                   seed = TRUE,
                   packages = c("furrr", "lavaan", "tidyverse")
                 ))
-res_raw
+write_rds(res_raw, "res_raw.rds")
 
 res <- res_raw  %>%
   map(bind_rows) %>% 
@@ -225,17 +226,11 @@ res %>%
   NULL
 
 res %>%
-  ggplot(aes(x = estimate, color = factor(n_obs))) +
-  geom_density() +
-  facet_wrap(~id, ncol = 1) +
-  theme_minimal()
-
-res %>%
   ggplot(aes(x = std_estimate, group = factor(n_obs), color = log10(n_obs))) +
   geom_density() +
   facet_wrap(~id, ncol = 1) +
   theme_minimal() +
-  scale_color_viridis_c(option = "magma")
+  scale_color_viridis_c()
   
 
 interval <- function(x, alpha = c(0.05)){
@@ -246,19 +241,6 @@ interval <- function(x, alpha = c(0.05)){
          upper = quantile(x, upper_alpha))
 }
 
-res %>%
-  select(n_obs, id, estimate) %>% 
-  filter(!is.na(estimate)) %>% 
-  group_by(n_obs, id) %>% 
-  summarise(interval = list(interval(estimate, seq(0.05, .2, 0.01))), 
-            .groups = "drop") %>% 
-  unnest(c(interval)) %>% 
-  ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
-  geom_ribbon() +
-  scale_fill_viridis_c(option = "magma", begin = .2) +
-  facet_wrap(~id) +
-  theme_minimal()
-
 res_interval <- res %>%
   select(n_obs, id, std_estimate) %>% 
   filter(!is.na(std_estimate)) %>% 
@@ -268,19 +250,28 @@ res_interval <- res %>%
   unnest(c(interval)) %>% 
   mutate(width = upper - lower)
 
-res_interval %>% 
+plot_interval <- res_interval %>% 
   ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
   geom_ribbon() +
-  scale_fill_viridis_c(option = "magma", begin = .2) +
-  facet_wrap(~id) +
+  scale_fill_viridis_c() +
+  scale_y_continuous(breaks = seq(-0.2, 0.7, .1)) +
   theme_minimal()
 
-res_interval %>% 
+plot_interval + facet_wrap(~id, nrow = 1)
+
+plot_interval %+% filter(res_interval, id == "model3")
+ggsave("interval.png")
+
+plot_width <- res_interval %>% 
   ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
-  facet_wrap(~id) +
   geom_line() +
-  scale_color_viridis_c(option = "viridis", begin = .2) +
+  scale_color_viridis_c() +
   theme_minimal() +
-  scale_y_log10(n.breaks = 10) +
+  scale_y_log10(breaks = seq(0, 0.8, .1)) +
   theme(axis.text.x = element_text(angle = -90)) +
   NULL
+
+plot_width + facet_wrap(~id)
+
+plot_width %+% filter(res_interval, id == "model3")
+ggsave("width.png")
