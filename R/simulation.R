@@ -99,6 +99,7 @@ generate_data_setup_ <- function(n_obs, truth, same, differ, extract_fns, ...){
 }
 
 generate_data_setup <- function(setup, .furrr_options = furrr_options()){
+  .furrr_options$seed <- TRUE
   mutate(select(setup, -extract_fns),
     results = future_pmap(setup, generate_data_setup_, .options = .furrr_options))
 }

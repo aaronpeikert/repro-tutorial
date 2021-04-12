@@ -89,7 +89,7 @@ res_raw %<-%
                 setup,
                 furrr_options(
                   globals = to_export,
-                  seed = TRUE,
+                  seed = params$seed,
                   packages = c("furrr", "lavaan", "tidyverse")
                 ))
 ```
@@ -102,7 +102,7 @@ write_rds(res_raw, here::here("res_raw.rds"))
 ```{r checksum}
 # compute checksum using md5
 checksum <- digest::digest(res_raw, "md5")
-if(checksum != "856fed767a7e0c3efcb5ac76359f7707"){
+if(checksum != "e3b116b36c2a267d0e848e692b76fc1a"){
   warning("Mismatch between original and current simulations!")
 }
 ```
