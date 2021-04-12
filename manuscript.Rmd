@@ -4,13 +4,15 @@ output: bookdown::pdf_document2
 repro:
   packages:
     - usethis
-    - repro
+    - aaronpeikert/repro@7bfaf98
     - here
+    - rstudio/webshot2@f62e743
   scripts:
     - R/lavaan_helper.R
     - R/simulation.R
     - R/link.R
 csl: apa7.csl
+numbered_headings: true
 bibliography: ["references.bib", "packages.bib"]
 ---
 
@@ -31,7 +33,7 @@ source(here::here("R", "link.R"))
 <!-- I wouldn't want to cite it. @brandmaier, would you please rewrite? -->
 A reproducible scientific product allows other researchers to obtain the same results from the same dataset in a way that enables substantive criticism and therefore facilitates replication.
 <!-- lure the reader in -->
-This notion of independent verifiability has long been part of "good scientific practice", but has not reached its full potential to benefit the scientific community.
+The research community has long accepted reproducibility as part of "good scientific practice", but has not has not benefited much from this self-imposed requirement.
 <!-- expand: who is calling it a requirement, maybe metascientific arguments-->
 Reproducing an empirical study is often tedious and frustrating work for the researcher.
 However, if reproduction would require mere minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
@@ -42,6 +44,7 @@ A scientific document should therefore be understood by researchers but reproduc
 This tutorial walks through the creation of such a document that can be reproduced automatically.
 Though reproducibility is but a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
 Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
+All code chunks are meant for the reader to try out for themselves.
 Still, the reader can safely skip sections marked as optional, when unfit for their research question or methods.
 However, any empirical data analysis will suffer from the following threats to reproducibility:
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
@@ -61,7 +64,7 @@ It is common to rely on the craftiness of the researcher to debug these problems
 
 We deem each concept necessary to archive longterm reproducibility.
 However, which tools you use to implement these concepts is a matter of taste and project requirements.
-This tutorial will follow the recommendations of @Peikert2019 and utilizes Git for version control, RMarkdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
+This tutorial follows the recommendations of @Peikert2019 and utilize Git for version control, R Markdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
@@ -110,9 +113,8 @@ Follow the instructions, then rerun the command, until it tells you not to worry
 # Planing
 
 <!-- researcher should begin early to enjoy most benefits -->
-It can be tempting to leave considerations of reproducibility for when you finish a project.
-<!-- weird sentence, I'll leave it as a placeholder-->
-However, reproducibility is invaluable for collaboration---including with the version of yourself from a few weeks ago.
+Reproducibility is invaluable for effective collaboration---including with your "past self".
+While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay of through your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
 The first step is to organize all files in one folder.
 This way, you never lose anything, and you can easily share the files.
@@ -121,6 +123,8 @@ RStudio's RProjects facilitate this concept of a project folder.
 To create one, click on:
 
 > File → New Project... → New Directory → New Project
+
+## Markdown
 
 <!--Keep notes.-->
 <!-- Hands on: Introduce Markdown -->
@@ -136,6 +140,7 @@ Markdown is simply text, where some characters let you add a minimal amount of s
 markdown_example <- "
 <!--this is a Markdown file -->
 # Header
+
 Normal text.
 Important **word**.
 
@@ -149,10 +154,13 @@ cat("``` markdown", markdown_example, "```", sep = "")
 ```
 
 We will later see how this simplicity enables us to create many different document formats (i.e. Word, PDF, HTML) and incorporate code (i.e. R, Python, Julia).
+
+## Git
+
 Another advantage of Markdown is that you can easily version-control it with Git.
 You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
-For example this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
+For example, this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
 To activate Git in a given project, you can call:
 <!-- Hands-on: Introduce Git -->
 
@@ -164,7 +172,7 @@ usethis::use_git()
 Recording each change you made helps you to iterate more quickly because you know that you can effortlessly go back to previous versions.
 For example, you can write down a rough project idea, knowing your collaborators and you will iterate and improve.
 <!-- This is maybe the place to introduce the example-->
-First, you could create a new markdown file named `idea.md` that looks like this:
+First, you could create a new Markdown file named `idea.md` that looks like this:
 
 ```markdown
 <!--this is a Markdown file -->
@@ -184,7 +192,7 @@ Could we use openpsychometrics.org data?
 
 And you could commit it in Git:
 <!--I am leaning towards doing everything in R, not sure though-->
-<!--For Git we maybe should use RStudio's Git pane-->
+<!--For Git we maybe should use RStudio's Git pane?-->
 
 ```r
 git2r::add(".", "idea.md")
@@ -217,7 +225,8 @@ git2r::add(".", "idea.md")
 git2r::commit(".", "exclude bias in measurement as possible confounder")
 ```
 
-And Git can show you what has changed, like in Figure \@ref(fig:idea-change).
+And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
+GitHub is in its essence a webinterface to Git and you may learn more about how to use it under the section on [GitHub].
 
 ```{r idea-change-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
@@ -235,8 +244,9 @@ if(!file.exists(idea_change)){
 knitr::include_graphics(idea_change)
 ```
 
-<!--I am troubled by how we should recomend to learn git-->
-We recommend to attend an online lecture or workshop to learn the ins and outs of Git.
+<!--I am troubled by how we should recommend to learn git-->
+Git can be challenging to learn, because we are used to learn alone and Git is best learned with others.
+We recommend to find a partner to attend an online lecture or workshop to learn the ins and outs of Git.
 
 ## Simulation (optional)
 
@@ -367,49 +377,141 @@ lavaan::summary(analyze(simulated))
 
 ### Preregestration (optional)
 
+<!--Hands-on: build simple functions tailored for your analysis-->
+
+## Preregestration (optional)
+
+
 A preregistration is a tool that may help to increase the credibility of empirical results.
 
-<!--Hands on: Introduce RMarkdown-->
+### R Markdown
+
+<!--Hands on: Introduce R Markdown-->
 <!--Hands on: gitignore resulting .html/pdf-->
 <!-- A preregistration needs to be public -->
 
 ## Prepare public release (optional)
+
+One of the greatest benefits of open research is that other people can freely reuse materials.
+To use your materials, they first have to find them and learn how to use them.
+Interested users find out about your project via the readme.
+The readme is the first thing they see when they visit your project on [GitHub].
+It should explain to them what your project is about and how to reproduce your project.
+You could for example include the abstract of your (planned) paper here.
+
+To add a readme to a repository run:
 
 <!--Hands on: Add a readme-->
 ```r
 usethis::use_readme_rmd()
 ```
 
+This command will create a file with the name `README.Rmd`.
+<!--knit/rmarkdown will be explained in section above-->
+When you knit this file, it in turn creates a `README.md`.
+That means you can include R code or plots etc. within the readme.
+The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:readme).
+
+```{r readme-screenshot, include=FALSE}
+# unfortunately css selectors won't work for pdf so we'll use png instead
+readme <- here::here("images", "readme.png")
+webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
+                  file = readme,
+                  vwidth = 1920, # height & width are not resolution
+                  vheight = 1080, # but what website thinks the browser size is
+                  selector = "div#readme",
+                  zoom = 2) # higher resolution
+```
+
+```{r readme, echo=FALSE, fig.cap="A screenshot of how a README.md is rendered/presented on GitHub.  ", out.width='100%'}
+knitr::include_graphics(readme)
+```
+
+Even when other researchers are excited to use your code or materials, they are usually legally inhibited from to doing so.
+That is because in many countries (i.e. the USA, European Union) the creator of something has exclusive right to use their creation.
+A license allows other people to use what you have created.
+<!---exact copy from our previous manuscript, do we need to change? -->
+In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media, whereas scripts and any other computer code are often best shared under the [MIT license](https://opensource.org/licenses/MIT) (or similar permissive licenses).
+Both licenses assure maximal freedom for future users while requiring the attribution of the original authors in derivative work.
+These licenses are also in line with the recommendations by the Reproducible Research Standard [@stoddenEnhancingReproducibilityComputational2016; @stoddenEnablingReproducibleResearch2009].
+A great resource to choose a license is [choosealicense.com](https://choosealicense.com), however, no resource, including our recommendation, replaces legal advice.
+<!-- plagiary end -->
+It is important to get written consent from collaborators when you change/add the license.
+However, if their first contribution occurs after you have added a license, they give their consent by contributing.
+To add a CC-BY license to your project simply run (there are similar commands for other licenses):
+
 <!--Hands on: Add a license-->
 ```r
-usethis::use_cc0_license()
+usethis::use_ccby_license()
 ```
+
+We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
+In fact, we hope it comes naturally to you.
+To communicate that contributors can expect a welcoming and respectful environment, you can add the `r link( "https://www.contributor-covenant.org", "Contributor Covenant")` to your repository.
+Contributing to an open project is daunting and a public pledge to value any contributions (even when you do not incorporate them) can help others to take the first step.
+The Contributor Covenant is a code of conduct used by many open source project.
+
+To add the Contributor Covenant to your project use:
 
 <!--Hands on: Add a code of conduct-->
 ```r
 usethis::use_code_of_conduct()
 ```
 
+However, there is some controversy around how to handle violations of a code of conduct.
+For that or any other reason, you may want to adapt the Contributor Covenant, to fit the needs of you project (which you are allowed to do because it is published with a CC-BY license).
+You can also consider alternative Codes of Conduct, like the `r link("https://opensource.microsoft.com/codeofconduct/", "Microsoft Open Source Code of Conduct")` or the `r link("https://berlincodeofconduct.org", "Berlin Code of Conduct")`.
+
+If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
+See the section on [GitHub] on how to publish your project.
+
 ## Collaboration
+
+Often, reproducibility is reduced to the merits it has for the reader.
+However, we argue that reproducibility is vital for collaboration, not only in the sense that the consumer of a scientific product build upon it, but also that the creators work together.
+The time that you invest into ensuring reproducibility, is directed at ensuring effective collaboration.
+Therefore, reproducibility is at its core about collaboration.
 
 ### GitHub
 
-GitHub/GitLab are great as a shared information basis: sharing and editing files, discussing and distributing tasks via issues and documenting the project via wikis even before data collection starts.
-
+On your local machine, you use Git to track changes.
+Online services like GitHub allow you to share these changes with others.
+GitHub is not the only solution; there is also [GitLab](gitlab.com) or [BitBucket](https://bitbucket.org), which are as feature-rich as GitHub.
+GitLab has the advantage that your institution can host it themselves; therefore, you are not relying on commercial service providers.
+Anyhow, we focus on GitHub because it is the most popular service.
+To upload your changes to GitHub, you need to create an account under https://github.com/join.
+As a researcher, you are eligible for the `r link("https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount", "Researcher/Educator discount")`.
+The following command creates a new GitHub repository under your GitHub account, beware this is public:
 <!--Hands-on: Introduce Github-->
 
 ```r
 usethis::use_github()
 ```
 
+To create a private repository (only you and people you invite have access), use:
+
+```r
+usethis::use_github(private = TRUE)
+```
+
 <!--Hands on: Introduce GitHub Issues-->
 <!--Hands on: Introduce GitHub Projects-->
 
-### Internal Dependencies
+# Analyzing Data
 
-A well defined "entry point" that automatically reproduces everything eases collaboration.
+While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive longterm reproducibility are still missing.
+
+## Internal Dependencies
 
 <!--I am not sure this is the right place, should we introduce this earlier? -->
+
+First dependency management, which means that you capture the interrelations between the components of you analysis.
+You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
+Understanding these relations is often key to reproducing a project.
+A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README])
+The "components" of an analysis are often loosely mapped onto files.
+For a simple project it might be enough to have a single R Markdown.
+However, while it is easy to reproduce this approach quickly gets unwieldy.
 
 <!--Hands on: Introduce Make-->
 <!--Hands on: Add targets for README.Rmd, preregistration.Rmd -->
@@ -418,7 +520,7 @@ A well defined "entry point" that automatically reproduces everything eases coll
 automate_make()
 ```
 
-### External Dependencies
+## External Dependencies
 
 A considerable number of external dependencies may hinder collaboration and long term reproducibility, but automated solutions can "bundle" and fix dependencies.
 
@@ -430,20 +532,17 @@ automate_docker()
 
 <!-- after this everything is optional? -->
 
-#### renv (alternative)
+### renv (alternative)
 
-#### Singularity (optional)
-
-## Analyzing Data
-
+### Singularity (optional)
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
 
-### Data Integrity (optional)
+## Data Integrity (optional)
 
 <!-- Hands-on: check changed hash -->
 
-### Anonymising Data (optional)
+## Anonymising Data (optional)
 
 <!-- Should we add a section on synthetic data generation? -->
 <!-- Hands on: Create synthetic data -->
@@ -453,16 +552,16 @@ automate_docker()
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
 
-## Peer Review (optional)
+# Peer Review (optional)
 
-## Post Publication Review (optional)
+# Post Publication Review (optional)
 
-## Archiving
+# Archiving
 
 <!-- Hands on: explain how to archive data-->
 <!-- Hands on: explain how to archive docker images-->
 
-## Checklist
+# Checklist
 
 <!-- Should we design a checklist? -->
 
