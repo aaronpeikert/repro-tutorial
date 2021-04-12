@@ -34,29 +34,9 @@ model_truth <- combine(
 model_same <- 
   "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
   MACH ~ c(0,0)*1
-  MACH ~~ c(1, 1)*MACH"
-
-model_differ <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0, NA)*1 + c(zero, diff)*1
-  MACH ~~ c(1, 1)*MACH"
-
-model_same2 <- 
-  "MACH =~ 1*x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0,0)*1
-  MACH ~~ c(NA, NA)*MACH"
-
-model_differ2 <- 
-  "MACH =~ 1*x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0, NA)*1 + c(zero, diff)*1
-  MACH ~~ c(NA, NA)*MACH"
-
-model_same3 <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0,0)*1
   MACH ~~ c(1, NA)*MACH"
 
-model_differ3 <- 
+model_differ <- 
   "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
   MACH ~ c(0, NA)*1 + c(zero, diff)*1
   MACH ~~ c(1, NA)*MACH"
@@ -163,7 +143,7 @@ extract_fns <- list(bic = get_bic,
 #quick test
 #n_obs <- c(10000)
 
-n_obs <- c(1:100)*100
+n_obs <- seq(100, 10000, 100)
 setup <- expand_grid(n_obs = n_obs,
                      truth = model_truth,
                      same = model_same,
@@ -171,24 +151,18 @@ setup <- expand_grid(n_obs = n_obs,
                      extract_fns = list(extract_fns),
                      group.equal = list(c("loadings", "intercepts")),
                      auto.fix.first = FALSE)
-setup2 <- mutate(setup, same = model_same2, differ = model_differ2)
-setup3 <- mutate(setup, same = model_same3, differ = model_differ3)
-n_sim <- 1000
+n_sim <- 100
 #quick test
 #n_sim <- 2
-#setup_all <- mutate(setup3, id = "model3")
-setup_all <- list(model1 =  setup,
-              model2 = setup2,
-              model3 = setup3) %>%
-  bind_rows(.id = "id")
+
 #rm(res_raw)
 to_export <- ls_funs() %>% map(get)
-to_export <- c(list(setup_all = setup_all), to_export)
+to_export <- c(list(setup = setup), to_export)
 #local test
 #plan(transparent)
 res_raw %<-% 
   generate_data(n_sim,
-                setup_all,
+                setup,
                 furrr_options(
                   globals = to_export,
                   seed = TRUE,
@@ -199,7 +173,7 @@ write_rds(res_raw, "res_raw.rds")
 res <- res_raw  %>%
   map(bind_rows) %>% 
   bind_rows() %>% 
-  select(n_obs, id, results) %>% 
+  select(n_obs, results) %>% 
   unnest(results)
 
 res <- mutate(
@@ -210,29 +184,6 @@ res <- mutate(
   dec_lrt_p = lrt_p < 0.05,
   dec_delta_p = delta_p < 0.05)
 
-res %>%
-  group_by(n_obs, id) %>% 
-  summarise(across(starts_with("dec"), mean, na.rm = TRUE), .groups = "drop") %>% 
-  pivot_longer(c(-n_obs, -id), names_to = "metric", values_to = "power") %>% 
-  filter(n_obs < 2500) %>% 
-  ggplot(aes(x = n_obs, y = power, color = metric)) +
-  geom_point() +
-  geom_line() +
-  facet_wrap(~id) +
-  theme_minimal() +
-  scale_x_continuous(n.breaks = 10) +
-  scale_y_continuous(trans = "log") +
-  theme(axis.text.x = element_text(angle = -90)) +
-  NULL
-
-res %>%
-  ggplot(aes(x = std_estimate, group = factor(n_obs), color = log10(n_obs))) +
-  geom_density() +
-  facet_wrap(~id, ncol = 1) +
-  theme_minimal() +
-  scale_color_viridis_c()
-  
-
 interval <- function(x, alpha = c(0.05)){
   lower_alpha <- alpha/2
   upper_alpha <- 1 - lower_alpha
@@ -242,9 +193,9 @@ interval <- function(x, alpha = c(0.05)){
 }
 
 res_interval <- res %>%
-  select(n_obs, id, std_estimate) %>% 
+  select(n_obs, std_estimate) %>% 
   filter(!is.na(std_estimate)) %>% 
-  group_by(n_obs, id) %>% 
+  group_by(n_obs) %>% 
   summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
             .groups = "drop") %>% 
   unnest(c(interval)) %>% 
@@ -257,9 +208,7 @@ plot_interval <- res_interval %>%
   scale_y_continuous(breaks = seq(-0.2, 0.7, .1)) +
   theme_minimal()
 
-plot_interval + facet_wrap(~id, nrow = 1)
-
-plot_interval %+% filter(res_interval, id == "model3")
+plot_interval
 ggsave("interval.png")
 
 plot_width <- res_interval %>% 
@@ -271,7 +220,5 @@ plot_width <- res_interval %>%
   theme(axis.text.x = element_text(angle = -90)) +
   NULL
 
-plot_width + facet_wrap(~id)
-
-plot_width %+% filter(res_interval, id == "model3")
+plot_width
 ggsave("width.png")
