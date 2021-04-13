@@ -35,7 +35,7 @@ A reproducible scientific product allows other researchers to obtain the same re
 <!-- lure the reader in -->
 The research community has long accepted reproducibility as part of "good scientific practice", but has not has not benefited much from this self-imposed requirement.
 <!-- expand: who is calling it a requirement, maybe metascientific arguments-->
-Reproducing an empirical study is often tedious and frustrating work for the researcher.
+Reproducing an empirical study is often too tedious and frustrating work for the researchers to benefit them.
 However, if reproduction would require mere minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
 <!-- Guiding principle: spending machine compute time instead of human research time -->
 To archive this boost, we must place the burden of reproducing something upon computers instead of human researchers.
@@ -116,7 +116,7 @@ Follow the instructions, then rerun the command, until it tells you not to worry
 Reproducibility is invaluable for effective collaboration---including with your "past self".
 While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay of through your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
-The first step is to organize all files in one folder.
+The first step is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files.
 <!-- Hands-on: Introducing RProjects-->
 RStudio's RProjects facilitate this concept of a project folder.
@@ -379,9 +379,6 @@ lavaan::summary(analyze(simulated))
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-## Preregestration (optional)
-
-
 A preregistration is a tool that may help to increase the credibility of empirical results.
 
 ### R Markdown
@@ -481,7 +478,7 @@ GitLab has the advantage that your institution can host it themselves; therefore
 Anyhow, we focus on GitHub because it is the most popular service.
 To upload your changes to GitHub, you need to create an account under https://github.com/join.
 As a researcher, you are eligible for the `r link("https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount", "Researcher/Educator discount")`.
-The following command creates a new GitHub repository under your GitHub account, beware this is public:
+The following command creates a new GitHub repository under your GitHub account (beware this is public):
 <!--Hands-on: Introduce Github-->
 
 ```r
@@ -494,21 +491,23 @@ To create a private repository (only you and people you invite have access), use
 usethis::use_github(private = TRUE)
 ```
 
+Only from this moment on, files are uploaded to the internet and only those which you have explicitly added and committed in Git.
+
 <!--Hands on: Introduce GitHub Issues-->
 <!--Hands on: Introduce GitHub Projects-->
 
 # Analyzing Data
 
-While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive longterm reproducibility are still missing.
+While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive longterm reproducibility are still missing, namely internal and external dependencies.
 
 ## Internal Dependencies
 
 <!--I am not sure this is the right place, should we introduce this earlier? -->
 
-First dependency management, which means that you capture the interrelations between the components of you analysis.
+First dependency management, which means that you capture the interrelations between the components of your analysis.
 You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
 Understanding these relations is often key to reproducing a project.
-A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README])
+A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
 The "components" of an analysis are often loosely mapped onto files.
 For a simple project it might be enough to have a single R Markdown.
 However, while it is easy to reproduce this approach quickly gets unwieldy.
