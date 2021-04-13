@@ -22,6 +22,7 @@ bibliography: ["references.bib", "packages.bib"]
 
 ```{r setup, include=FALSE}
 library(repro)
+library(tidyverse)
 automate_load_scripts()
 source(here::here("R", "link.R"))
 ```
@@ -278,7 +279,7 @@ knitr::kable(data.frame(Item = 1:9,
 It is probably better to assume more pessimistic values.
 This way, we make sure that our analytic strategy is viable even in non-optimal circumstances.
 Therefore, we will assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
-These assumption can be simply translated into [`lavaan` [@lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
+These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
 [^lavaan]: https://lavaan.ugent.be
 
@@ -510,10 +511,72 @@ Understanding these relations is often key to reproducing a project.
 A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
 The "components" of an analysis are often loosely mapped onto files.
 For a simple project it might be enough to have a single R Markdown.
-However, while it is easy to reproduce this approach quickly gets unwieldy.
+However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
+To better navigate the data analysis, a researcher often splits it across several scripts.
+For example, they create a script to load the data and another to run the analysis.
+This modularisation facilitates reuse, because the loading script may be used by other projects building on the same data, while the analysis script may be employed on other data and so forth.
+The downside is that reproducibility is complicated, because instead of reproducing everything in one step, multiple steps are required.
+
+Of course there a several ways to solve this problem.
+One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or build a "master" script that combines all steps.
+We found Make to be particularly useful for two reasons.
+First, it is language agnostic, therefore fusing steps that are carried out in different programming languages.
+Second, it does implement a simple, yet powerful caching mechanism of results which is welcome in computing intensive analysis often found in neuroimaging or machine learning.
+
+Make is build around the concept of computational recipes.
+Like cooking recipes, the dish you want to create is at the top, followed by the necessary ingredients with the procedure at last.
+In Make the dish is usually a file and is called "target".
+The ingredients are called "requirements" and are usually also files.
+The procedures are formulated as shell commands.
+One (hypothetical) example is this:
+
+```
+spaghetti_arrabiata.pdf: spaghetti_arrabiata.Rmd arrabiata_sauce.csv pasta.csv
+  Rscript -e 'rmarkdown::render("spagetti_arrabiata.Rmd")'
+```
+
+An important property is that each requirement can be itself be a target, like here:
+
+```
+spaghetti_arrabiata.pdf: spagetti_arrabiata.Rmd arrabiata_sauce.csv pasta.csv
+  Rscript -e 'rmarkdown::render("spaghetti_arrabiata.Rmd")'
+
+pasta.csv: cook_pasta.R
+  Rscript -e 'source("cook_pasta.R")'
+
+arrabiata_sauce.csv: cook_sauce.R canned_tomatoes.csv
+  Rscript -e 'source("cook_sauce.R")'
+```
+
+Lets suppose you want to eat spaghetti arrabiata and you still have delicious arrabiata sauce in the fridge.
+Would you cook the sauce again?
+No, you would only cook the pasta.
+Make behaves the same.
+If a file already exists it does not recreate it unnecessarily.
+However, if a requirement is newer than its target, make recreates the target to reflect the updated dependency.
+Therefore, when you update the data file, the analysis is run again.
+Because Make knows the whole dependency tree, its caching is smarter than many alternatives.
+
+One alternative that is even smarter than Make is the R package [`targets` [@targets2021]](https://books.ropensci.org/targets/)[^targets].
+`targets` can infer more about your project than Make, because it analysis the R code you write to build the dependency tree.
+For this inference to work well you have to write everything in R and you have to write everything strictly functional.
+
+[^targets]: https://books.ropensci.org/targets/
 
 <!--Hands on: Introduce Make-->
 <!--Hands on: Add targets for README.Rmd, preregistration.Rmd -->
+
+The `repro` package can automatically write Makefiles for simple scenarios.
+For this purpose, `repro` utilizes the YAML metadata:
+
+```{r}
+x <- readLines(here::here("preregistration.Rmd"))
+yaml_ind <- stringr::str_which(x, "^---[[:space:]]*")
+stripped <- stringr::str_c(x[seq(yaml_ind[[1]], yaml_ind[[2]])],
+                  collapse = "\n")
+cat("```\n", stripped, "\n```", sep = "")
+```
+
 
 ``` r
 automate_make()
@@ -569,3 +632,8 @@ link_index()
 ```
 
 # References
+
+```{r, include=FALSE}
+knitr::write_bib(c(.packages(), "bookdown", "lavaan", "knitr", "targets"), "packages.bib")
+```
+
