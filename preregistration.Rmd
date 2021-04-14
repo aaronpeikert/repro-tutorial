@@ -1,0 +1,175 @@
+---
+title: "Preregistration"
+author: "Aaron Peikert"
+date: "4/12/2021"
+output: html_document
+params:
+  nsim: 1000
+  nmin: 100
+  nmax: 10000
+  nstep: 100
+  seed: 1234
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+
+library(tidyverse)
+library(lavaan)
+library(furrr)
+library(slider)
+source(here::here("R", "simulation.R"))
+# if you have access to a hpc envir specify this in R/hpc.R
+# if not we use local multicore
+# to speed up consider reduce nsim; increase nstep in ↑YAML↑
+
+hpc_config <- here::here("R", "hpc.R")
+if(fs::file_exists(hpc_config)){
+  source(hpc_config)
+} else {
+  plan(list(transparent,
+       tweak(multisession, workers = 4L)))
+}
+# debug:
+#   plan(transparent)
+```
+
+```{r}
+loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
+cohend_jones_paulhus <- c(24, 29, 35)/100
+```
+
+```{r models}
+model_truth <- combine(
+  measurement(
+    "MACH",
+    items("x", 9),
+    loadings = round(loadings_jones_paulhus * 0.7, 2)
+  ),
+  intercepts("MACH", list(0, 0.2)),
+  variances("MACH", list(1, 1))
+)
+
+model_same <- 
+  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+  MACH ~ c(0,0)*1
+  MACH ~~ c(1, NA)*MACH"
+
+model_differ <- 
+  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+  MACH ~ c(0, NA)*1 + c(zero, diff)*1
+  MACH ~~ c(1, NA)*MACH"
+```
+
+```{r sim}
+extract_fns <- list(bic = get_bic, 
+                    aic = get_aic,
+                    lrt_p = get_lrt_p,
+                    delta_p = get_delta_p,
+                    estimate = get_estimate,
+                    std_delta_p = get_std_delta_p,
+                    std_estimate = get_std_estimate)
+
+n_obs <- seq(params$nmin, params$nmax, params$nstep)
+n_sim <- params$nsim
+
+setup <- expand_grid(n_obs = n_obs,
+                     truth = model_truth,
+                     same = model_same,
+                     differ = model_differ,
+                     mod_load = c(3),
+                     mod_int = c(3),
+                     extract_fns = list(extract_fns),
+                     group.equal = list(c("loadings", "intercepts")),
+                     auto.fix.first = FALSE)
+to_export <- ls_funs() %>% map(get)
+to_export <- c(list(setup = setup), to_export)
+RNGkind("L'Ecuyer-CMRG")
+set.seed(params$seed)
+res_raw %<-% generate_data_setup(n_sim,
+                setup,
+                furrr_options(
+                  globals = to_export,
+                  seed = params$seed,
+                  packages = c("furrr", "lavaan", "tidyverse")
+                ))
+```
+
+```{r write-out, error=TRUE, include=FALSE}
+write_rds(res_raw, here::here("res_raw.rds"))
+```
+
+```{r checksum}
+# compute checksum using md5
+checksum <- digest::digest(res_raw, "md5")
+if(checksum != "4203854848ad0cc5d2f848c44b70815d"){
+  warning("Mismatch between original and current simulations!
+Checksum now is:\n    '", checksum, "'")
+}
+```
+
+```{r}
+res <- res_raw  %>%
+  map(bind_rows) %>% 
+  bind_rows() %>% 
+  mutate(results = map(results, "result")) %>% 
+  unnest(results)
+
+res <- mutate(
+  res,
+  dec_bic = bic < 0,
+  dec_aic = aic < 0,
+  dec_aic2 = aic < -2,
+  dec_lrt_p = lrt_p < 0.05,
+  dec_delta_p = delta_p < 0.05)
+
+res_interval <- res %>%
+  select(n_obs, std_estimate, mod_load, mod_int) %>% 
+  filter(!is.na(std_estimate)) %>% 
+  group_by(n_obs, mod_load, mod_int) %>% 
+  summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
+            .groups = "drop") %>% 
+  unnest(c(interval)) %>% 
+  mutate(width = upper - lower) %>% 
+  group_by(alpha) %>% 
+  arrange(n_obs) %>% 
+  mutate(across(c(width, upper, lower), list(smooth = ~slide_dbl(.x, mean, na.rm = TRUE, .before = 2, .after = 0, .complete = FALSE)))) %>% 
+  ungroup()
+```
+
+```{r}
+plot_interval <- res_interval %>% 
+  ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
+  geom_ribbon() +
+  scale_fill_viridis_c() +
+  scale_y_continuous(breaks = seq(-0.2, 0.7, .1)) +
+  theme_minimal()
+
+plot_interval
+
+plot_interval %+% aes(ymin = lower_smooth, ymax = upper_smooth)
+```
+
+```{r}
+plot_width <- res_interval %>% 
+  ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
+  geom_line() +
+  scale_color_viridis_c() +
+  theme_minimal() +
+  scale_y_log10(breaks = seq(0, 0.8, .1)) +
+  theme(axis.text.x = element_text(angle = -90)) +
+  NULL
+plot_width
+plot_width %+% aes(y = width_smooth)
+```
+```{r}
+res_interval %>% 
+  ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
+  geom_smooth(se = FALSE, span = .1, size = .5) +
+  scale_color_viridis_c() +
+  theme_minimal() +
+  scale_y_log10(breaks = seq(0, 0.8, .1)) +
+  theme(axis.text.x = element_text(angle = -90)) +
+  NULL
+```
+

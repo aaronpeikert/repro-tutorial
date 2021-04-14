@@ -7,10 +7,13 @@ repro:
     - aaronpeikert/repro@7bfaf98
     - here
     - rstudio/webshot2@f62e743
+  scripts:
+    - R/lavaan_helper.R
+    - R/simulation.R
+    - R/link.R
 csl: apa7.csl
 numbered_headings: true
-toc_depth: 5
-bibliography: references.bib
+bibliography: ["references.bib", "packages.bib"]
 ---
 
 <!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
@@ -19,6 +22,8 @@ bibliography: references.bib
 
 ```{r setup, include=FALSE}
 library(repro)
+library(tidyverse)
+automate_load_scripts()
 source(here::here("R", "link.R"))
 ```
 
@@ -31,7 +36,7 @@ A reproducible scientific product allows other researchers to obtain the same re
 <!-- lure the reader in -->
 The research community has long accepted reproducibility as part of "good scientific practice", but has not has not benefited much from this self-imposed requirement.
 <!-- expand: who is calling it a requirement, maybe metascientific arguments-->
-Reproducing an empirical study is often tedious and frustrating work for the researcher.
+Reproducing an empirical study is often too tedious and frustrating work for the researchers to benefit them.
 However, if reproduction would require mere minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
 <!-- Guiding principle: spending machine compute time instead of human research time -->
 To archive this boost, we must place the burden of reproducing something upon computers instead of human researchers.
@@ -64,7 +69,7 @@ This tutorial follows the recommendations of @Peikert2019 and utilize Git for ve
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
-```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency management (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
 # file gets downloaded in Makefile
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
@@ -112,7 +117,7 @@ Follow the instructions, then rerun the command, until it tells you not to worry
 Reproducibility is invaluable for effective collaboration---including with your "past self".
 While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay of through your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
-The first step is to organize all files in one folder.
+The first step is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files.
 <!-- Hands-on: Introducing RProjects-->
 RStudio's RProjects facilitate this concept of a project folder.
@@ -227,12 +232,13 @@ GitHub is in its essence a webinterface to Git and you may learn more about how 
 ```{r idea-change-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
 idea_change <- here::here("images", "idea-change.png")
-webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f4641ff542158184f85d458880c35e8f09f3c?diff=split",
+if(!file.exists(idea_change)){
+  webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f4641ff542158184f85d458880c35e8f09f3c?diff=split",
                   file = idea_change,
                   selector = "div#diff-2f8beaa39e5c98706d8abb3361a8383776f8df8a195a21c0e6eeb25e5aa48f45", # only select file change
                   zoom = 2)# higher resolution
+}
 ```
-
 
 ```{r idea-change, echo=FALSE, fig.cap="A screenshot of how a change tracked in Git is represented by GitHub.  ", out.width='100%'}
 knitr::include_graphics(idea_change)
@@ -247,15 +253,141 @@ We recommend to find a partner to attend an online lecture or workshop to learn 
 <!-- impress with neatness → sample size planning, preregistration and analysis in one 😎-->
 <!-- but explain that good science is often not as neat, strive for the ideal -->
 
+```{r, include=FALSE}
+source(here::here("R", "simulation.R"))
+```
+
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
-Simulated data lets you verify that the data you expect to gather and the analysis that you plan fit together.
+Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
+Of course, one has to make many educated guesses to simulate data that closely matches your expectation.
+These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
+However, the analytic strategy often gives you a hint about how to simulate data.
+In the Machiavellism example, the analytic strategy is to use structural equation modelling (SEM).
+To simulate data for SEM, one has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
+The model parameters should mimic the Machiavellism subscale of the short dark triad (SD3).
+As a starting point, we can use already published information.
+@Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
+
+```{r loadings, echo=FALSE}
+knitr::kable(data.frame(Item = 1:9,
+                        Loading = loadings_jones_paulhus),
+             caption = "Factor loadings from an Exploratory Structrural Equation Model as reported in Jones \\& Paulhus (2013)")
+```
+
+It is probably better to assume more pessimistic values.
+This way, we make sure that our analytic strategy is viable even in non-optimal circumstances.
+Therefore, we will assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
+These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
+
+[^lavaan]: https://lavaan.ugent.be
+
+```{r, results='asis', echo=FALSE}
+model_truth <- combine(
+  measurement(
+    "MACH",
+    items("x", 9),
+    loadings = round(loadings_jones_paulhus * 0.7, 2)
+    ),
+  intercepts("MACH", list(0, 0.1))
+  )
+cat("``` r",
+    model_truth,
+    "```",
+    sep = "\n")
+model <- combine(measurement(
+  "MACH",
+  items("x", 9)),
+  intercepts("MACH", list(0, "NA")))
+```
+
+From which we can simulate data:
+
+```{r, results='hide'}
+simulated <- lavaan::simulateData(
+  model_truth,
+  sample.nobs = c(1000, 1000),
+  meanstructure = TRUE,
+  standardized = TRUE
+)
+```
+
+And then fit the statistical model:
+
+```{r}
+fit <-
+  lavaan::cfa(
+    model,
+    data = simulated,
+    group = "group",
+    meanstructure = TRUE,
+    std.lv = TRUE
+  ) 
+```
+
+But wait `lavaan` warns us that this model may not be identified.
+We overlooked a crucial assumption of this model, that is measurement invariance.
+This assumption is also baked into our simulation of the data.
+It is probably more realistic to violate this assumption and plan our analysis accordingly.
+Therefore, we simulate the data so that some of the items parameter differ among groups and then alter the analysis to assume partial measurement invariance.
+While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
+Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
+@Rhemtulla2012 conclude that using Likert-like items is acceptable when they employ five or more categories.
+Hence, we continue simulating continues data.
+However, adding a little skewness to the items is easy and helps make the simulation more realistic.
+Anyhow, remember that what we consider realistic for our case could be unfit for your case.
+If you are satisfied with your assumptions it helps to write a function that expresses them, like this one:
+<!--Hands-on: build simple functions tailored for your analysis-->
+
+```{r generate}
+```
+
+Note however that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/R/simulation.R", "GitHub")`.
+
+With its help we can simulate 500 cases with a mean difference between groups of 0.1, where the intercepts of three random items vary by .3 and three loadings vary by 30% and five random items have a skew.
+
+```{r}
+simulated <- generate(n = 500,
+                      diff = 0.1,
+                      vary_intercepts = rep(0.3, 3),
+                      vary_loadings = rep(0.3, 3),
+                      skewness = rep(5, -0.5))
+```
+
+Note, that this certainly results in different numbers each time we run it.
+To consistently get the same results it is good practice to use a seed.
+The function `seeded_generate()` will always generate the same pseudo-random numbers, when given the same seed.
+
+```{r}
+seeded_generate <-  function(seed, ...)withr::with_seed(seed, generate(...))
+simulated <- seeded_generate(
+  seed = 1234,
+  n = 100000,
+  diff = 0.1,
+  vary_intercepts = rep(0.3, 3),
+  vary_loadings = rep(0.3, 3),
+  skewness = rep(5,-0.5)
+)
+```
+
+```{r}
+lavaan::summary(analyze(simulated))
+```
+
+
+### Preregestration (optional)
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-## Preregestration (optional)
-
-A preregistration is a tool that may help to increase the credibility of empirical results.
+A preregistration serves as a tool that may help to increase the credibility of empirical results.
+Without getting lost in the meta scientific arguments for preregistration, we want to note two advantages.
+First, a preregistration is an opportunity to carefully plan a study.
+Gathering empirical data often requires enormous resources and better planning increases the chances that these efforts are worthwhile.
+For us a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
+Some [citation!] argue that preregistration can not fulfill its promise to reduce the false discovery rate of science, if we allow to deviate from them.
+While such argument has some merits, we believe another advantage of preregistration is transparency.
+If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
+A preregistration, together with version control allows their readers to inform themselfs about these lessons learned.
 
 ### R Markdown
 
@@ -354,7 +486,7 @@ GitLab has the advantage that your institution can host it themselves; therefore
 Anyhow, we focus on GitHub because it is the most popular service.
 To upload your changes to GitHub, you need to create an account under https://github.com/join.
 As a researcher, you are eligible for the `r link("https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount", "Researcher/Educator discount")`.
-The following command creates a new GitHub repository under your GitHub account, beware this is public:
+The following command creates a new GitHub repository under your GitHub account (beware this is public):
 <!--Hands-on: Introduce Github-->
 
 ```r
@@ -367,27 +499,91 @@ To create a private repository (only you and people you invite have access), use
 usethis::use_github(private = TRUE)
 ```
 
+Only from this moment on, files are uploaded to the internet and only those which you have explicitly added and committed in Git.
+
 <!--Hands on: Introduce GitHub Issues-->
 <!--Hands on: Introduce GitHub Projects-->
 
 # Analyzing Data
 
-While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive longterm reproducibility are still missing.
+While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive longterm reproducibility are still missing, namely internal and external dependencies.
 
 ## Internal Dependencies
 
 <!--I am not sure this is the right place, should we introduce this earlier? -->
 
-First dependency management, which means that you capture the interrelations between the components of you analysis.
+First dependency management, which means that you capture the interrelations between the components of your analysis.
 You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
 Understanding these relations is often key to reproducing a project.
-A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README])
+A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
 The "components" of an analysis are often loosely mapped onto files.
 For a simple project it might be enough to have a single R Markdown.
-However, while it is easy to reproduce this approach quickly gets unwieldy.
+However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
+To better navigate the data analysis, a researcher often splits it across several scripts.
+For example, they create a script to load the data and another to run the analysis.
+This modularisation facilitates reuse, because the loading script may be used by other projects building on the same data, while the analysis script may be employed on other data and so forth.
+The downside is that reproducibility is complicated, because instead of reproducing everything in one step, multiple steps are required.
+
+Of course there a several ways to solve this problem.
+One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or build a "master" script that combines all steps.
+We found Make to be particularly useful for two reasons.
+First, it is language agnostic, therefore fusing steps that are carried out in different programming languages.
+Second, it does implement a simple, yet powerful caching mechanism of results which is welcome in computing intensive analysis often found in neuroimaging or machine learning.
+
+Make is build around the concept of computational recipes.
+Like cooking recipes, the dish you want to create is at the top, followed by the necessary ingredients with the procedure at last.
+In Make the dish is usually a file and is called "target".
+The ingredients are called "requirements" and are usually also files.
+The procedures are formulated as shell commands.
+One (hypothetical) example is this:
+
+```
+spaghetti_arrabiata.pdf: spaghetti_arrabiata.Rmd arrabiata_sauce.csv pasta.csv
+  Rscript -e 'rmarkdown::render("spagetti_arrabiata.Rmd")'
+```
+
+An important property is that each requirement can be itself be a target, like here:
+
+```
+spaghetti_arrabiata.pdf: spagetti_arrabiata.Rmd arrabiata_sauce.csv pasta.csv
+  Rscript -e 'rmarkdown::render("spaghetti_arrabiata.Rmd")'
+
+pasta.csv: cook_pasta.R
+  Rscript -e 'source("cook_pasta.R")'
+
+arrabiata_sauce.csv: cook_sauce.R canned_tomatoes.csv
+  Rscript -e 'source("cook_sauce.R")'
+```
+
+Lets suppose you want to eat spaghetti arrabiata and you still have delicious arrabiata sauce in the fridge.
+Would you cook the sauce again?
+No, you would only cook the pasta.
+Make behaves the same.
+If a file already exists it does not recreate it unnecessarily.
+However, if a requirement is newer than its target, make recreates the target to reflect the updated dependency.
+Therefore, when you update the data file, the analysis is run again.
+Because Make knows the whole dependency tree, its caching is smarter than many alternatives.
+
+One alternative that is even smarter than Make is the R package [`targets` [@targets2021]](https://books.ropensci.org/targets/)[^targets].
+`targets` can infer more about your project than Make, because it analysis the R code you write to build the dependency tree.
+For this inference to work well you have to write everything in R and you have to write everything strictly functional.
+
+[^targets]: https://books.ropensci.org/targets/
 
 <!--Hands on: Introduce Make-->
 <!--Hands on: Add targets for README.Rmd, preregistration.Rmd -->
+
+The `repro` package can automatically write Makefiles for simple scenarios.
+For this purpose, `repro` utilizes the YAML metadata:
+
+```{r}
+x <- readLines(here::here("preregistration.Rmd"))
+yaml_ind <- stringr::str_which(x, "^---[[:space:]]*")
+stripped <- stringr::str_c(x[seq(yaml_ind[[1]], yaml_ind[[2]])],
+                  collapse = "\n")
+cat("```\n", stripped, "\n```", sep = "")
+```
+
 
 ``` r
 automate_make()
@@ -443,3 +639,8 @@ link_index()
 ```
 
 # References
+
+```{r, include=FALSE}
+knitr::write_bib(c(.packages(), "bookdown", "lavaan", "knitr", "targets"), "packages.bib")
+```
+
