@@ -41,13 +41,14 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
 ```{r models}
+true_diff <- 0.2
 model_truth <- combine(
   measurement(
     "MACH",
     items("x", 9),
     loadings = round(loadings_jones_paulhus * 0.7, 2)
   ),
-  intercepts("MACH", list(0, 0.2)),
+  intercepts("MACH", list(0, true_diff)),
   variances("MACH", list(1, 1))
 )
 
@@ -141,7 +142,9 @@ res_interval <- res %>%
 ```
 
 ```{r}
-minn <- filter(res_interval, perc == .8, width < .2) %>% 
+choosen_perc <- .8
+choosen_width <- .2
+minn <- filter(res_interval, perc == choosen_perc, width < choosen_width) %>% 
   filter(n_obs == min(n_obs))
 ```
 
@@ -156,7 +159,7 @@ plot_interval <- res_interval %>%
   )) +
   geom_ribbon() +
   geom_line(aes(y = median), color = "white") +
-  geom_hline(yintercept = .2, linetype = "dotted") +
+  geom_hline(yintercept = true_diff, linetype = "dotted") +
   scale_fill_viridis_c(
     begin = 1,
     end = 0,
@@ -204,9 +207,17 @@ plot_interval +
 ggsave("plot.svg", device = svglite::svglite, width = 7, height = 4)
 ```
 
-Plot A depicts the range of effectsizes we observed in the simulation, where the color encodes the density.
+Plot A depicts the range of effect sizes we observed in the simulation, where the colour encodes the density.
 The light yellow interval shows where 80% of the estimates land.
-The dotted line represents the simulated true effect size; the white line shows the median of observed effect sizes.
+The dotted line represents the simulated true effect size; the white line shows the median observed effect sizes.
 
 Plot B represents the width of the interval shown in Plot A on a logarithmic scale.
-The cross shows the minimal required sample size so that 80% of the estimates land in a range of +/- .1.
+The cross shows the minimum required sample size so that 80% of the estimates land in a range of +/- .1.
+
+```{r}
+nmax <- filter(res_interval, n_obs == max(n_obs))
+bias <- (slice(nmax, 1)$median - true_diff)/true_diff
+```
+
+We can therefore conclude, that when we want to plan a study where we expect that `r scales::percent(choosen_perc)` of the estimates fall into a range of +/- `r choosen_width/2`, we need a minimum sample size of `r minn$n_obs` per group.
+The simulation also shows that we overestimate the effect size by `r scales::percent(bias)` (true: `r true_diff`, median of observed: `round(slice(nmax, 1)$median, 2)`) with a sample size per group of `r slice(nmax, 1)$n_obs`.
