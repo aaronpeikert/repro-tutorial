@@ -30,11 +30,14 @@ competing_models_mod <- function(data, same, differ, mod_load = 0L, mod_int = 0L
   
 }
 
+safe_competing_models <- safely(competing_models_mod,
+                                otherwise = list(same = NA, differ = NA))
+
 set_free_mod <- function(differ, data, pars, depth = 3, op = c("~1", "=~"), ...){
   differ_fit <- safe_cfa(model = differ, data = data, group.partial = pars, ...)
   depth <- depth - 1
   if(depth < 0){return(list(pars = pars, differ = differ_fit))}
-  
+  if(!is_converged(differ_fit)){return(list(pars = pars, differ = differ_fit))}
   parest <- parameterEstimates(differ_fit)
   testscores <- lavTestScore(differ_fit)
   sorted_pars <- testscores$uni %>% 
@@ -53,7 +56,14 @@ set_free_mod <- function(differ, data, pars, depth = 3, op = c("~1", "=~"), ...)
   }
 }
 
-is_converged <- function(fit)lavInspect(fit, "converged")
+safe_set_free_mod <- safely(set_free_mod,
+                            otherwise = list(same = NA, differ = NA))
+
+is_converged_ <- function(fit)lavInspect(fit, "converged")
+is_converged <- function(fit){
+  if(inherits(fit, "lavaan"))return(is_converged_(fit))
+  else return(FALSE)
+}
 all_converged <- function(fits)all(purrr::map_lgl(fits, is_converged))
 
 get_fit <- function(fits, measure){
@@ -89,24 +99,28 @@ get_std_delta_p <- function(fits, label = "diff"){
 get_std_estimate <- function(fits, label = "diff"){
   get_parameter(fits, "est.std", label, how = standardizedSolution)
 }
-generate_data_setup_ <- function(n_obs, truth, same, differ, extract_fns, ...){
+generate_data <- function(n_obs, truth, same, differ, extract_fns, ...){
   data <- lavaan::simulateData(
     truth,
     sample.nobs = rep(n_obs, 2), 
     standardized = TRUE)
   fits <- competing_models_mod(data, same, differ, group = "group", ...)
-  as_tibble(map(extract_fns, exec, fits))
+  save_fns <- map(extract_fns, purrr::safely, otherwise = NA)
+  results <- map(save_fns, exec, fits)
+  as_tibble(map(results, "result"))
 }
 
-generate_data_setup <- function(setup, .furrr_options = furrr_options()){
+safe_generate_data <- safely(generate_data, otherwise = NA)
+
+generate_data_setup_ <- function(setup, .furrr_options = furrr_options()){
   .furrr_options$seed <- TRUE
   mutate(select(setup, -extract_fns),
-    results = future_pmap(setup, generate_data_setup_, .options = .furrr_options))
+    results = future_pmap(setup, safe_generate_data, .options = .furrr_options))
 }
 
-generate_data <- function(n_sim, setup, .furrr_options = furrr_options()){
+generate_data_setup <- function(n_sim, setup, .furrr_options = furrr_options()){
   future_map(seq_len(n_sim),
-             ~generate_data_setup(setup, .furrr_options = .furrr_options),
+             ~generate_data_setup_(setup, .furrr_options = .furrr_options),
              .options = .furrr_options)
 }
 
