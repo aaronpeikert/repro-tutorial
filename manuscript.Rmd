@@ -240,7 +240,6 @@ if(!file.exists(idea_change)){
 }
 ```
 
-
 ```{r idea-change, echo=FALSE, fig.cap="A screenshot of how a change tracked in Git is represented by GitHub.  ", out.width='100%'}
 knitr::include_graphics(idea_change)
 ```
@@ -380,7 +379,15 @@ lavaan::summary(analyze(simulated))
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-A preregistration is a tool that may help to increase the credibility of empirical results.
+A preregistration serves as a tool that may help to increase the credibility of empirical results.
+Without getting lost in the meta scientific arguments for preregistration, we want to note two advantages.
+First, a preregistration is an opportunity to carefully plan a study.
+Gathering empirical data often requires enormous resources and better planning increases the chances that these efforts are worthwhile.
+For us a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
+Some [citation!] argue that preregistration can not fulfill its promise to reduce the false discovery rate of science, if we allow to deviate from them.
+While such argument has some merits, we believe another advantage of preregistration is transparency.
+If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
+A preregistration, together with version control allows their readers to inform themselfs about these lessons learned.
 
 ### R Markdown
 
