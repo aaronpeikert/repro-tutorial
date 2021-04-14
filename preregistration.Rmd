@@ -18,6 +18,7 @@ library(tidyverse)
 library(lavaan)
 library(furrr)
 library(slider)
+library(patchwork)
 source(here::here("R", "simulation.R"))
 # if you have access to a hpc envir specify this in R/hpc.R
 # if not we use local multicore
@@ -128,48 +129,84 @@ res_interval <- res %>%
   filter(!is.na(std_estimate)) %>% 
   group_by(n_obs, mod_load, mod_int) %>% 
   summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
-            .groups = "drop") %>% 
+            .groups = "drop", median = median(std_estimate)) %>% 
   unnest(c(interval)) %>% 
-  mutate(width = upper - lower) %>% 
+  mutate(width = upper - lower, perc = 1 - alpha) %>% 
   group_by(alpha) %>% 
   arrange(n_obs) %>% 
-  mutate(across(c(width, upper, lower), list(smooth = ~slide_dbl(.x, mean, na.rm = TRUE, .before = 2, .after = 0, .complete = FALSE)))) %>% 
-  ungroup()
+  mutate(across(c(width, upper, lower),
+                ~slide_dbl(.x, mean, na.rm = TRUE, .before = 2, .after = 0, .complete = FALSE))) %>% 
+  ungroup() %>% 
+  arrange(perc)
 ```
 
 ```{r}
-plot_interval <- res_interval %>% 
-  ggplot(aes(n_obs, ymin = lower, ymax = upper, fill = alpha, group = alpha)) + 
+minn <- filter(res_interval, perc == .8, width < .2) %>% 
+  filter(n_obs == min(n_obs))
+```
+
+```{r}
+plot_interval <- res_interval %>%
+  ggplot(aes(
+    n_obs,
+    ymin = lower,
+    ymax = upper,
+    fill = perc,
+    group = alpha
+  )) +
   geom_ribbon() +
-  scale_fill_viridis_c() +
-  scale_y_continuous(breaks = seq(-0.2, 0.7, .1)) +
-  theme_minimal()
-
-plot_interval
-
-plot_interval %+% aes(ymin = lower_smooth, ymax = upper_smooth)
+  geom_line(aes(y = median), color = "white") +
+  geom_hline(yintercept = .2, linetype = "dotted") +
+  scale_fill_viridis_c(
+    begin = 1,
+    end = 0,
+    breaks  = 1 - seq(0.05, .2, 0.05),
+    labels = . %>% scales::percent(accuracy = 1)
+  ) +
+  scale_y_continuous(n.breaks = 10) +
+  scale_x_continuous(breaks = seq(0, params$nmax, params$nstep * 10)) +
+  theme_minimal() +
+  labs(x = "N per Group", y = "Standardized Effect Size") +
+  theme(legend.title = element_blank()) +
+  NULL
 ```
 
 ```{r}
-plot_width <- res_interval %>% 
-  ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
+plot_width <- res_interval %>%
+  ggplot(aes(n_obs, width, color = perc, group = perc)) +
   geom_line() +
-  scale_color_viridis_c() +
+  geom_point(
+    data = minn,
+    size = 3,
+    color = "black",
+    shape = 3
+  ) +
+  scale_color_viridis_c(
+    begin = 1,
+    end = 0,
+    breaks = 1 - seq(0.05, .2, 0.05),
+    labels = . %>% scales::percent(accuracy = 1)
+  ) +
   theme_minimal() +
   scale_y_log10(breaks = seq(0, 0.8, .1)) +
-  theme(axis.text.x = element_text(angle = -90)) +
-  NULL
-plot_width
-plot_width %+% aes(y = width_smooth)
-```
-```{r}
-res_interval %>% 
-  ggplot(aes(n_obs, width, color = alpha, group = alpha)) +
-  geom_smooth(se = FALSE, span = .1, size = .5) +
-  scale_color_viridis_c() +
-  theme_minimal() +
-  scale_y_log10(breaks = seq(0, 0.8, .1)) +
-  theme(axis.text.x = element_text(angle = -90)) +
+  scale_x_continuous(breaks = seq(0, params$nmax, params$nstep * 10)) +
+  labs(x = "N per Group", y = "Width of quantile\n(Standardized Effect Size)") +
+  theme(legend.title = element_blank()) +
   NULL
 ```
 
+```{r}
+plot_interval +
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank()) + 
+  plot_width +
+  plot_layout(nrow = 2, guides = 'collect') +
+  plot_annotation(tag_levels = 'A')
+ggsave("plot.svg", device = svglite::svglite, width = 7, height = 4)
+```
+
+Plot A depicts the range of effectsizes we observed in the simulation, where the color encodes the density.
+The light yellow interval shows where 80% of the estimates land.
+The dotted line represents the simulated true effect size; the white line shows the median of observed effect sizes.
+
+Plot B represents the width of the interval shown in Plot A on a logarithmic scale.
+The cross shows the minimal required sample size so that 80% of the estimates land in a range of +/- .1.
