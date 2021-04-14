@@ -210,3 +210,17 @@ The dotted line represents the simulated true effect size; the white line shows 
 
 Plot B represents the width of the interval shown in Plot A on a logarithmic scale.
 The cross shows the minimal required sample size so that 80% of the estimates land in a range of +/- .1.
+
+```{r}
+alpha <- seq(0.05, .2, 0.01)
+res %>% 
+  group_by(n_obs) %>% 
+  summarise(power = list(tibble(alpha = alpha,
+            power = map_dbl(alpha/2, ~mean(lrt_p < .x, na.rm = TRUE))))) %>% 
+  unnest(power) %>% 
+  ggplot(aes(n_obs, power, color = alpha, group = alpha)) +
+  geom_line() +
+  scale_color_viridis_c() +
+  theme_minimal()
+```
+
