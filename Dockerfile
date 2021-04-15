@@ -7,11 +7,16 @@ RUN MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE} \
   && echo MRAN=$MRAN >> /etc/environment \
   && export MRAN=$MRAN \
   && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site
-RUN apt-get update &&\
-  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&\
-  apt install -y ./google-chrome-stable_current_amd64.deb
+RUN apt-get update && apt-get install -y chromium-browser
 RUN install2.r --error --skipinstalled \ 
+  furrr \ 
+  future.batchtools \ 
   here \ 
+  lavaan \ 
+  patchwork \ 
+  slider \ 
+  svglite \ 
+  tidyverse \ 
   usethis
 RUN installGithub.r \ 
   aaronpeikert/repro@7bfaf98 \ 

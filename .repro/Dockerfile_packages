@@ -1,5 +1,12 @@
 RUN install2.r --error --skipinstalled \ 
+  furrr \ 
+  future.batchtools \ 
   here \ 
+  lavaan \ 
+  patchwork \ 
+  slider \ 
+  svglite \ 
+  tidyverse \ 
   usethis
 RUN installGithub.r \ 
   aaronpeikert/repro@7bfaf98 \ 

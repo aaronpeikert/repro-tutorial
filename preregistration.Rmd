@@ -6,14 +6,24 @@ output: html_document
 params:
   nsim: 1000
   nmin: 100
-  nmax: 10000
+  nmax: 1000
   nstep: 100
   seed: 1234
+repro:
+  packages:
+    - tidyverse
+    - here
+    - lavaan
+    - furrr
+    - future.batchtools
+    - slider
+    - patchwork
+    - svglite
+  scripts:
+    - R/simulation.R
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, error = TRUE)
-
 library(tidyverse)
 library(lavaan)
 library(furrr)
@@ -88,16 +98,18 @@ to_export <- ls_funs() %>% map(get)
 to_export <- c(list(setup = setup), to_export)
 RNGkind("L'Ecuyer-CMRG")
 set.seed(params$seed)
+seed <- params$seed
 res_raw %<-% generate_data_setup(n_sim,
                 setup,
                 furrr_options(
                   globals = to_export,
-                  seed = params$seed,
+                  seed = seed,
                   packages = c("furrr", "lavaan", "tidyverse")
                 ))
 ```
 
 ```{r write-out, error=TRUE, include=FALSE}
+invisible(res_raw)
 write_rds(res_raw, here::here("res_raw.rds"))
 ```
 
@@ -221,3 +233,16 @@ bias <- (slice(nmax, 1)$median - true_diff)/true_diff
 
 We can therefore conclude, that when we want to plan a study where we expect that `r scales::percent(choosen_perc)` of the estimates fall into a range of +/- `r choosen_width/2`, we need a minimum sample size of `r minn$n_obs` per group.
 The simulation also shows that we overestimate the effect size by `r scales::percent(bias)` (true: `r true_diff`, median of observed: `round(slice(nmax, 1)$median, 2)`) with a sample size per group of `r slice(nmax, 1)$n_obs`.
+
+# Session Info
+
+```{r}
+if(fs::file_exists(hpc_config)){
+  list(local = sessioninfo::session_info(),
+     login_node = value(future(sessioninfo::session_info())),
+     worker = value(future(value(future(sessioninfo::session_info())))))
+} else {
+  sessioninfo::session_info()
+}
+```
+
