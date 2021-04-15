@@ -8,3 +8,9 @@
 *.html
 *.pdf
 apa7.csl
+.ssh/
+.local/
+.pki/
+.cache/
+*.svg
+*.png
