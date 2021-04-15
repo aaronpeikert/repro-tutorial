@@ -1,7 +1,9 @@
 ### Singularity Command ###
 
+SCMD = exec
+
 ifeq ($(SINGULARITY),TRUE)
-	SRUN := singularity $(SCMD) $(SFLAGS)
+	SRUN := singularity $(SCMD) $(SFLAGS) $(PROJECT).sif
 	current_dir=/home/rstudio
 endif
 
