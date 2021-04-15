@@ -33,3 +33,9 @@ include .repro/Makefile_Rmds
 WINPATH = //c/Users/someuser/Documents/myproject/
 include .repro/Makefile_Docker
 
+### Singularity for HPC ###
+# include only when Makefile_Singularity exists
+# only for users who have a HPC environment
+ifneq (,$(wildcard .repro/Makefile_Singularity))
+    include .repro/Makefile_Singularity
+endif
