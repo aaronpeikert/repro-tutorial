@@ -1,2 +1,1 @@
-RUN apt-get update && apt-get install -y snap
-    snap install chromium
+RUN apt-get update && apt-get install -y chromium-browser
