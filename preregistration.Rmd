@@ -4,9 +4,9 @@ author: "Aaron Peikert"
 date: "4/12/2021"
 output: html_document
 params:
-  nsim: 1000
+  nsim: 2
   nmin: 100
-  nmax: 1000
+  nmax: 300
   nstep: 100
   seed: 1234
 repro:

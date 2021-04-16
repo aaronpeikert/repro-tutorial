@@ -4,9 +4,11 @@ output: bookdown::pdf_document2
 repro:
   packages:
     - usethis
+    - git2r
     - aaronpeikert/repro@7bfaf98
     - here
     - rstudio/webshot2@f62e743
+    - targets
   scripts:
     - R/lavaan_helper.R
     - R/simulation.R
@@ -269,13 +271,13 @@ No matter which analytic strategy you plan, it comes with assumptions and a simu
 If you identify unrealistic assumptions you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical strategy to address them.
 We will show an example using structural equation modeling (SEM) for our Machiavellism example.
 However, the general process is applicable to any statistical model, but of course the simulation here is specific to our hypothetical research question.
-Of course, one has to make many educated guesses to simulate data that closely matches your expectation.
+One has to make many educated guesses to simulate data that closely matches your expectation.
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
 If you are unfamiliar with SEM, you may skim over the next sections.
 To simulate data for SEM, one has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
-The model parameters should mimic the Machiavellism subscale of the short dark triad (SD3).
+The model parameters should express out expectations for the Machiavellism subscale of the short dark triad (SD3).
 As a starting point, we can use already published information.
 @Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
