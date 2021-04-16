@@ -45,7 +45,7 @@ standardizedSolution <-
     }
     
     if(is.null(partable)) {
-      PARTABLE <- inspect(object, "list")
+      PARTABLE <- lavaan::inspect(object, "list")
     } else {
       PARTABLE <- partable
     }

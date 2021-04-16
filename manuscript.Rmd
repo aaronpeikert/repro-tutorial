@@ -257,13 +257,23 @@ We recommend to find a partner to attend an online lecture or workshop to learn 
 source(here::here("R", "simulation.R"))
 ```
 
+```{r, include=FALSE}
+loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
+cohend_jones_paulhus <- c(24, 29, 35)/100
+```
+
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
+No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly, than simply thinking about it.
+If you identify unrealistic assumptions you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical strategy to address them.
+We will show an example using structural equation modeling (SEM) for our Machiavellism example.
+However, the general process is applicable to any statistical model, but of course the simulation here is specific to our hypothetical research question.
 Of course, one has to make many educated guesses to simulate data that closely matches your expectation.
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
-However, the analytic strategy often gives you a hint about how to simulate data.
-In the Machiavellism example, the analytic strategy is to use structural equation modelling (SEM).
+The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
+
+If you are unfamiliar with SEM, you may skim over the next sections.
 To simulate data for SEM, one has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
 The model parameters should mimic the Machiavellism subscale of the short dark triad (SD3).
 As a starting point, we can use already published information.
@@ -277,7 +287,7 @@ knitr::kable(data.frame(Item = 1:9,
 
 It is probably better to assume more pessimistic values.
 This way, we make sure that our analytic strategy is viable even in non-optimal circumstances.
-Therefore, we will assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.1.
+Therefore, we will assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.2.
 These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
 [^lavaan]: https://lavaan.ugent.be
@@ -289,7 +299,7 @@ model_truth <- combine(
     items("x", 9),
     loadings = round(loadings_jones_paulhus * 0.7, 2)
     ),
-  intercepts("MACH", list(0, 0.1))
+  intercepts("MACH", list(0, 0.2))
   )
 cat("``` r",
     model_truth,
@@ -328,50 +338,85 @@ fit <-
 But wait `lavaan` warns us that this model may not be identified.
 We overlooked a crucial assumption of this model, that is measurement invariance.
 This assumption is also baked into our simulation of the data.
-It is probably more realistic to violate this assumption and plan our analysis accordingly.
-Therefore, we simulate the data so that some of the items parameter differ among groups and then alter the analysis to assume partial measurement invariance.
+There is a good chance that this assumption is violated.
+We therefore adept our analysis to plan for this contingency.
+After fitting the model with strict measurement invariance, we free equality constrains first on loadings and then on intercepts based on the Lagrange Multiplier test.
+The model is iteratively refit and improved till at most three loadings or three intercepts are freed or the Lagrange Multiplier test is not significant for the constrains on loadings or intercepts.
 While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
 @Rhemtulla2012 conclude that using Likert-like items is acceptable when they employ five or more categories.
-Hence, we continue simulating continues data.
-However, adding a little skewness to the items is easy and helps make the simulation more realistic.
+For simplicity we do not address these concerns (but doing so would certainly improve the simulation).
 Anyhow, remember that what we consider realistic for our case could be unfit for your case.
 If you are satisfied with your assumptions it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-```{r generate}
+```{r}
+generate_data
 ```
 
-Note however that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/R/simulation.R", "GitHub")`.
+Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/R/simulation.R", "GitHub")`.
 
-With its help we can simulate 500 cases with a mean difference between groups of 0.1, where the intercepts of three random items vary by .3 and three loadings vary by 30% and five random items have a skew.
+With its help we can simulate 500 cases and fit our analysis.
 
 ```{r}
-simulated <- generate(n = 500,
-                      diff = 0.1,
-                      vary_intercepts = rep(0.3, 3),
-                      vary_loadings = rep(0.3, 3),
-                      skewness = rep(5, -0.5))
+true_diff <- 0.2
+model_truth <- combine(
+  measurement(
+    "MACH",
+    items("x", 9),
+    loadings = round(loadings_jones_paulhus * 0.7, 2)
+  ),
+  intercepts("MACH", list(0, true_diff)),
+  variances("MACH", list(1, 1))
+)
+
+model_same <- 
+  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+  MACH ~ c(0,0)*1
+  MACH ~~ c(1, NA)*MACH"
+
+model_differ <- 
+  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+  MACH ~ c(0, NA)*1 + c(zero, diff)*1
+  MACH ~~ c(1, NA)*MACH"
+generate_data(500,
+              model_truth,
+              model_same,
+              model_differ,
+              list(std_estimate = get_std_estimate),
+              group.equal = c("loadings", "intercepts"),
+              mod_load = 3,
+              mod_int = 3,
+              std.lv = TRUE)
 ```
 
 Note, that this certainly results in different numbers each time we run it.
-To consistently get the same results it is good practice to use a seed.
-The function `seeded_generate()` will always generate the same pseudo-random numbers, when given the same seed.
 
 ```{r}
-seeded_generate <-  function(seed, ...)withr::with_seed(seed, generate(...))
-simulated <- seeded_generate(
-  seed = 1234,
-  n = 100000,
-  diff = 0.1,
-  vary_intercepts = rep(0.3, 3),
-  vary_loadings = rep(0.3, 3),
-  skewness = rep(5,-0.5)
-)
+generate_data(500,
+              model_truth,
+              model_same,
+              model_differ,
+              list(std_estimate = get_std_estimate),
+              group.equal = c("loadings", "intercepts"),
+              mod_load = 3,
+              mod_int = 3,
+              std.lv = TRUE)
+```
+
+To consistently get the same results it is good practice to use a seed with `set.seed(1235)`.
+It is a little more complicated when you have parallelized your code, like we did, but the future package handles this for us:
+
+```{r}
+set.seed(1235)
+runif(1)
+set.seed(1235)
+runif(1)
 ```
 
 ```{r}
-lavaan::summary(analyze(simulated))
+future::value(future::future(runif(1), seed = 1235))
+future::value(future::future(runif(1), seed = 1235))
 ```
 
 

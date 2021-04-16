@@ -17,7 +17,7 @@ safe_cfa <- function(...){
   valid_args <-
     c(names(formals(lavaan::lavaanify)),
       names(formals(lavaan::lavaan)),
-      names(lavOptions()))
+      names(lavaan::lavOptions()))
   dots <- filter_dots(..., fun = lavaan::cfa, what = valid_args)
   do.call("cfa", dots, envir = getNamespace("lavaan"))
 }
@@ -38,8 +38,8 @@ set_free_mod <- function(differ, data, pars, depth = 3, op = c("~1", "=~"), ...)
   depth <- depth - 1
   if(depth < 0){return(list(pars = pars, differ = differ_fit))}
   if(!is_converged(differ_fit)){return(list(pars = pars, differ = differ_fit))}
-  parest <- parameterEstimates(differ_fit)
-  testscores <- lavTestScore(differ_fit)
+  parest <- lavaan::parameterEstimates(differ_fit)
+  testscores <- lavaan::lavTestScore(differ_fit)
   sorted_pars <- testscores$uni %>% 
     rename(label = lhs) %>% 
     select(-c(op, rhs, df)) %>% 
@@ -59,7 +59,7 @@ set_free_mod <- function(differ, data, pars, depth = 3, op = c("~1", "=~"), ...)
 safe_set_free_mod <- safely(set_free_mod,
                             otherwise = list(same = NA, differ = NA))
 
-is_converged_ <- function(fit)lavInspect(fit, "converged")
+is_converged_ <- function(fit)lavaan::lavInspect(fit, "converged")
 is_converged <- function(fit){
   if(inherits(fit, "lavaan"))return(is_converged_(fit))
   else return(FALSE)
