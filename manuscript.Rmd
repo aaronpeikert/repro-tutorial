@@ -387,7 +387,7 @@ For us a good preregistration is the same as a good plan; the only difference is
 Some [citation!] argue that preregistration can not fulfill its promise to reduce the false discovery rate of science, if we allow to deviate from them.
 While such argument has some merits, we believe another advantage of preregistration is transparency.
 If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
-A preregistration, together with version control allows their readers to inform themselfs about these lessons learned.
+A preregistration, together with version control allows their readers to inform themselves about these lessons learned.
 
 ### R Markdown
 
@@ -512,10 +512,10 @@ While you already know how to write dynamic documents with [Markdown] and [R Mar
 
 <!--I am not sure this is the right place, should we introduce this earlier? -->
 
-First dependency management, which means that you capture the interrelations between the components of your analysis.
-You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
-Understanding these relations is often key to reproducing a project.
 A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
+To be able to do that, it is often key to understand how different components of the project relate to each other.
+You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
+Dependency management means that you capture the interrelations between the components of your analysis.
 The "components" of an analysis are often loosely mapped onto files.
 For a simple project it might be enough to have a single R Markdown.
 However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
