@@ -9,7 +9,7 @@ ncpus <- 10
 plan(list(tweak(cluster, workers=tardis),
           tweak(batchtools_slurm,
                 workers = 16,
-                template = "/home/mpib/peikert/repro-tutorial/.batchtools.slurm.singularity.tmpl",
+                template = "/home/mpib/peikert/repro-tutorial/.batchtools.slurm.tmpl",
                 resources=list(ncpus=ncpus,
                                memory='700m',
                                walltime=6600,
