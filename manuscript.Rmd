@@ -421,7 +421,6 @@ future::value(future::future(runif(1), seed = 1235))
 future::value(future::future(runif(1), seed = 1235))
 ```
 
-
 ### Preregestration (optional)
 
 <!--Hands-on: build simple functions tailored for your analysis-->
@@ -435,6 +434,11 @@ Some [citation!] argue that preregistration can not fulfill its promise to reduc
 While such argument has some merits, we believe another advantage of preregistration is transparency.
 If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
 A preregistration, together with version control allows their readers to inform themselves about these lessons learned.
+
+Often a preregistration is guided by a template, which formalizes the research questions and the planned analysis.
+An alternative to such protocol is to submit preregistration as code.
+Therefore, instead of describing the analysis that you plan to turn into code and run, you write the code beforehand.
+This is obviously challenging to do, because it is so concrete.
 
 ### R Markdown
 
