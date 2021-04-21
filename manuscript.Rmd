@@ -430,19 +430,58 @@ Without getting lost in the meta scientific arguments for preregistration, we wa
 First, a preregistration is an opportunity to carefully plan a study.
 Gathering empirical data often requires enormous resources and better planning increases the chances that these efforts are worthwhile.
 For us a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
+
+The second advantage is transparency.
+A preregistration offers the interested reader more insight into the research process than a paper alone could.
 Some [citation!] argue that preregistration can not fulfill its promise to reduce the false discovery rate of science, if we allow to deviate from them.
-While such argument has some merits, we believe another advantage of preregistration is transparency.
+While such argument has some merits, we believe that transparency outweighs these concerns.
 If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
 A preregistration, together with version control allows their readers to inform themselves about these lessons learned.
 
-Often a preregistration is guided by a template, which formalizes the research questions and the planned analysis.
+The liklihood that you have to diverge from your preregistration increases the more specific and concrete the preregistration is.
+To nudge researcher to be specific enough, there are many preregistrations template.
+These templates formalize somewhat the research questions and the planned analysis.
 An alternative to such protocol is to submit preregistration as code.
-Therefore, instead of describing the analysis that you plan to turn into code and run, you write the code beforehand.
-This is obviously challenging to do, because it is so concrete.
+Therefore, instead of describing the analysis that you plan to turn into code, you skip a step and write the code beforehand.
+This is obviously challenging to do, because it leaves no place to hide in the additional layer of abstraction.
+It may well be that for any given project this is impossible, without deviating from the preregistration.
+However, preregistered and version controlled code lets anyone see what was changed very concretely.
+
+One way to ensure that the code for the analysis works (at least in theory) is to simulate data.
+A data simulation allows you to verify that the code runs error free and lets you form more realistic expectation about the correctness and precision of the estimates.
+We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
+This showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
+If you went to the trouble to simulate data, we argue that you get a preregistration for free.
 
 ### R Markdown
 
 <!--Hands on: Introduce R Markdown-->
+A preregistration in code of course describes sufficiently how you want to analyze the data, but ideally you also describe the why.
+Literate programming combines code and text, enabling you to explain your reasoning.
+As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
+We already learned about [Markdown], to write text.
+R Markdown allows you to include R code (in fact arbitrary computer code; see @riedererChapter15Other).
+To create a R Markdown document click on: 
+
+> File → New File → Markdown File
+
+The code is separated from the text by three backtics, like here:
+
+````md
+```{r}`r ''`
+set.seed(1235)
+runif(1)
+```
+````
+
+When you include code into a R Markdown this code is run and its results are included in the rendered document.
+With R Markdown, you can write whole articles (like this one).
+You could in principle even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
+In fact, if you have simulated data, you could even include fake results.
+Such dynamic document is arguably the most concrete preregistration possible.
+One advantage is that writing the manuscript and writing the preregistration are no longer two distinct tasks.
+Therefore a preregistration can be thought of as simply rearranging tasks that you have to do anyway.
+
 <!--Hands on: gitignore resulting .html/pdf-->
 <!-- A preregistration needs to be public -->
 
