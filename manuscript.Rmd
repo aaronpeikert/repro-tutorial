@@ -346,8 +346,7 @@ After fitting the model with strict measurement invariance, we free equality con
 The model is iteratively refit and improved till at most three loadings or three intercepts are freed or the Lagrange Multiplier test is not significant for the constrains on loadings or intercepts.
 While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
-@Rhemtulla2012 conclude that using Likert-like items is acceptable when they employ five or more categories.
-For simplicity we do not address these concerns (but doing so would certainly improve the simulation).
+For simplicity we do not simulate these likely data problems (but doing so would certainly improve the simulation).
 Anyhow, remember that what we consider realistic for our case could be unfit for your case.
 If you are satisfied with your assumptions it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
@@ -407,7 +406,7 @@ generate_data(500,
 ```
 
 To consistently get the same results it is good practice to use a seed with `set.seed(1235)`.
-It is a little more complicated when you have parallelized your code, like we did, but the future package handles this for us:
+It is a little more complicated to archive uncorrelted randome numbers when you have parallelized your code, like we did, but the future package handles this for us:
 
 ```{r}
 set.seed(1235)
