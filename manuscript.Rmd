@@ -502,7 +502,7 @@ One of the greatest benefits of open research is that other people can freely re
 To use your materials, they first have to find them and learn how to use them.
 Interested users find out about your project via the readme.
 The readme is the first thing they see when they visit your project on [GitHub].
-It should explain to them what your project is about and how to reproduce your project.
+It should explain to them what your project is about and how to reproduce it.
 You could for example include the abstract of your (planned) paper here.
 
 To add a readme to a repository run:
@@ -620,7 +620,7 @@ To be able to do that, it is often key to understand how different components of
 You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
 Dependency management means that you capture the interrelations between the components of your analysis.
 The "components" of an analysis are often loosely mapped onto files.
-For a simple project it might be enough to have a single R Markdown.
+For a simple project it might be enough to have a single R Markdown file.
 However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
 To better navigate the data analysis, a researcher often splits it across several scripts.
 For example, they create a script to load the data and another to run the analysis.
@@ -658,9 +658,8 @@ arrabiata_sauce.csv: cook_sauce.R canned_tomatoes.csv
   Rscript -e 'source("cook_sauce.R")'
 ```
 
-Lets suppose you want to eat spaghetti arrabiata and you still have delicious arrabiata sauce in the fridge.
-Would you cook the sauce again?
-No, you would only cook the pasta.
+When you cook something and you have a neccesary ingriedient already at hand, would you throw it away just to prepare it again?
+Unlikely.
 Make behaves the same.
 If a file already exists it does not recreate it unnecessarily.
 However, if a requirement is newer than its target, make recreates the target to reflect the updated dependency.
@@ -687,6 +686,7 @@ stripped <- stringr::str_c(x[seq(yaml_ind[[1]], yaml_ind[[2]])],
 cat("```\n", stripped, "\n```", sep = "")
 ```
 
+This command will go through all R Markdown files in your repository and infer a Makefile from them:
 
 ``` r
 automate_make()
