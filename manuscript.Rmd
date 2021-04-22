@@ -438,19 +438,19 @@ If researchers deviate from their preregistration, they probably have good reaso
 A preregistration, together with version control allows their readers to inform themselves about these lessons learned.
 
 The liklihood that you have to diverge from your preregistration increases the more specific and concrete the preregistration is.
-To nudge researcher to be specific enough, there are many preregistrations template.
+To nudge researcher to still be specific enough, there are many preregistrations templates.
 These templates formalize somewhat the research questions and the planned analysis.
 An alternative to such protocol is to submit preregistration as code.
 Therefore, instead of describing the analysis that you plan to turn into code, you skip a step and write the code beforehand.
-This is obviously challenging to do, because it leaves no place to hide in the additional layer of abstraction.
+This is obviously challenging to do, because it leaves no place to hide behind the additional layer of abstraction.
 It may well be that for any given project this is impossible, without deviating from the preregistration.
 However, preregistered and version controlled code lets anyone see what was changed very concretely.
 
-One way to ensure that the code for the analysis works (at least in theory) is to simulate data.
+One way to ensure that you can expect your analysis to work with real data is to simulate data.
 A data simulation allows you to verify that the code runs error free and lets you form more realistic expectation about the correctness and precision of the estimates.
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
 This showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
-If you went to the trouble to simulate data, we argue that you get a preregistration for free.
+If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
 
 ### R Markdown
 
@@ -483,6 +483,18 @@ Therefore a preregistration can be thought of as simply rearranging tasks that y
 
 <!--Hands on: gitignore resulting .html/pdf-->
 <!-- A preregistration needs to be public -->
+
+### Preregistration on GitHub
+
+An important aspect of a preregistration is that you have to make it public.
+Of course if you commit the preregistration to Git and upload it into a public repository it is also public.
+However, simply using GitHub as a preregistration site is not ideal.
+First, you can delete your GitHub repository whenever you want.
+Second, while Git records meticulously when you made which change, committing and publishing are two different steps.
+Therefore, you can choose to upload to GitHub after conducting the study, while still making it look like you have made the preregistration public before conducting the study. 
+Third, any person with some experience in Git can retroactively change the history.
+These downsides can be alleviated by using zenodo.org to give a digital object identifier (DOI) to your preregistration, because zenondo.org saves an unchangeable copy of your repository.
+You can learn more about this in [Creating a public release].
 
 ## Prepare public release (optional)
 
@@ -592,6 +604,8 @@ Only from this moment on, files are uploaded to the internet and only those whic
 
 <!--Hands on: Introduce GitHub Issues-->
 <!--Hands on: Introduce GitHub Projects-->
+
+## Creating a public release
 
 # Analyzing Data
 
