@@ -36,7 +36,7 @@ source(here::here("R", "link.R"))
 <!-- I wouldn't want to cite it. @brandmaier, would you please rewrite? -->
 A reproducible scientific product allows other researchers to obtain the same results from the same dataset in a way that enables substantive criticism and therefore facilitates replication.
 <!-- lure the reader in -->
-The research community has long accepted reproducibility as part of "good scientific practice", but has not has not benefited much from this self-imposed requirement.
+The research community has long accepted reproducibility as part of "good scientific practice" but has not benefited much from this self-imposed requirement.
 <!-- expand: who is calling it a requirement, maybe metascientific arguments-->
 Reproducing an empirical study is often too tedious and frustrating work for the researchers to benefit them.
 However, if reproduction would require mere minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
@@ -45,10 +45,10 @@ To archive this boost, we must place the burden of reproducing something upon co
 A scientific document should therefore be understood by researchers but reproduced by computers.
 
 This tutorial walks through the creation of such a document that can be reproduced automatically.
-Though reproducibility is but a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
+Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
 Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
 All code chunks are meant for the reader to try out for themselves.
-Still, the reader can safely skip sections marked as optional, when unfit for their research question or methods.
+Still, the reader can safely skip sections marked as optional when unfit for their research question or methods.
 However, any empirical data analysis will suffer from the following threats to reproducibility:
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
 <!--stolen from: https://brandmaier.github.io/reproducible-data-analysis-materials/KULeuvenQuantPsy2020.html#11 -->
@@ -65,7 +65,7 @@ It is common to rely on the craftiness of the researcher to debug these problems
 3. Dependency tracking
 4. Software management
 
-We deem each concept necessary to archive longterm reproducibility.
+We deem each concept necessary to archive long-term reproducibility.
 However, which tools you use to implement these concepts is a matter of taste and project requirements.
 This tutorial follows the recommendations of @Peikert2019 and utilize Git for version control, R Markdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
@@ -80,7 +80,7 @@ knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 
 <!-- keep it brief, let `repro` do the work -->
 
-We assume that you have already installed R and RStudio (if not check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/install.md", "installation guide")`).
+We assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/install.md", "installation guide")`).
 Additionally, you'll need the [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
 
 [^repropackage]: https://github.com/aaronpeikert/repro
@@ -111,13 +111,13 @@ check_docker()
 ```
 
 If these commands detect that something is not installed or set up, they will give you detailed instructions (tailored to your operating system) to remedy the situation.
-Follow the instructions, then rerun the command, until it tells you not to worry.
+Follow the instructions, then rerun the command until it tells you not to worry.
 
 # Planing
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
-While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay of through your increased productivity.
+While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay off through your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
 The first step is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files.
@@ -132,7 +132,7 @@ To create one, click on:
 <!--Keep notes.-->
 <!-- Hands on: Introduce Markdown -->
 A great tool to capture ideas or meeting notes is Markdown.
-To create a Markdown document click on: 
+To create a Markdown document, click on: 
 
 > File → New File → Markdown File
 
@@ -161,7 +161,7 @@ We will later see how this simplicity enables us to create many different docume
 ## Git
 
 Another advantage of Markdown is that you can easily version-control it with Git.
-You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in its basic idea but more potent in its features.
+You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in their basic idea but more potent in their features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
 For example, this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
 To activate Git in a given project, you can call:
@@ -229,7 +229,7 @@ git2r::commit(".", "exclude bias in measurement as possible confounder")
 ```
 
 And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
-GitHub is in its essence a webinterface to Git and you may learn more about how to use it under the section on [GitHub].
+GitHub is, in its essence, a web interface to Git, and you may learn more about how to use it under the section on [GitHub].
 
 ```{r idea-change-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
@@ -246,9 +246,9 @@ if(!file.exists(idea_change)){
 knitr::include_graphics(idea_change)
 ```
 
-<!--I am troubled by how we should recommend to learn git-->
-Git can be challenging to learn, because we are used to learn alone and Git is best learned with others.
-We recommend to find a partner to attend an online lecture or workshop to learn the ins and outs of Git.
+<!--I am troubled by how we should recommend to learn Git-->
+Git can be challenging to learn because we are used to learning alone, and Git is best learned with others.
+We recommend finding a partner to attend an online lecture or workshop to learn the ins and outs of Git.
 
 ## Simulation (optional)
 
@@ -267,17 +267,17 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
-No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly, than simply thinking about it.
-If you identify unrealistic assumptions you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical strategy to address them.
-We will show an example using structural equation modeling (SEM) for our Machiavellism example.
-However, the general process is applicable to any statistical model, but of course the simulation here is specific to our hypothetical research question.
+No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about it.
+If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
+We will show an example using structural equation modelling (SEM) for our Machiavellism example.
+However, the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
 One has to make many educated guesses to simulate data that closely matches your expectation.
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
 If you are unfamiliar with SEM, you may skim over the next sections.
 To simulate data for SEM, one has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
-The model parameters should express out expectations for the Machiavellism subscale of the short dark triad (SD3).
+The model parameters should express our expectations for the Machiavellism subscale of the short dark triad (SD3).
 As a starting point, we can use already published information.
 @Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
@@ -337,18 +337,18 @@ fit <-
   ) 
 ```
 
-But wait `lavaan` warns us that this model may not be identified.
-We overlooked a crucial assumption of this model, that is measurement invariance.
+But wait, `lavaan` warns us that this model may not be identified.
+We overlooked a crucial assumption of this model, that is, measurement invariance.
 This assumption is also baked into our simulation of the data.
 There is a good chance that this assumption is violated.
-We therefore adept our analysis to plan for this contingency.
-After fitting the model with strict measurement invariance, we free equality constrains first on loadings and then on intercepts based on the Lagrange Multiplier test.
-The model is iteratively refit and improved till at most three loadings or three intercepts are freed or the Lagrange Multiplier test is not significant for the constrains on loadings or intercepts.
+We, therefore, adept our analysis to plan for this contingency.
+After fitting the model with strict measurement invariance, we free equality constraints first on loadings and then on intercepts based on the Lagrange Multiplier test.
+The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
 While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
-For simplicity we do not simulate these likely data problems (but doing so would certainly improve the simulation).
+For simplicity, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
 Anyhow, remember that what we consider realistic for our case could be unfit for your case.
-If you are satisfied with your assumptions it helps to write a function that expresses them, like this one:
+If you are satisfied with your assumptions, it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
 
 ```{r}
@@ -405,8 +405,8 @@ generate_data(500,
               std.lv = TRUE)
 ```
 
-To consistently get the same results it is good practice to use a seed with `set.seed(1235)`.
-It is a little more complicated to archive uncorrelted randome numbers when you have parallelized your code, like we did, but the future package handles this for us:
+To consistently get the same results, it is good practice to set a seed with `set.seed(1235)`.
+It is a little more complicated to archive uncorrelated random numbers when you have parallelized your code like we did, but the future package handles this for us:
 
 ```{r}
 set.seed(1235)
@@ -424,47 +424,47 @@ future::value(future::future(runif(1), seed = 1235))
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-A preregistration serves as a tool that may help to increase the credibility of empirical results.
-Without getting lost in the meta scientific arguments for preregistration, we want to note two advantages.
-First, a preregistration is an opportunity to carefully plan a study.
-Gathering empirical data often requires enormous resources and better planning increases the chances that these efforts are worthwhile.
-For us a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
+Preregistration serves as a tool that may help to increase the credibility of empirical results.
+Without getting lost in the meta-scientific arguments for preregistration, we want to note two advantages.
+First, a preregistration is an opportunity to plan a study carefully.
+Gathering empirical data requires many resources, and better planning increases the chances that these efforts are worthwhile.
+For us, a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
 
 The second advantage is transparency.
 A preregistration offers the interested reader more insight into the research process than a paper alone could.
-Some [citation!] argue that preregistration can not fulfill its promise to reduce the false discovery rate of science, if we allow to deviate from them.
-While such argument has some merits, we believe that transparency outweighs these concerns.
+Some [citation!] argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
+While such an argument has some merits, we believe that transparency outweighs these concerns.
 If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
-A preregistration, together with version control allows their readers to inform themselves about these lessons learned.
+A preregistration, together with version control, allows their readers to inform themselves about these lessons learned.
 
-The liklihood that you have to diverge from your preregistration increases the more specific and concrete the preregistration is.
-To nudge researcher to still be specific enough, there are many preregistrations templates.
+The likelihood that you have to diverge from your preregistration increases the more specific and concrete the preregistration is.
+To nudge the researcher to still be specific enough, there are many preregistrations templates.
 These templates formalize somewhat the research questions and the planned analysis.
 An alternative to such protocol is to submit preregistration as code.
-Therefore, instead of describing the analysis that you plan to turn into code, you skip a step and write the code beforehand.
-This is obviously challenging to do, because it leaves no place to hide behind the additional layer of abstraction.
-It may well be that for any given project this is impossible, without deviating from the preregistration.
-However, preregistered and version controlled code lets anyone see what was changed very concretely.
+Therefore, instead of describing the analysis, you plan to turn into code, you skip a step and write the code beforehand.
+Such preregistration as code is challenging because it leaves no place to hide behind the additional layer of abstraction that verbal descriptions provide.
+It may well be that for any given project, this is impossible without deviating from the preregistration.
+However, preregistered and version-controlled code lets anyone see what was changed very concretely.
 
 One way to ensure that you can expect your analysis to work with real data is to simulate data.
-A data simulation allows you to verify that the code runs error free and lets you form more realistic expectation about the correctness and precision of the estimates.
+A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision.
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
-This showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
+The simulation showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
 If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
 
 ### R Markdown
 
 <!--Hands on: Introduce R Markdown-->
-A preregistration in code of course describes sufficiently how you want to analyze the data, but ideally you also describe the why.
+A preregistration in code describes sufficiently how you want to analyze the data, but ideally, you also convey the why.
 Literate programming combines code and text, enabling you to explain your reasoning.
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
 We already learned about [Markdown], to write text.
-R Markdown allows you to include R code (in fact arbitrary computer code; see @riedererChapter15Other).
-To create a R Markdown document click on: 
+R Markdown allows you to include R code (in fact, arbitrary computer code; see @riedererChapter15Other).
+To create an R Markdown document, click on: 
 
 > File → New File → Markdown File
 
-The code is separated from the text by three backtics, like here:
+The code is separated from the text by three backticks, like here:
 
 ````md
 ```{r}`r ''`
@@ -473,11 +473,11 @@ runif(1)
 ```
 ````
 
-When you include code into a R Markdown this code is run and its results are included in the rendered document.
+When you include code into an R Markdown, this code is run, and its results are included in the rendered document.
 With R Markdown, you can write whole articles (like this one).
-You could in principle even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
-In fact, if you have simulated data, you could even include fake results.
-Such dynamic document is arguably the most concrete preregistration possible.
+You could, in principle, even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
+If you have simulated data, you could even include fake results.
+Such a dynamic document is arguably the most concrete preregistration possible.
 One advantage is that writing the manuscript and writing the preregistration are no longer two distinct tasks.
 Therefore a preregistration can be thought of as simply rearranging tasks that you have to do anyway.
 
@@ -486,24 +486,24 @@ Therefore a preregistration can be thought of as simply rearranging tasks that y
 
 ### Preregistration on GitHub
 
-An important aspect of a preregistration is that you have to make it public.
-Of course if you commit the preregistration to Git and upload it into a public repository it is also public.
+An essential aspect of a preregistration is that you have to make it public.
+Of course, if you commit the preregistration to Git and upload it into a public repository, it is also public.
 However, simply using GitHub as a preregistration site is not ideal.
 First, you can delete your GitHub repository whenever you want.
-Second, while Git records meticulously when you made which change, committing and publishing are two different steps.
-Therefore, you can choose to upload to GitHub after conducting the study, while still making it look like you have made the preregistration public before conducting the study. 
+Second, while Git meticulously records when you made which change, committing and publishing are two different steps.
+Therefore, you can choose to upload to GitHub after conducting the study while still making it look like you have made the preregistration public before conducting the study. 
 Third, any person with some experience in Git can retroactively change the history.
-These downsides can be alleviated by using zenodo.org to give a digital object identifier (DOI) to your preregistration, because zenondo.org saves an unchangeable copy of your repository.
+You can alleviate these downsides by using zenodo.org to give a digital object identifier (DOI) to your preregistration because zenondo.org saves an unchangeable copy of your repository.
 You can learn more about this in [Creating a public release].
 
 ## Prepare public release (optional)
 
-One of the greatest benefits of open research is that other people can freely reuse materials.
+One of the most significant benefits of open research is that other people can freely reuse materials.
 To use your materials, they first have to find them and learn how to use them.
 Interested users find out about your project via the readme.
 The readme is the first thing they see when they visit your project on [GitHub].
 It should explain to them what your project is about and how to reproduce it.
-You could for example include the abstract of your (planned) paper here.
+You could, for example, include the abstract of your (planned) paper here.
 
 To add a readme to a repository run:
 
@@ -514,8 +514,8 @@ usethis::use_readme_rmd()
 
 This command will create a file with the name `README.Rmd`.
 <!--knit/rmarkdown will be explained in section above-->
-When you knit this file, it in turn creates a `README.md`.
-That means you can include R code or plots etc. within the readme.
+When you knit this file, it, in turn, creates a `README.md`.
+That means you can include R code or plots etc., within the readme.
 The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:readme).
 
 ```{r readme-screenshot, include=FALSE}
@@ -533,18 +533,20 @@ webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
 knitr::include_graphics(readme)
 ```
 
-Even when other researchers are excited to use your code or materials, they are usually legally inhibited from to doing so.
-That is because in many countries (i.e. the USA, European Union) the creator of something has exclusive right to use their creation.
+Even when other researchers are excited to use your code or materials, they are usually legally inhibited from doing so.
+In many countries (i.e. the USA, European Union), the creator of something has exclusive right to use their creation.
 A license allows other people to use what you have created.
 <!---exact copy from our previous manuscript, do we need to change? -->
-In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media, whereas scripts and any other computer code are often best shared under the [MIT license](https://opensource.org/licenses/MIT) (or similar permissive licenses).
+In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media.
+In contrast, scripts and any other computer code are often best shared under the [MIT license](https://opensource.org/licenses/MIT) (or similar permissive licenses).
 Both licenses assure maximal freedom for future users while requiring the attribution of the original authors in derivative work.
 These licenses are also in line with the recommendations by the Reproducible Research Standard [@stoddenEnhancingReproducibilityComputational2016; @stoddenEnablingReproducibleResearch2009].
-A great resource to choose a license is [choosealicense.com](https://choosealicense.com), however, no resource, including our recommendation, replaces legal advice.
+A great resource to choose a license is [choosealicense.com](https://choosealicense.com).
+However, no resource, including our recommendation, replaces legal advice.
 <!-- plagiary end -->
 It is important to get written consent from collaborators when you change/add the license.
-However, if their first contribution occurs after you have added a license, they give their consent by contributing.
-To add a CC-BY license to your project simply run (there are similar commands for other licenses):
+However, if their first contribution occurs after adding a license, they give their consent by contributing.
+To add a CC-BY license to your project, simply run (there are similar commands for other licenses):
 
 <!--Hands on: Add a license-->
 ```r
@@ -552,9 +554,9 @@ usethis::use_ccby_license()
 ```
 
 We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
-In fact, we hope it comes naturally to you.
+We hope it comes naturally to you.
 To communicate that contributors can expect a welcoming and respectful environment, you can add the `r link( "https://www.contributor-covenant.org", "Contributor Covenant")` to your repository.
-Contributing to an open project is daunting and a public pledge to value any contributions (even when you do not incorporate them) can help others to take the first step.
+Contributing to an open project is daunting, and a public pledge to value any contributions (even when you do not incorporate them) can help others to take the first step.
 The Contributor Covenant is a code of conduct used by many open source project.
 
 To add the Contributor Covenant to your project use:
@@ -565,7 +567,7 @@ usethis::use_code_of_conduct()
 ```
 
 However, there is some controversy around how to handle violations of a code of conduct.
-For that or any other reason, you may want to adapt the Contributor Covenant, to fit the needs of you project (which you are allowed to do because it is published with a CC-BY license).
+For that or any other reason, you may want to change the Contributor Covenant to fit your project's needs (which you are allowed to do because it is published with a CC-BY license).
 You can also consider alternative Codes of Conduct, like the `r link("https://opensource.microsoft.com/codeofconduct/", "Microsoft Open Source Code of Conduct")` or the `r link("https://berlincodeofconduct.org", "Berlin Code of Conduct")`.
 
 If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
@@ -574,8 +576,8 @@ See the section on [GitHub] on how to publish your project.
 ## Collaboration
 
 Often, reproducibility is reduced to the merits it has for the reader.
-However, we argue that reproducibility is vital for collaboration, not only in the sense that the consumer of a scientific product build upon it, but also that the creators work together.
-The time that you invest into ensuring reproducibility, is directed at ensuring effective collaboration.
+However, we argue that reproducibility is vital for collaboration, not only in the sense that the consumer of a scientific product builds upon it but also that the creators work together.
+The time that you invest into ensuring reproducibility is directed at ensuring effective collaboration.
 Therefore, reproducibility is at its core about collaboration.
 
 ### GitHub
@@ -600,7 +602,7 @@ To create a private repository (only you and people you invite have access), use
 usethis::use_github(private = TRUE)
 ```
 
-Only from this moment on, files are uploaded to the internet and only those which you have explicitly added and committed in Git.
+Only from this moment on files are uploaded to the internet and only those you have explicitly added and committed in Git.
 
 <!--Hands on: Introduce GitHub Issues-->
 <!--Hands on: Introduce GitHub Projects-->
@@ -609,29 +611,29 @@ Only from this moment on, files are uploaded to the internet and only those whic
 
 # Analyzing Data
 
-While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive longterm reproducibility are still missing, namely internal and external dependencies.
+While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive long-term reproducibility are still missing, namely internal and external dependencies.
 
 ## Internal Dependencies
 
 <!--I am not sure this is the right place, should we introduce this earlier? -->
 
 A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
-To be able to do that, it is often key to understand how different components of the project relate to each other.
-You cannot run an analysis without data, you cannot render a dynamic document without an analysis, and so forth.
+To do that, it is often crucial to understand how different project components relate to each other.
+You cannot run an analysis without data; you cannot render a dynamic document without an analysis, and so forth.
 Dependency management means that you capture the interrelations between the components of your analysis.
 The "components" of an analysis are often loosely mapped onto files.
-For a simple project it might be enough to have a single R Markdown file.
+For a simple project, it might be enough to have a single R Markdown file.
 However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
 To better navigate the data analysis, a researcher often splits it across several scripts.
 For example, they create a script to load the data and another to run the analysis.
-This modularisation facilitates reuse, because the loading script may be used by other projects building on the same data, while the analysis script may be employed on other data and so forth.
-The downside is that reproducibility is complicated, because instead of reproducing everything in one step, multiple steps are required.
+This modularisation facilitates reuse because the loading script may be used by other projects building on the same data, while the analysis script may be employed on different data and so forth.
+The downside is that reproducibility is complicated because instead of reproducing everything in one step, multiple steps are required.
 
-Of course there a several ways to solve this problem.
-One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or build a "master" script that combines all steps.
+Of course, there a several ways to solve this problem.
+One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or create a "master" script that combines all steps.
 We found Make to be particularly useful for two reasons.
 First, it is language agnostic, therefore fusing steps that are carried out in different programming languages.
-Second, it does implement a simple, yet powerful caching mechanism of results which is welcome in computing intensive analysis often found in neuroimaging or machine learning.
+Second, it does implement a simple yet powerful caching mechanism of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning.
 
 Make is build around the concept of computational recipes.
 Like cooking recipes, the dish you want to create is at the top, followed by the necessary ingredients with the procedure at last.
@@ -658,17 +660,17 @@ arrabiata_sauce.csv: cook_sauce.R canned_tomatoes.csv
   Rscript -e 'source("cook_sauce.R")'
 ```
 
-When you cook something and you have a neccesary ingriedient already at hand, would you throw it away just to prepare it again?
+When you cook something, and you have the necessary ingredients already at hand, would you throw it away just to prepare it again?
 Unlikely.
 Make behaves the same.
-If a file already exists it does not recreate it unnecessarily.
+If a file already exists, it does not recreate it unnecessarily.
 However, if a requirement is newer than its target, make recreates the target to reflect the updated dependency.
-Therefore, when you update the data file, the analysis is run again.
+Therefore, when you update the data file, the analysis is rerun.
 Because Make knows the whole dependency tree, its caching is smarter than many alternatives.
 
 One alternative that is even smarter than Make is the R package [`targets` [@targets2021]](https://books.ropensci.org/targets/)[^targets].
 `targets` can infer more about your project than Make, because it analysis the R code you write to build the dependency tree.
-For this inference to work well you have to write everything in R and you have to write everything strictly functional.
+For this inference to work well, you have to write everything in R, and you have to write everything strictly functional.
 
 [^targets]: https://books.ropensci.org/targets/
 
@@ -708,24 +710,24 @@ automate_make()
 
 Modern data analysis is only feasible because we rely on much external software.
 One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
-The key problem is the fragility of a software setup.
-Many components have to fit perfectly together and each change e.g. an update, risks that balance.
+The critical problem is the fragility of a software setup.
+Many components have to fit perfectly together, and each change, e.g. an update, risks that balance.
 Updates are, of course, very much necessary.
-Another problem is that the software environment is also variable and what works on one machine, might not work on any other.
+Another problem is that the software environment is also variable and what works on one machine might not work on any other.
 Docker circumvents such issues.
-Instead of delivering instructions on how to recreate some required components of an analysis, Docker delivers all software that was used in an analysis, down to the operating system.
+Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, down to the operating system.
 Docker does this without interfering with the already installed software by using a virtual software environment that is independent of the host software environment.
-Such snapshot of the software stack is called "image".
-Of course packaging all needed software in such image, requires considerable amounts of storage.
+Such a snapshot of the software stack is called "image".
+Of course, packaging all needed software in such an image requires considerable amounts of storage.
 However, two strategies help to keep the storage requirements manageable.
-First, there is a community that maintains images for special purposes.
+First, there is a community that maintains images for particular purposes.
 For example, using R [rocker-citation].
-Such images only contain what is absolutely necessary for the specific purpose.
-Users can then install whatever they additionally need on top of these purpose built images.
+Such images only contain what is necessary for a specific purpose.
+Users can then install whatever they additionally need on top of these purpose-built images.
 The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
 It does include R, RStudio, LaTeX as well as many R packages like the tidyverse (amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.)
 Second, instead of saving a binary image of the software, one can also save a textual description of the programmatic steps to install the software in a `Dockerfile`.
-Such files are very small (the Dockerfile for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
+Such files are tiny (the Dockerfile for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
 The `repro`-package lets you specify required packages as part of the metadata of the RMarkdown:
 
 ```
@@ -745,8 +747,7 @@ repro:
 ---
 ```
 
-These packages together with the R version that you currently used are then translated into an `Dockerfile`.
-
+With the R version that you currently use, this specification is then translated into a `Dockerfile`.
 
 <!-- Hands on: Introduce Docker -->
 
