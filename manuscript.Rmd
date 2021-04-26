@@ -781,6 +781,31 @@ Anyway, from within the container i.e. for your analysis it does not make any di
 
 <!-- Hands-on: check changed hash -->
 
+To reproduce an analysis, you need to have access to the data.
+There are several reasons which may prohibit you from making your data available, like legal or regulatory or privacy concerns.
+Often you find yourself in a situation where you can make the data only availabe on request.
+A possibility for irreproducibility is that the data has changed in the meantime.
+To at least check that the data was not changed you can provide a so called "hash".
+This is a cryptographic fingerprint.
+If the data changes, so does its fingerprint or hash.
+The user can therefore compare if the data they have received is the same that was used in the original publication, as long as the original publication does contain the hash of the data.
+
+To verify the data integrity you can include a line of code after reading the data that looks like this:
+
+```{r}
+# create a dummy data.frame with two columns
+x <- data.frame(VAR1 = c(1, 2, 3, 4), VAR2 = c(0, 4, 6, 9))
+# compute hash using md5
+hash <- digest::digest(x, "md5")
+if(hash != "4203854848ad0cc5d2f848c44b70815d"){
+  warning("Mismatch between original and current simulations!\nHash now is:\n    '", hash, "'")
+}
+```
+
+We did the same for our simulation to verify that the simulation is really reproducible[^simhash].
+
+[^simhash]: https://github.com/aaronpeikert/repro-tutorial/blob/master/R/hash.R
+
 ## Anonymising Data (optional)
 
 <!-- Should we add a section on synthetic data generation? -->
