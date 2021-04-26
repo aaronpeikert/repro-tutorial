@@ -686,6 +686,18 @@ stripped <- stringr::str_c(x[seq(yaml_ind[[1]], yaml_ind[[2]])],
 cat("```\n", stripped, "\n```", sep = "")
 ```
 
+```
+---
+title: "Preregistration"
+author: "Aaron Peikert"
+date: "4/12/2021"
+output: html_document
+repro:
+  scripts:
+    - R/simulation.R
+---
+```
+
 This command will go through all R Markdown files in your repository and infer a Makefile from them:
 
 ``` r
@@ -694,7 +706,47 @@ automate_make()
 
 ## External Dependencies
 
-A considerable number of external dependencies may hinder collaboration and long term reproducibility, but automated solutions can "bundle" and fix dependencies.
+Modern data analysis is only feasible because we rely on much external software.
+One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
+The key problem is the fragility of a software setup.
+Many components have to fit perfectly together and each change e.g. an update, risks that balance.
+Updates are, of course, very much necessary.
+Another problem is that the software environment is also variable and what works on one machine, might not work on any other.
+Docker circumvents such issues.
+Instead of delivering instructions on how to recreate some required components of an analysis, Docker delivers all software that was used in an analysis, down to the operating system.
+Docker does this without interfering with the already installed software by using a virtual software environment that is independent of the host software environment.
+Such snapshot of the software stack is called "image".
+Of course packaging all needed software in such image, requires considerable amounts of storage.
+However, two strategies help to keep the storage requirements manageable.
+First, there is a community that maintains images for special purposes.
+For example, using R [rocker-citation].
+Such images only contain what is absolutely necessary for the specific purpose.
+Users can then install whatever they additionally need on top of these purpose built images.
+The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
+It does include R, RStudio, LaTeX as well as many R packages like the tidyverse (amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.)
+Second, instead of saving a binary image of the software, one can also save a textual description of the programmatic steps to install the software in a `Dockerfile`.
+Such files are very small (the Dockerfile for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
+The `repro`-package lets you specify required packages as part of the metadata of the RMarkdown:
+
+```
+---
+title: "Preregistration"
+author: "Aaron Peikert"
+date: "4/12/2021"
+output: html_document
+repro:
+  scripts:
+    - R/simulation.R
+  packages:
+    - tidyverse
+    - here
+    - lavaan
+    - furrr
+---
+```
+
+These packages together with the R version that you currently used are then translated into an `Dockerfile`.
+
 
 <!-- Hands on: Introduce Docker -->
 
