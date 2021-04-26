@@ -267,16 +267,16 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
-No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about it.
+No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about them.
 If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
-We will show an example using structural equation modelling (SEM) for our Machiavellism example.
+We will show an example using structural equation modeling (SEM) for our Machiavellism example.
 However, the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
 One has to make many educated guesses to simulate data that closely matches your expectation.
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
 If you are unfamiliar with SEM, you may skim over the next sections.
-To simulate data for SEM, one has to specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
+To simulate data for SEM, one could specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
 The model parameters should express our expectations for the Machiavellism subscale of the short dark triad (SD3).
 As a starting point, we can use already published information.
 @Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
@@ -348,6 +348,7 @@ While reconsidering our assumptions, it is also unlikely that the data is normal
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
 For simplicity, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
 Anyhow, remember that what we consider realistic for our case could be unfit for your case.
+
 If you are satisfied with your assumptions, it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
 
@@ -583,7 +584,7 @@ Therefore, reproducibility is at its core about collaboration.
 ### GitHub
 
 On your local machine, you use Git to track changes.
-Online services like GitHub allow you to share these changes with others.
+Online services like GitHub allow you to share these changes with others and collaborate with them.
 GitHub is not the only solution; there is also [GitLab](gitlab.com) or [BitBucket](https://bitbucket.org), which are as feature-rich as GitHub.
 GitLab has the advantage that your institution can host it themselves; therefore, you are not relying on commercial service providers.
 Anyhow, we focus on GitHub because it is the most popular service.
@@ -679,14 +680,6 @@ For this inference to work well, you have to write everything in R, and you have
 
 The `repro` package can automatically write Makefiles for simple scenarios.
 For this purpose, `repro` utilizes the YAML metadata:
-
-```{r}
-x <- readLines(here::here("preregistration.Rmd"))
-yaml_ind <- stringr::str_which(x, "^---[[:space:]]*")
-stripped <- stringr::str_c(x[seq(yaml_ind[[1]], yaml_ind[[2]])],
-                  collapse = "\n")
-cat("```\n", stripped, "\n```", sep = "")
-```
 
 ```
 ---
@@ -797,6 +790,6 @@ link_index()
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "bookdown", "lavaan", "knitr", "targets"), "packages.bib")
+knitr::write_bib(c(.packages(), "bookdown", "lavaan", "knitr", "targets", "renv"), "packages.bib")
 ```
 
