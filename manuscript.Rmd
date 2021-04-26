@@ -765,6 +765,15 @@ Most importantly the R version itself has to match.
 
 ### Singularity (optional)
 
+One usecase in which Docker sometimes can't be used is in high performance computing (HPC).
+The simulation we did is computationally expensive enough to warrant the use of a HPC cluster.
+To run the simulation on a cluster we require the exact same software, not only on one or two computers, but potentially hundreds.
+Docker is a natural solution for this problem and is the defacto standard for cloud computing.
+However, Docker requires admin rights, while this is no issue on cloud computing infrastructure it is an issue in classical HPC environments.
+Singularity was designed to run without admin rights, while maintaining full compatibility with Docker images.
+If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
+Anyway, from within the container i.e. for your analysis it does not make any difference.
+
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
 
