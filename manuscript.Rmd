@@ -752,7 +752,19 @@ automate_docker()
 
 ### renv (alternative)
 
+Docker can be a bit unfriendly, because it requires a complicated mental model and some knowledge about how to install software on Linux.
+An R-focused alternative is the R package [`renv`](https://rstudio.github.io/renv/articles/renv.html)[^renv][@R-renv].
+`renv` isolates all R packages used in a project and records there version as well as the source from where they where installed.
+This mechanism is faster and simpler to use than Docker, at the expense of only tracking R packages.
+`renv` therefore is already of great use for reproducibility.
+However, even when your project relies solely on R, external dependencies still change the outcome of computations, like the operating system, the compilers used, the BLAS system in use and so forth.
+Most importantly the R version itself has to match.
+
+[^renv]: https://rstudio.github.io/renv/articles/renv.html
+
+
 ### Singularity (optional)
+
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
 
