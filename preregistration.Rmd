@@ -21,6 +21,7 @@ repro:
     - svglite
   scripts:
     - R/simulation.R
+    - R/hash.R
 ---
 
 ```{r setup, include=FALSE}
@@ -113,13 +114,7 @@ invisible(res_raw)
 write_rds(res_raw, here::here("res_raw.rds"))
 ```
 
-```{r checksum}
-# compute checksum using md5
-checksum <- digest::digest(res_raw, "md5")
-if(checksum != "4203854848ad0cc5d2f848c44b70815d"){
-  warning("Mismatch between original and current simulations!
-Checksum now is:\n    '", checksum, "'")
-}
+```{r hash}
 ```
 
 ```{r}
