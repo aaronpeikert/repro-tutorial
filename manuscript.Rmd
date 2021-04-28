@@ -71,7 +71,7 @@ This tutorial follows the recommendations of @Peikert2019 and utilize Git for ve
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
-```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency management (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
 # file gets downloaded in Makefile
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
@@ -621,7 +621,7 @@ While you already know how to write dynamic documents with [Markdown] and [R Mar
 A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
 To do that, it is often crucial to understand how different project components relate to each other.
 You cannot run an analysis without data; you cannot render a dynamic document without an analysis, and so forth.
-Dependency management means that you capture the interrelations between the components of your analysis.
+Dependency tracking means that you capture the interrelations between the components of your analysis.
 The "components" of an analysis are often loosely mapped onto files.
 For a simple project, it might be enough to have a single R Markdown file.
 However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
