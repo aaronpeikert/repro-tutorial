@@ -422,7 +422,7 @@ future::value(future::future(runif(1), seed = 1235))
 future::value(future::future(runif(1), seed = 1235))
 ```
 
-### Preregestration (optional)
+## Preregestration (optional)
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
@@ -439,6 +439,8 @@ While such an argument has some merits, we believe that transparency outweighs t
 If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
 A preregistration, together with version control, allows their readers to inform themselves about these lessons learned.
 
+### Preregistration as Code
+
 The likelihood that you have to diverge from your preregistration increases the more specific and concrete the preregistration is.
 To nudge the researcher to still be specific enough, there are many preregistrations templates.
 These templates formalize somewhat the research questions and the planned analysis.
@@ -453,12 +455,13 @@ A data simulation allows you to verify that the code runs error-free and lets yo
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
 The simulation showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
 If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
+A preregistration in code describes sufficiently how you want to analyze the data, but ideally, you also convey the why.
+Dynamic document generation combines code and text, enabling you to explain your reasoning.
+See the section on [R Markdown] for an example of a dynamic document generation paradigm.
 
 ### R Markdown
 
 <!--Hands on: Introduce R Markdown-->
-A preregistration in code describes sufficiently how you want to analyze the data, but ideally, you also convey the why.
-Literate programming combines code and text, enabling you to explain your reasoning.
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
 We already learned about [Markdown], to write text.
 R Markdown allows you to include R code (in fact, arbitrary computer code; see @riedererChapter15Other).
@@ -500,6 +503,8 @@ You can learn more about this in [Creating a public release].
 
 ## Prepare public release (optional)
 
+### README (optional)
+
 One of the most significant benefits of open research is that other people can freely reuse materials.
 To use your materials, they first have to find them and learn how to use them.
 Interested users find out about your project via the readme.
@@ -535,6 +540,8 @@ webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
 knitr::include_graphics(readme)
 ```
 
+### License
+
 Even when other researchers are excited to use your published code or materials, they are usually legally inhibited from doing so.
 In many countries (i.e. the USA, European Union), the creator of something has exclusive right to use their creation.
 A license allows other people to use what you have created.
@@ -554,6 +561,8 @@ To add a CC-BY license to your project, simply run (there are similar commands f
 ```r
 usethis::use_ccby_license()
 ```
+
+### Code of Conduct
 
 We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
 We hope it comes naturally to you.
@@ -608,8 +617,6 @@ Only from this moment on files are uploaded to the internet and only those you h
 
 <!--Hands on: Introduce GitHub Issues-->
 <!--Hands on: Introduce GitHub Projects-->
-
-## Creating a public release
 
 # Analyzing Data
 
@@ -812,17 +819,11 @@ Such approach tries to recreate the marginal distribution and bivariate relation
 The results of such data should generally not be interpreted.
 However, synthetic data provides an opportunity for researcher to test if a project is in principle reproducible, even though they have no access to the data. 
 
-## Releasing a Preprint (optional)
+# Creating a public release
 
+<!-- public releases like preregistration, preprint -->
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
-
-# Peer Review (optional)
-
-# Post Publication Review (optional)
-
-# Archiving
-
 <!-- Hands on: explain how to archive data-->
 <!-- Hands on: explain how to archive docker images-->
 
