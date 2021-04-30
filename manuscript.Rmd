@@ -9,6 +9,7 @@ repro:
     - here
     - rstudio/webshot2@f62e743
     - targets
+    - renv
   scripts:
     - R/lavaan_helper.R
     - R/simulation.R

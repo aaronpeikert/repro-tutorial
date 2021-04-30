@@ -18,6 +18,7 @@ RUN install2.r --error --skipinstalled \
   here \ 
   lavaan \ 
   patchwork \ 
+  renv \ 
   slider \ 
   svglite \ 
   targets \ 
