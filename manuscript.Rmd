@@ -820,7 +820,7 @@ Such approach tries to recreate the marginal distribution and bivariate relation
 The results of such data should generally not be interpreted.
 However, synthetic data provides an opportunity for researcher to test if a project is in principle reproducible, even though they have no access to the data. 
 
-# Archive Milestones
+# Archiving and Dissemination
 
 The open nature of the here proposed workflow does blur the lines between published and unpublished.
 However, even when your Git repository is public, you may want to signify important stages of your project, like preregistration, preprint, submission and acceptance to the journal.
@@ -831,6 +831,7 @@ Ideally, you ask a coworker or collaborator to reproduce the project independent
 The sections [Creating a DOI] and [Creating a Release] describe how you can easily create three different openly accessible longterm archived copies of your project.
 
 ## Creating a DOI
+
 
 ## Creating a Release
 
