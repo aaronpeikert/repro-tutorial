@@ -534,7 +534,7 @@ webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
 knitr::include_graphics(readme)
 ```
 
-Even when other researchers are excited to use your code or materials, they are usually legally inhibited from doing so.
+Even when other researchers are excited to use your published code or materials, they are usually legally inhibited from doing so.
 In many countries (i.e. the USA, European Union), the creator of something has exclusive right to use their creation.
 A license allows other people to use what you have created.
 <!---exact copy from our previous manuscript, do we need to change? -->
@@ -693,7 +693,7 @@ repro:
 ---
 ```
 
-This command will go through all R Markdown files in your repository and infer a Makefile from them:
+This command will go through all R Markdown files, and their YAML metadata, in your repository and infer a Makefile from them:
 
 ``` r
 automate_make()
@@ -718,9 +718,9 @@ For example, using R [rocker-citation].
 Such images only contain what is necessary for a specific purpose.
 Users can then install whatever they additionally need on top of these purpose-built images.
 The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
-It does include R, RStudio, LaTeX as well as many R packages like the tidyverse (amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.)
+It does include Ubuntu (a Linux operating system) R, RStudio, LaTeX as well as many R packages like the tidyverse (amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.)
 Second, instead of saving a binary image of the software, one can also save a textual description of the programmatic steps to install the software in a `Dockerfile`.
-Such files are tiny (the Dockerfile for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
+Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
 The `repro`-package lets you specify required packages as part of the metadata of the RMarkdown:
 
 ```
@@ -757,7 +757,7 @@ An R-focused alternative is the R package [`renv`](https://rstudio.github.io/ren
 `renv` isolates all R packages used in a project and records there version as well as the source from where they where installed.
 This mechanism is faster and simpler to use than Docker, at the expense of only tracking R packages.
 `renv` therefore is already of great use for reproducibility.
-However, even when your project relies solely on R, external dependencies still change the outcome of computations, like the operating system, the compilers used, the BLAS system in use and so forth.
+However, even when your project relies solely on R, external dependencies can still change the outcome of computations, like the operating system, the compilers used, the BLAS system in use and so forth.
 Most importantly the R version itself has to match.
 
 [^renv]: https://rstudio.github.io/renv/articles/renv.html
@@ -765,7 +765,7 @@ Most importantly the R version itself has to match.
 
 ### Singularity (optional)
 
-One usecase in which Docker sometimes can't be used is in high performance computing (HPC).
+One usecase in which Docker sometimes can not be used is in high performance computing (HPC).
 The simulation we did is computationally expensive enough to warrant the use of a HPC cluster.
 To run the simulation on a cluster we require the exact same software, not only on one or two computers, but potentially hundreds.
 Docker is a natural solution for this problem and is the defacto standard for cloud computing.
@@ -797,8 +797,8 @@ To verify the data integrity you can include a line of code after reading the da
 x <- data.frame(VAR1 = c(1, 2, 3, 4), VAR2 = c(0, 4, 6, 9))
 # compute hash using md5
 hash <- digest::digest(x, "md5")
-if(hash != "4203854848ad0cc5d2f848c44b70815d"){
-  warning("Mismatch between original and current simulations!\nHash now is:\n    '", hash, "'")
+if(hash != "5ba412f5a26f43842971dd74954fcdeb"){
+  warning("Mismatch between original and current data!\nHash now is:\n    '", hash, "'")
 }
 ```
 
@@ -836,6 +836,7 @@ link_index()
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "bookdown", "lavaan", "knitr", "targets", "renv"), "packages.bib")
+knitr::write_bib(c(.packages(), "bookdown", "lavaan", "knitr", "targets", "renv"),
+                 "packages.bib")
 ```
 
