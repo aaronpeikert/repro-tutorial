@@ -48,6 +48,7 @@ This tutorial walks through the creation of such a document that can be reproduc
 Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
 Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
 All code chunks are meant for the reader to try out for themselves.
+If not declared otherwise the code is meant to run in R (version `r with(R.version, paste0(major, ".", minor))`).
 Still, the reader can safely skip sections marked as optional when unfit for their research question or methods.
 However, any empirical data analysis will suffer from the following threats to reproducibility:
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
