@@ -830,8 +830,24 @@ Therefore, you should make extra sure that the project at these points is reprod
 To ensure reproducible, you could ask a coworker or collaborator to reproduce the project independently from you.
 The sections [Creating a DOI] and [Creating a Release] describe how you can easily create three different openly accessible longterm archived copies of your project.
 
+When you disseminate the paper across more locations than just GitHub it can be ambiguous which version of code and data have created the document (e.g. the manuscript.pdf).
+To create a clear link between the repository version and some end result you can automatically include the hash of the commit.
+Either you use Git from within R:
+
+```{r}
+system("git rev-parse --short HEAD")
+```
+
+Or you can use the `gert` package:
+
+```{r}
+strtrim(gert::git_commit_id(), 7)
+```
+
+
 ## Creating a DOI
 
+<!-- public releases like preregistration, preprint -->
 zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides digital object identifiers (DOI) for these archives.
 While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
 Please note that you can only link public GitHub repositories to zenodo.
@@ -845,7 +861,6 @@ After you have linked a GitHub repository you trigger the archivation by creatin
 
 ## Creating a Release
 
-
 GitHub has a "release" function, which creates a link to a specific version of your project, where everything is available as a zip file.
 You have the opportunity to describe the release in the release notes and to upload other additional files (e.g. the rendered pdf).
 
@@ -855,7 +870,6 @@ You have the opportunity to describe the release in the release notes and to upl
 ## Archiving Data
 
 
-<!-- public releases like preregistration, preprint -->
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
 <!-- Hands on: explain how to archive data-->
