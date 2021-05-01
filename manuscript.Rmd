@@ -827,11 +827,21 @@ However, even when your Git repository is public, you may want to signify import
 These milestones deserve to be archived.
 A project is only then properly archived when it is stored at least at two independent storage locations and reproducible from all locations.
 Therefore, you should make extra sure that the project at these points is reproducible.
-Ideally, you ask a coworker or collaborator to reproduce the project independently from you.
+To ensure reproducible, you could ask a coworker or collaborator to reproduce the project independently from you.
 The sections [Creating a DOI] and [Creating a Release] describe how you can easily create three different openly accessible longterm archived copies of your project.
 
 ## Creating a DOI
 
+zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides digital object identifiers (DOI) for these archives.
+While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
+Please note that you can only link public GitHub repositories to zenodo.
+You may log into zenodo.org through your GitHub account.
+
+> Log into zenodo.org → Account → GitHub[^zenodo-github]
+
+[^zenodo-github]: https://zenodo.org/account/settings/github/
+
+After you have linked a GitHub repository you trigger the archivation by creating a GitHub release, as described in the next section.
 
 ## Creating a Release
 
