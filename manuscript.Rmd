@@ -650,7 +650,7 @@ knitr::include_graphics(issue)
 One advantage of using the issue system of GitHub is that it enables you to link changes you made to their tasks by including the issue number (i.e. #20) in the commit message:
 
 ``` r
-# do not run this
+# do not run:
 gert::git_add(c("manuscript.Rmd", "references.bib"))
 gert::git_commit("explain the basics of issues #20")
 ```
@@ -663,9 +663,44 @@ Readers of your manuscript can ask questions or point out how to improve it afte
 
 <!--Hands on: Introduce GitHub PR and review-->
 
+Pull requests allow anyone to contribute to a project, even though they do not have write access, while the authors still retain all control.
+If someone wants to contribute, but they have no permission to write to a repository, they can create a copy of the project, called "fork", where they can push their changes.
+They then request that you (or anyone with write permissions) "pull" these changes.
+Any new pull request can be seen on GitHub:
+
+``` r
+usethis::browse_github_pulls()
+```
+
+Before you incorporate changes from someone else, you can review and change them.
+This review step can also be useful for collaboration, because you can invite a collaborator to take a look at changes you want to do.
+It is therefore sometimes useful to create a pull request even though you have permission to push, because it invites your collaborators to comment or change your proposal.
+
+You can initiate a new pull request with:
+
+``` r
+usethis::pr_init("myrevision")
+```
+
+Then you make and commit your changes and open a new pull request with:
+
+``` r
+usethis::pr_push()
+```
+
+After you or someone else has merged the pull request on GitHub, you can wrap it up with:
+
+```r
+usethis::pr_finish()
+```
+
+This process is especially useful if you want the feedback of a more senior researcher, because they do not need to know how to use Git but have a convenient web interface to provide comments or changes.
+
 ### GitHub Project Management
 
 <!--Hands on: Introduce GitHub Projects-->
+<!--I love it, but maybe we should remove it-->
+While issues and pull requests already provide much structure to organize your work, GitHub projects allow you to categorize and prioritize issues and pull request, while informing you on the progress you made.
 
 # Analyzing Data
 
