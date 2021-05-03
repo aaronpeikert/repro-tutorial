@@ -504,6 +504,9 @@ You can learn more about this in [Creating a public release].
 
 ## Prepare public release (optional)
 
+An open research project usually entails that you publish content to the public web, without an intermediate publisher.
+Since you are directly responsible for such content, you have to prepare a few things that are usually done by the publisher for you.
+
 ### README (optional)
 
 One of the most significant benefits of open research is that other people can freely reuse materials.
