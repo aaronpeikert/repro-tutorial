@@ -622,6 +622,42 @@ Only from this moment on files are uploaded to the internet and only those you h
 ### GitHub Issues
 
 <!--Hands on: Introduce GitHub Issues-->
+Effective collaboration needs effective organization.
+GitHub offers a ticket system called "Issues".
+Here you and your collaborators can discuss and distribute tasks.
+
+To take a look at the issue page of your project, you may use:
+
+``` r
+usethis::browse_github_issues()
+```
+
+```{r issue-screenshot, include=FALSE}
+# unfortunately css selectors won't work for pdf so we'll use png instead
+issue <- here::here("images", "issue.png")
+if(!file.exists(issue)){
+  webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/issues/20",
+                  file = issue,
+                  selector = "div#repo-content-pjax-container", # only select file change
+                  zoom = 2)# higher resolution
+}
+```
+
+```{r issue, echo=FALSE, fig.cap="A screenshot of an example issue.  ", out.width='100%'}
+knitr::include_graphics(issue)
+```
+
+One advantage of using the issue system of GitHub is that it enables you to link changes you made to their tasks by including the issue number (i.e. #20) in the commit message:
+
+``` r
+# do not run this
+gert::git_add(c("manuscript.Rmd", "references.bib"))
+gert::git_commit("explain the basics of issues #20")
+```
+
+While it is a valuable device for working with direct collaborators, it is also great to facilitate review [@rougierSustainableComputationalScience2017].
+Even if a journal does not support this, it enables post-publication review.
+Readers of your manuscript can ask questions or point out how to improve it after you have published it.
 
 ### GitHub Pull Requests
 
