@@ -835,7 +835,7 @@ To create a clear link between the repository version and some end result you ca
 Either you use Git from within R:
 
 ```{r}
-system("git rev-parse --short HEAD")
+system2("git", c("rev-parse",  "--short",  "HEAD"), stdout = TRUE)
 ```
 
 Or you can use the `gert` package:
@@ -853,7 +853,7 @@ While the service is independent of GitHub---in terms of storage facilities and 
 Please note that you can only link public GitHub repositories to zenodo.
 You may log into zenodo.org through your GitHub account.
 
-> Log into zenodo.org → Account → GitHub[^zenodo-github]
+> Log into zenodo.org → Account → [GitHub[^zenodo-github]](https://zenodo.org/account/settings/github/)
 
 [^zenodo-github]: https://zenodo.org/account/settings/github/
 
