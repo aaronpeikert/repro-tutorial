@@ -49,7 +49,7 @@ This tutorial walks through the creation of such a document that can be reproduc
 Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
 Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
 All code chunks are meant for the reader to try out for themselves.
-If not declared otherwise the code is meant to run in R (version `r with(R.version, paste0(major, ".", minor))`).
+If not declared otherwise the code is meant to run in R (tested with version `r with(R.version, paste0(major, ".", minor))`).
 Still, the reader can safely skip sections marked as optional when unfit for their research question or methods.
 However, any empirical data analysis will suffer from the following threats to reproducibility:
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
@@ -344,7 +344,7 @@ We overlooked a crucial assumption of this model, that is, measurement invarianc
 This assumption is also baked into our simulation of the data.
 There is a good chance that this assumption is violated.
 We, therefore, adept our analysis to plan for this contingency.
-After fitting the model with strict measurement invariance, we free equality constraints first on loadings and then on intercepts based on the Lagrange Multiplier test.
+After fitting the model with strict measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
 While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
@@ -465,10 +465,10 @@ See the section on [R Markdown] for an example of a dynamic document generation 
 <!--Hands on: Introduce R Markdown-->
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
 We already learned about [Markdown], to write text.
-R Markdown allows you to include R code (in fact, arbitrary computer code; see @riedererChapter15Other).
+R Markdown allows you to include R code (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown.
 To create an R Markdown document, click on: 
 
-> File → New File → Markdown File
+> File → New File → R Markdown...
 
 The code is separated from the text by three backticks, like here:
 
@@ -480,7 +480,7 @@ runif(1)
 ````
 
 When you include code into an R Markdown, this code is run, and its results are included in the rendered document.
-With R Markdown, you can write whole articles (like this one).
+With R Markdown, you can write whole articles (`r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/manuscript.Rmd", "like the one you are reading")`).
 You could, in principle, even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
 If you have simulated data, you could even include fake results.
 Such a dynamic document is arguably the most concrete preregistration possible.
@@ -821,7 +821,7 @@ We employed the same mechanism for our simulation to verify that the simulation 
 An compromise between making the data publicly available and keeping it closed is to publish synthetic data.
 Such approach tries to recreate the marginal distribution and bivariate relationships in simulated data, e.g. with the R package `synthpop`[@nowokSynthpopBespokeCreation2016].
 The results of such data should generally not be interpreted.
-However, synthetic data provides an opportunity for researcher to test if a project is in principle reproducible, even though they have no access to the data. 
+However, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data. 
 
 # Archiving and Dissemination
 
@@ -847,7 +847,6 @@ Or you can use the `gert` package:
 strtrim(gert::git_commit_id(), 7)
 ```
 
-
 ## Creating a DOI
 
 <!-- public releases like preregistration, preprint -->
@@ -867,11 +866,9 @@ After you have linked a GitHub repository you trigger the archivation by creatin
 GitHub has a "release" function, which creates a link to a specific version of your project, where everything is available as a zip file.
 You have the opportunity to describe the release in the release notes and to upload other additional files (e.g. the rendered pdf).
 
-
 ## Archiving Docker
 
 ## Archiving Data
-
 
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
