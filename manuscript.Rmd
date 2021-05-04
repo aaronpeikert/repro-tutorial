@@ -33,25 +33,35 @@ source(here::here("R", "link.R"))
 # Why you should care about reproducibility
 
 A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions.
-Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716]. Here, _replicability_ refers to the degree to which original studies and their derivatives yield consistent results. In other words, a succesful replication study finds a consistent effect with an original study in a new sample of data.  
-Enabling the assessment of scientific conclusions requires a systematic and rigorous approach to research. Researchers across various fields have identified a _crisis_ of non-replicability of findings [e.g. @aac4716]- <!--citation needed, e.g. [@aac4716]-->
+Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716].
+Here, *replicability* refers to the degree to which original studies and their derivatives yield consistent results.In other words, a succesful replication study finds a consistent effect with an original study in a new sample of data.
+Enabling the assessment of scientific conclusions requires a systematic and rigorous approach to research.
+Researchers across various fields have identified a *crisis* of non-replicability of findings [e.g. @aac4716]- <!--citation needed, e.g. [@aac4716]-->
 
 <!-- define replicability and then... 
  define reproducibility -->
-Even worse, researchers might often not even be able to achieve reproducibility -- defined as the ability to obtain identical results from the _same_ data with the _same_ computer code. Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models. With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken. With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves. Only with access to both data and procedures can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer. Only if both the data and code are shared, can we obtain a reproducible scientific product, facilitating assessment of its validity and later reuse.
+Even worse, researchers might often not even be able to achieve reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code.
+Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models.
+With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken.
+With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves.
+Only with access to both data and procedures can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.
+Only if both the data and code are shared, can we obtain a reproducible scientific product, facilitating assessment of its validity and later reuse.
 
 In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
 However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
 Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories do not provide sufficient information to reproduce relevant computational and statistical results.
-For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition. Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
-For 13 articles, at least one outcome could not be reproduced — even with the original authors' assistance.
+For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition.
+Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
+For 13 articles, at least one outcome could not be reproduced —-- even with the original authors' assistance.
 @obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available.
 The authors could execute only 31 of the scripts without error and were able to reproduce the results of only 21 articles (within a reasonable period of time).
 Thus, there is a dire need to establish standards for reproducible workflows for scientific rigor.
 
-From our personal experience, the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step. If reproduction would require merely minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
+From our personal experience, the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step.
+If reproduction would require merely minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
 <!-- Guiding principle: spending machine compute time instead of human research time -->
-To achieve this boost in productivity, we must place the burden of reproducibility upon computers instead of the researchers. To this end, we demand that a scientific product (no matter whether this is a preliminary report or a full research article) should both be understandable by researchers and automatically reproducible by computers with minimal constraints to the researchers' own workflows.
+To achieve this boost in productivity, we must place the burden of reproducibility upon computers instead of the researchers.
+To this end, we demand that a scientific product (no matter whether this is a preliminary report or a full research article) should both be understandable by researchers and automatically reproducible by computers with minimal constraints to the researchers' own workflows.
 
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
 <!--stolen from: https://brandmaier.github.io/reproducible-data-analysis-materials/KULeuvenQuantPsy2020.html#11 -->
@@ -80,7 +90,7 @@ knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
 This tutorial walks through the creation of a reproducible document that can be reproduced automatically.
-Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review) -- but not that even non-open science will benefit from ensuring reproducibility because good scientific practice demands that every scientist is able to reproduce their own results later in time.
+Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review) --- but not that even non-open science will benefit from ensuring reproducibility because good scientific practice demands that every scientist is able to reproduce their own results later in time.
 Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
 All code chunks are meant for the reader to try out for themselves.
 If not declared otherwise the code is meant to run in R (tested with version `r with(R.version, paste0(major, ".", minor))`).
@@ -112,7 +122,8 @@ check_make()
 check_docker()
 ```
 
-If these commands detect that something is not installed or set up properly, they will alert you and give you detailed instructions (tailored to your operating system) to set up your computer. Please make sure that all these commands pass before you continue with the tutorial.
+If these commands detect that something is not installed or set up properly, they will alert you and give you detailed instructions (tailored to your operating system) to set up your computer.
+Please make sure that all these commands pass before you continue with the tutorial.
 
 # Planning
 
