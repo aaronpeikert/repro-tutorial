@@ -262,8 +262,10 @@ knitr::include_graphics(idea_change)
 ```
 
 <!--I am troubled by how we should recommend to learn Git-->
-Git can be challenging to learn because we are used to learning alone, and Git is best learned with others.
-We recommend finding a partner to attend an online lecture or workshop to learn the ins and outs of Git.
+Git can be challenging to learn, because it requires a rather complex mental model.
+However, there is a subsets of commands which we present here and in the section on [GitHub] (commit, push, pull) which enable you to utilize Git for simple version control.
+There are many tutorials on learning Git and @vuorreCuratingResearchAssets2018 provide a good starting point.
+However Git is designed for collaboration, we therefore recommend finding a partner to attend an online lecture or workshop to learn the ins and outs of Git.
 
 ## Simulation (optional)
 
