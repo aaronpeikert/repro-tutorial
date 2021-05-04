@@ -879,6 +879,29 @@ Anyway, from within the container i.e. for your analysis it does not make any di
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
 
+## Reproduce a Project
+
+A reproducible project should not only be theoretically reproducible, but it should be simple to reproduce.
+Ideally, you have a statement in the README that contains a few steps to reproduce the project, where most steps are automatic and standardized.
+This statement should also note the required software.
+E.g. you can download any git repository with these commands:
+
+``` bash
+# this should be run in the terminal
+git clone https://github.com/aaronpeikert/repro-tutorial.git
+cd repro-tutorial
+```
+
+Projects that combine Make and Docker then can usually be reproduced with:
+
+``` bash
+# this should be run in the terminal
+make docker &&
+make -B DOCKER=TRUE 
+```
+
+<!-- maybe we add here the real data? #25 -->
+
 ## If you can not make the data public (optional)
 
 <!-- Hands-on: check changed hash -->
