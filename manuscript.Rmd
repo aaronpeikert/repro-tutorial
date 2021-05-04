@@ -861,7 +861,7 @@ Such a snapshot of the software stack is called "image".
 Of course, packaging all needed software in such an image requires considerable amounts of storage.
 However, two strategies help to keep the storage requirements manageable.
 First, there is a community that maintains images for particular purposes.
-For example, using R [rocker-citation].
+For example, using R [@boettigerIntroductionRockerDocker2017].
 Such images only contain what is necessary for a specific purpose.
 Users can then install whatever they additionally need on top of these purpose-built images.
 The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
