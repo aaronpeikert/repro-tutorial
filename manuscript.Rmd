@@ -42,7 +42,7 @@ Enabling this assessment requires a systematic and rigorous approach to research
 A reproducible scientific product allows other researchers to obtain the same results from the same dataset in a way that enables substantive criticism and therefore facilitates replication.
 <!-- lure the reader in -->
 <!-- expand: who is calling it a requirement, maybe metascientific arguments-->
-In fact, the the research community has long accepted reproducibility as an important element of “good scientific practice. <!-- examples missing -->
+In fact, the the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
 However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
 Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories do not provide sufficient information to reproduce relevant computational and statistical results.
 For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition. Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
