@@ -33,55 +33,44 @@ source(here::here("R", "link.R"))
 # Why you should care about reproducibility
 
 A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions.
-Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716].
-Enabling this assessment requires a systematic and rigorous approach to research.
+Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716]. Here, _replicability_ refers to the degree to which original studies and their derivatives yield consistent results. In other words, a succesful replication study finds a consistent effect with an original study in a new sample of data.  
+Enabling the assessment of scientific conclusions requires a systematic and rigorous approach to research. Researchers across various fields have identified a _crisis_ of non-replicability of findings [e.g. @aac4716]- <!--citation needed, e.g. [@aac4716]-->
+
 <!-- define replicability and then... 
  define reproducibility -->
-<!-- is a direct quote from my master thesis -->
-<!-- I wouldn't want to cite it. @brandmaier, would you please rewrite? -->
-A reproducible scientific product allows other researchers to obtain the same results from the same dataset in a way that enables substantive criticism and therefore facilitates replication.
-<!-- lure the reader in -->
-<!-- expand: who is calling it a requirement, maybe metascientific arguments-->
-In fact, the the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
+Even worse, researchers might often not even be able to achieve reproducibility -- defined as the ability to obtain identical results from the _same_ data with the _same_ computer code. Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models. With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken. With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves. Only with access to both data and procedures can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer. Only if both the data and code are shared, can we obtain a reproducible scientific product, facilitating assessment of its validity and later reuse.
+
+In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
 However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
 Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories do not provide sufficient information to reproduce relevant computational and statistical results.
 For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition. Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
 For 13 articles, at least one outcome could not be reproduced — even with the original authors' assistance.
 @obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available.
 The authors could execute only 31 of the scripts without error and were able to reproduce the results of only 21 articles (within a reasonable period of time).
-Thus, there is a dire need to establish standards for reproducible workflows in order to move current research from just being transparent to becoming a cumulative computational knowledge acquisition process.
+Thus, there is a dire need to establish standards for reproducible workflows for scientific rigor.
 
-From our personal experience, the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step.
-If reproduction would require merely minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
+From our personal experience, the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step. If reproduction would require merely minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
 <!-- Guiding principle: spending machine compute time instead of human research time -->
-To archive this boost, we must place the burden of reproducing something upon computers instead of human researchers.
-A scientific document should therefore be understood by researchers but reproduced by computers.
+To achieve this boost in productivity, we must place the burden of reproducibility upon computers instead of the researchers. To this end, we demand that a scientific product (no matter whether this is a preliminary report or a full research article) should both be understandable by researchers and automatically reproducible by computers with minimal constraints to the researchers' own workflows.
 
-This tutorial walks through the creation of such a document that can be reproduced automatically.
-Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review).
-Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
-All code chunks are meant for the reader to try out for themselves.
-If not declared otherwise the code is meant to run in R (tested with version `r with(R.version, paste0(major, ".", minor))`).
-Still, the reader can safely skip sections marked as optional when unfit for their research question or methods.
-However, any empirical data analysis will suffer from the following threats to reproducibility:
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
 <!--stolen from: https://brandmaier.github.io/reproducible-data-analysis-materials/KULeuvenQuantPsy2020.html#11 -->
+We identified the following common four causes for non-reproducibility:
 
-1. Multiple versions of scripts/data (e.g., the dataset has changed over time, i.e., was further cleaned or extended)
-2. Copy&paste errors (e.g., inconsistency between reported result and reproduced result)
-3. unclear which scripts should be executed in which order
-4. Broken software dependencies (e.g., analysis broken after an update, missing package)
+1.	Multiple inconsistent versions of code and data; for example, the dataset has changed over time because outliers were removed at a later stage, or the code has changed because a bug was removed at some point in time;
+2.	Copy-and-paste errors; for example, results are manually copied from a computing environment into a text processor, causing inconsistencies between the reported result and the reproduced result;
+.3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;
+4.	Broken dependencies; for example, a given analysis depends on a software package that might not be available on a different computer or no longer exists.
 
-It is common to rely on the craftiness of the researcher to debug these problems, but we could prevent them altogether with:
+We have eveloped a workflow that leverages established tools and practices from software engineering to achieve long-term computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]:
 
 1. Version control
 2. Dynamic document creation
 3. Dependency tracking
 4. Software management
 
-We deem each concept necessary to archive long-term reproducibility.
 However, which tools you use to implement these concepts is a matter of taste and project requirements.
-This tutorial follows the recommendations of @Peikert2019 and utilize Git for version control, R Markdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
+This tutorial follows the recommendations of @Peikert2019 and use Git for version control, R Markdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
 Their interplay is shown in Figure \@ref(fig:schematic).
 At several points, we suggest other viable alternatives.
 
@@ -90,12 +79,19 @@ At several points, we suggest other viable alternatives.
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
+This tutorial walks through the creation of a reproducible document that can be reproduced automatically.
+Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review) -- but not that even non-open science will benefit from ensuring reproducibility because good scientific practice demands that every scientist is able to reproduce their own results later in time.
+Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
+All code chunks are meant for the reader to try out for themselves.
+If not declared otherwise the code is meant to run in R (tested with version `r with(R.version, paste0(major, ".", minor))`).
+Still, the reader can safely skip sections marked as optional when unfit for their research question or methods.
+
+
 # Setup
 
 <!-- keep it brief, let `repro` do the work -->
 
-We assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/install.md", "installation guide")`).
-Additionally, you'll need the [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
+This tutorial is targeted at scholars with at least intermediate R knowledge and we assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/install.md", "installation guide")`). To create reproducible research projects in R, we have implemented our workflow in the  [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
 
 [^repropackage]: https://github.com/aaronpeikert/repro
 
@@ -106,33 +102,24 @@ remotes::install_github("aaronpeikert/repro")
 library("repro")
 ```
 
-The [`repro`-package](https://github.com/aaronpeikert/repro) contains several helpers to work with reproducibility tools.
-For example, it can check if your computer is set up to use the tools we rely on:
+The [`repro`-package](https://github.com/aaronpeikert/repro) contains several helpers to work with the suggested tools for reproducibility.
+For example, the package can check if your computer has all the required software packages installed and ready. 
 
 ```{r}
 # -- type this on the R console --
 check_git()
-```
-
-```{r}
-# -- type this on the R console --
 check_make()
-```
-
-```{r}
-# -- type this on the R console --
 check_docker()
 ```
 
-If these commands detect that something is not installed or set up, they will give you detailed instructions (tailored to your operating system) to remedy the situation.
-Follow the instructions, then rerun the command until it tells you not to worry.
+If these commands detect that something is not installed or set up properly, they will alert you and give you detailed instructions (tailored to your operating system) to set up your computer. Please make sure that all these commands pass before you continue with the tutorial.
 
-# Planing
+# Planning
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
 While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay off through your increased productivity.
-Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you archive reproducibility gradually.
+Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you achieve reproducibility gradually.
 The first step is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files.
 <!-- Hands-on: Introducing RProjects-->
