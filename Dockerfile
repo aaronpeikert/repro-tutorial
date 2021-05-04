@@ -16,7 +16,7 @@ RUN Rscript -e 'tinytex::tlmgr_install(c("epstopdf-pkg", "mdwtools", "booktabs",
 RUN install2.r --error --skipinstalled \ 
   furrr \ 
   future.batchtools \ 
-  git2r \ 
+  gert \ 
   here \ 
   lavaan \ 
   patchwork \ 

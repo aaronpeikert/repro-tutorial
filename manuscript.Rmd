@@ -4,7 +4,7 @@ output: bookdown::pdf_document2
 repro:
   packages:
     - usethis
-    - git2r
+    - gert
     - aaronpeikert/repro@7bfaf98
     - here
     - rstudio/webshot2@f62e743
@@ -176,7 +176,7 @@ Another advantage of Markdown is that you can easily version-control it with Git
 You may be familiar with Microsoft Words' "Track Changes"-Feature.
 Version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
-For example, this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/main", "iterations")`.
+For example, this paper has been going through `r system2("git", c("rev-list",  "--count",  "HEAD"), stdout = TRUE)` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/main", "iterations")`.
 To activate Git in a given project, you can call:
 <!-- Hands-on: Introduce Git -->
 
@@ -206,13 +206,14 @@ t-test
 Could we use openpsychometrics.org data?
 ```
 
-And you could commit it in Git:
+And you could commit it in Git.
+For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert] to interface with Git, but it does not make a difference:
 <!--I am leaning towards doing everything in R, not sure though-->
 <!--For Git we maybe should use RStudio's Git pane?-->
 
 ```r
-git2r::add(".", "idea.md")
-git2r::commit(".", "add a first concept")
+gert::git_add("idea.md")
+gert::git_add("add a first concept")
 ```
 
 But then you realize that the new literature suggests that there could be a bias in measurement:
@@ -237,8 +238,8 @@ Commit this version:
 
 ```r
 # -- type this on the R console --
-git2r::add(".", "idea.md")
-git2r::commit(".", "exclude bias in measurement as possible confounder")
+gert::git_add("idea.md")
+gert::commit("exclude bias in measurement as possible confounder")
 ```
 
 And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
@@ -1071,7 +1072,7 @@ link_index()
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "bookdown", "lavaan", "knitr", "targets", "renv"),
+knitr::write_bib(c(.packages(), "gert", "bookdown", "lavaan", "knitr", "targets", "renv"),
                  "packages.bib")
 ```
 
