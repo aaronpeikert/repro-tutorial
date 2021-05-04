@@ -286,7 +286,7 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
-A step to prevent unpleasant surprises is to simulate data.
+A step to prevent unpleasant surprises is to simulate data.<!-- AP: this paragraph deserves some references. I assume those can be found in the Bayesian literature. But are there classic SEM literature references talking of the value of simulation. Please make a lit research -->
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
 No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about them.
 If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
@@ -296,11 +296,12 @@ One has to make many educated guesses to simulate data that closely matches your
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
-If you are unfamiliar with SEM, you may skim over the next sections.
-To simulate data for SEM, one could specify a model and then sample from a multivariate normal distribution following its implied covariance matrix.
-The model parameters should express our expectations for the Machiavellism subscale of the short dark triad (SD3).
+If you are unfamiliar with the specifics of SEM, we you may skip the next sections and continue in section XXX <!--AP: fill in reference.-->.
+To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix. 
+
+The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad (SD3). <!-- AP: reference needed; explain the scale. What is the construct that we are measuring here? -->
 As a starting point, we can use already published information.
-@Jones2013 report loadings seen in Table \@ref(tab:loadings) and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
+@Jones2013 report a set of factor loadings (see Table \@ref(tab:loadings)) <!--AP what was the reference population? what was the sample size? --> and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`. <!--AP why not on the latent level? They report factor loadings after all? Please explain-->
 
 ```{r loadings, echo=FALSE}
 knitr::kable(data.frame(Item = 1:9,
@@ -308,9 +309,9 @@ knitr::kable(data.frame(Item = 1:9,
              caption = "Factor loadings from an Exploratory Structrural Equation Model as reported in Jones \\& Paulhus (2013)")
 ```
 
-Typically, it is recommended to choose conservative values during study design planning  [@brandmaier2018precision].
+Typically, it is recommended to choose conservative values in the study planning phase [@brandmaier2018precision].
 This way, we make sure that our analytic strategy is viable even in non-optimal circumstances, for example if the measurement instrument works less well then expected or the population characteristics are more different than expected.
-As a heuristic guess, we assume that the factor loadings are 30% lower than reported and that the standardized mean difference is only 0.2.
+As a heuristic guess, we assume that the factor loadings are 30% lower than those reported by @Jones2013 and that the standardized mean difference is only 0.2.
 These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
 [^lavaan]: https://lavaan.ugent.be
@@ -334,7 +335,7 @@ model <- combine(measurement(
   intercepts("MACH", list(0, "NA")))
 ```
 
-Structural Equation Models are generative models that not only fit models but lend themselves to data simulation. This is particularly easy in lavaan syntax using the function `simulateData`.
+Data simulation is particularly easy in lavaan syntax using the function `simulateData`. More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem <!--AP please add reference, and possibly other packages-->. The following code simulates data from the population model `model_truth` with 1.000 cases in each group. 
 
 ```{r, results='hide'}
 simulated <- lavaan::simulateData(
@@ -358,11 +359,11 @@ fit <-
   ) 
 ```
 
-But wait, `lavaan` warns us that this model may not be identified.
+Now, `lavaan` warns us that this model may not be identified.
 We overlooked a crucial assumption of this model, that is, measurement invariance.
 This assumption is also baked into our simulation of the data.
 There is a good chance that this assumption is violated.
-We, therefore, adept our analysis to plan for this contingency.
+We, therefore, adapt our analysis to plan for this contingency.
 After fitting the model with strict measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
 While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
@@ -427,9 +428,9 @@ generate_data(500,
               std.lv = TRUE)
 ```
 
-To consistently get the same results, it is good practice to set a seed with `set.seed(1235)`.
-It is a little more complicated to archive uncorrelated random numbers when you have parallelized your code like we did, but the future package handles this for us:
-
+Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code. To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
+It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster), but the `future` <!--AP add citation --> package handles this for us:
+<!--AB I don't understand how this solves the problem yet - please explain in more detail -->
 ```{r}
 set.seed(1235)
 runif(1)
@@ -446,8 +447,8 @@ future::value(future::future(runif(1), seed = 1235))
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-Preregistration serves as a tool that may help to increase the credibility of empirical results.
-Without getting lost in the meta-scientific arguments for preregistration, we want to note two advantages.
+Preregistration serves as a tool that may help to increase the credibility of empirical results. <!-- AP citation needed-->
+Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages. <!-- AP can we add a citation to someone who has the arguments?-->
 First, a preregistration is an opportunity to plan a study carefully.
 Gathering empirical data requires many resources, and better planning increases the chances that these efforts are worthwhile.
 For us, a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
@@ -528,12 +529,13 @@ Since you are directly responsible for such content, you have to prepare a few t
 
 ### README (optional)
 
-One of the most significant benefits of open research is that other people can freely reuse materials.
+One of the most significant benefits of open research is that other people can freely reuse materials, ideally including everything from stimuli, over computerized experiments, to data analysis code.
 To use your materials, they first have to find them and learn how to use them.
 Interested users find out about your project via the readme.
-The readme is the first thing they see when they visit your project on [GitHub].
-It should explain to them what your project is about and how to reproduce it.
-You could, for example, include the abstract of your (planned) paper here.
+Historically\footnote{Apparently, the use of readme files can be traced back to at least 1974 <!--AP reference needed, I guess-->}, a readme file is the default place to look for human readable information in a computer archive 
+the first thing they see when they visit your project on [GitHub].
+It is supposed to explain to visitors what your project is about and how to reproduce it.
+You could, for example, include the abstract of your (planned) paper here.<!-- AP: shouldn't this be a function in repro? to auto-insert the abstract?-->
 
 To add a readme to a repository run:
 
@@ -565,11 +567,10 @@ knitr::include_graphics(readme)
 
 ### License
 
-Even when other researchers are excited to use your published code or materials, they are usually legally inhibited from doing so.
-In many countries (i.e. the USA, European Union), the creator of something has exclusive right to use their creation.
-A license allows other people to use what you have created.
+Note that publishing data, code, or other materials is not sufficient to allow other users to use it, modify it, or redistribute it. For example, according to German copyright law, a repository without a license must be assumed to be protected by copyright <!-- AP citation needed -->. In many countries (i.e. the USA, European Union), a content creator has exclusive right to use their creation.
+A license is the legal authorization of other people to use what you have created.
 <!---exact copy from our previous manuscript, do we need to change? -->
-In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media.
+In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media (such as stimulus materials if you created them).
 In contrast, scripts and any other computer code are often best shared under the [MIT license](https://opensource.org/licenses/MIT) (or similar permissive licenses).
 Both licenses assure maximal freedom for future users while requiring the attribution of the original authors in derivative work.
 These licenses are also in line with the recommendations by the Reproducible Research Standard [@stoddenEnhancingReproducibilityComputational2016; @stoddenEnablingReproducibleResearch2009].
@@ -584,6 +585,8 @@ To add a CC-BY license to your project, simply run (there are similar commands f
 ```r
 usethis::use_ccby_license()
 ```
+
+<!-- AP: Can we show how to set MIT license for code an CCBY license for the manuscript? Can we make a repro function that creates such a double-license? How to do it actually? Two license files? -->
 
 ### Code of Conduct
 
