@@ -795,11 +795,31 @@ repro:
 ---
 ```
 
-This command will go through all R Markdown files, and their YAML metadata, in your repository and infer a Makefile from them:
+This command will go through all R Markdown files, and their YAML metadata, in your repository and infer a `Makefile` from them:
 
 ``` r
 automate_make()
 ```
+
+The generated `Makefile` automatically contains targets for all R Markdown documents.
+To, for example, generate the `README.md` from the `README.Rmd` you can run:
+
+``` bash
+# this should be run in the terminal
+make README.md
+```
+
+It is common practice to have a target all, that encompasses all important files of the project as the first target.
+If you do not specify a target, Make defaults to the first target, which is usually `all`.
+`repro` reminds you of that and suggests which file you might want to add to the target `all`.
+After you have done so, you can then run in the terminal:
+
+``` bash
+# this should be run in the terminal
+make
+```
+
+And it will fully reproduce the project, if you have all required software installed.
 
 ## External Dependencies
 
@@ -823,6 +843,7 @@ The image that was used for this article uses `r round(as.numeric(fs::file_size(
 It does include Ubuntu (a Linux operating system) R, RStudio, LaTeX as well as many R packages like the tidyverse (amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.)
 Second, instead of saving a binary image of the software, one can also save a textual description of the programmatic steps to install the software in a `Dockerfile`.
 Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
+For archiving, you therefore have to store the image, as explained in [Archiving Docker].
 The `repro`-package lets you specify required packages as part of the metadata of the RMarkdown:
 
 ```
@@ -842,12 +863,28 @@ repro:
 ---
 ```
 
-With the R version that you currently use, this specification is then translated into a `Dockerfile`.
+With the R version that you currently use, this specification is then translated into a `Dockerfile`:
 
 <!-- Hands on: Introduce Docker -->
 
 ``` r
 automate_docker()
+```
+
+From the `Dockerfile` you can then build an image.
+While you can do so manually we prefer to use Make, see [Internal Dependencies].
+The `Makefile` build by `repro` does contain a recipe for creating the `Dockerfile`.
+
+``` bash
+make docker
+```
+
+The `Makefile` from `repro` does also include a mechanism to send commands conditionally through the Docker container.
+This mechanism is triggered by `DOCKER=TRUE` in the make call:
+
+``` bash
+# this should be run in the terminal
+make DOCKER=TRUE
 ```
 
 <!-- after this everything is optional? -->
@@ -875,6 +912,12 @@ However, Docker requires admin rights, while this is no issue on cloud computing
 Singularity was designed to run without admin rights, while maintaining full compatibility with Docker images.
 If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
 Anyway, from within the container i.e. for your analysis it does not make any difference.
+Like with Docker, the default `Makefile` of `repro` has a mechanism to automatically send all commands to Singularity.
+It is triggered by `SINGULARITY=TRUE`:
+
+``` bash
+make SINGULARITY=TRUE
+```
 
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
