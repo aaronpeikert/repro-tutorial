@@ -205,17 +205,19 @@ t-test
 
 # Sample
 
-Could we use openpsychometrics.org data?
+Can we use openpsychometrics.org data?
 ```
 
 And you could commit it in Git.
-For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert] to interface with Git, but it does not make a difference:
+For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert], which wraps most git commands into R functions. Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools -> Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
 <!--I am leaning towards doing everything in R, not sure though-->
 <!--For Git we maybe should use RStudio's Git pane?-->
 
+To commit your first changes to the project, start with staging all files to be included in the commit using `git_add()`. Here, we stage our idea collection in the file `idea.md` and then commit it to our local repository with a meaningful commit message that will later help us keep track of all the changes over time.
+
 ```r
 gert::git_add("idea.md")
-gert::git_add("add a first concept")
+gert::git_commit("add a first concept")
 ```
 
 But then you realize that the new literature suggests that there could be a bias in measurement:
@@ -233,7 +235,7 @@ Multigroup CFA + Measurement Invariance
 
 # Sample
 
-Could we use openpsychometrics.org data?
+Can we use openpsychometrics.org data?
 ```
 
 Commit this version:
