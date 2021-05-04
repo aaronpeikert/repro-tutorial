@@ -163,7 +163,8 @@ We will later see how this simplicity enables us to create many different docume
 ## Git
 
 Another advantage of Markdown is that you can easily version-control it with Git.
-You may be familiar with Microsoft Words' "Track Changes"-Feature and version control is similar in their basic idea but more potent in their features.
+You may be familiar with Microsoft Words' "Track Changes"-Feature.
+Version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
 For example, this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
 To activate Git in a given project, you can call:
@@ -655,6 +656,8 @@ gert::git_add(c("manuscript.Rmd", "references.bib"))
 gert::git_commit("explain the basics of issues #20")
 ```
 
+You see the linkage in Figure \@ref(fig:issue).
+
 While it is a valuable device for working with direct collaborators, it is also great to facilitate review [@rougierSustainableComputationalScience2017].
 Even if a journal does not support this, it enables post-publication review.
 Readers of your manuscript can ask questions or point out how to improve it after you have published it.
@@ -665,14 +668,21 @@ Readers of your manuscript can ask questions or point out how to improve it afte
 
 Pull requests allow anyone to contribute to a project, even though they do not have write access, while the authors still retain all control.
 If someone wants to contribute, but they have no permission to write to a repository, they can create a copy of the project, called "fork", where they can push their changes.
-They then request that you (or anyone with write permissions) "pull" these changes.
-Any new pull request can be seen on GitHub:
+For example if you found an error in this manuscript, you can not simply change it, because you have no write access.
+However, you can create a fork in your account, where you have write permission:
+
+``` r
+usethis::create_from_github("aaronpeikert/repro-tutorial", fork = TRUE)
+```
+In this copy you then make any changes you want.
+You could then request that we (or anyone with write permissions) "pull" these changes.
+You can view new pull request for any project with:
 
 ``` r
 usethis::browse_github_pulls()
 ```
 
-Before you incorporate changes from someone else, you can review and change them.
+Before incorporating changes from someone else, they can be reviewed and adepted.
 This review step can also be useful for collaboration, because you can invite a collaborator to take a look at changes you want to do.
 It is therefore sometimes useful to create a pull request even though you have permission to push, because it invites your collaborators to comment or change your proposal.
 
