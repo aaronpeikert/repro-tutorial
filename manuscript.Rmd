@@ -632,6 +632,18 @@ usethis::use_github(private = TRUE)
 
 Only from this moment on files are uploaded to the internet and only those you have explicitly added and committed in Git.
 
+Uploading commits to GitHub is called "push":
+
+```r
+gert::git_push()
+```
+
+Downloading changes, e.g. from your collaborators is called "pull".
+
+```r
+gert::git_pull()
+```
+
 ### GitHub Issues
 
 <!--Hands on: Introduce GitHub Issues-->
