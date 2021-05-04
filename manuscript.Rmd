@@ -959,6 +959,7 @@ make SINGULARITY=TRUE
 A reproducible project should not only be theoretically reproducible, but it should be simple to reproduce.
 Ideally, you have a statement in the README that contains a few steps to reproduce the project, where most steps are automatic and standardized.
 This statement should also note the required software.
+Figure \@ref(fig:readme) shows `r link("https://github.com/aaronpeikert/repro-tutorial#how-to-reproduce-this-manuscript", "the reproduction statement of this project")`.
 E.g. you can download any git repository with these commands:
 
 ```bash
@@ -1077,4 +1078,3 @@ link_index()
 knitr::write_bib(c(.packages(), "gert", "bookdown", "lavaan", "knitr", "targets", "renv"),
                  "packages.bib")
 ```
-
