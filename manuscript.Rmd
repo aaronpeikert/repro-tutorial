@@ -201,7 +201,7 @@ Machiavellianism is higher in male persons.
 
 # Analytic Strategy
 
-t-test
+Independent t-test
 
 # Sample
 
@@ -220,7 +220,7 @@ gert::git_add("idea.md")
 gert::git_commit("add a first concept")
 ```
 
-But then you realize that the new literature suggests that there could be a bias in measurement:
+Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder <!-- Aaron, reference needed-->. This results in changes to your notes as follows:
 
 ```markdown
 <!--this is a Markdown file -->
@@ -231,19 +231,20 @@ Machiavellianism is higher in male persons.
 
 # Analytic Strategy
 
-Multigroup CFA + Measurement Invariance
+Multigroup Confirmatory Factor Analysis
+First, establish strong measurement invariance using a CFI cutoff-criterion
+Second, test for differences in latent factor means of Machiavellianism using a $\chi^2$ test
 
 # Sample
 
-Can we use openpsychometrics.org data?
+Can we use openpsychometrics.org data? 
 ```
 
-Commit this version:
+Again, stage the changes to this file and commit like before using `git_add()` and `git_commit()` or use the following shorthand to stage all new and modified files and then commit:
 
 ```r
 # -- type this on the R console --
-gert::git_add("idea.md")
-gert::commit("exclude bias in measurement as possible confounder")
+gert::commit_all("switch to CFA to exclude bias in measurement as possible confounder")
 ```
 
 And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
@@ -307,9 +308,9 @@ knitr::kable(data.frame(Item = 1:9,
              caption = "Factor loadings from an Exploratory Structrural Equation Model as reported in Jones \\& Paulhus (2013)")
 ```
 
-It is probably better to assume more pessimistic values.
-This way, we make sure that our analytic strategy is viable even in non-optimal circumstances.
-Therefore, we will assume that the loadings are 30% lower than reported and that the standardized mean difference is only 0.2.
+Typically, it is recommended to choose conservative values during study design planning  [@brandmaier2018precision].
+This way, we make sure that our analytic strategy is viable even in non-optimal circumstances, for example if the measurement instrument works less well then expected or the population characteristics are more different than expected.
+As a heuristic guess, we assume that the factor loadings are 30% lower than reported and that the standardized mean difference is only 0.2.
 These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
 [^lavaan]: https://lavaan.ugent.be
@@ -333,7 +334,7 @@ model <- combine(measurement(
   intercepts("MACH", list(0, "NA")))
 ```
 
-From which we can simulate data:
+Structural Equation Models are generative models that not only fit models but lend themselves to data simulation. This is particularly easy in lavaan syntax using the function `simulateData`.
 
 ```{r, results='hide'}
 simulated <- lavaan::simulateData(
