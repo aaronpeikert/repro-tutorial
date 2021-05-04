@@ -101,7 +101,8 @@ Still, the reader can safely skip sections marked as optional when unfit for the
 
 <!-- keep it brief, let `repro` do the work -->
 
-This tutorial is targeted at scholars with at least intermediate R knowledge and we assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md", "installation guide")`). To create reproducible research projects in R, we have implemented our workflow in the  [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
+This tutorial is targeted at scholars with at least intermediate R knowledge and we assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md", "installation guide")`).
+To create reproducible research projects in R, we have implemented our workflow in the  [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
 
 [^repropackage]: https://github.com/aaronpeikert/repro
 
