@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# A quick tour through the `repro`-package
+# A Hitchhiker’s Guide to Reproducible Research
 
 <!-- badges: start -->
 
@@ -12,6 +12,26 @@ proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https:
 <!-- badges: end -->
 
 WIP
+
+## How to reproduce this manuscript
+
+To reproduce this project Git, Make, and Docker is required (see [the
+installation
+guide](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)).
+
+Open the terminal, download the repository, and enter the directory:
+
+``` bash
+git clone https://github.com/aaronpeikert/repro-tutorial.git
+cd repro-tutorial
+```
+
+Then build the Docker image, and run Make:
+
+``` bash
+make docker &&
+make -B DOCKER=TRUE 
+```
 
 ## Code of Conduct
 

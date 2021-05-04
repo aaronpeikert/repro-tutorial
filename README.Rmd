@@ -4,14 +4,32 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# A quick tour through the `repro`-package
+# A Hitchhiker's Guide to Reproducible Research
 <!-- badges: start -->
 [![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 <!-- badges: end -->
 
-
 WIP
+
+## How to reproduce this manuscript
+
+To reproduce this project Git, Make, and Docker is required (see [the installation guide](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)).
+
+Open the terminal, download the repository, and enter the directory:
+
+```bash
+git clone https://github.com/aaronpeikert/repro-tutorial.git
+cd repro-tutorial
+```
+
+Then build the Docker image, and run Make:
+
+```bash
+make docker &&
+make -B DOCKER=TRUE 
+```
 
 ## Code of Conduct
 
-Please note that the repro-tutorial project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the repro-tutorial project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
