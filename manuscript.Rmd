@@ -125,6 +125,7 @@ check_docker()
 
 If these commands detect that something is not installed or set up properly, they will alert you and give you detailed instructions (tailored to your operating system) to set up your computer.
 Please make sure that all these commands pass before you continue with the tutorial.
+This process is only required once per computer and does not need to be repeated per project.
 
 # Planning
 
