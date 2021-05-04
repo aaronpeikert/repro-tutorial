@@ -32,7 +32,9 @@ source(here::here("R", "link.R"))
 
 # Why you should care about reproducibility
 
-A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions. Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716]. Enabling this assessment requires a systematic and rigorous approach to research.
+A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions.
+Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716].
+Enabling this assessment requires a systematic and rigorous approach to research.
 <!-- define replicability and then... 
  define reproducibility -->
 <!-- is a direct quote from my master thesis -->
@@ -40,9 +42,17 @@ A cornerstone of scientific progress is the possibility to critically assess the
 A reproducible scientific product allows other researchers to obtain the same results from the same dataset in a way that enables substantive criticism and therefore facilitates replication.
 <!-- lure the reader in -->
 <!-- expand: who is calling it a requirement, maybe metascientific arguments-->
-In fact, the the research community has long accepted reproducibility as an important element of “good scientific practice. <!-- examples missing --> However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.  Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories do not provide sufficient information to reproduce relevant computational and statistical results. For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition. Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required. For 13 articles, at least one outcome could not be reproduced — even with the original authors' assistance. @obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available. The authors could execute only 31 of the scripts without error and were able to reproduce the results of only 21 articles (within a reasonable period of time). Thus, there is a dire need to establish standards for reproducible workflows in order to move current research from just being transparent to becoming a cumulative computational knowledge acquisition process.
+In fact, the the research community has long accepted reproducibility as an important element of “good scientific practice. <!-- examples missing -->
+However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
+Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories do not provide sufficient information to reproduce relevant computational and statistical results.
+For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition. Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
+For 13 articles, at least one outcome could not be reproduced — even with the original authors' assistance.
+@obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available.
+The authors could execute only 31 of the scripts without error and were able to reproduce the results of only 21 articles (within a reasonable period of time).
+Thus, there is a dire need to establish standards for reproducible workflows in order to move current research from just being transparent to becoming a cumulative computational knowledge acquisition process.
 
-From our personal experience, the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step. If reproduction would require merely minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
+From our personal experience, the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step.
+If reproduction would require merely minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
 <!-- Guiding principle: spending machine compute time instead of human research time -->
 To archive this boost, we must place the burden of reproducing something upon computers instead of human researchers.
 A scientific document should therefore be understood by researchers but reproduced by computers.
