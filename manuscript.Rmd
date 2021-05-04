@@ -101,7 +101,7 @@ Still, the reader can safely skip sections marked as optional when unfit for the
 
 <!-- keep it brief, let `repro` do the work -->
 
-This tutorial is targeted at scholars with at least intermediate R knowledge and we assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/install.md", "installation guide")`). To create reproducible research projects in R, we have implemented our workflow in the  [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
+This tutorial is targeted at scholars with at least intermediate R knowledge and we assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md", "installation guide")`). To create reproducible research projects in R, we have implemented our workflow in the  [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
 
 [^repropackage]: https://github.com/aaronpeikert/repro
 
@@ -176,7 +176,7 @@ Another advantage of Markdown is that you can easily version-control it with Git
 You may be familiar with Microsoft Words' "Track Changes"-Feature.
 Version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
-For example, this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/master", "iterations")`.
+For example, this paper has been going through `r length(git2r::commits())` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/main", "iterations")`.
 To activate Git in a given project, you can call:
 <!-- Hands-on: Introduce Git -->
 
@@ -371,7 +371,7 @@ If you are satisfied with your assumptions, it helps to write a function that ex
 generate_data
 ```
 
-Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/R/simulation.R", "GitHub")`.
+Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R", "GitHub")`.
 
 With its help we can simulate 500 cases and fit our analysis.
 
@@ -493,7 +493,7 @@ runif(1)
 ````
 
 When you include code into an R Markdown, this code is run, and its results are included in the rendered document.
-With R Markdown, you can write whole articles (`r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/manuscript.Rmd", "like the one you are reading")`).
+With R Markdown, you can write whole articles (`r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/manuscript.Rmd", "like the one you are reading")`).
 You could, in principle, even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
 If you have simulated data, you could even include fake results.
 Such a dynamic document is arguably the most concrete preregistration possible.
@@ -758,7 +758,7 @@ This modularisation facilitates reuse because the loading script may be used by 
 The downside is that reproducibility is complicated because instead of reproducing everything in one step, multiple steps are required.
 
 Of course, there a several ways to solve this problem.
-One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or create a "master" script that combines all steps.
+One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or create a "main" script that combines all steps.
 We found Make to be particularly useful for two reasons.
 First, it is language agnostic, therefore fusing steps that are carried out in different programming languages.
 Second, it does implement a simple yet powerful caching mechanism of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning.
@@ -867,7 +867,7 @@ Users can then install whatever they additionally need on top of these purpose-b
 The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
 It does include Ubuntu (a Linux operating system) R, RStudio, LaTeX as well as many R packages like the tidyverse (amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.)
 Second, instead of saving a binary image of the software, one can also save a textual description of the programmatic steps to install the software in a `Dockerfile`.
-Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/master/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
+Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big), but they rely on the assumption that all software repositories are available and contain the correct software version.
 For archiving, you therefore have to store the image, as explained in [Archiving Docker].
 The `repro`-package lets you specify required packages as part of the metadata of the RMarkdown:
 
@@ -1001,7 +1001,7 @@ if(hash != "5ba412f5a26f43842971dd74954fcdeb"){
 
 We employed the same mechanism for our simulation to verify that the simulation is really reproducible[^simhash].
 
-[^simhash]: https://github.com/aaronpeikert/repro-tutorial/blob/master/R/hash.R
+[^simhash]: https://github.com/aaronpeikert/repro-tutorial/blob/main/R/hash.R
 
 An compromise between making the data publicly available and keeping it closed is to publish synthetic data.
 Such approach tries to recreate the marginal distribution and bivariate relationships in simulated data, e.g. with the R package `synthpop`[@nowokSynthpopBespokeCreation2016].
