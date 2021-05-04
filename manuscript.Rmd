@@ -155,7 +155,7 @@ To do list:
 * do more research
 * spend time with family
 "
-cat("``` markdown", markdown_example, "```", sep = "")
+cat("```markdown", markdown_example, "```", sep = "")
 ```
 
 We will later see how this simplicity enables us to create many different document formats (i.e. Word, PDF, HTML) and incorporate code (i.e. R, Python, Julia).
@@ -207,7 +207,7 @@ git2r::commit(".", "add a first concept")
 
 But then you realize that the new literature suggests that there could be a bias in measurement:
 
-``` markdown
+```markdown
 <!--this is a Markdown file -->
 
 # Hypothesis
@@ -306,7 +306,7 @@ model_truth <- combine(
     ),
   intercepts("MACH", list(0, 0.2))
   )
-cat("``` r",
+cat("```r",
     model_truth,
     "```",
     sep = "\n")
@@ -629,7 +629,7 @@ Here you and your collaborators can discuss and distribute tasks.
 
 To take a look at the issue page of your project, you may use:
 
-``` r
+```r
 usethis::browse_github_issues()
 ```
 
@@ -650,7 +650,7 @@ knitr::include_graphics(issue)
 
 One advantage of using the issue system of GitHub is that it enables you to link changes you made to their tasks by including the issue number (i.e. #20) in the commit message:
 
-``` r
+```r
 # do not run:
 gert::git_add(c("manuscript.Rmd", "references.bib"))
 gert::git_commit("explain the basics of issues #20")
@@ -671,14 +671,14 @@ If someone wants to contribute, but they have no permission to write to a reposi
 For example if you found an error in this manuscript, you can not simply change it, because you have no write access.
 However, you can create a fork in your account, where you have write permission:
 
-``` r
+```r
 usethis::create_from_github("aaronpeikert/repro-tutorial", fork = TRUE)
 ```
 In this copy you then make any changes you want.
 You could then request that we (or anyone with write permissions) "pull" these changes.
 You can view new pull request for any project with:
 
-``` r
+```r
 usethis::browse_github_pulls()
 ```
 
@@ -688,13 +688,13 @@ It is therefore sometimes useful to create a pull request even though you have p
 
 You can initiate a new pull request with:
 
-``` r
+```r
 usethis::pr_init("myrevision")
 ```
 
 Then you make and commit your changes and open a new pull request with:
 
-``` r
+```r
 usethis::pr_push()
 ```
 
@@ -797,14 +797,14 @@ repro:
 
 This command will go through all R Markdown files, and their YAML metadata, in your repository and infer a `Makefile` from them:
 
-``` r
+```r
 automate_make()
 ```
 
 The generated `Makefile` automatically contains targets for all R Markdown documents.
 To, for example, generate the `README.md` from the `README.Rmd` you can run:
 
-``` bash
+```bash
 # this should be run in the terminal
 make README.md
 ```
@@ -814,7 +814,7 @@ If you do not specify a target, Make defaults to the first target, which is usua
 `repro` reminds you of that and suggests which file you might want to add to the target `all`.
 After you have done so, you can then run in the terminal:
 
-``` bash
+```bash
 # this should be run in the terminal
 make
 ```
@@ -867,7 +867,7 @@ With the R version that you currently use, this specification is then translated
 
 <!-- Hands on: Introduce Docker -->
 
-``` r
+```r
 automate_docker()
 ```
 
@@ -875,14 +875,14 @@ From the `Dockerfile` you can then build an image.
 While you can do so manually we prefer to use Make, see [Internal Dependencies].
 The `Makefile` build by `repro` does contain a recipe for creating the `Dockerfile`.
 
-``` bash
+```bash
 make docker
 ```
 
 The `Makefile` from `repro` does also include a mechanism to send commands conditionally through the Docker container.
 This mechanism is triggered by `DOCKER=TRUE` in the make call:
 
-``` bash
+```bash
 # this should be run in the terminal
 make DOCKER=TRUE
 ```
@@ -915,7 +915,7 @@ Anyway, from within the container i.e. for your analysis it does not make any di
 Like with Docker, the default `Makefile` of `repro` has a mechanism to automatically send all commands to Singularity.
 It is triggered by `SINGULARITY=TRUE`:
 
-``` bash
+```bash
 make SINGULARITY=TRUE
 ```
 
@@ -929,7 +929,7 @@ Ideally, you have a statement in the README that contains a few steps to reprodu
 This statement should also note the required software.
 E.g. you can download any git repository with these commands:
 
-``` bash
+```bash
 # this should be run in the terminal
 git clone https://github.com/aaronpeikert/repro-tutorial.git
 cd repro-tutorial
@@ -937,7 +937,7 @@ cd repro-tutorial
 
 Projects that combine Make and Docker then can usually be reproduced with:
 
-``` bash
+```bash
 # this should be run in the terminal
 make docker &&
 make -B DOCKER=TRUE 
