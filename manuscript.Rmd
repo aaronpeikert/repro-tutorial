@@ -699,8 +699,9 @@ Readers of your manuscript can ask questions or point out how to improve it afte
 ### GitHub Pull Requests
 
 <!--Hands on: Introduce GitHub PR and review-->
+There are various ways, in which other scholars may interact with your published repository. For example, in our exposition of the workflow for reproducibility [@Peikert2019], once we had published our preprint, scholars previously unknown to us started to send us spelling corrections. When multiple persons start modifying a project in parallel, keeping track of the edits and how they are supposed to be merged is crucial. Clearly, allowing everyone to edit the project is difficult <!--AP are there papers who analyzed Wikipedia and the way concurrent changes and discussions are resolved - is this relevant at all?-->
 
-Pull requests allow anyone to contribute to a project, even though they do not have write access, while the authors still retain all control.
+_Pull requests_ allow anyone to contribute to a project, even though they were not granted write access, while the authors still retain full control over all changes.
 If someone wants to contribute, but they have no permission to write to a repository, they can create a copy of the project, called "fork", where they can push their changes.
 For example if you found an error in this manuscript, you can not simply change it, because you have no write access.
 However, you can create a fork in your account, where you have write permission:
@@ -748,7 +749,7 @@ While issues and pull requests already provide much structure to organize your w
 
 # Analyzing Data
 
-While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to archive long-term reproducibility are still missing, namely internal and external dependencies.
+While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to achieve long-term reproducibility are still missing, namely handling internal and external dependencies.
 
 ## Internal Dependencies
 
@@ -857,7 +858,7 @@ And it will fully reproduce the project, if you have all required software insta
 
 ## External Dependencies
 
-Modern data analysis is only feasible because we rely on much external software.
+Modern data analysis is only feasible because researchers rely on much external software. <!-- AP: can we give examples of cool applications in psychology -->
 One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility. The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
 The critical problem is the fragility of a software setup.
 Many components have to fit perfectly together, and each change, e.g. an update, risks that balance . At the same time, software updates are very much necessary to remove errors or improve methodology [@epskamp2019].
@@ -876,7 +877,7 @@ It does include Ubuntu, R, RStudio, LaTeX as well as many R packages like the ti
 Second, instead of saving a binary image of the software, one can also save a container recipe, a so-called  `Dockerfile`. This recipe is a textual description of all commands that need to be executed to recreate the image.
 Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image. However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
-The `repro`-package lets you specify required packages as part of the metadata of the RMarkdown:
+With the `repro`-package adding R packages dependencies is as simple as adding them to the header under the tag `packages:`
 
 ```
 ---
@@ -895,8 +896,8 @@ repro:
 ---
 ```
 
-With the R version that you currently use, this specification is then translated into a `Dockerfile`:
-
+With the R version that you currently use, this specification is then translated into a `Dockerfile` that makes sure that the container image has all these packages installed:
+<!--AP: can you say something about ensuring a given version of the R package; can the header be automatically generated from a given R script?-->
 <!-- Hands on: Introduce Docker -->
 
 ```r
