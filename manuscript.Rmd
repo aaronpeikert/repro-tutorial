@@ -741,12 +741,6 @@ usethis::pr_finish()
 
 This process is especially useful if you want the feedback of a more senior researcher, because they do not need to know how to use Git but have a convenient web interface to provide comments or changes.
 
-### GitHub Project Management
-
-<!--Hands on: Introduce GitHub Projects-->
-<!--I love it, but maybe we should remove it-->
-While issues and pull requests already provide much structure to organize your work, GitHub projects allow you to categorize and prioritize issues and pull request, while informing you on the progress you made.
-
 # Analyzing Data
 
 While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to achieve long-term reproducibility are still missing, namely handling internal and external dependencies.
