@@ -1058,8 +1058,14 @@ After you have linked a GitHub repository you trigger the archivation by creatin
 
 ## Creating a Release
 
-GitHub has a "release" function, which creates a link to a specific version of your project, where everything is available as a zip file.
-You have the opportunity to describe the release in the release notes and to upload other additional files (e.g. the rendered pdf).
+In software development, a release is the distribution of a piece of computer software indicating a certain maturity in development and level of completeness.  GitHub has a "release" function, which creates a link to a specific snapshot of your project that then is available as a single compressed file. We believe that the idea of software releases can be leveraged for singling out important versions in a research project. We found it useful to label the following stages of development as release:
+- Preregistration (repository contains the final data analysis plan; also see the Section on PAC)
+- Completion of data collection (repository contains all study data)
+- Preprint (repository exactly reproduces a preprint that is hosted externally)
+- Submission or Resubmission (repository exactly reproduces a given version (re)submitted to a journal)
+- In Press (repository exactly reproduces the final manuscript as accepted by a scientific journal)
+
+You have the opportunity to describe the release in more detail in the accompanying release notes and to add extra files (e.g., complementing the Markdown source code of a journal article with a rendered PDF document).
 
 ## Archiving Docker
 
