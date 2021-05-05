@@ -434,8 +434,13 @@ generate_data(500,
 ```
 
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code. To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
-It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster), but the `future` <!--AP add citation --> package handles this for us:
-<!--AB I don't understand how this solves the problem yet - please explain in more detail -->
+It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
+The standard random number generator (RNG) produces high quality random numbers, but has is not safe to use in parrallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
+The problem is that concurrent random number streams are correlated, because they repeat after some time.
+Therefore, if you set a seed for one worker and another seed for another worker, you could end up with the same random numbers but with a phase shift.
+@lecuyerGoodParametersImplementations1999 proposed a more computationally expensive RNG, designed to generate many uncorrelated streams.
+While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the [`future`-package](futureverse.org)[^futureverse] to handles this for us across all workers:
+
 ```{r}
 set.seed(1235)
 runif(1)
@@ -447,6 +452,8 @@ runif(1)
 future::value(future::future(runif(1), seed = 1235))
 future::value(future::future(runif(1), seed = 1235))
 ```
+
+[^futureverse]: https://www.futureverse.org
 
 ## Preregestration (optional)
 
