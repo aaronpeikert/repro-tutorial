@@ -286,7 +286,9 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
-A step to prevent unpleasant surprises is to simulate data.<!-- AP: this paragraph deserves some references. I assume those can be found in the Bayesian literature. But are there classic SEM literature references talking of the value of simulation. Please make a lit research -->
+A step to prevent unpleasant surprises is to simulate data.
+The machine learning community has begun to use simulated data to test models and their implementation [@braiekTestingMachineLearning2020].
+Beyond checking the technical side of the model, simulation is also beneficial on a conceptual leven [@axelrodAdvancingArtSimulation1997].
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
 No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about them.
 If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
