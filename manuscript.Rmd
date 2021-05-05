@@ -985,7 +985,8 @@ To at least check that the data was not changed, we suggest to provide a so call
 If the data changes, so does its fingerprint or hash.
 The user can therefore compare if the data they have received is the same that was used in the original publication, as long as the original publication does contain the hash of the data.
 
-To verify the data integrity you can include a line of code after reading the data that looks like this:
+To verify the data integrity, you can include a line of code after reading the data that looks like this:
+<!-- AP: shouldn't this be wrapped into a repro function and also stored in the YAML header??? -->
 
 ```{r}
 # create a dummy data.frame with two columns
