@@ -858,17 +858,16 @@ And it will fully reproduce the project, if you have all required software insta
 ## External Dependencies
 
 Modern data analysis is only feasible because we rely on much external software.
-One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
+One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility. The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
 The critical problem is the fragility of a software setup.
-Many components have to fit perfectly together, and each change, e.g. an update, risks that balance.
-Updates are, of course, very much necessary.
+Many components have to fit perfectly together, and each change, e.g. an update, risks that balance . At the same time, software updates are very much necessary to remove errors or improve methodology [@epskamp2019].
 Another problem is that the software environment is also variable and what works on one machine might not work on any other.
-Docker circumvents such issues.
-Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, down to the operating system.
+Containers directly address such issues.
+Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself. The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such. <!--AP can we add an example here with the non-reproducibility of an eigen problem solver - I think we discussed at some point in time when WOlfgang Viechtbauer sent us a link to a paper -->.
 Docker does this without interfering with the already installed software by using a virtual software environment that is independent of the host software environment.
-Such a snapshot of the software stack is called "image".
-Of course, packaging all needed software in such an image requires considerable amounts of storage.
-However, two strategies help to keep the storage requirements manageable.
+Such a snapshot of the software stack is called an "image".
+Packaging all needed software in such an image requires considerable amounts of storage space.
+There are two major strategies helping to keep the storage requirements reasonable.
 First, there is a community that maintains images for particular purposes.
 For example, using R [@boettigerIntroductionRockerDocker2017].
 Such images only contain what is necessary for a specific purpose.
