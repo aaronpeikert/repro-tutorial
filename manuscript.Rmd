@@ -338,7 +338,7 @@ model <- combine(measurement(
   intercepts("MACH", list(0, "NA")))
 ```
 
-Data simulation is particularly easy in lavaan syntax using the function `simulateData`. More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem <!--AP please add reference, and possibly other packages-->. The following code simulates data from the population model `model_truth` with 1.000 cases in each group. 
+Data simulation is particularly easy in lavaan syntax using the function `simulateData`. More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020]. The following code simulates data from the population model `model_truth` with 1.000 cases in each group. 
 
 ```{r, results='hide'}
 simulated <- lavaan::simulateData(
