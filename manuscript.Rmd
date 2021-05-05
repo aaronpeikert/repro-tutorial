@@ -1037,10 +1037,14 @@ strtrim(gert::git_commit_id(), 7)
 ```
 
 ## Creating a DOI
-<!-- AP add references; why are DOIs helpful-->
 
+The approach we advocate for distributes the research project, e.g. across GitHub, preregistration platforms, the publishers site, and more.
+Digital Object Identifiers (DOI) tie all these locations together under one link [@derisiWhatWhysDOIs2003].
+Not only can a DOI resolve to several locations, several parts of a research project can get their own DOI besides the DOI of the publication.
+This is useful to link or cite a specific part of a research project, such as the preregistration, an illustration in the paper or the data that was gathered.
+The DOI can also contain information about the license of the object it refers to.
 <!-- public releases like preregistration, preprint -->
-zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides digital object identifiers (DOI) for these archives.
+zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides doi for these archives.
 While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
 Please note that you can only link public GitHub repositories to zenodo.
 You may log into zenodo.org through your GitHub account.
