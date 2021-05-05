@@ -962,7 +962,8 @@ make SINGULARITY=TRUE
 
 ## Reproduce a Project
 
-A reproducible project should not only be theoretically reproducible, but it should be simple to reproduce.
+A reproducible project should not only be reproducible in theory, but it should be simple to reproduce. Typically, it is argued that results should be reproducible by a Ph.D. student from the same discipline who had experience with the statistical software used [@obels2020]. Even if all code and data are available in a repository, if reproducibility takes too long because of a lack of structure and documentation, it must be regarded as non-reproducible [@obels2020].
+
 Ideally, you have a statement in the README that contains a few steps to reproduce the project, where most steps are automatic and standardized.
 This statement should also note the required software.
 Figure \@ref(fig:readme) shows `r link("https://github.com/aaronpeikert/repro-tutorial#how-to-reproduce-this-manuscript", "the reproduction statement of this project")`.
