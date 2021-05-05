@@ -984,16 +984,13 @@ make -B DOCKER=TRUE
 
 <!-- maybe we add here the real data? #25 -->
 
-## If you can not make the data public (optional)
+## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
-
-To reproduce an analysis, you need to have access to the data.
-There are several reasons which may prohibit you from making your data available, like legal or regulatory or privacy concerns.
-Often you find yourself in a situation where you can make the data only availabe on request.
-A possibility for irreproducibility is that the data has changed in the meantime.
-To at least check that the data was not changed you can provide a so called "hash".
-This is a cryptographic fingerprint.
+A prerequisite to reproducibility is the availability of code and data <!-- AP: can you add the reference to this tight reproducibility requirements that you told me about?-->. We use containers to guarantee that all code components are available and work as expected. Ideally, all data is also stored in the repository. In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
+You may find yourself in a situation where you can make the data only available on request. <!-- AP please cite the SHARE data and explain as an example what one has to do to ontain these data -->.
+A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
+To at least check that the data was not changed, we suggest to provide a so called "hash", which is a cryptographic fingerprint.
 If the data changes, so does its fingerprint or hash.
 The user can therefore compare if the data they have received is the same that was used in the original publication, as long as the original publication does contain the hash of the data.
 
@@ -1043,6 +1040,7 @@ strtrim(gert::git_commit_id(), 7)
 ```
 
 ## Creating a DOI
+<!-- AP add references; why are DOIs helpful-->
 
 <!-- public releases like preregistration, preprint -->
 zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides digital object identifiers (DOI) for these archives.
