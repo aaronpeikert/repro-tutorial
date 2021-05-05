@@ -299,9 +299,12 @@ The analytic strategy (i.e. SEM) often gives you a hint about how to simulate da
 If you are unfamiliar with the specifics of SEM, we you may skip the next sections and continue in section XXX <!--AP: fill in reference.-->.
 To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix. 
 
-The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad (SD3). <!-- AP: reference needed; explain the scale. What is the construct that we are measuring here? -->
+The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad [SD3, @Jones2013].
+
 As a starting point, we can use already published information.
-@Jones2013 report a set of factor loadings (see Table \@ref(tab:loadings)) <!--AP what was the reference population? what was the sample size? --> and report a gender difference (at the manifest level) depending on the sample between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`. <!--AP why not on the latent level? They report factor loadings after all? Please explain-->
+@Jones2013 report a set of factor loadings from an Exploratory Structural Equation Model [@asparouhovExploratoryStructuralEquation2009].
+The estimates for the construction sample, which was recruited from Amazon’s Mechanical Turk (MTurk) and consists of 489 adults from Canada and the United States, can be seen in Table \@ref(tab:loadings))
+They report a gender difference (at the manifest level) depending on the study between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
 ```{r loadings, echo=FALSE}
 knitr::kable(data.frame(Item = 1:9,
