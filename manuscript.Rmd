@@ -544,10 +544,12 @@ Since you are directly responsible for such content, you have to prepare a few t
 One of the most significant benefits of open research is that other people can freely reuse materials, ideally including everything from stimuli, over computerized experiments, to data analysis code.
 To use your materials, they first have to find them and learn how to use them.
 Interested users find out about your project via the readme.
-Historically\footnote{Apparently, the use of readme files can be traced back to at least 1974 <!--AP reference needed, I guess-->}, a readme file is the default place to look for human readable information in a computer archive 
+Historically[^readme-age], a readme file is the default place to look for human readable information in a computer archive 
 the first thing they see when they visit your project on [GitHub].
 It is supposed to explain to visitors what your project is about and how to reproduce it.
 You could, for example, include the abstract of your (planned) paper here.<!-- AP: shouldn't this be a function in repro? to auto-insert the abstract?-->
+
+[^readme-age]: Apparently, the use of readme files can be traced back to at least 1974 as part of UCI LISP in this file: http://pdp-10.trailing-edge.com/decuslib10-04/01/43,50322/read.me.html
 
 To add a readme to a repository run:
 
