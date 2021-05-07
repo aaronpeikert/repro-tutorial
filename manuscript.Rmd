@@ -124,7 +124,6 @@ check_make()
 check_docker()
 ```
 
-<!-- AP is there a single command check() that does all of this?-->
 If these commands detect that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
 Please make sure that all three commands pass before you continue with the tutorial.
 This process is only required once per computer and does not need to be repeated per project.
@@ -143,12 +142,10 @@ To create one, click on:
 
 > File → New Project... → New Directory → New Project
 
-<!-- AP: clearly content is missing. What about the here package. What are the benefits of an R package? What if I have external data on a network drive ..... ->
-
 ## Dynamic Documents
 
 <!--Keep notes.-->
- A great tool to capture ideas or meeting notes is Markdown. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions. This way, Markup does not need any specialized software for editting, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation. R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format. We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations -- and even your CV.  <!--AP: What is Markdown? Why Markdown? Why not MS Word? Why should I care? What is so great about it? This was missing. Do you want to add anything? Please add citation to how you can create a CV with Markdown -->
+ A great tool to capture ideas or meeting notes is Markdown. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions. This way, Markup does not need any specialized software for editting, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation. R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format. We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations -- and even your CV.
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -302,7 +299,7 @@ One has to make many educated guesses to simulate data that closely matches your
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
-If you are unfamiliar with the specifics of SEM, we you may skip the next sections and continue in section XXX <!--AP: fill in reference.-->.
+If you are unfamiliar with the specifics of SEM, we you may skip the next sections and continue in section ["Randome Number Generation"](#prng).
 To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix. 
 
 The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad [SD3, @Jones2013].
@@ -436,6 +433,8 @@ generate_data(500,
               mod_int = 3,
               std.lv = TRUE)
 ```
+
+### Randome Number Generation (optional) {#prng}
 
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code. To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
 It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
