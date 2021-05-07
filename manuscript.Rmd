@@ -73,16 +73,17 @@ We identified the following common four causes for non-reproducibility:
 .3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;
 4.	Broken dependencies; for example, a given analysis depends on a software package that might not be available on a different computer or no longer exists.
 
-We have eveloped a workflow that leverages established tools and practices from software engineering to achieve long-term computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]:
+We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]:
 
 1. Version control
 2. Dynamic document creation
 3. Dependency tracking
 4. Software management
 
-However, which tools you use to implement these concepts is a matter of taste and project requirements.
-This tutorial follows the recommendations of @Peikert2019 and use Git for version control, R Markdown for dynamic document creation, Make for dependency tracking, and Docker for software management.
-Their interplay is shown in Figure \@ref(fig:schematic).
+
+This tutorial follows the recommendations of @Peikert2019 and uses _Git_ for version control, _R Markdown_ for dynamic document creation, _Make_ for dependency tracking, and _Docker_ for software management.
+The interplay of these four components is shown in Figure \@ref(fig:schematic). 
+However, which tools you use to implement these concepts is a matter of taste and project requirements, and other choices are possible depending on the context and the degree of reproducibility one aims for [e.g., @vanlissa2020worcs; @turingway2021turing].
 At several points, we suggest other viable alternatives.
 
 ```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
@@ -123,29 +124,32 @@ check_make()
 check_docker()
 ```
 
+<!-- AP is there a single command check() that does all of this?-->
 If these commands detect that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
 Please make sure that all three commands pass before you continue with the tutorial.
 This process is only required once per computer and does not need to be repeated per project.
 
-# Planning
+# Organizing Files
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
 While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay off through your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you achieve reproducibility gradually.
-The first step is to bundle all required files in one folder.
-This way, you never lose anything, and you can easily share the files.
+The first step towards reproducibility is to bundle all required files in one folder.
+This way, you never lose anything, and you can easily share the files without missing anything.
 <!-- Hands-on: Introducing RProjects-->
-RStudio's RProjects facilitate this concept of a project folder.
+RStudio's _R Projects_ facilitate this concept of a project folder.
 To create one, click on:
 
 > File → New Project... → New Directory → New Project
 
-## Markdown
+<!-- AP: clearly content is missing. What about the here package. What are the benefits of an R package? What if I have external data on a network drive ..... ->
+
+## Dynamic Documents
 
 <!--Keep notes.-->
 <!-- Hands on: Introduce Markdown -->
-A great tool to capture ideas or meeting notes is Markdown.
+A great tool to capture ideas or meeting notes is Markdown. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions. This way, Markup does not need any specialized software for editting, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, or a Powerpoint presentation <!--AP: What is Markdown? Why Markdown? Why not MS Word? Why should I care? What is so great about it?-->
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
