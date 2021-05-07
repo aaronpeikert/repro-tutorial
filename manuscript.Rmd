@@ -883,7 +883,7 @@ First, there is a community that maintains images for particular purposes.
 For example, there are ready-made images for R based on Ubuntu (a Linux operating system) containers [@boettigerIntroductionRockerDocker2017].
 Users can then install whatever they additionally need on top of these pre-made images.
 The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
-It does include Ubuntu, R, RStudio, LaTeX as well as many R packages like the tidyverse <!-- AP add citations to all packages, please--> (amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.)
+It does include Ubuntu, R, RStudio, LaTeX as well as many R packages like the tidyverse [@tidyverse], amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.
 Second, instead of saving a binary image of the software, one can also save a container recipe, a so-called  `Dockerfile`. This recipe is a textual description of all commands that need to be executed to recreate the image.
 Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image. However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
@@ -1097,6 +1097,6 @@ link_index()
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "gert", "bookdown", "lavaan", "knitr", "targets", "renv"),
+knitr::write_bib(c(.packages(), "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
                  "packages.bib")
 ```
