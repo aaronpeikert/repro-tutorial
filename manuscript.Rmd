@@ -485,7 +485,7 @@ Currently, there are various templates available that guide researchers in devel
 PAC works well within this reproducible framework. First, the preregistration becomes a part of the reproducible repository. It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project. If code was version-controlled and tagged (see Section XXX) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history. 
 
 One way to ensure that you can expect your analysis to work with real data is to simulate data.
-A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision.
+A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision. <!--AP shouldn't this be in the simulation part?-->
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
 The simulation showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
 If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
@@ -604,6 +604,10 @@ usethis::use_ccby_license()
 ```
 
 <!-- AP: Can we show how to set MIT license for code an CCBY license for the manuscript? Can we make a repro function that creates such a double-license? How to do it actually? Two license files? -->
+
+### Data Documentation
+
+<!--AP cite WORCS and some arguments for documenting your data. Also, cite the codebook package -->
 
 ### Code of Conduct
 
@@ -790,6 +794,10 @@ In Make the dish is usually a file and is called "target".
 The ingredients are called "requirements" and are usually also files.
 The procedures are formulated as shell commands.
 One (hypothetical) example is this:
+
+<!-- AP: this is a nice example but why is this an abstract example now? I thought that 
+we walk through one(!) example. I think this really should be the concrete Makefile from
+the analysis that we are talking about -->
 
 ```
 spaghetti_arrabiata.pdf: spaghetti_arrabiata.Rmd arrabiata_sauce.csv pasta.csv
@@ -997,10 +1005,12 @@ make docker &&
 make -B DOCKER=TRUE 
 ```
 
+Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories <!--AP add links -->.
 <!-- maybe we add here the real data? #25 -->
 
 ## Closed Data (optional)
 
+<!--AP: make sure to cite WORCS and describe what WORCS is proposing here-->
 <!-- Hands-on: check changed hash -->
 A prerequisite to reproducibility is the availability of code and data <!-- AP: can you add the reference to this tight reproducibility requirements that you told me about?-->. We use containers to guarantee that all code components are available and work as expected. Ideally, all data is also stored in the repository. In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
 You may find yourself in a situation where you can make the data only available on request. <!-- AP please cite the SHARE data and explain as an example what one has to do to ontain these data -->.
@@ -1031,7 +1041,7 @@ Such approach tries to recreate the marginal distribution and bivariate relation
 The results of such data should generally not be interpreted.
 However, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data. 
 
-# Archiving and Dissemination
+# Archival and Dissemination
 
 The open nature of the here proposed workflow does blur the lines between published and unpublished.
 However, even when your Git repository is public, you may want to signify important stages of your project, like preregistration, preprint, submission and acceptance to the journal.
@@ -1101,6 +1111,11 @@ You have the opportunity to describe the release in more detail in the accompany
 ```{r, results='asis', echo=FALSE}
 link_index()
 ```
+
+# Summary
+
+Here, we provided a step-by-step tutorial with what we think are best practices for creating a fully reproducible repository for data analysis projects that center on the statistical programming language R. The workflow avoids common threats to reproducibility, such as missing files, missing software dependencies, side-effects through changing dependent software packages, changes in the programming language, or even at the level of the operating system itself. 
+<!-- AP: add more. Summarize. Talk about the benefits. Talk about the limitations. What are the threats to reproducibility. Make the case that adopting this workflow is easy and can even be done for existing repositories. Also, wasn't an important point of repro that it itself is not a dependency? I think this needs to be strengthened and probably already said in the intro-->
 
 # References
 
