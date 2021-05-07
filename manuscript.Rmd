@@ -1,5 +1,6 @@
 ---
 title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
+author: Aaron Peikert and Andreas M. Brandmaier 
 output: bookdown::pdf_document2
 repro:
   packages:
@@ -122,8 +123,8 @@ check_make()
 check_docker()
 ```
 
-If these commands detect that something is not installed or set up properly, they will alert you and give you detailed instructions (tailored to your operating system) to set up your computer.
-Please make sure that all these commands pass before you continue with the tutorial.
+If these commands detect that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
+Please make sure that all three commands pass before you continue with the tutorial.
 This process is only required once per computer and does not need to be repeated per project.
 
 # Planning
