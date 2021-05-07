@@ -1113,7 +1113,13 @@ link_index()
 
 # Summary
 
-Here, we provided a step-by-step tutorial with what we think are best practices for creating a fully reproducible repository for data analysis projects that center on the statistical programming language R. The workflow avoids common threats to reproducibility, such as missing files, missing software dependencies, side-effects through changing dependent software packages, changes in the programming language, or even at the level of the operating system itself. 
+Here, we provided a step-by-step tutorial with what we think are best practices for creating a fully reproducible repository for data analysis projects that center on the statistical programming language R. 
+The workflow avoids common threats to reproducibility, such as copy-and-paste errors, missing files, missing software dependencies, or side-effects through changing dependent software packages, changes in the programming language, or even at the level of the operating system itself. 
+However, the workflow as proposed by @Peikert2019 requires mastering up to four different software tools and their specification languages, which are typically not taught in the curriculum of social and behavioral sciences but rather belong to computer science and software development. 
+Currently, this is a serious obstacle in adopting the workflow for researchers who strive for reproducibility but have little training in computer science and software development.  
+The repro package, which we introduced here, supports scholars in creating reproducible workflows. It abstracts tedious and error-prone tasks such as the creation of a Makefile or the specification of a container.
+By extending the YAML specification that is used for storing meta information in R Markdown files, which are becoming increasingly popular among R users, repro helps users to implement @Peikert2019's workflow with minimal effort. Most importantly, repro is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow. 
+Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the repro package. 
 <!-- AP: add more. Summarize. Talk about the benefits. Talk about the limitations. What are the threats to reproducibility. Make the case that adopting this workflow is easy and can even be done for existing repositories. Also, wasn't an important point of repro that it itself is not a dependency? I think this needs to be strengthened and probably already said in the intro-->
 
 # References
