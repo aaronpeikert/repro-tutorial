@@ -89,13 +89,12 @@ At several points, we suggest other viable alternatives.
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
-This tutorial walks through the creation of a reproducible document that can be reproduced automatically.
-Though reproducibility is a small part of the research process, it can serve as the mortar of open science building blocks (e.g. preregistration, open data, postpublication review) --- but not that even non-open science will benefit from ensuring reproducibility because good scientific practice demands that every scientist is able to reproduce their own results later in time.
-Therefore, we show the whole lifecycle of an open research project, where some parts are essential to archive reproducibility.
-All code chunks are meant for the reader to try out for themselves.
-If not declared otherwise the code is meant to run in R (tested with version `r with(R.version, paste0(major, ".", minor))`).
-Still, the reader can safely skip sections marked as optional when unfit for their research question or methods.
+This tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on. We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely. We continue with the creation of a concrete data analysis plan, which ideally is already implemented in code, and a dynamic report document that can be preregistered. Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact using a unique DOI in a persistent location.
 
+We have structured the tutorial with a _learning by doing_ approach in mind, such that readers can follow along at their own computers. We explicitly encourage readers to try out all R commands for themselves.
+Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R (tested with version `r with(R.version, paste0(major, ".", minor))`).
+
+Here, we present a workflow that has proven useful for our way of working with a strong focus on Open Science. However, not all steps are necessary to achieve reproducibility. We have marked those steps that can be omitted as "optional" in the section headings.
 
 # Setup
 
