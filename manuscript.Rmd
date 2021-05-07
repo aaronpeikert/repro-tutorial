@@ -595,14 +595,14 @@ However, no resource, including our recommendation, replaces legal advice.
 <!-- plagiary end -->
 It is important to get written consent from collaborators when you change/add the license.
 However, if their first contribution occurs after adding a license, they give their consent by contributing.
-To add a CC-BY license to your project, simply run (there are similar commands for other licenses):
+To add a CC-BY license to your project in general, simply run (there are similar commands for other licenses):
 
 <!--Hands on: Add a license-->
 ```r
 usethis::use_ccby_license()
 ```
 
-<!-- AP: Can we show how to set MIT license for code an CCBY license for the manuscript? Can we make a repro function that creates such a double-license? How to do it actually? Two license files? -->
+You can add other licenses for specific directories (e.g. copy `LICENSE.md` from `usethis::use_cc0_license()` into the `data` folder or the MIT License into the `R` folder).
 
 ### Code of Conduct
 
