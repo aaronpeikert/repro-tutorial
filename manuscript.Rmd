@@ -906,13 +906,16 @@ repro:
 ---
 ```
 
-With the R version that you currently use, this specification is then translated into a `Dockerfile` that makes sure that the container image has all these packages installed:
-<!--AP: can you say something about ensuring a given version of the R package; can the header be automatically generated from a given R script?-->
+With the R version that you currently use, this specification is then translated into a `Dockerfile` that makes sure that the container image has all these packages installed.
+The `Dockerfile` also contains the current date and fixes packages versions to the version of the package that were available on that day on the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org)[^cran] by relying on the [CRAN timemachine of Microsoft R Application Network (MRAN)](https://mran.microsoft.com/timemachine)[^mran].
 <!-- Hands on: Introduce Docker -->
 
 ```r
 automate_docker()
 ```
+
+[^cran]: https://cran.r-project.org
+[^mran]: https://mran.microsoft.com/timemachine
 
 From the `Dockerfile` you can then build an image.
 While you can do so manually we prefer to use Make, see [Internal Dependencies].
