@@ -954,8 +954,12 @@ Most importantly the R version itself has to match.
 
 ### High-performance computing environments (optional)
 
-The `repro` package is particularly well-suited for computationally intensive data analyses and simulations that  are to be run on distributed computing environments. By using containers, `repro` ensures identical execution across platforms and thus guarantees that a data analysis or simulation that was designed and tested on a local computer will be executed in the identical manner on a remote machine or various remote machines across an entire computing cluster. Thereby, the repro package makes massive parallel computing in heterogeneous computing environments less error-prone while ensuring the full documentation of all computational steps taken — even if some or all of them were run in parallel on distributed platforms. <!-- AP can we add examples, are there open repositores eg from neuroscience that have massive datasets published or massive simulations? -->
-As default, `repro` uses Docker, which is the defacto standard for cloud computing, as container solution.
+The `repro` package is particularly well-suited for computationally intensive data analyses and simulations that  are to be run on distributed computing environments. By using containers, `repro` ensures identical execution across platforms and thus guarantees that a data analysis or simulation that was designed and tested on a local computer will be executed in the identical manner on a remote machine or various remote machines across an entire computing cluster. Thereby, the repro package makes massive parallel computing in heterogeneous computing environments less error-prone while ensuring the full documentation of all computational steps taken — even if some or all of them were run in parallel on distributed platforms.
+Alone the sheer data size often warrants distributed computing, e.g. the European Bioinformatics Institute stores more than 120 Petabyte of publicly accessible data [@cookEuropeanBioinformaticsInstitute2018], single FMRI studies quickly amount to hundreds of Gigabyte[^openneuro] and even purely behavioral data like from the moral machine experiment [>10GB, @awadMoralMachineExperiment2018] can become to big to handle .
+
+[^openneuro]: https://openneuro.org/public/datasets
+
+As default, `repro` uses Docker, which is the defacto standard for cloud computing, as a container solution.
 However, Docker requires administrator rights for execution. Whereas this is no issue on most modern cloud computing infrastructures, it is often an issue in classic HPC environments.
 Singularity <!--AP add reference --> is an alternative solution. It was designed to run without administratot rights, while maintaining full compatibility with Docker images.
 If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
