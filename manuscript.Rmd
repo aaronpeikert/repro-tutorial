@@ -148,8 +148,7 @@ To create one, click on:
 ## Dynamic Documents
 
 <!--Keep notes.-->
-<!-- Hands on: Introduce Markdown -->
-A great tool to capture ideas or meeting notes is Markdown. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions. This way, Markup does not need any specialized software for editting, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, or a Powerpoint presentation <!--AP: What is Markdown? Why Markdown? Why not MS Word? Why should I care? What is so great about it?-->
+ A great tool to capture ideas or meeting notes is Markdown. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions. This way, Markup does not need any specialized software for editting, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation. R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format. We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations -- and even your CV.  <!--AP: What is Markdown? Why Markdown? Why not MS Word? Why should I care? What is so great about it? This was missing. Do you want to add anything? Please add citation to how you can create a CV with Markdown -->
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -178,7 +177,7 @@ We will later see how this simplicity enables us to create many different docume
 
 ## Git
 
-Another advantage of Markdown is that you can easily version-control it with Git.
+Another advantage of Markdown is that because of its alikeness to plain text, you can easily version-control it with Git and leverage Gits features for tracking, displaying, and merging sequential and concurrent changes.
 You may be familiar with Microsoft Words' "Track Changes"-Feature.
 Version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
