@@ -288,6 +288,7 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
+
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 The machine learning community has begun to use simulated data to test models and their implementation [@braiekTestingMachineLearning2020].
@@ -458,11 +459,13 @@ future::value(future::future(runif(1), seed = 1235))
 
 [^futureverse]: https://www.futureverse.org
 
-## Preregestration (optional)
+## Preregistration (optional)
 
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-Preregistration serves as a tool that may help to increase the credibility of empirical results. <!-- AP citation needed-->
+
+Preregistration is the specification of a research plan in advance of data analysis. The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
+Thus, it serves as a tool that may help to increase the credibility of empirical results. <!-- AP citation needed-->
 Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages. <!-- AP can we add a citation to someone who has the arguments?-->
 First, a preregistration is an opportunity to plan a study carefully.
 Gathering empirical data requires many resources, and better planning increases the chances that these efforts are worthwhile.
@@ -471,20 +474,15 @@ For us, a good preregistration is the same as a good plan; the only difference i
 The second advantage is transparency.
 A preregistration offers the interested reader more insight into the research process than a paper alone could.
 Some [citation!] argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
-While such an argument has some merits, we believe that transparency outweighs these concerns.
-If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study.
+While such an argument has some merits, we believe that often transparency outweighs these concerns.
+Deviation from a preregistration is still possible. If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study, and any deviation will simply be explicitly marked as such.
 A preregistration, together with version control, allows their readers to inform themselves about these lessons learned.
 
 ### Preregistration as Code
 
-The likelihood that you have to diverge from your preregistration increases the more specific and concrete the preregistration is.
-To nudge the researcher to still be specific enough, there are many preregistrations templates.
-These templates formalize somewhat the research questions and the planned analysis.
-An alternative to such protocol is to submit preregistration as code.
-Therefore, instead of describing the analysis, you plan to turn into code, you skip a step and write the code beforehand.
-Such preregistration as code is challenging because it leaves no place to hide behind the additional layer of abstraction that verbal descriptions provide.
-It may well be that for any given project, this is impossible without deviating from the preregistration.
-However, preregistered and version-controlled code lets anyone see what was changed very concretely.
+Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration <!--AP citation needed-->. Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code <!--AP are the classic computer science literature who talks about this ambiguity... theoretical CS? NLP research or such?-->. Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity. PAC essentially reverses the process of empirical research. Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results --- initially based on simulated data. Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration. 
+
+PAC works well within this reproducible framework. First, the preregistration becomes a part of the reproducible repository. It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project. If code was version-controlled and tagged (see Section XXX) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history. 
 
 One way to ensure that you can expect your analysis to work with real data is to simulate data.
 A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision.
