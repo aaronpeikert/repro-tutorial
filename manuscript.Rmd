@@ -464,8 +464,8 @@ future::value(future::future(runif(1), seed = 1235))
 
 
 Preregistration is the specification of a research plan in advance of data analysis. The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
-Thus, it serves as a tool that may help to increase the credibility of empirical results. <!-- AP citation needed-->
-Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages. <!-- AP can we add a citation to someone who has the arguments?-->
+Thus, it serves as a tool that may help to increase the credibility of empirical results.
+Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages.
 First, a preregistration is an opportunity to plan a study carefully.
 Gathering empirical data requires many resources, and better planning increases the chances that these efforts are worthwhile.
 For us, a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
@@ -479,12 +479,12 @@ A preregistration, together with version control, allows their readers to inform
 
 ### Preregistration as Code
 
-Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration <!--AP citation needed-->. Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code <!--AP are the classic computer science literature who talks about this ambiguity... theoretical CS? NLP research or such?-->. Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity. PAC essentially reverses the process of empirical research. Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results --- initially based on simulated data. Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration. 
+Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration. Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code. Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity. PAC essentially reverses the process of empirical research. Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results --- initially based on simulated data. Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration. 
 
 PAC works well within this reproducible framework. First, the preregistration becomes a part of the reproducible repository. It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project. If code was version-controlled and tagged (see Section XXX) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history. 
 
 One way to ensure that you can expect your analysis to work with real data is to simulate data.
-A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision. <!--AP shouldn't this be in the simulation part?-->
+A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision.
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
 The simulation showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
 If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
@@ -547,7 +547,7 @@ Interested users find out about your project via the readme.
 Historically[^readme-age], a readme file is the default place to look for human readable information in a computer archive 
 the first thing they see when they visit your project on [GitHub].
 It is supposed to explain to visitors what your project is about and how to reproduce it.
-You could, for example, include the abstract of your (planned) paper here.<!-- AP: shouldn't this be a function in repro? to auto-insert the abstract?-->
+You could, for example, include the abstract of your (planned) paper here.
 
 [^readme-age]: Apparently, the use of readme files can be traced back to at least 1974 as part of UCI LISP in this file: http://pdp-10.trailing-edge.com/decuslib10-04/01/43,50322/read.me.html
 
@@ -602,11 +602,7 @@ To add a CC-BY license to your project, simply run (there are similar commands f
 usethis::use_ccby_license()
 ```
 
-<!-- AP: Can we show how to set MIT license for code an CCBY license for the manuscript? Can we make a repro function that creates such a double-license? How to do it actually? Two license files? -->
-
 ### Data Documentation
-
-<!--AP cite WORCS and some arguments for documenting your data. Also, cite the codebook package -->
 
 ### Code of Conduct
 
@@ -719,7 +715,7 @@ Readers of your manuscript can ask questions or point out how to improve it afte
 ### GitHub Pull Requests
 
 <!--Hands on: Introduce GitHub PR and review-->
-There are various ways, in which other scholars may interact with your published repository. For example, in our exposition of the workflow for reproducibility [@Peikert2019], once we had published our preprint, scholars previously unknown to us started to send us spelling corrections. When multiple persons start modifying a project in parallel, keeping track of the edits and how they are supposed to be merged is crucial. Clearly, allowing everyone to edit the project is difficult <!--AP are there papers who analyzed Wikipedia and the way concurrent changes and discussions are resolved - is this relevant at all?-->
+There are various ways, in which other scholars may interact with your published repository. For example, in our exposition of the workflow for reproducibility [@Peikert2019], once we had published our preprint, scholars previously unknown to us started to send us spelling corrections. When multiple persons start modifying a project in parallel, keeping track of the edits and how they are supposed to be merged is crucial. Clearly, allowing everyone to edit the project is difficult.
 
 _Pull requests_ allow anyone to contribute to a project, even though they were not granted write access, while the authors still retain full control over all changes.
 If someone wants to contribute, but they have no permission to write to a repository, they can create a copy of the project, called "fork", where they can push their changes.
@@ -793,10 +789,6 @@ In Make the dish is usually a file and is called "target".
 The ingredients are called "requirements" and are usually also files.
 The procedures are formulated as shell commands.
 One (hypothetical) example is this:
-
-<!-- AP: this is a nice example but why is this an abstract example now? I thought that 
-we walk through one(!) example. I think this really should be the concrete Makefile from
-the analysis that we are talking about -->
 
 ```
 spaghetti_arrabiata.pdf: spaghetti_arrabiata.Rmd arrabiata_sauce.csv pasta.csv
@@ -876,13 +868,13 @@ And it will fully reproduce the project, if you have all required software insta
 
 ## External Dependencies
 
-Modern data analysis is only feasible because researchers rely on much external software. <!-- AP: can we give examples of cool applications in psychology -->
+Modern data analysis is only feasible because researchers rely on much external software.
 One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility. The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
 The critical problem is the fragility of a software setup.
 Many components have to fit perfectly together, and each change, e.g. an update, risks that balance . At the same time, software updates are very much necessary to remove errors or improve methodology [@epskamp2019].
 Another problem is that the software environment is also variable and what works on one machine might not work on any other.
 Containers directly address such issues.
-Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself. The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such. <!--AP can we add an example here with the non-reproducibility of an eigen problem solver - I think we discussed at some point in time when WOlfgang Viechtbauer sent us a link to a paper -->.
+Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself. The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
 Docker does this without interfering with the already installed software by using a virtual software environment that is independent of the host software environment.
 Such a snapshot of the software stack is called an "image".
 Packaging all needed software in such an image requires considerable amounts of storage space.
@@ -970,7 +962,7 @@ Alone the sheer data size often warrants distributed computing, e.g. the Europea
 
 As default, `repro` uses Docker, which is the defacto standard for cloud computing, as a container solution.
 However, Docker requires administrator rights for execution. Whereas this is no issue on most modern cloud computing infrastructures, it is often an issue in classic HPC environments.
-Singularity <!--AP add reference --> is an alternative solution. It was designed to run without administratot rights, while maintaining full compatibility with Docker images.
+Singularity is an alternative solution. It was designed to run without administratot rights, while maintaining full compatibility with Docker images.
 If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
 Importantly, this choice does not affect how code is executed inside the container.
 Like with Docker, the default `Makefile` generated by `repro` comes with a mechanism to automatically send all commands to Singularity. To reproduce an analysis with Singularity, simple add the parameter `SINGULARITY=TRUE` as follows:
@@ -1005,23 +997,26 @@ make docker &&
 make -B DOCKER=TRUE 
 ```
 
-Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories <!--AP add links -->.
+Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
 <!-- maybe we add here the real data? #25 -->
 
 ## Closed Data (optional)
 
-<!--AP: make sure to cite WORCS and describe what WORCS is proposing here-->
 <!-- Hands-on: check changed hash -->
-A prerequisite to reproducibility is the availability of code and data <!-- AP: can you add the reference to this tight reproducibility requirements that you told me about?-->. We use containers to guarantee that all code components are available and work as expected. Ideally, all data is also stored in the repository. In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
-You may find yourself in a situation where you can make the data only available on request. <!-- AP please cite the SHARE data and explain as an example what one has to do to ontain these data -->.
+A prerequisite to reproducibility is the availability of code and data. We use containers to guarantee that all code components are available and work as expected. Ideally, all data is also stored in the repository. In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
+You may find yourself in a situation where you can make the data only available on request.
 A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
 To at least check that the data was not changed, we suggest to provide a so called "hash", which is a cryptographic fingerprint.
 If the data changes, so does its fingerprint or hash.
 The user can therefore compare if the data they have received is the same that was used in the original publication, as long as the original publication does contain the hash of the data.
 
 To verify the data integrity, you can include a line of code after reading the data that looks like this:
+<<<<<<< HEAD
 <!-- AP: shouldn't this be wrapped into a repro function and also stored in the YAML header??? -->
 <!-- AP: can you demonstrate this with the actual openpsychometric data instead?-->
+=======
+
+>>>>>>> 2bfdb64 (turn AP callouts into GitHub issues)
 ```{r}
 # create a dummy data.frame with two columns
 x <- data.frame(VAR1 = c(1, 2, 3, 4), VAR2 = c(0, 4, 6, 9))
@@ -1121,7 +1116,7 @@ Currently, this is a serious obstacle in adopting the workflow for researchers w
 The repro package, which we introduced here, supports scholars in creating reproducible workflows. It abstracts tedious and error-prone tasks such as the creation of a Makefile or the specification of a container.
 By extending the YAML specification that is used for storing meta information in R Markdown files, which are becoming increasingly popular among R users, repro helps users to implement @Peikert2019's workflow with minimal effort. Most importantly, repro is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow. 
 Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the repro package. 
-<!-- AP: add more. Summarize. Talk about the benefits. Talk about the limitations. What are the threats to reproducibility. Make the case that adopting this workflow is easy and can even be done for existing repositories. Also, wasn't an important point of repro that it itself is not a dependency? I think this needs to be strengthened and probably already said in the intro-->
+
 
 # References
 
