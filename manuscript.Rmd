@@ -82,7 +82,7 @@ We have developed a workflow that leverages established tools and practices from
 
 
 This tutorial follows the recommendations of @Peikert2019 and uses _Git_ for version control, _R Markdown_ for dynamic document creation, _Make_ for dependency tracking, and _Docker_ for software management.
-The interplay of these four components is shown in Figure \@ref(fig:schematic). 
+The interplay of these four components is shown in Figure \@ref(fig:schematic).
 However, which tools you use to implement these concepts is a matter of taste and project requirements, and other choices are possible depending on the context and the degree of reproducibility one aims for [e.g., @vanlissa2020worcs; @turingway2021turing].
 At several points, we suggest other viable alternatives.
 
@@ -91,12 +91,18 @@ At several points, we suggest other viable alternatives.
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
-This tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on. We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely. We continue with the creation of a concrete data analysis plan, which ideally is already implemented in code, and a dynamic report document that can be preregistered. Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact using a unique DOI in a persistent location.
+This tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on.
+We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely.
+We continue with the creation of a concrete data analysis plan, which ideally is already implemented in code, and a dynamic report document that can be preregistered.
+Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact using a unique DOI in a persistent location.
 
-We have structured the tutorial with a _learning by doing_ approach in mind, such that readers can follow along at their own computers. We explicitly encourage readers to try out all R commands for themselves.
+We have structured the tutorial with a _learning by doing_ approach in mind, such that readers can follow along at their own computers.
+We explicitly encourage readers to try out all R commands for themselves.
 Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R (tested with version `r with(R.version, paste0(major, ".", minor))`).
 
-Here, we present a workflow that has proven useful for our way of working with a strong focus on Open Science. However, not all steps are necessary to achieve reproducibility. We have marked those steps that can be omitted as "optional" in the section headings.
+Here, we present a workflow that has proven useful for our way of working with a strong focus on Open Science.
+However, not all steps are necessary to achieve reproducibility.
+We have marked those steps that can be omitted as "optional" in the section headings.
 
 # Setup
 
@@ -115,7 +121,7 @@ library("repro")
 ```
 
 The [`repro`-package](https://github.com/aaronpeikert/repro) contains several helpers to work with the suggested tools for reproducibility.
-For example, the package can check if your computer has all the required software packages installed and ready. 
+For example, the package can check if your computer has all the required software packages installed and ready.
 
 ```{r}
 # -- type this on the R console --
@@ -145,7 +151,11 @@ To create one, click on:
 ## Dynamic Documents
 
 <!--Keep notes.-->
- A great tool to capture ideas or meeting notes is Markdown. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions. This way, Markup does not need any specialized software for editting, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation. R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format. We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations -- and even your CV.
+ A great tool to capture ideas or meeting notes is Markdown.
+ Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
+ This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
+ R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format
+ We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV.
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -209,18 +219,21 @@ Can we use openpsychometrics.org data?
 ```
 
 And you could commit it in Git.
-For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert], which wraps most git commands into R functions. Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools -> Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
+For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert], which wraps most git commands into R functions.
+Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools -> Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
 <!--I am leaning towards doing everything in R, not sure though-->
 <!--For Git we maybe should use RStudio's Git pane?-->
 
-To commit your first changes to the project, start with staging all files to be included in the commit using `git_add()`. Here, we stage our idea collection in the file `idea.md` and then commit it to our local repository with a meaningful commit message that will later help us keep track of all the changes over time.
+To commit your first changes to the project, start with staging all files to be included in the commit using `git_add()`.
+Here, we stage our idea collection in the file `idea.md` and then commit it to our local repository with a meaningful commit message that will later help us keep track of all the changes over time.
 
 ```r
 gert::git_add("idea.md")
 gert::git_commit("add a first concept")
 ```
 
-Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder <!-- Aaron, reference needed-->. This results in changes to your notes as follows:
+Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder <!-- Aaron, reference needed-->.
+This results in changes to your notes as follows:
 
 ```markdown
 <!--this is a Markdown file -->
@@ -300,7 +313,7 @@ These guesses strongly depend on the study you are planning, and there cannot be
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
 If you are unfamiliar with the specifics of SEM, we you may skip the next sections and continue in section ["Randome Number Generation"](#prng).
-To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix. 
+To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix.
 
 The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad [SD3, @Jones2013].
 
@@ -341,7 +354,9 @@ model <- combine(measurement(
   intercepts("MACH", list(0, "NA")))
 ```
 
-Data simulation is particularly easy in lavaan syntax using the function `simulateData`. More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020]. The following code simulates data from the population model `model_truth` with 1.000 cases in each group. 
+Data simulation is particularly easy in lavaan syntax using the function `simulateData`.
+More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
+The following code simulates data from the population model `model_truth` with 1.000 cases in each group.
 
 ```{r, results='hide'}
 simulated <- lavaan::simulateData(
@@ -436,7 +451,8 @@ generate_data(500,
 
 ### Randome Number Generation (optional) {#prng}
 
-Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code. To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
+Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code.
+To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
 It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The standard random number generator (RNG) produces high quality random numbers, but has is not safe to use in parrallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
@@ -463,7 +479,8 @@ future::value(future::future(runif(1), seed = 1235))
 <!--Hands-on: build simple functions tailored for your analysis-->
 
 
-Preregistration is the specification of a research plan in advance of data analysis. The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
+Preregistration is the specification of a research plan in advance of data analysis.
+The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
 Thus, it serves as a tool that may help to increase the credibility of empirical results.
 Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages.
 First, a preregistration is an opportunity to plan a study carefully.
@@ -474,14 +491,23 @@ The second advantage is transparency.
 A preregistration offers the interested reader more insight into the research process than a paper alone could.
 Some [citation!] argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
 While such an argument has some merits, we believe that often transparency outweighs these concerns.
-Deviation from a preregistration is still possible. If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study, and any deviation will simply be explicitly marked as such.
+Deviation from a preregistration is still possible.
+If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study, and any deviation will simply be explicitly marked as such.
 A preregistration, together with version control, allows their readers to inform themselves about these lessons learned.
 
 ### Preregistration as Code
 
-Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration. Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code. Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity. PAC essentially reverses the process of empirical research. Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results --- initially based on simulated data. Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration. 
+Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration. 
+Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code.
+Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
+PAC essentially reverses the process of empirical research.
+Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results --- initially based on simulated data.
+Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration.
 
-PAC works well within this reproducible framework. First, the preregistration becomes a part of the reproducible repository. It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project. If code was version-controlled and tagged (see Section XXX) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history. 
+PAC works well within this reproducible framework.
+First, the preregistration becomes a part of the reproducible repository.
+It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project.
+If code was version-controlled and tagged (see Section XXX) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history.
 
 One way to ensure that you can expect your analysis to work with real data is to simulate data.
 A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision.
@@ -529,7 +555,7 @@ Of course, if you commit the preregistration to Git and upload it into a public 
 However, simply using GitHub as a preregistration site is not ideal.
 First, you can delete your GitHub repository whenever you want.
 Second, while Git meticulously records when you made which change, committing and publishing are two different steps.
-Therefore, you can choose to upload to GitHub after conducting the study while still making it look like you have made the preregistration public before conducting the study. 
+Therefore, you can choose to upload to GitHub after conducting the study while still making it look like you have made the preregistration public before conducting the study.
 Third, any person with some experience in Git can retroactively change the history.
 You can alleviate these downsides by using zenodo.org to give a digital object identifier (DOI) to your preregistration because zenondo.org saves an unchangeable copy of your repository.
 You can learn more about this in [Creating a public release].
@@ -581,7 +607,9 @@ knitr::include_graphics(readme)
 
 ### License
 
-Note that publishing data, code, or other materials is not sufficient to allow other users to use it, modify it, or redistribute it. For example, according to German copyright law, a repository without a license must be assumed to be protected by copyright ([UrhG[^urhg]](https://www.gesetze-im-internet.de/englisch_urhg/englisch_urhg.html), Section 1, 7, 11). In many countries (i.e. the USA, European Union), a content creator has exclusive right to use their creation[@stoddenLegalFrameworkReproducible2009].
+Note that publishing data, code, or other materials is not sufficient to allow other users to use it, modify it, or redistribute it.
+For example, according to German copyright law, a repository without a license must be assumed to be protected by copyright ([UrhG[^urhg]](https://www.gesetze-im-internet.de/englisch_urhg/englisch_urhg.html), Section 1, 7, 11).
+In many countries (i.e. the USA, European Union), a content creator has exclusive right to use their creation[@stoddenLegalFrameworkReproducible2009].
 A license is the legal authorization of other people to use what you have created.
 <!---exact copy from our previous manuscript, do we need to change? -->
 In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media (such as stimulus materials if you created them).
@@ -715,7 +743,10 @@ Readers of your manuscript can ask questions or point out how to improve it afte
 ### GitHub Pull Requests
 
 <!--Hands on: Introduce GitHub PR and review-->
-There are various ways, in which other scholars may interact with your published repository. For example, in our exposition of the workflow for reproducibility [@Peikert2019], once we had published our preprint, scholars previously unknown to us started to send us spelling corrections. When multiple persons start modifying a project in parallel, keeping track of the edits and how they are supposed to be merged is crucial. Clearly, allowing everyone to edit the project is difficult.
+There are various ways, in which other scholars may interact with your published repository.
+For example, in our exposition of the workflow for reproducibility [@Peikert2019], once we had published our preprint, scholars previously unknown to us started to send us spelling corrections.
+When multiple persons start modifying a project in parallel, keeping track of the edits and how they are supposed to be merged is crucial.
+Clearly, allowing everyone to edit the project is difficult.
 
 _Pull requests_ allow anyone to contribute to a project, even though they were not granted write access, while the authors still retain full control over all changes.
 If someone wants to contribute, but they have no permission to write to a repository, they can create a copy of the project, called "fork", where they can push their changes.
@@ -869,12 +900,15 @@ And it will fully reproduce the project, if you have all required software insta
 ## External Dependencies
 
 Modern data analysis is only feasible because researchers rely on much external software.
-One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility. The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
+One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
+The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
 The critical problem is the fragility of a software setup.
-Many components have to fit perfectly together, and each change, e.g. an update, risks that balance . At the same time, software updates are very much necessary to remove errors or improve methodology [@epskamp2019].
+Many components have to fit perfectly together, and each change, e.g. an update, risks that balance .
+At the same time, software updates are very much necessary to remove errors or improve methodology [@epskamp2019].
 Another problem is that the software environment is also variable and what works on one machine might not work on any other.
 Containers directly address such issues.
-Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself. The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
+Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself.
+The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
 Docker does this without interfering with the already installed software by using a virtual software environment that is independent of the host software environment.
 Such a snapshot of the software stack is called an "image".
 Packaging all needed software in such an image requires considerable amounts of storage space.
@@ -884,8 +918,10 @@ For example, there are ready-made images for R based on Ubuntu (a Linux operatin
 Users can then install whatever they additionally need on top of these pre-made images.
 The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
 It does include Ubuntu, R, RStudio, LaTeX as well as many R packages like the tidyverse [@tidyverse], amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.
-Second, instead of saving a binary image of the software, one can also save a container recipe, a so-called  `Dockerfile`. This recipe is a textual description of all commands that need to be executed to recreate the image.
-Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image. However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
+Second, instead of saving a binary image of the software, one can also save a container recipe, a so-called  `Dockerfile`.
+This recipe is a textual description of all commands that need to be executed to recreate the image.
+Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image.
+However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
 With the `repro`-package adding R packages dependencies is as simple as adding them to the header under the tag `packages:`
 
@@ -946,8 +982,8 @@ An R-focused alternative is the R package [`renv`](https://rstudio.github.io/ren
 `renv` isolates all R packages used in a project and records there version as well as the source from where they where installed.
 This mechanism is faster and simpler to use than Docker, at the expense of only tracking R packages.
 `renv` therefore is already of great use for reproducibility [@vanlissa2020worcs].
-However, even when your project relies solely on R, external dependencies can still change the outcome of computations, like the operating system, the compilers used, the BLAS system <!--AP reference, also explain what this is... most people will not know--> in use and so forth.
-Most importantly the R version itself has to match. 
+However, even when your project relies solely on R, external dependencies can still change the outcome of computations, like the operating system, the compilers used, the BLAS system in use and so forth.
+Most importantly the R version itself has to match.
 For example, @Peikert2019 illustrate how the generation of random numbers across different R versions is a threat to reproducibility.
 
 [^renv]: https://rstudio.github.io/renv/articles/renv.html
@@ -955,17 +991,22 @@ For example, @Peikert2019 illustrate how the generation of random numbers across
 
 ### High-performance computing environments (optional)
 
-The `repro` package is particularly well-suited for computationally intensive data analyses and simulations that  are to be run on distributed computing environments. By using containers, `repro` ensures identical execution across platforms and thus guarantees that a data analysis or simulation that was designed and tested on a local computer will be executed in the identical manner on a remote machine or various remote machines across an entire computing cluster. Thereby, the repro package makes massive parallel computing in heterogeneous computing environments less error-prone while ensuring the full documentation of all computational steps taken — even if some or all of them were run in parallel on distributed platforms.
+The `repro` package is particularly well-suited for computationally intensive data analyses and simulations that  are to be run on distributed computing environments.
+By using containers, `repro` ensures identical execution across platforms and thus guarantees that a data analysis or simulation that was designed and tested on a local computer will be executed in the identical manner on a remote machine or various remote machines across an entire computing cluster.
+Thereby, the repro package makes massive parallel computing in heterogeneous computing environments less error-prone while ensuring the full documentation of all computational steps taken — even if some or all of them were run in parallel on distributed platforms.
 Alone the sheer data size often warrants distributed computing, e.g. the European Bioinformatics Institute stores more than 120 Petabyte of publicly accessible data [@cookEuropeanBioinformaticsInstitute2018], single FMRI studies quickly amount to hundreds of Gigabyte[^openneuro] and even purely behavioral data like from the moral machine experiment [>10GB, @awadMoralMachineExperiment2018] can become to big to handle .
 
 [^openneuro]: https://openneuro.org/public/datasets
 
 As default, `repro` uses Docker, which is the defacto standard for cloud computing, as a container solution.
-However, Docker requires administrator rights for execution. Whereas this is no issue on most modern cloud computing infrastructures, it is often an issue in classic HPC environments.
-Singularity is an alternative solution. It was designed to run without administratot rights, while maintaining full compatibility with Docker images.
+However, Docker requires administrator rights for execution.
+Whereas this is no issue on most modern cloud computing infrastructures, it is often an issue in classic HPC environments.
+Singularity is an alternative solution.
+It was designed to run without administratot rights, while maintaining full compatibility with Docker images.
 If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
 Importantly, this choice does not affect how code is executed inside the container.
-Like with Docker, the default `Makefile` generated by `repro` comes with a mechanism to automatically send all commands to Singularity. To reproduce an analysis with Singularity, simple add the parameter `SINGULARITY=TRUE` as follows:
+Like with Docker, the default `Makefile` generated by `repro` comes with a mechanism to automatically send all commands to Singularity.
+To reproduce an analysis with Singularity, simple add the parameter `SINGULARITY=TRUE` as follows:
 
 ```bash
 make SINGULARITY=TRUE
@@ -976,7 +1017,9 @@ make SINGULARITY=TRUE
 
 ## Reproduce a Project
 
-A reproducible project should not only be reproducible in theory, but it should be simple to reproduce. Typically, it is argued that results should be reproducible by a Ph.D. student from the same discipline who had experience with the statistical software used [@obels2020]. Even if all code and data are available in a repository, if reproducibility takes too long because of a lack of structure and documentation, it must be regarded as non-reproducible [@obels2020].
+A reproducible project should not only be reproducible in theory, but it should be simple to reproduce.
+Typically, it is argued that results should be reproducible by a Ph.D. student from the same discipline who had experience with the statistical software used [@obels2020].
+Even if all code and data are available in a repository, if reproducibility takes too long because of a lack of structure and documentation, it must be regarded as non-reproducible [@obels2020].
 
 Ideally, you have a statement in the README that contains a few steps to reproduce the project, where most steps are automatic and standardized.
 This statement should also note the required software.
@@ -1003,7 +1046,10 @@ Note that both this tutorial as well as our article on the reproducible workflow
 ## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
-A prerequisite to reproducibility is the availability of code and data. We use containers to guarantee that all code components are available and work as expected. Ideally, all data is also stored in the repository. In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
+A prerequisite to reproducibility is the availability of code and data.
+We use containers to guarantee that all code components are available and work as expected.
+Ideally, all data is also stored in the repository.
+In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
 You may find yourself in a situation where you can make the data only available on request.
 A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
 To at least check that the data was not changed, we suggest to provide a so called "hash", which is a cryptographic fingerprint.
@@ -1011,12 +1057,7 @@ If the data changes, so does its fingerprint or hash.
 The user can therefore compare if the data they have received is the same that was used in the original publication, as long as the original publication does contain the hash of the data.
 
 To verify the data integrity, you can include a line of code after reading the data that looks like this:
-<<<<<<< HEAD
-<!-- AP: shouldn't this be wrapped into a repro function and also stored in the YAML header??? -->
-<!-- AP: can you demonstrate this with the actual openpsychometric data instead?-->
-=======
 
->>>>>>> 2bfdb64 (turn AP callouts into GitHub issues)
 ```{r}
 # create a dummy data.frame with two columns
 x <- data.frame(VAR1 = c(1, 2, 3, 4), VAR2 = c(0, 4, 6, 9))
@@ -1034,7 +1075,7 @@ We employed the same mechanism for our simulation to verify that the simulation 
 An compromise between making the data publicly available and keeping it closed is to publish synthetic data.
 Such approach tries to recreate the marginal distribution and bivariate relationships in simulated data, e.g. with the R package `synthpop`[@nowokSynthpopBespokeCreation2016].
 The results of such data should generally not be interpreted.
-However, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data. 
+However, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data.
 
 # Archival and Dissemination
 
@@ -1081,7 +1122,10 @@ After you have linked a GitHub repository you trigger the archivation by creatin
 
 ## Creating a Release
 
-In software development, a release is the distribution of a piece of computer software indicating a certain maturity in development and level of completeness.  GitHub has a "release" function, which creates a link to a specific snapshot of your project that then is available as a single compressed file. We believe that the idea of software releases can be leveraged for singling out important versions in a research project. We found it useful to label the following stages of development as release:
+In software development, a release is the distribution of a piece of computer software indicating a certain maturity in development and level of completeness.
+GitHub has a "release" function, which creates a link to a specific snapshot of your project that then is available as a single compressed file.
+We believe that the idea of software releases can be leveraged for singling out important versions in a research project.
+We found it useful to label the following stages of development as release:
 - Preregistration (repository contains the final data analysis plan; also see the Section on PAC)
 - Completion of data collection (repository contains all study data)
 - Preprint (repository exactly reproduces a preprint that is hosted externally)
@@ -1109,14 +1153,15 @@ link_index()
 
 # Summary
 
-Here, we provided a step-by-step tutorial with what we think are best practices for creating a fully reproducible repository for data analysis projects that center on the statistical programming language R. 
-The workflow avoids common threats to reproducibility, such as copy-and-paste errors, missing files, missing software dependencies, or side-effects through changing dependent software packages, changes in the programming language, or even at the level of the operating system itself. 
-However, the workflow as proposed by @Peikert2019 requires mastering up to four different software tools and their specification languages, which are typically not taught in the curriculum of social and behavioral sciences but rather belong to computer science and software development. 
-Currently, this is a serious obstacle in adopting the workflow for researchers who strive for reproducibility but have little training in computer science and software development.  
-The repro package, which we introduced here, supports scholars in creating reproducible workflows. It abstracts tedious and error-prone tasks such as the creation of a Makefile or the specification of a container.
-By extending the YAML specification that is used for storing meta information in R Markdown files, which are becoming increasingly popular among R users, repro helps users to implement @Peikert2019's workflow with minimal effort. Most importantly, repro is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow. 
-Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the repro package. 
-
+Here, we provided a step-by-step tutorial with what we think are best practices for creating a fully reproducible repository for data analysis projects that center on the statistical programming language R.
+The workflow avoids common threats to reproducibility, such as copy-and-paste errors, missing files, missing software dependencies, or side-effects through changing dependent software packages, changes in the programming language, or even at the level of the operating system itself.
+However, the workflow as proposed by @Peikert2019 requires mastering up to four different software tools and their specification languages, which are typically not taught in the curriculum of social and behavioral sciences but rather belong to computer science and software development.
+Currently, this is a serious obstacle in adopting the workflow for researchers who strive for reproducibility but have little training in computer science and software development.
+The repro package, which we introduced here, supports scholars in creating reproducible workflows.
+It abstracts tedious and error-prone tasks such as the creation of a Makefile or the specification of a container.
+By extending the YAML specification that is used for storing meta information in R Markdown files, which are becoming increasingly popular among R users, repro helps users to implement @Peikert2019's workflow with minimal effort.
+Most importantly, repro is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow.
+Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the repro package.
 
 # References
 
