@@ -261,6 +261,8 @@ gert::commit_all("switch to CFA to exclude bias in measurement as possible confo
 ```
 
 And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
+This detection of what has changed works on a line-by-line basis.
+We recommend therefore to keep each sentence in a Markdown on its own line to generate clean difference views.
 GitHub is, in its essence, a web interface to Git, and you may learn more about how to use it under the section on [GitHub].
 
 ```{r idea-change-screenshot, include=FALSE}
