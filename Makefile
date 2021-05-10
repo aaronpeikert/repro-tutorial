@@ -4,7 +4,7 @@ WORKDIR := $(CURDIR)
 # list below your targets and their recipies
 all: install.md README.md manuscript.pdf
 
-manuscript.pdf: manuscript.Rmd R/lavaan_helper.R R/simulation.R R/link.R images/nutshell.pdf apa7.csl
+manuscript.pdf: manuscript.Rmd R/simulation_funs.R R/simulation.R R/link.R images/nutshell.pdf apa7.csl
 	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
 
 images/nutshell.svg:
