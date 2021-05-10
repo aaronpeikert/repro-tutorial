@@ -130,9 +130,9 @@ check_make()
 check_docker()
 ```
 
-If these commands detect that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
+If any of these commands find that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
 Please make sure that all three commands pass before you continue with the tutorial.
-This process is only required once per computer and does not need to be repeated per project.
+This process is only required once per computer and does not need to be repeated for each project.
 
 # Organizing Files
 
@@ -143,10 +143,11 @@ Therefore, we suggest starting early, ideally from the moment you decide to purs
 The first step towards reproducibility is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files without missing anything.
 <!-- Hands-on: Introducing RProjects-->
-RStudio's _R Projects_ facilitate this concept of a project folder.
+RStudio's _R Projects_ facilitate this concept of a project folder. The `repro` package offers an R Studio template, which sets up a file structure that follows best practices and conventions.<!--AP this is from your thesis - can you please add citations as to which practices and conventions these are?-->
 To create one, click on:
 
 > File → New Project... → New Directory → New Project
+
 
 ## Dynamic Documents
 
@@ -973,7 +974,7 @@ make DOCKER=TRUE
 
 You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manuel` to install software beyond R packages.
 Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manuel`.
-We recomend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
+We recommend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
 
 <!-- after this everything is optional? -->
 
