@@ -4,6 +4,7 @@ author: Aaron Peikert and Andreas M. Brandmaier
 output: bookdown::pdf_document2
 repro:
   packages:
+    - tidyverse
     - usethis
     - gert
     - aaronpeikert/repro@7bfaf98
@@ -11,9 +12,11 @@ repro:
     - rstudio/webshot2@f62e743
     - targets
     - renv
+    - slider
+    - patchwork
   scripts:
-    - R/lavaan_helper.R
     - R/simulation.R
+    - R/simulation_funs.R
     - R/link.R
 csl: apa7.csl
 numbered_headings: true
@@ -26,7 +29,7 @@ bibliography: ["references.bib", "packages.bib"]
 
 ```{r setup, include=FALSE}
 library(repro)
-library(tidyverse)
+automate_load_packages()
 automate_load_scripts()
 source(here::here("R", "link.R"))
 ```
@@ -246,9 +249,7 @@ Machiavellianism is higher in male persons.
 
 # Analytic Strategy
 
-Multigroup Confirmatory Factor Analysis
-First, establish strong measurement invariance using a CFI cutoff-criterion
-Second, test for differences in latent factor means of Machiavellianism using a $\chi^2$ test
+Multigroup Confirmatory Factor Analysis with equal loadings and intercepts
 
 # Sample
 
@@ -294,7 +295,7 @@ However Git is designed for collaboration, we therefore recommend finding a part
 <!-- but explain that good science is often not as neat, strive for the ideal -->
 
 ```{r, include=FALSE}
-source(here::here("R", "simulation.R"))
+source(here::here("R", "simulation_funs.R"))
 ```
 
 ```{r, include=FALSE}
@@ -302,11 +303,10 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
-
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 The machine learning community has begun to use simulated data to test models and their implementation [@braiekTestingMachineLearning2020].
-Beyond checking the technical side of the model, simulation is also beneficial on a conceptual leven [@axelrodAdvancingArtSimulation1997].
+Beyond checking the technical side of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
 No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about them.
 If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
@@ -327,8 +327,8 @@ The estimates for the construction sample, which was recruited from Amazon’s M
 They report a gender difference (at the manifest level) depending on the study between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
 ```{r loadings, echo=FALSE}
-knitr::kable(data.frame(Item = 1:9,
-                        Loading = loadings_jones_paulhus),
+knitr::kable(t(data.frame(Item = as.character(1:9),
+                        Loading = loadings_jones_paulhus)),
              caption = "Factor loadings from an Exploratory Structrural Equation Model as reported in Jones \\& Paulhus (2013)")
 ```
 
@@ -337,32 +337,20 @@ This way, we make sure that our analytic strategy is viable even in non-optimal 
 As a heuristic guess, we assume that the factor loadings are 30% lower than those reported by @Jones2013 and that the standardized mean difference is only 0.2.
 These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
-[^lavaan]: https://lavaan.ugent.be
-
-```{r, results='asis', echo=FALSE}
-model_truth <- combine(
-  measurement(
-    "MACH",
-    items("x", 9),
-    loadings = round(loadings_jones_paulhus * 0.7, 2)
-    ),
-  intercepts("MACH", list(0, 0.2))
-  )
-cat("```r",
-    model_truth,
-    "```",
-    sep = "\n")
-model <- combine(measurement(
-  "MACH",
-  items("x", 9)),
-  intercepts("MACH", list(0, "NA")))
+```{r}
+model_truth <-
+"MACH =~ 0.27*x1 + 0.22*x2 + 0.28*x3 + 0.36*x4 + 0.41*x5 + 0.5*x6 + 0.43*x7 + 0.32*x8 + 0.36*x9
+MACH ~ c(0, 0.2)*1
+MACH ~~ c(1, 1)*MACH"
 ```
+
+[^lavaan]: https://lavaan.ugent.be
 
 Data simulation is particularly easy in lavaan syntax using the function `simulateData`.
 More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
 The following code simulates data from the population model `model_truth` with 1.000 cases in each group.
 
-```{r, results='hide'}
+```{r}
 simulated <- lavaan::simulateData(
   model_truth,
   sample.nobs = c(1000, 1000),
@@ -374,6 +362,9 @@ simulated <- lavaan::simulateData(
 And then fit the statistical model:
 
 ```{r}
+model <- "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+MACH ~~ c(1, NA)*MACH
+MACH ~ c(0, NA)*1 + c(zero, diff)*1"
 fit <-
   lavaan::cfa(
     model,
@@ -389,69 +380,148 @@ We overlooked a crucial assumption of this model, that is, measurement invarianc
 This assumption is also baked into our simulation of the data.
 There is a good chance that this assumption is violated.
 We, therefore, adapt our analysis to plan for this contingency.
-After fitting the model with strict measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
+After fitting the model with strong measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
 While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
 For simplicity, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
 Anyhow, remember that what we consider realistic for our case could be unfit for your case.
 
-If you are satisfied with your assumptions, it helps to write a function that expresses them, like this one:
+If you are satisfied with your assumptions for the data simulation, it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
 
 ```{r}
 generate_data
 ```
 
+And to build another function that captures your planned analysis.
 Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R", "GitHub")`.
 
-With its help we can simulate 500 cases and fit our analysis.
-
 ```{r}
-true_diff <- 0.2
-model_truth <- combine(
-  measurement(
-    "MACH",
-    items("x", 9),
-    loadings = round(loadings_jones_paulhus * 0.7, 2)
-  ),
-  intercepts("MACH", list(0, true_diff)),
-  variances("MACH", list(1, 1))
-)
-
-model_same <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0,0)*1
-  MACH ~~ c(1, NA)*MACH"
-
-model_differ <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0, NA)*1 + c(zero, diff)*1
-  MACH ~~ c(1, NA)*MACH"
-generate_data(500,
-              model_truth,
-              model_same,
-              model_differ,
-              list(std_estimate = get_std_estimate),
-              group.equal = c("loadings", "intercepts"),
-              mod_load = 3,
-              mod_int = 3,
-              std.lv = TRUE)
+planed_analysis
+extract_results
 ```
 
-Note, that this certainly results in different numbers each time we run it.
+With its help we can simulate 1000 cases and fit our analysis.
 
 ```{r}
-generate_data(500,
-              model_truth,
-              model_same,
-              model_differ,
-              list(std_estimate = get_std_estimate),
-              group.equal = c("loadings", "intercepts"),
-              mod_load = 3,
-              mod_int = 3,
-              std.lv = TRUE)
+generate_data(1000) %>% 
+  planed_analysis() %>% 
+  extract_results()
 ```
+
+Note, that this certainly results in different numbers each time we run it (see ["Randome Number Generation"](#prng)).
+Of course it is already helpful to simulate a single dataset to test if the analysis works in principle, but repeating the analysis several times and vary parameters lets you verify more properties of your analysis.
+First, you can check if the planned analysis recovers the simulated values (`std_estimate` should be close to the simulated mean difference of 0.2).
+Second, it enables you to plan an appropriate sample size because you are able to quantify the sampling variability.
+
+To complete a simulation study we need a function that repeats the analysis for different conditions (here only for different n):
+
+```{r}
+simulation_study
+```
+
+```{r}
+res <- read_csv(here::here("results.csv"), col_types = "ddddd")
+```
+
+```{r}
+res_interval <- res %>%
+  select(n_obs, std_estimate) %>% 
+  filter(!is.na(std_estimate)) %>% 
+  group_by(n_obs) %>% 
+  summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
+            .groups = "drop", median = median(std_estimate)) %>% 
+  unnest(c(interval)) %>% 
+  mutate(width = upper - lower, perc = 1 - alpha) %>% 
+  group_by(alpha) %>% 
+  arrange(n_obs) %>% 
+  mutate(across(c(width, upper, lower),
+                ~slide_dbl(.x, mean, na.rm = TRUE, .before = 2, .after = 0, .complete = FALSE))) %>% 
+  ungroup() %>% 
+  arrange(perc)
+```
+
+```{r}
+choosen_perc <- .8
+choosen_width <- .2
+true_diff <- .2
+minn <- filter(res_interval, perc == choosen_perc, width < choosen_width) %>% 
+  filter(n_obs == min(n_obs))
+sim_n <- pull(res, n_obs)
+sim_nmax <- max(sim_n)
+sim_n_unique <- unique(sim_n)
+sim_nstep <- sim_n_unique[2] - sim_n_unique[1]
+```
+
+```{r}
+plot_interval <- res_interval %>%
+  ggplot(aes(
+    n_obs,
+    ymin = lower,
+    ymax = upper,
+    fill = perc,
+    group = alpha
+  )) +
+  geom_ribbon() +
+  geom_line(aes(y = median), color = "white") +
+  geom_hline(yintercept = true_diff, linetype = "dotted") +
+  scale_fill_viridis_c(
+    begin = 1,
+    end = 0,
+    breaks  = 1 - seq(0.05, .2, 0.05),
+    labels = . %>% scales::percent(accuracy = 1)
+  ) +
+  scale_y_continuous(n.breaks = 10) +
+  scale_x_continuous(breaks = seq(0, sim_nmax, sim_nstep * 10)) +
+  theme_minimal() +
+  labs(x = "N per Group", y = "Standardized Effect Size") +
+  theme(legend.title = element_blank()) +
+  NULL
+```
+
+```{r}
+plot_width <- res_interval %>%
+  ggplot(aes(n_obs, width, color = perc, group = perc)) +
+  geom_line() +
+  geom_point(
+    data = minn,
+    size = 3,
+    color = "black",
+    shape = 3
+  ) +
+  scale_color_viridis_c(
+    begin = 1,
+    end = 0,
+    breaks = 1 - seq(0.05, .2, 0.05),
+    labels = . %>% scales::percent(accuracy = 1)
+  ) +
+  theme_minimal() +
+  scale_y_log10(breaks = seq(0, 0.8, .1)) +
+  scale_x_continuous(breaks = seq(0, sim_nmax, sim_nstep * 10)) +
+  labs(x = "N per Group", y = "Width of quantile\n(Standardized Effect Size)") +
+  theme(legend.title = element_blank()) +
+  NULL
+```
+
+```{r}
+simulation_plot <- plot_interval +
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank()) + 
+  plot_width +
+  plot_layout(nrow = 2, guides = 'collect') +
+  plot_annotation(tag_levels = 'A')
+```
+
+```{r}
+simulation_plot
+```
+
+Plot A depicts the range of effect sizes we observed in the simulation, where the colour encodes the density.
+The light yellow interval shows where 80% of the estimates land.
+The dotted line represents the simulated true effect size; the white line shows the median observed effect sizes.
+
+Plot B represents the width of the interval shown in Plot A on a logarithmic scale.
+The cross shows the minimum required sample size so that 80% of the estimates land in a range of +/- .1.
 
 ### Randome Number Generation (optional) {#prng}
 
@@ -481,7 +551,6 @@ future::value(future::future(runif(1), seed = 1235))
 ## Preregistration (optional)
 
 <!--Hands-on: build simple functions tailored for your analysis-->
-
 
 Preregistration is the specification of a research plan in advance of data analysis.
 The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
@@ -973,12 +1042,12 @@ This mechanism is triggered by `DOCKER=TRUE` in the make call:
 # this should be run in the terminal
 make DOCKER=TRUE
 ```
+The function `automate()` combines `automate_docker()` & `automate_make()`.
 
 You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manual` to install software beyond R packages.
 Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manual`.
 We recomend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
 
-The function `automate()` combines `automate_docker()` & `automate_make()`.
 
 <!-- after this everything is optional? -->
 
@@ -994,7 +1063,6 @@ Most importantly the R version itself has to match.
 For example, @Peikert2019 illustrate how the generation of random numbers across different R versions is a threat to reproducibility.
 
 [^renv]: https://rstudio.github.io/renv/articles/renv.html
-
 
 ### High-performance computing environments (optional)
 
