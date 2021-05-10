@@ -1,11 +1,6 @@
-source(here::here("R", "lavaan_helper.R"))
+source(here::here("R", "standardizedSolution.R"))
 
 #----sim-functions----
-competing_models <- function(data, same, differ, ...){
-  list(same = cfa(same, data, ...),
-       differ = cfa(differ, data, ...))
-}
-
 filter_dots <- function(..., fun, what = names(formals(fun))){
   dots <- list(...)
   if(any(names(dots) == ""))stop("filter_dots does not allow unnamed args!")
@@ -22,16 +17,17 @@ safe_cfa <- function(...){
   do.call("cfa", dots, envir = getNamespace("lavaan"))
 }
 
-competing_models_mod <- function(data, same, differ, mod_load = 0L, mod_int = 0L, pars = "", ...){
+stitch <- function(pars){
+  with(pars, str_c(lhs, op, rhs))
+}
+
+partial_measurement_invariance <- function(data, same, differ, mod_load = 0L, mod_int = 0L, pars = "", ...){
   res_mod <- set_free_mod(differ, data, pars, op = "=~", depth = mod_load, ...)
   res_mod <- set_free_mod(differ, data, res_mod$pars, op = "~1", depth = mod_int, ...)
   fits <- list(same = safe_cfa(model = same, data = data, group.partial = res_mod$pars, ...),
                differ = res_mod$differ)
   
 }
-
-safe_competing_models <- safely(competing_models_mod,
-                                otherwise = list(same = NA, differ = NA))
 
 set_free_mod <- function(differ, data, pars, depth = 3, op = c("~1", "=~"), ...){
   differ_fit <- safe_cfa(model = differ, data = data, group.partial = pars, ...)
@@ -56,9 +52,6 @@ set_free_mod <- function(differ, data, pars, depth = 3, op = c("~1", "=~"), ...)
   }
 }
 
-safe_set_free_mod <- safely(set_free_mod,
-                            otherwise = list(same = NA, differ = NA))
-
 is_converged_ <- function(fit)lavaan::lavInspect(fit, "converged")
 is_converged <- function(fit){
   if(inherits(fit, "lavaan"))return(is_converged_(fit))
@@ -68,12 +61,13 @@ all_converged <- function(fits)all(purrr::map_lgl(fits, is_converged))
 
 get_fit <- function(fits, measure){
   stopifnot(length(fits) == 2L, length(measure) == 1L)
-  if(!all_converged(fits))return(NA)
-  diff <- fitMeasures(fits$differ, measure) - fitMeasures(fits$same, measure)
+  if(!is_converged(fits$differ))return(NA)
+  diff <- lavaan::fitMeasures(fits$differ, measure)
   as.numeric(diff)
 }
-get_bic <- function(fits)get_fit(fits, "BIC")
-get_aic <- function(fits)get_fit(fits, "AIC")
+
+get_rmsea <- function(fits)get_fit(fits, "rmsea")
+get_cfi <- function(fits)get_fit(fits, "cfi")
 get_lrt_p <- function(fits){
   if(!all_converged(fits))return(NA)
   lavaan::anova(fits$same, fits$differ)$`Pr(>Chisq)`[2]
@@ -87,41 +81,84 @@ get_parameter <- function(fits, what, label, how){
   out
 }
 
-get_estimate <- function(fits, label = "diff"){
-  get_parameter(fits, "est", label, how = parameterestimates)
-}
-get_delta_p <- function(fits, label = "diff"){
-  get_parameter(fits, "pvalue", label, how = parameterestimates)
-}
-get_std_delta_p <- function(fits, label = "diff"){
-  get_parameter(fits, "pvalue", label, how = standardizedSolution)
-}
 get_std_estimate <- function(fits, label = "diff"){
   get_parameter(fits, "est.std", label, how = standardizedSolution)
 }
-generate_data <- function(n_obs, truth, same, differ, extract_fns, ...){
-  data <- lavaan::simulateData(
+
+generate_data <- function(n_obs){
+  truth <- "MACH =~ 0.27*x1 + 0.22*x2 + 0.28*x3 + 0.36*x4 + 0.41*x5 + 0.5*x6 + 0.43*x7 + 0.32*x8 + 0.36*x9
+  MACH ~ c(0, 0.2)*1
+  MACH ~~ c(1, 1)*MACH"
+  lavaan::simulateData(
     truth,
     sample.nobs = rep(n_obs, 2), 
     standardized = TRUE)
-  fits <- competing_models_mod(data, same, differ, group = "group", ...)
+}
+
+planed_analysis <- function(data){
+  model <- "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+   MACH ~~ c(1, NA)*MACH"
+  # intercept is set to zero
+  same <- paste0(model, "
+  MACH ~ c(0,0)*1")
+  # intercept is free in one group
+  differ <-  paste0(model, "
+  MACH ~ c(0, NA)*1 + c(zero, diff)*1")
+  # fit strong measurement invariance, then free <= 3 loadings and/or intercepts
+  partial_measurement_invariance(
+    data,
+    same,
+    differ,
+    mod_load = 3L,
+    mod_int = 3L,
+    group = "group",
+    group.equal = c("loadings", "intercepts"),
+    auto.fix.first = FALSE
+  )
+}
+
+extract_results <- function(fits) {
+  # extract_fns are helper that extract variables of interest, like p value etc.
+  extract_fns <-
+    list(
+      std_estimate = get_std_estimate,
+      lrt_p = get_lrt_p,
+      rmsea = get_rmsea,
+      cfi = get_cfi
+    )
+  # we use purrr::safely so that the simulation continues
+  # even when some models fail
   save_fns <- map(extract_fns, purrr::safely, otherwise = NA)
   results <- map(save_fns, exec, fits)
   as_tibble(map(results, "result"))
 }
 
-safe_generate_data <- safely(generate_data, otherwise = NA)
-
-generate_data_setup_ <- function(setup, .furrr_options = furrr_options()){
-  .furrr_options$seed <- TRUE
-  mutate(select(setup, -extract_fns),
-    results = future_pmap(setup, safe_generate_data, .options = .furrr_options))
+simulation <- function(n_obs){
+  fits <- purrr::safely(planed_analysis)(generate_data(n_obs))$result
+  extract_results(fits)
 }
 
-generate_data_setup <- function(n_sim, setup, .furrr_options = furrr_options()){
-  future_map(seq_len(n_sim),
-             ~generate_data_setup_(setup, .furrr_options = .furrr_options),
-             .options = .furrr_options)
+simulation_study_ <-
+  function(n_obs, .options = furrr::furrr_options()) {
+    .options$seed <- TRUE
+    names(n_obs) <- n_obs
+    # repeat simulation for different n
+    future_map_dfr(n_obs,
+                   ~ simulation(.x),
+                   .id = "n_obs",
+                   .options = .options)
+  }
+
+simulation_study <- function(n_obs, n_sim, .options = furrr::furrr_options()){
+  # `map` is equivalent to lapply or for-loop
+  # `future` is a package for parallelization, see High Performance Computing
+  # repeat simulation n_sim times
+  future_map_dfr(
+    seq_len(n_sim),
+    # repeat simulation for different n
+    ~ simulation_study_(n_obs, .options = .options),
+    .options = .options
+  )
 }
 
 ls_funs <- function(pos = parent.frame(), ...){

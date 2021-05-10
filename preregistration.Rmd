@@ -31,6 +31,7 @@ library(furrr)
 library(slider)
 library(patchwork)
 source(here::here("R", "simulation.R"))
+repro::automate_load_scripts()
 # if you have access to a hpc envir specify this in R/hpc.R
 # if not we use local multicore
 # to speed up consider reduce nsim; increase nstep in ↑YAML↑
@@ -51,57 +52,18 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
-```{r models}
-true_diff <- 0.2
-model_truth <- combine(
-  measurement(
-    "MACH",
-    items("x", 9),
-    loadings = round(loadings_jones_paulhus * 0.7, 2)
-  ),
-  intercepts("MACH", list(0, true_diff)),
-  variances("MACH", list(1, 1))
-)
-
-model_same <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0,0)*1
-  MACH ~~ c(1, NA)*MACH"
-
-model_differ <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0, NA)*1 + c(zero, diff)*1
-  MACH ~~ c(1, NA)*MACH"
-```
-
 ```{r sim}
-extract_fns <- list(bic = get_bic, 
-                    aic = get_aic,
-                    lrt_p = get_lrt_p,
-                    delta_p = get_delta_p,
-                    estimate = get_estimate,
-                    std_delta_p = get_std_delta_p,
-                    std_estimate = get_std_estimate)
-
 n_obs <- seq(params$nmin, params$nmax, params$nstep)
 n_sim <- params$nsim
-
-setup <- expand_grid(n_obs = n_obs,
-                     truth = model_truth,
-                     same = model_same,
-                     differ = model_differ,
-                     mod_load = c(3),
-                     mod_int = c(3),
-                     extract_fns = list(extract_fns),
-                     group.equal = list(c("loadings", "intercepts")),
-                     auto.fix.first = FALSE)
+# n_sim * length(n_obs)
+# [1] 100000
 to_export <- ls_funs() %>% map(get)
-to_export <- c(list(setup = setup), to_export)
-RNGkind("L'Ecuyer-CMRG")
-set.seed(params$seed)
-seed <- params$seed
-res_raw %<-% generate_data_setup(n_sim,
-                setup,
+to_export <-
+  c(to_export, list(
+    n_obs = seq(params$nmin, params$nmax, params$nstep),
+    n_sim = params$nsim
+  ))
+res_raw %<-% simulation_study(n_obs, n_sim,
                 furrr_options(
                   globals = to_export,
                   seed = seed,
@@ -118,24 +80,11 @@ write_rds(res_raw, here::here("res_raw.rds"))
 ```
 
 ```{r}
-res <- res_raw  %>%
-  map(bind_rows) %>% 
-  bind_rows() %>% 
-  mutate(results = map(results, "result")) %>% 
-  unnest(results)
-
-res <- mutate(
-  res,
-  dec_bic = bic < 0,
-  dec_aic = aic < 0,
-  dec_aic2 = aic < -2,
-  dec_lrt_p = lrt_p < 0.05,
-  dec_delta_p = delta_p < 0.05)
-
+res <- res_raw %>% mutate(n_obs = as.numeric(n_obs))
 res_interval <- res %>%
-  select(n_obs, std_estimate, mod_load, mod_int) %>% 
+  select(n_obs, std_estimate) %>% 
   filter(!is.na(std_estimate)) %>% 
-  group_by(n_obs, mod_load, mod_int) %>% 
+  group_by(n_obs) %>% 
   summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
             .groups = "drop", median = median(std_estimate)) %>% 
   unnest(c(interval)) %>% 
@@ -151,6 +100,7 @@ res_interval <- res %>%
 ```{r}
 choosen_perc <- .8
 choosen_width <- .2
+true_diff <- .2
 minn <- filter(res_interval, perc == choosen_perc, width < choosen_width) %>% 
   filter(n_obs == min(n_obs))
 ```
@@ -206,12 +156,14 @@ plot_width <- res_interval %>%
 ```
 
 ```{r}
-plot_interval +
+simulation_plot <- plot_interval +
   theme(axis.text.x = element_blank(), axis.title.x = element_blank()) + 
   plot_width +
   plot_layout(nrow = 2, guides = 'collect') +
   plot_annotation(tag_levels = 'A')
-ggsave("plot.svg", device = svglite::svglite, width = 7, height = 4)
+simulation_plot
+write_rds(simulation_plot, "simulation_plot.rds")
+ggsave("simulation.svg", device = svglite::svglite, width = 7, height = 4)
 ```
 
 Plot A depicts the range of effect sizes we observed in the simulation, where the colour encodes the density.
