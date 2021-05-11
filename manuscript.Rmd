@@ -35,18 +35,19 @@ source(here::here("R", "link.R"))
 
 A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions.
 Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716].
-Here, *replicability* refers to the degree to which original studies and their derivatives yield consistent results.In other words, a succesful replication study finds a consistent effect with an original study in a new sample of data.
+Here, *replicability* refers to the degree to which original studies and their derivatives yield consistent results.
+In other words, a successful replication study finds a consistent effect with an original study in a new sample of data.
 Enabling the assessment of scientific conclusions requires a systematic and rigorous approach to research.
-Researchers across various fields have identified a *crisis* of non-replicability of findings [e.g. @aac4716]- <!--citation needed, e.g. [@aac4716]-->
+Researchers across various fields have identified a *crisis* of non-replicability of findings [e.g. @aac4716]. <!--citation needed, e.g. [@aac4716]-->
 
 <!-- define replicability and then... 
  define reproducibility -->
 Even worse, researchers might often not even be able to achieve reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code.
 Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models.
 With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken.
-With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves.
+With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
 Only with access to both data and procedures can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.
-Only if both the data and code are shared, can we obtain a reproducible scientific product, facilitating assessment of its validity and later reuse.
+With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
 
 In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
 However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
@@ -70,7 +71,7 @@ We identified the following common four causes for non-reproducibility:
 
 1.	Multiple inconsistent versions of code and data; for example, the dataset has changed over time because outliers were removed at a later stage, or the code has changed because a bug was removed at some point in time;
 2.	Copy-and-paste errors; for example, results are manually copied from a computing environment into a text processor, causing inconsistencies between the reported result and the reproduced result;
-.3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;
+3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;
 4.	Broken dependencies; for example, a given analysis depends on a software package that might not be available on a different computer or no longer exists.
 
 We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]:
