@@ -973,8 +973,8 @@ This mechanism is triggered by `DOCKER=TRUE` in the make call:
 make DOCKER=TRUE
 ```
 
-You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manuel` to install software beyond R packages.
-Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manuel`.
+You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manual` to install software beyond R packages.
+Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manual`.
 We recomend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
 
 <!-- after this everything is optional? -->
