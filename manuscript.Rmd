@@ -892,6 +892,7 @@ make README.md
 It is common practice to have a target all, that encompasses all important files of the project as the first target.
 If you do not specify a target, Make defaults to the first target, which is usually `all`.
 `repro` reminds you of that and suggests which file you might want to add to the target `all`.
+You can generally change the `Makefile` anyway you want, e.g. to add targets which are not supported by `repro`.
 After you have done so, you can then run in the terminal:
 
 ```bash
@@ -976,6 +977,8 @@ make DOCKER=TRUE
 You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manual` to install software beyond R packages.
 Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manual`.
 We recomend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
+
+The function `automate()` combines `automate_docker()` & `automate_make()`.
 
 <!-- after this everything is optional? -->
 
