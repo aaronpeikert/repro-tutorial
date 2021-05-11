@@ -1044,6 +1044,14 @@ make docker &&
 make -B DOCKER=TRUE 
 ```
 
+The `repro` also contains a function that automatically figures out how to reproduce a project with:
+
+```{r}
+repro::rerun()
+```
+
+This function also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
+
 Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
 <!-- maybe we add here the real data? #25 -->
 
@@ -1168,8 +1176,8 @@ Currently, this is a serious obstacle in adopting the workflow for researchers w
 The repro package, which we introduced here, supports scholars in creating reproducible workflows.
 It abstracts tedious and error-prone tasks such as the creation of a Makefile or the specification of a container.
 By extending the YAML specification that is used for storing meta information in R Markdown files, which are becoming increasingly popular among R users, repro helps users to implement @Peikert2019's workflow with minimal effort.
-Most importantly, repro is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow.
-Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the repro package.
+Most importantly, `repro`-is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow.
+Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the `repro`-package.
 
 # References
 
