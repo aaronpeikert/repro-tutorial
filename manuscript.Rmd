@@ -1050,7 +1050,7 @@ Note that both this tutorial as well as our article on the reproducible workflow
 <!-- Hands-on: check changed hash -->
 A prerequisite to reproducibility is the availability of code and data.
 We use containers to guarantee that all code components are available and work as expected.
-Ideally, all data is also stored in the repository.
+Ideally, all data is also stored in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs].
 In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
 You may find yourself in a situation where you can make the data only available on request.
 A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
