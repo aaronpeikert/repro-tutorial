@@ -10,6 +10,9 @@ manuscript.pdf: manuscript.Rmd data/simulation_results.csv R/simulation.R R/link
 data/simulation_results.csv: R/simulation.R R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
 
+data/sd3.csv: R/simulation_funs.R
+	$(RUN1) Rscript -e 'source("$<"); set.seed(1235); readr::write_csv(generate_data(500), "data/sd3.csv")' $(RUN2)
+
 images/nutshell.svg:
 	mkdir -p images && \
 	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.svg

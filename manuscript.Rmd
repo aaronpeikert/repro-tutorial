@@ -1122,7 +1122,16 @@ The `repro`-package contains a function designed for that purpose:
 repro::rerun()
 ```
 
-This function  automatically figures out how to reproduce a project  and also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
+This function automatically figures out how to reproduce a project and also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
+
+If you have written a [Preregistration as Code] you can swap the data file and reproduce the project.
+In fact, before the`r link("https://github.com/aaronpeikert/repro-tutorial/releases/tag/ v0.0.1-preregistration", "preregistration")` were the results below on simulated data, only after we preregistered the whole manuscript, they were based on actual data from https://openpsychometrics.org/_rawdata/.
+
+```{r}
+read_csv(here("data", "sd3.csv"), col_types = "dddddddddd") %>% 
+  planed_analysis() %>% 
+  extract_results()
+```
 
 Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
 <!-- maybe we add here the real data? #25 -->
