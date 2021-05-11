@@ -422,7 +422,7 @@ simulation_study
 ```
 
 ```{r}
-res <- read_csv(here::here("results.csv"), col_types = "ddddd")
+res <- read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddd")
 ```
 
 ```{r}
