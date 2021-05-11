@@ -135,7 +135,7 @@ If these commands detect that a given software requirement is not installed or s
 Please make sure that all three commands pass before you continue with the tutorial.
 This process is only required once per computer and does not need to be repeated per project.
 
-# Organizing Files
+# Planning Phase
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
@@ -149,7 +149,7 @@ To create one, click on:
 
 > File → New Project... → New Directory → New Project
 
-## Dynamic Documents
+## Markdown
 
 <!--Keep notes.-->
  A great tool to capture ideas or meeting notes is Markdown.
