@@ -1047,13 +1047,14 @@ make docker &&
 make -B DOCKER=TRUE 
 ```
 
-The `repro` also contains a function that automatically figures out how to reproduce a project with:
+Because you probably want to reproduce your own project each time something changes, you will often want to reproduce evertyhting.
+The `repro`-package contains a function designed for that purpose:
 
 ```{r}
 repro::rerun()
 ```
 
-This function also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
+This function  automatically figures out how to reproduce a project  and also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
 
 Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
 <!-- maybe we add here the real data? #25 -->
