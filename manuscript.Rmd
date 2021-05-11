@@ -92,6 +92,7 @@ knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
 This tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on.
+This paper was designed to help researchers to practically apply the TOP guidelines [except for number 8. which does not apply to single research projects; @nosekPromotingOpenResearch2015; @vanlissa2020worcs].
 We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely.
 We continue with the creation of a concrete data analysis plan, which ideally is already implemented in code, and a dynamic report document that can be preregistered.
 Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact using a unique DOI in a persistent location.
@@ -1052,8 +1053,8 @@ A prerequisite to reproducibility is the availability of code and data.
 We use containers to guarantee that all code components are available and work as expected.
 Ideally, all data is also stored in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
 Sometimes it is just the required storage capacity that exceeds what Git can handle (Git gets slow around more than 100mb).
-In such case we strongly recommend using [DataLad [@DataladDatalad2021]](http://handbook.datalad.org/en/latest/)[^datalad] or the below procedure to garunteee that the data has not changed.
-In practice, however, there are various reasons, which may prohibit you from making your data publically available, for example legal or regulatory or privacy concerns.
+In such case we strongly recommend using [DataLad [@DataladDatalad2021]](http://handbook.datalad.org/en/latest/)[^datalad] or the below procedure to guarantee that the data has not changed.
+In practice, however, there are various reasons, which may prohibit you from making your data publicly available, for example legal or regulatory or privacy concerns.
 You may find yourself in a situation where you can make the data only available on request.
 A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
 To at least check that the data was not changed, we suggest to provide a so called "hash", which is a cryptographic fingerprint.
