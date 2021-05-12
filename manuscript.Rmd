@@ -315,7 +315,7 @@ One has to make many educated guesses to simulate data that closely matches your
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
-If you are unfamiliar with the specifics of SEM, we you may skip the next sections and continue in section ["Randome Number Generation"](#prng).
+If you are unfamiliar with the specifics of SEM, you may briefly skim the next sections and continue in section ["Randome Number Generation"](#prng).
 To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix.
 
 The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad [SD3, @Jones2013].
