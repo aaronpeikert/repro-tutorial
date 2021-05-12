@@ -421,11 +421,11 @@ To complete a simulation study we need a function that repeats the analysis for 
 simulation_study
 ```
 
-```{r}
+```{r, include=FALSE}
 res <- read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddd")
 ```
 
-```{r}
+```{r, include=FALSE}
 res_interval <- res %>%
   select(n_obs, std_estimate) %>% 
   filter(!is.na(std_estimate)) %>% 
@@ -442,7 +442,7 @@ res_interval <- res %>%
   arrange(perc)
 ```
 
-```{r}
+```{r, include=FALSE}
 choosen_perc <- .8
 choosen_width <- .2
 true_diff <- .2
@@ -454,7 +454,7 @@ sim_n_unique <- unique(sim_n)
 sim_nstep <- sim_n_unique[2] - sim_n_unique[1]
 ```
 
-```{r}
+```{r, include=FALSE}
 plot_interval <- res_interval %>%
   ggplot(aes(
     n_obs,
@@ -480,7 +480,7 @@ plot_interval <- res_interval %>%
   NULL
 ```
 
-```{r}
+```{r, include=FALSE}
 plot_width <- res_interval %>%
   ggplot(aes(n_obs, width, color = perc, group = perc)) +
   geom_line() +
@@ -504,7 +504,7 @@ plot_width <- res_interval %>%
   NULL
 ```
 
-```{r}
+```{r, include=FALSE}
 simulation_plot <- plot_interval +
   theme(axis.text.x = element_blank(), axis.title.x = element_blank()) + 
   plot_width +
@@ -512,16 +512,9 @@ simulation_plot <- plot_interval +
   plot_annotation(tag_levels = 'A')
 ```
 
-```{r}
+```{r, simulation-plot, echo=FALSE, fig.cap="*Plot A* depicts the range of effect sizes we observed in the simulation, where the colour encodes the density. The light yellow interval shows where 80% of the estimates land. The dotted line represents the simulated true effect size; the white line shows the median observed effect sizes. *Plot B* represents the width of the interval shown in Plot A on a logarithmic scale. The cross shows the minimum required sample size so that 80% of the estimates land in a range of +/- .1.  "}
 simulation_plot
 ```
-
-Plot A depicts the range of effect sizes we observed in the simulation, where the colour encodes the density.
-The light yellow interval shows where 80% of the estimates land.
-The dotted line represents the simulated true effect size; the white line shows the median observed effect sizes.
-
-Plot B represents the width of the interval shown in Plot A on a logarithmic scale.
-The cross shows the minimum required sample size so that 80% of the estimates land in a range of +/- .1.
 
 ### Randome Number Generation (optional) {#prng}
 
