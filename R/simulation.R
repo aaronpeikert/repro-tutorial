@@ -28,7 +28,6 @@ seed <- 1234
 n_obs <- seq(nmin, nmax, nstep)
 
 options(scipen = 999)
-message("This may take a while! You fit approximately ", n_sim*length(n_obs)*5*2, " SEMs.")
 
 to_export <- ls_funs() %>% map(get)
 to_export <-
@@ -38,6 +37,7 @@ to_export <-
   ))
 out_file <- here::here("data", "simulation_results.csv")
 if(!fs::file_exists(out_file)){
+  message("This may take a while! You fit approximately ", n_sim*length(n_obs)*5*2, " SEMs.")
   res_raw %<-% simulation_study(n_obs, n_sim,
                                 furrr_options(
                                   globals = to_export,

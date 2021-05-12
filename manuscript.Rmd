@@ -349,6 +349,10 @@ Data simulation is particularly easy in lavaan syntax using the function `simula
 More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
 The following code simulates data from the population model `model_truth` with 1000 cases in each group.
 
+```{r, include=FALSE}
+set.seed(1234)
+```
+
 ```{r}
 simulated <- lavaan::simulateData(
   model_truth,
