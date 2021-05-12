@@ -572,12 +572,13 @@ Then, the source code of this manuscript serves as an unambiguous description of
 PAC works well within this reproducible framework.
 First, the preregistration becomes a part of the reproducible repository.
 It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project.
-If code was version-controlled and tagged (see Section XXX) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history.
+If code was version-controlled and tagged (see Section [Git]) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history.
 
 One way to ensure that you can expect your analysis to work with real data is to simulate data.
 A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision.
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
-The simulation showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
+The simulation showed that we have to gather at least `r minn$n_obs` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `r round((est_diff - true_diff)*100/true_diff, 2)`%.
+These results are also visualized in Figure \@ref(fig:simulation-plot).
 If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
 A preregistration in code describes sufficiently how you want to analyze the data, but ideally, you also convey the why.
 Dynamic document generation combines code and text, enabling you to explain your reasoning.
