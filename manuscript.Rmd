@@ -210,7 +210,7 @@ First, you could create a new Markdown file named `idea.md` that looks like this
 
 # Hypothesis
 
-Machiavellianism is higher in male persons.
+Machiavellism is higher in male persons.
 
 # Analytic Strategy
 
@@ -243,7 +243,7 @@ This results in changes to your notes as follows:
 
 # Hypothesis
 
-Machiavellianism is higher in male persons.
+Machiavellism is higher in male persons.
 
 # Analytic Strategy
 
@@ -588,7 +588,7 @@ If you went to the trouble to simulate data, we argue that you get a preregistra
 A preregistration in code describes sufficiently how you want to analyze the data, but ideally, you also convey the why.
 Dynamic document generation combines code and text, enabling you to explain your reasoning.
 See the section on [R Markdown] for an example of a dynamic document generation paradigm.
-In fact, this manuscript and therefore the here presented Machiavialismus example were preregistered as a full manuscript, and you can see the results on real data in section [Reproduce a Project].
+In fact, this manuscript and therefore the here presented Machiavellism example were preregistered as a full manuscript, and you can see the results on real data in section [Reproduce a Project].
 
 ### R Markdown
 
