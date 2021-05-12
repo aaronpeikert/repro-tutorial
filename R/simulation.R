@@ -36,17 +36,20 @@ to_export <-
     n_obs = seq(nmin, nmax, nstep),
     n_sim = n_sim
   ))
-res_raw %<-% simulation_study(n_obs, n_sim,
-                              furrr_options(
-                                globals = to_export,
-                                seed = seed,
-                                packages = c("furrr", "lavaan", "tidyverse"),
-                                scheduling = 10
-                              ))
-invisible(res_raw)
-fs::dir_create("data")
-readr::write_csv(res_raw, here::here("data", "simulation_results.csv"))
-readr::write_rds(res_raw, here::here("data", "simulation_results.rds"))
+out_file <- here::here("data", "simulation_results.csv")
+if(!fs::file_exists(out_file)){
+  res_raw %<-% simulation_study(n_obs, n_sim,
+                                furrr_options(
+                                  globals = to_export,
+                                  seed = seed,
+                                  packages = c("furrr", "lavaan", "tidyverse"),
+                                  scheduling = 10
+                                ))
+  invisible(res_raw)
+  fs::dir_create("data")
+  readr::write_csv(res_raw, here::here("data", "simulation_results.csv"))
+  readr::write_rds(res_raw, here::here("data", "simulation_results.rds"))
+}
 
 if(fs::file_exists(hpc_config)){
   list(local = sessioninfo::session_info(),
