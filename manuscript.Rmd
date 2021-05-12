@@ -50,7 +50,6 @@ Over the past decades, computational statistical methods have radically changed 
 With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken.
 With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
 Only with access to both data and procedures can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.
-With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
 
 In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
 However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
