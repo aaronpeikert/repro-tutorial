@@ -95,7 +95,7 @@ knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
 This tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on.
-This paper was designed to help researchers to practically apply the TOP guidelines [except for number 8. which does not apply to single research projects; @nosekPromotingOpenResearch2015; @vanlissa2020worcs].
+This paper was designed to help researchers to practically apply the TOP guidelines [except for number 8. which does not apply to single research projects, @nosekPromotingOpenResearch2015; @vanlissa2020worcs].
 We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely.
 We continue with the creation of a concrete data analysis plan, which ideally is already implemented in code, and a dynamic report document that can be preregistered.
 Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact using a unique DOI in a persistent location.
@@ -158,8 +158,7 @@ To create one, click on:
  A great tool to capture ideas or meeting notes is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
  This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
- R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format
- We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV.
+We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV.
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -224,7 +223,7 @@ Can we use openpsychometrics.org data?
 
 And you could commit it in Git.
 For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert], which wraps most git commands into R functions.
-Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools -> Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
+Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools → Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
 <!--I am leaning towards doing everything in R, not sure though-->
 <!--For Git we maybe should use RStudio's Git pane?-->
 
@@ -347,7 +346,7 @@ MACH ~~ c(1, 1)*MACH"
 
 Data simulation is particularly easy in lavaan syntax using the function `simulateData`.
 More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
-The following code simulates data from the population model `model_truth` with 1.000 cases in each group.
+The following code simulates data from the population model `model_truth` with 1000 cases in each group.
 
 ```{r}
 simulated <- lavaan::simulateData(
@@ -445,6 +444,7 @@ res_interval <- res %>%
 choosen_perc <- .8
 choosen_width <- .2
 true_diff <- .2
+est_diff <- res %>% filter(n_obs == max(n_obs)) %>% pull(std_estimate) %>% mean()
 minn <- filter(res_interval, perc == choosen_perc, width < choosen_width) %>% 
   filter(n_obs == min(n_obs))
 sim_n <- pull(res, n_obs)
@@ -520,11 +520,11 @@ simulation_plot
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code.
 To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
 It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
-The standard random number generator (RNG) produces high quality random numbers, but has is not safe to use in parrallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
+The standard random number generator (RNG) produces high quality random numbers, but is not safe to use in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
 Therefore, if you set a seed for one worker and another seed for another worker, you could end up with the same random numbers but with a phase shift.
 @lecuyerGoodParametersImplementations1999 proposed a more computationally expensive RNG, designed to generate many uncorrelated streams.
-While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the [`future`-package](futureverse.org)[^futureverse] to handles this for us across all workers:
+While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers:
 
 ```{r}
 set.seed(1235)
@@ -566,7 +566,7 @@ Currently, there are various templates available that guide researchers in devel
 Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code.
 Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
 PAC essentially reverses the process of empirical research.
-Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results --- initially based on simulated data.
+Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results---initially based on simulated data.
 Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration.
 
 PAC works well within this reproducible framework.
@@ -590,6 +590,7 @@ See the section on [R Markdown] for an example of a dynamic document generation 
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
 We already learned about [Markdown], to write text.
 R Markdown allows you to include R code (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown.
+R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format
 To create an R Markdown document, click on: 
 
 > File → New File → R Markdown...
