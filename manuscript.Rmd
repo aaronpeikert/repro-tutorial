@@ -398,7 +398,7 @@ generate_data
 ```
 
 And to build another function that captures your planned analysis.
-Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R", "GitHub")`.
+Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R", "GitHub")`.
 
 ```{r}
 planed_analysis
@@ -429,6 +429,9 @@ One historically important tradeoff is between sample size and power (the probab
 More recently there has been growing interest in other resource relevant parameters as well [!citation], such as number of measurement occasions, reliability of measures etc.
 To show that there can also be alternative approaches for sample size planning beyond null hypothesis testing, we choose to visualize the density distribution of the parameter of interest (latent mean difference by gender of Machiavellism) instead of power.
 Such process still lets you formulate expectations for the precision of the analysis, e.g. with a sample size of 1000 per group 80% of the simulated standardized effect size fall into a range of +/- .1, but without necessarily rely on null hypothesis testing.
+For simplicity we do not show the code for the simulation/graphic, but it is available in the accompanying [GitHub repository](https://github.com/aaronpeikert/repro-tutorial)[^gh-repo]:.
+
+[^gh-repo]: https://github.com/aaronpeikert/repro-tutorial
 
 ```{r, include=FALSE}
 res <- read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddd")
@@ -1140,8 +1143,10 @@ read_csv(here("data", "sd3.csv"), col_types = "dddddddddd") %>%
   extract_results()
 ```
 
-Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
+Note that both [this tutorial](https://github.com/aaronpeikert/repro-tutorial)[^gh-repo2] as well as our article on the [reproducible workflow](https://github.com/aaronpeikert/reproducible-research)[^gh-repo3] [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
 
+[^gh-repo2]: https://github.com/aaronpeikert/repro-tutorial
+[^gh-repo3]: https://github.com/aaronpeikert/reproducible-research
 ## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
@@ -1217,7 +1222,7 @@ While the service is independent of GitHub---in terms of storage facilities and 
 Please note that you can only link public GitHub repositories to zenodo.
 You may log into zenodo.org through your GitHub account.
 
-> Log into zenodo.org → Account → [GitHub[^zenodo-github]](https://zenodo.org/account/settings/github/)
+> Log into zenodo.org → Account → [GitHub](https://zenodo.org/account/settings/github/)[^zenodo-github]
 
 [^zenodo-github]: https://zenodo.org/account/settings/github/
 
