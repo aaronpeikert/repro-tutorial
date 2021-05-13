@@ -303,7 +303,7 @@ Again, stage the changes to this file and commit like before using `git_add()` a
 
 ```r
 # -- type this on the R console --
-gert::commit_all("switch to CFA to exclude bias in measurement as possible confounder")
+gert::git_commit_all("switch to CFA to exclude bias in measurement as possible confounder")
 ```
 
 And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
