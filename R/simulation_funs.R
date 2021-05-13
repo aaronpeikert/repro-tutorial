@@ -85,8 +85,10 @@ get_std_estimate <- function(fits, label = "diff"){
   get_parameter(fits, "est.std", label, how = standardizedSolution)
 }
 
+#----generate_data----
 generate_data <- function(n_obs){
-  truth <- "MACH =~ 0.27*x1 + 0.22*x2 + 0.28*x3 + 0.36*x4 + 0.41*x5 + 0.5*x6 + 0.43*x7 + 0.32*x8 + 0.36*x9
+  truth <- "MACH =~ 0.27*x1 + 0.22*x2 + 0.28*x3 + 0.36*x4 + 0.41*x5 + 0.5*x6 +
+  0.43*x7 + 0.32*x8 + 0.36*x9
   MACH ~ c(0, 0.2)*1
   MACH ~~ c(1, 1)*MACH"
   lavaan::simulateData(
@@ -95,10 +97,13 @@ generate_data <- function(n_obs){
     standardized = TRUE)
 }
 
+#----planed_analysis----
 planed_analysis <- function(data){
+  # force loadings to be freely estimated
   model <- "MACH =~  c(NA, NA)*x1 + c(NA, NA)*x2 + c(NA, NA)*x3 + c(NA, NA)*x4 +
   c(NA, NA)*x5 + c(NA, NA)*x6 + c(NA, NA)*x7 + c(NA, NA)*x8 + c(NA, NA)*x9
-   MACH ~~ c(1, NA)*MACH"
+  # model is identified via latent variance set to 1
+  MACH ~~ c(1, NA)*MACH"
   # intercept is set to zero
   same <- paste0(model, "
   MACH ~ c(0,0)*1")
@@ -117,6 +122,7 @@ planed_analysis <- function(data){
   )
 }
 
+#----extract_results----
 extract_results <- function(fits) {
   # extract_fns are helper that extract variables of interest, like p value etc.
   extract_fns <-
@@ -133,6 +139,7 @@ extract_results <- function(fits) {
   as_tibble(map(results, "result"))
 }
 
+#----simulation_study_funs----
 simulation <- function(n_obs){
   fits <- purrr::safely(planed_analysis)(generate_data(n_obs))$result
   extract_results(fits)
@@ -149,6 +156,7 @@ simulation_study_ <-
                    .options = .options)
   }
 
+#----simulation_study----
 simulation_study <- function(n_obs, n_sim, .options = furrr::furrr_options()){
   # `map` is equivalent to lapply or for-loop
   # `future` is a package for parallelization, see High Performance Computing
@@ -161,6 +169,8 @@ simulation_study <- function(n_obs, n_sim, .options = furrr::furrr_options()){
   )
 }
 
+
+#----other-funs----
 ls_funs <- function(pos = parent.frame(), ...){
   everything <- ls(pos = pos, ...)
   names(everything) <- everything

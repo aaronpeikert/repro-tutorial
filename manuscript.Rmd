@@ -14,6 +14,7 @@ repro:
     - renv
     - slider
     - patchwork
+    - knitr
   scripts:
     - R/simulation.R
     - R/simulation_funs.R
@@ -33,6 +34,17 @@ automate_load_packages()
 automate_load_scripts()
 source(here::here("R", "link.R"))
 ```
+
+```{r}
+# define a ürint method for objects of the class data.frame
+knit_print.data.frame = function(x, ...) {
+  res = paste(c('', '', kable(x)), collapse = '\n')
+  asis_output(res)
+}
+# register the method
+registerS3method("knit_print", "data.frame", knit_print.data.frame)
+```
+
 
 # Why you should care about reproducibility
 
@@ -338,7 +350,8 @@ These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://la
 
 ```{r}
 model_truth <-
-"MACH =~ 0.27*x1 + 0.22*x2 + 0.28*x3 + 0.36*x4 + 0.41*x5 + 0.5*x6 + 0.43*x7 + 0.32*x8 + 0.36*x9
+"MACH =~ 0.27*x1 + 0.22*x2 + 0.28*x3 + 0.36*x4 + 0.41*x5 + 0.5*x6 + 0.43*x7 +
+0.32*x8 + 0.36*x9
 MACH ~ c(0, 0.2)*1
 MACH ~~ c(1, 1)*MACH"
 ```
@@ -393,16 +406,16 @@ Anyhow, remember that what we consider realistic for our case could be unfit for
 If you are satisfied with your assumptions for the data simulation, it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-```{r}
-generate_data
+```{r generate_data}
 ```
 
 And to build another function that captures your planned analysis.
 Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R", "GitHub")`.
 
-```{r}
-planed_analysis
-extract_results
+```{r planed_analysis}
+```
+
+```{r extract_results}
 ```
 
 With its help we can simulate 1000 cases and fit our analysis.
@@ -420,8 +433,7 @@ Second, it enables you to plan an appropriate sample size because you are able t
 
 To complete a such a  Monte-Carlo simulation study we need a function that repeats the analysis for different conditions (here only for different n):
 
-```{r}
-simulation_study
+```{r simulation_study}
 ```
 
 Such Monte-Carlo simulation can help you decide between several tradeoffs.
