@@ -418,11 +418,17 @@ Of course it is already helpful to simulate a single dataset to test if the anal
 First, you can check if the planned analysis recovers the simulated values (`std_estimate` should be close to the simulated mean difference of 0.2).
 Second, it enables you to plan an appropriate sample size because you are able to quantify the sampling variability.
 
-To complete a simulation study we need a function that repeats the analysis for different conditions (here only for different n):
+To complete a such a  Monte-Carlo simulation study we need a function that repeats the analysis for different conditions (here only for different n):
 
 ```{r}
 simulation_study
 ```
+
+Such Monte-Carlo simulation can help you decide between several tradeoffs.
+One historically important tradeoff is between sample size and power (the probability to detect an effect of given size).
+More recently there has been growing interest in other resource relevant parameters as well [!citation], such as number of measurement occasions, reliability of measures etc.
+To show that there can also be alternative approaches for sample size planning beyond null hypothesis testing, we choose to visualize the density distribution of the parameter of interest (latent mean difference by gender of Machiavellism) instead of power.
+Such process still lets you formulate expectations for the precision of the analysis, e.g. with a sample size of 1000 per group 80% of the simulated standardized effect size fall into a range of +/- .1, but without necessarily rely on null hypothesis testing.
 
 ```{r, include=FALSE}
 res <- read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddd")
