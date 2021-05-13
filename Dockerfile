@@ -18,11 +18,12 @@ RUN install2.r --error --skipinstalled \
   future.batchtools \ 
   gert \ 
   here \ 
+  knitr \ 
   lavaan \ 
+  pander \ 
   patchwork \ 
   renv \ 
   slider \ 
-  svglite \ 
   targets \ 
   tidyverse \ 
   usethis
