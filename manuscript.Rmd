@@ -1,6 +1,6 @@
 ---
 title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
-author: Aaron Peikert and Andreas M. Brandmaier 
+author: Aaron Peikert, Caspar J. Van Lissa and Andreas M. Brandmaier 
 output:
   bookdown::pdf_document2:
     keep_tex: TRUE
