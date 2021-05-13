@@ -1200,7 +1200,7 @@ We employed the same mechanism for our simulation to verify that the simulation 
 
 [^simhash]: https://github.com/aaronpeikert/repro-tutorial/blob/main/R/hash.R
 
-An compromise between making the data publicly available and keeping it closed is to publish synthetic data.
+An compromise between making the data publicly available and keeping it closed is to publish synthetic data [@vanlissa2020worcs].
 Such approach tries to recreate the marginal distribution and bivariate relationships in simulated data, e.g. with the R package `synthpop`[@nowokSynthpopBespokeCreation2016].
 The results of such data should generally not be interpreted.
 However, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data.
