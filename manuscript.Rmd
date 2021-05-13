@@ -671,10 +671,16 @@ When you include code into an R Markdown, this code is run, and its results are 
 With R Markdown, you can write whole articles (`r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/manuscript.Rmd", "like the one you are reading")`).
 You could, in principle, even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
 If you have simulated data, you could even include fake results.
+Packages like [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf)[^stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html)[^apaTables] [citation] and [`papaja`](http://frederikaust.com/papaja_man/)[^papaja] help you to create dynamically generated professional looking results.
+The package [`report`](https://github.com/easystats/report)[^report] [@report] is particularly noteworthy because it not only generates tables, but also a simple interpretation of the effects as actual prose (e.g it quantifies the size of an effect).
 Such a dynamic document is arguably the most concrete preregistration possible.
 One advantage is that writing the manuscript and writing the preregistration are no longer two distinct tasks.
 Therefore a preregistration can be thought of as simply rearranging tasks that you have to do anyway.
 
+[^report]: https://github.com/easystats/report
+[^stargazer]: https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf
+[^apaTables]: https://dstanley4.github.io/apaTables/articles/apaTables.html
+[^papaja]: http://frederikaust.com/papaja_man/
 <!--Hands on: gitignore resulting .html/pdf-->
 <!-- A preregistration needs to be public -->
 
