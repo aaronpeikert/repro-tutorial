@@ -1,7 +1,9 @@
 ---
 title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
 author: Aaron Peikert and Andreas M. Brandmaier 
-output: bookdown::pdf_document2
+output:
+  bookdown::pdf_document2:
+    keep_tex: TRUE
 repro:
   packages:
     - tidyverse
@@ -142,7 +144,7 @@ pander::pander(
   keep.line.breaks = TRUE,
   style = "grid",
   justify = 'left',
-  caption = "Overview over all steps to create and open and reproducible research project."
+  caption = "\\label{tab:overview} Overview over all steps to create and open and reproducible research project."
 )
 ```
 
