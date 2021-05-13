@@ -453,6 +453,9 @@ For simplicity we do not show the code for the simulation/graphic, but it is ava
 res <- read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddd")
 ```
 
+```{r hash}
+```
+
 ```{r, include=FALSE}
 res_interval <- res %>%
   select(n_obs, std_estimate) %>% 
