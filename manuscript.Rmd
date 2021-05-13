@@ -15,6 +15,10 @@ repro:
     - slider
     - patchwork
     - knitr
+    - pander
+    - lavaan
+    - furrr
+    - future.batchtools
   scripts:
     - R/simulation.R
     - R/simulation_funs.R
