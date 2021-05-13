@@ -315,7 +315,7 @@ GitHub is, in its essence, a web interface to Git, and you may learn more about 
 # unfortunately css selectors won't work for pdf so we'll use png instead
 idea_change <- here::here("images", "idea-change.png")
 if(!file.exists(idea_change)){
-  webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f4641ff542158184f85d458880c35e8f09f3c?diff=split",
+  webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/76f5d4e78b3d3bf22e84e9137756bc17767dff3b?diff=split",
                   file = idea_change,
                   selector = "div#diff-2f8beaa39e5c98706d8abb3361a8383776f8df8a195a21c0e6eeb25e5aa48f45", # only select file change
                   zoom = 2)# higher resolution
