@@ -315,7 +315,7 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
-The machine learning community has begun to use simulated data to test models and their implementation [@braiekTestingMachineLearning2020].
+The machine learning community has begun to routinely simulate data to test models and their implementation [@braiekTestingMachineLearning2020].
 Beyond checking the technical side of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
 Beyond ensuring that the code runs without technical error and it lets you form more realistic expectations about the estimates' correctness and precision.
@@ -1159,6 +1159,7 @@ Note that both [this tutorial](https://github.com/aaronpeikert/repro-tutorial)[^
 
 [^gh-repo2]: https://github.com/aaronpeikert/repro-tutorial
 [^gh-repo3]: https://github.com/aaronpeikert/reproducible-research
+
 ## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
