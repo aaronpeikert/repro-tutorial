@@ -146,6 +146,11 @@ check_make()
 check_docker()
 ```
 
+```{r, eval=FALSE}
+check_github()
+```
+
+
 If these commands detect that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
 Please make sure that all three commands pass before you continue with the tutorial.
 This process is only required once per computer and does not need to be repeated per project.
