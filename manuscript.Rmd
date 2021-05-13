@@ -45,7 +45,6 @@ knit_print.data.frame = function(x, ...) {
 registerS3method("knit_print", "data.frame", knit_print.data.frame)
 ```
 
-
 # Why you should care about reproducibility
 
 A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions.
@@ -1252,11 +1251,12 @@ In software development, a release is the distribution of a piece of computer so
 GitHub has a "release" function, which creates a link to a specific snapshot of your project that then is available as a single compressed file.
 We believe that the idea of software releases can be leveraged for singling out important versions in a research project.
 We found it useful to label the following stages of development as release:
-- Preregistration (repository contains the final data analysis plan; also see the Section on PAC)
-- Completion of data collection (repository contains all study data)
-- Preprint (repository exactly reproduces a preprint that is hosted externally)
-- Submission or Resubmission (repository exactly reproduces a given version (re)submitted to a journal)
-- In Press (repository exactly reproduces the final manuscript as accepted by a scientific journal)
+
+* Preregistration (repository contains the final data analysis plan; also see the Section on PAC)
+* Completion of data collection (repository contains all study data)
+* Preprint (repository exactly reproduces a preprint that is hosted externally)
+* Submission or Resubmission (repository exactly reproduces a given version (re)submitted to a journal)
+* In Press (repository exactly reproduces the final manuscript as accepted by a scientific journal)
 
 You have the opportunity to describe the release in more detail in the accompanying release notes and to add extra files (e.g., complementing the Markdown source code of a journal article with a rendered PDF document).
 
