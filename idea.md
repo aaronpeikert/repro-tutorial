@@ -4,7 +4,7 @@ Machiavellism is higher in male persons.
 
 # Analytic Strategy
 
-Independent t-test
+Multigroup Confirmatory Factor Analysis with equal loadings and intercepts
 
 # Sample
 
