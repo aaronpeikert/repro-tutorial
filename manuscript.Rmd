@@ -123,6 +123,29 @@ Here, we present a workflow that has proven useful for our way of working with a
 However, not all steps are necessary to achieve reproducibility.
 We have marked those steps that can be omitted as "optional" in the section headings.
 
+We have marked those steps that can be omitted as "optional" in the section headings.
+Table \@ref(tab:overview) shows all steps required to to create and open and reproducible research project as they are presented in the remainder of the manuscript.
+
+```{r overview, echo=FALSE}
+overview <-
+  read_csv(
+    here::here("data", "overview.csv"),
+    col_types = "cc",
+    col_names = c("Phase", "Steps"),
+    trim_ws = FALSE
+  )
+pander::pander(
+  overview,
+  split.tables = Inf,
+  split.cells = Inf,
+  missing = "",
+  keep.line.breaks = TRUE,
+  style = "grid",
+  justify = 'left',
+  caption = "Overview over all steps to create and open and reproducible research project."
+)
+```
+
 # Setup
 
 <!-- keep it brief, let `repro` do the work -->
