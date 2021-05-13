@@ -1,0 +1,28 @@
+Setup,"1. install package manager when necessary (Chocolately for Windows and Homebrew for Mac OS)
+2. install R + Rstudio with package manager (see installation guide)
+2. install `remotes` package with `install.packages(""remotes"")`
+2. install `repro`-package with `remotes::install_github(""aaronpeikert/repro"")`
+2. Check Git with `repro::check_git()`
+2. Check Make with `repro::check_make()`
+2. Check Docker with `repro::check_docker()`
+2. Check GitHub with `repro::check_github()`"
+Planning Phase,"1. Create an R Project with  `repro::use_repro_template()` or `Rstudio →  File → New Project... → New Directory → New Project`
+2. Create a project draft `RStudio → File → New File → Markdown File`
+2. Enable Git with `usethis::use_git()`
+2. Use Git with `gert::git_add()` & `gert::git_commit()` or Terminal or Rstudio Git Pane
+2. Create a README with `usethis::use_readme_rmd()`
+2. Add a Licences for Text (`usethis::use_ccby_license()`), Code (`usethis::use_mit_license()`) and Data (`usethis::use_cc0_license()`).
+2. Create a Code of Conduct with `usethis::use_code_of_conduct()`
+2. Publish to Github with `usethis::use_github()`
+2. (optional) Simulate Data with package `simstudy` or other
+2. (optional) Preregister Manuscript including Code by assigning a DOI (see Archival and Dissemination)"
+Analyzing Data,"1. Create dynamic manuscript `RStudio → File → New File → R Markdown… → From Template` with `rticles` package
+2. add required packages to YAML metadata header
+2. generate `Dockerfile`with `repro::automate_docker()`
+2. add required scripts and data to YAML metadata header
+2. generate `Makefile` with `repro::automate_make()`
+2. reproduce with  `repro::automate()` and `repro::rerun()` on any change"
+Archival and Dissemination,"1. Connect zenodo.org with GitHub on https://zenodo.org/account/settings/github/
+2. save docker image to file with `make save-docker`
+3. (optional) if data is not committed to repository save hash of data and add synthetic data with `synthpop` package
+4. Create release on GitHub, with rendered documents and docker image."
