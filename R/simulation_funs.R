@@ -96,7 +96,8 @@ generate_data <- function(n_obs){
 }
 
 planed_analysis <- function(data){
-  model <- "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+  model <- "MACH =~  c(NA, NA)*x1 + c(NA, NA)*x2 + c(NA, NA)*x3 + c(NA, NA)*x4 +
+  c(NA, NA)*x5 + c(NA, NA)*x6 + c(NA, NA)*x7 + c(NA, NA)*x8 + c(NA, NA)*x9
    MACH ~~ c(1, NA)*MACH"
   # intercept is set to zero
   same <- paste0(model, "
@@ -112,8 +113,7 @@ planed_analysis <- function(data){
     mod_load = 3L,
     mod_int = 3L,
     group = "group",
-    group.equal = c("loadings", "intercepts"),
-    auto.fix.first = FALSE
+    group.equal = c("loadings", "intercepts")
   )
 }
 
