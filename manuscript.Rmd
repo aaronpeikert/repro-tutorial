@@ -625,7 +625,7 @@ A preregistration, together with version control, allows their readers to inform
 ### Preregistration as Code
 
 Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration [@osfstandard; @socpsytemp; @howtoreplicate]. 
-Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code.
+Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code [@sep-ambiguity].
 Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
 PAC essentially reverses the process of empirical research.
 Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results---initially based on simulated data.
