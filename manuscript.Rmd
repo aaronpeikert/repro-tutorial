@@ -282,8 +282,8 @@ knitr::include_graphics(idea_change)
 ```
 
 <!--I am troubled by how we should recommend to learn Git-->
-Git can be challenging to learn, because it requires a rather complex mental model.
-However, there is a subsets of commands which we present here and in the section on [GitHub] (commit, push, pull) which enable you to utilize Git for simple version control.
+Git can be challenging to learn, because it requires a rather complex mental model of maintaining potentially differing versions between different repositories (typically one central repository and one local repository per each author while each repository may have different branches).
+However, there is a subsets of commands which we present here and in the section on [GitHub] (commit, push, pull) which enable you to use Git for simple version control.
 There are many tutorials on learning Git and @vuorreCuratingResearchAssets2018 provide a good starting point.
 However Git is designed for collaboration, we therefore recommend finding a partner to attend an online lecture or workshop to learn the ins and outs of Git.
 
@@ -525,8 +525,10 @@ See the section on [R Markdown] for an example of a dynamic document generation 
 
 <!--Hands on: Introduce R Markdown-->
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
-We already learned about [Markdown], to write text.
-R Markdown allows you to include R code (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown.
+Above, we have already suggested [Markdown] as a universal and portable text format. 
+R Markdown extends regular Markdown by allowing useres you to include R code chunks (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown document.
+Upon rendering of the document, the code blocks are executed and their output is dynamically inserted into the document.
+This allows the creation of conditional text blocks, statistical results, or figures that are guarantueed to be uptodate because they are created everytime anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
 To create an R Markdown document, click on: 
 
 > File → New File → R Markdown...
@@ -543,7 +545,7 @@ runif(1)
 When you include code into an R Markdown, this code is run, and its results are included in the rendered document.
 With R Markdown, you can write whole articles (`r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/manuscript.Rmd", "like the one you are reading")`).
 You could, in principle, even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
-If you have simulated data, you could even include fake results.
+If you have simulated data, you could even already generate all figures and statistical results based on fake data, which will later be replaced by the real data.
 Such a dynamic document is arguably the most concrete preregistration possible.
 One advantage is that writing the manuscript and writing the preregistration are no longer two distinct tasks.
 Therefore a preregistration can be thought of as simply rearranging tasks that you have to do anyway.
