@@ -1,9 +1,12 @@
 ---
 title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
 author: Aaron Peikert and Andreas M. Brandmaier 
-output: bookdown::pdf_document2
+output:
+  bookdown::pdf_document2:
+    keep_tex: TRUE
 repro:
   packages:
+    - tidyverse
     - usethis
     - gert
     - aaronpeikert/repro@7bfaf98
@@ -11,9 +14,16 @@ repro:
     - rstudio/webshot2@f62e743
     - targets
     - renv
+    - slider
+    - patchwork
+    - knitr
+    - pander
+    - lavaan
+    - furrr
+    - future.batchtools
   scripts:
-    - R/lavaan_helper.R
     - R/simulation.R
+    - R/simulation_funs.R
     - R/link.R
 csl: apa7.csl
 numbered_headings: true
@@ -26,27 +36,37 @@ bibliography: ["references.bib", "packages.bib"]
 
 ```{r setup, include=FALSE}
 library(repro)
-library(tidyverse)
+automate_load_packages()
 automate_load_scripts()
 source(here::here("R", "link.R"))
+```
+
+```{r}
+# define a ürint method for objects of the class data.frame
+knit_print.data.frame = function(x, ...) {
+  res = paste(c('', '', kable(x)), collapse = '\n')
+  asis_output(res)
+}
+# register the method
+registerS3method("knit_print", "data.frame", knit_print.data.frame)
 ```
 
 # Why you should care about reproducibility
 
 A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions.
 Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716].
-Here, *replicability* refers to the degree to which original studies and their derivatives yield consistent results.In other words, a succesful replication study finds a consistent effect with an original study in a new sample of data.
+Here, *replicability* refers to the degree to which original studies and their derivatives yield consistent results.
+In other words, a successful replication study finds a consistent effect with an original study in a new sample of data.
 Enabling the assessment of scientific conclusions requires a systematic and rigorous approach to research.
-Researchers across various fields have identified a *crisis* of non-replicability of findings [e.g. @aac4716]- <!--citation needed, e.g. [@aac4716]-->
+Researchers across various fields have identified a *crisis* of non-replicability of findings [e.g. @aac4716]. <!--citation needed, e.g. [@aac4716]-->
 
 <!-- define replicability and then... 
  define reproducibility -->
 Even worse, researchers might often not even be able to achieve reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code.
 Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models.
 With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken.
-With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves.
+With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
 Only with access to both data and procedures can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.
-Only if both the data and code are shared, can we obtain a reproducible scientific product, facilitating assessment of its validity and later reuse.
 
 In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
 However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
@@ -70,7 +90,7 @@ We identified the following common four causes for non-reproducibility:
 
 1.	Multiple inconsistent versions of code and data; for example, the dataset has changed over time because outliers were removed at a later stage, or the code has changed because a bug was removed at some point in time;
 2.	Copy-and-paste errors; for example, results are manually copied from a computing environment into a text processor, causing inconsistencies between the reported result and the reproduced result;
-.3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;
+3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;
 4.	Broken dependencies; for example, a given analysis depends on a software package that might not be available on a different computer or no longer exists.
 
 We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]:
@@ -92,6 +112,7 @@ knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
 This tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on.
+This paper was designed to help researchers to practically apply the TOP guidelines [except for number 8. which does not apply to single research projects, @nosekPromotingOpenResearch2015; @vanlissa2020worcs].
 We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely.
 We continue with the creation of a concrete data analysis plan, which ideally is already implemented in code, and a dynamic report document that can be preregistered.
 Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact using a unique DOI in a persistent location.
@@ -103,6 +124,29 @@ Unless stated otherwise, all code blocks are meant to be run in the statistical 
 Here, we present a workflow that has proven useful for our way of working with a strong focus on Open Science.
 However, not all steps are necessary to achieve reproducibility.
 We have marked those steps that can be omitted as "optional" in the section headings.
+
+We have marked those steps that can be omitted as "optional" in the section headings.
+Table \@ref(tab:overview) shows all steps required to to create and open and reproducible research project as they are presented in the remainder of the manuscript.
+
+```{r overview, echo=FALSE}
+overview <-
+  read_csv(
+    here::here("data", "overview.csv"),
+    col_types = "cc",
+    col_names = c("Phase", "Steps"),
+    trim_ws = FALSE
+  )
+pander::pander(
+  overview,
+  split.tables = Inf,
+  split.cells = Inf,
+  missing = "",
+  keep.line.breaks = TRUE,
+  style = "grid",
+  justify = 'left',
+  caption = "\\label{tab:overview} Overview over all steps to create and open and reproducible research project."
+)
+```
 
 # Setup
 
@@ -130,11 +174,16 @@ check_make()
 check_docker()
 ```
 
+```{r, eval=FALSE}
+check_github()
+```
+
+
 If any of these commands find that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
 Please make sure that all three commands pass before you continue with the tutorial.
 This process is only required once per computer and does not need to be repeated for each project.
 
-# Organizing Files
+# Planning Phase
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
@@ -148,15 +197,13 @@ To create one, click on:
 
 > File → New Project... → New Directory → New Project
 
-
-## Dynamic Documents
+## Markdown
 
 <!--Keep notes.-->
  A great tool to capture ideas or meeting notes is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
  This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
- R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format
- We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV.
+We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV.
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -208,7 +255,7 @@ First, you could create a new Markdown file named `idea.md` that looks like this
 
 # Hypothesis
 
-Machiavellianism is higher in male persons.
+Machiavellism is higher in male persons.
 
 # Analytic Strategy
 
@@ -221,7 +268,7 @@ Can we use openpsychometrics.org data?
 
 And you could commit it in Git.
 For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert], which wraps most git commands into R functions.
-Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools -> Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
+Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools → Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
 <!--I am leaning towards doing everything in R, not sure though-->
 <!--For Git we maybe should use RStudio's Git pane?-->
 
@@ -241,13 +288,11 @@ This results in changes to your notes as follows:
 
 # Hypothesis
 
-Machiavellianism is higher in male persons.
+Machiavellism is higher in male persons.
 
 # Analytic Strategy
 
-Multigroup Confirmatory Factor Analysis
-First, establish strong measurement invariance using a CFI cutoff-criterion
-Second, test for differences in latent factor means of Machiavellianism using a $\chi^2$ test
+Multigroup Confirmatory Factor Analysis with equal loadings and intercepts
 
 # Sample
 
@@ -258,7 +303,7 @@ Again, stage the changes to this file and commit like before using `git_add()` a
 
 ```r
 # -- type this on the R console --
-gert::commit_all("switch to CFA to exclude bias in measurement as possible confounder")
+gert::git_commit_all("switch to CFA to exclude bias in measurement as possible confounder")
 ```
 
 And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
@@ -270,7 +315,7 @@ GitHub is, in its essence, a web interface to Git, and you may learn more about 
 # unfortunately css selectors won't work for pdf so we'll use png instead
 idea_change <- here::here("images", "idea-change.png")
 if(!file.exists(idea_change)){
-  webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/5b3f4641ff542158184f85d458880c35e8f09f3c?diff=split",
+  webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/commit/76f5d4e78b3d3bf22e84e9137756bc17767dff3b?diff=split",
                   file = idea_change,
                   selector = "div#diff-2f8beaa39e5c98706d8abb3361a8383776f8df8a195a21c0e6eeb25e5aa48f45", # only select file change
                   zoom = 2)# higher resolution
@@ -293,7 +338,7 @@ However Git is designed for collaboration, we therefore recommend finding a part
 <!-- but explain that good science is often not as neat, strive for the ideal -->
 
 ```{r, include=FALSE}
-source(here::here("R", "simulation.R"))
+source(here::here("R", "simulation_funs.R"))
 ```
 
 ```{r, include=FALSE}
@@ -301,12 +346,12 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
-
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
-The machine learning community has begun to use simulated data to test models and their implementation [@braiekTestingMachineLearning2020].
-Beyond checking the technical side of the model, simulation is also beneficial on a conceptual leven [@axelrodAdvancingArtSimulation1997].
+The machine learning community has begun to routinely simulate data to test models and their implementation [@braiekTestingMachineLearning2020].
+Beyond checking the technical side of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
 Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
+Beyond ensuring that the code runs without technical error and it lets you form more realistic expectations about the estimates' correctness and precision.
 No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about them.
 If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
 We will show an example using structural equation modeling (SEM) for our Machiavellism example.
@@ -315,7 +360,7 @@ One has to make many educated guesses to simulate data that closely matches your
 These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
 The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
 
-If you are unfamiliar with the specifics of SEM, we you may skip the next sections and continue in section ["Randome Number Generation"](#prng).
+If you are unfamiliar with the specifics of SEM, you may briefly skim the next sections and continue in section ["Randome Number Generation"](#prng).
 To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix.
 
 The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad [SD3, @Jones2013].
@@ -326,8 +371,8 @@ The estimates for the construction sample, which was recruited from Amazon’s M
 They report a gender difference (at the manifest level) depending on the study between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
 ```{r loadings, echo=FALSE}
-knitr::kable(data.frame(Item = 1:9,
-                        Loading = loadings_jones_paulhus),
+knitr::kable(t(data.frame(Item = as.character(1:9),
+                        Loading = loadings_jones_paulhus)),
              caption = "Factor loadings from an Exploratory Structrural Equation Model as reported in Jones \\& Paulhus (2013)")
 ```
 
@@ -336,32 +381,25 @@ This way, we make sure that our analytic strategy is viable even in non-optimal 
 As a heuristic guess, we assume that the factor loadings are 30% lower than those reported by @Jones2013 and that the standardized mean difference is only 0.2.
 These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
-[^lavaan]: https://lavaan.ugent.be
-
-```{r, results='asis', echo=FALSE}
-model_truth <- combine(
-  measurement(
-    "MACH",
-    items("x", 9),
-    loadings = round(loadings_jones_paulhus * 0.7, 2)
-    ),
-  intercepts("MACH", list(0, 0.2))
-  )
-cat("```r",
-    model_truth,
-    "```",
-    sep = "\n")
-model <- combine(measurement(
-  "MACH",
-  items("x", 9)),
-  intercepts("MACH", list(0, "NA")))
+```{r}
+model_truth <-
+"MACH =~ 0.27*x1 + 0.22*x2 + 0.28*x3 + 0.36*x4 + 0.41*x5 + 0.5*x6 + 0.43*x7 +
+0.32*x8 + 0.36*x9
+MACH ~ c(0, 0.2)*1
+MACH ~~ c(1, 1)*MACH"
 ```
+
+[^lavaan]: https://lavaan.ugent.be
 
 Data simulation is particularly easy in lavaan syntax using the function `simulateData`.
 More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
-The following code simulates data from the population model `model_truth` with 1.000 cases in each group.
+The following code simulates data from the population model `model_truth` with 1000 cases in each group.
 
-```{r, results='hide'}
+```{r, include=FALSE}
+set.seed(1234)
+```
+
+```{r}
 simulated <- lavaan::simulateData(
   model_truth,
   sample.nobs = c(1000, 1000),
@@ -373,6 +411,9 @@ simulated <- lavaan::simulateData(
 And then fit the statistical model:
 
 ```{r}
+model <- "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+MACH ~~ c(1, NA)*MACH
+MACH ~ c(0, NA)*1 + c(zero, diff)*1"
 fit <-
   lavaan::cfa(
     model,
@@ -388,68 +429,152 @@ We overlooked a crucial assumption of this model, that is, measurement invarianc
 This assumption is also baked into our simulation of the data.
 There is a good chance that this assumption is violated.
 We, therefore, adapt our analysis to plan for this contingency.
-After fitting the model with strict measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
+After fitting the model with strong measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
 While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
 Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
 For simplicity, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
 Anyhow, remember that what we consider realistic for our case could be unfit for your case.
 
-If you are satisfied with your assumptions, it helps to write a function that expresses them, like this one:
+If you are satisfied with your assumptions for the data simulation, it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
 
-```{r}
-generate_data
+```{r generate_data}
 ```
 
-Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R", "GitHub")`.
+And to build another function that captures your planned analysis.
+Note that this function is again composed of several functions, which you may inspect on `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R", "GitHub")`.
 
-With its help we can simulate 500 cases and fit our analysis.
-
-```{r}
-true_diff <- 0.2
-model_truth <- combine(
-  measurement(
-    "MACH",
-    items("x", 9),
-    loadings = round(loadings_jones_paulhus * 0.7, 2)
-  ),
-  intercepts("MACH", list(0, true_diff)),
-  variances("MACH", list(1, 1))
-)
-
-model_same <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0,0)*1
-  MACH ~~ c(1, NA)*MACH"
-
-model_differ <- 
-  "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-  MACH ~ c(0, NA)*1 + c(zero, diff)*1
-  MACH ~~ c(1, NA)*MACH"
-generate_data(500,
-              model_truth,
-              model_same,
-              model_differ,
-              list(std_estimate = get_std_estimate),
-              group.equal = c("loadings", "intercepts"),
-              mod_load = 3,
-              mod_int = 3,
-              std.lv = TRUE)
+```{r planed_analysis}
 ```
 
-Note, that this certainly results in different numbers each time we run it.
+```{r extract_results}
+```
+
+With its help we can simulate 1000 cases and fit our analysis.
 
 ```{r}
-generate_data(500,
-              model_truth,
-              model_same,
-              model_differ,
-              list(std_estimate = get_std_estimate),
-              group.equal = c("loadings", "intercepts"),
-              mod_load = 3,
-              mod_int = 3,
-              std.lv = TRUE)
+generate_data(1000) %>% 
+  planed_analysis() %>% 
+  extract_results()
+```
+
+Note, that this certainly results in different numbers each time we run it (see ["Randome Number Generation"](#prng)).
+Of course it is already helpful to simulate a single dataset to test if the analysis works in principle, but repeating the analysis several times and vary parameters lets you verify more properties of your analysis.
+First, you can check if the planned analysis recovers the simulated values (`std_estimate` should be close to the simulated mean difference of 0.2).
+Second, it enables you to plan an appropriate sample size because you are able to quantify the sampling variability.
+
+To complete a such a  Monte-Carlo simulation study we need a function that repeats the analysis for different conditions (here only for different n):
+
+```{r simulation_study}
+```
+
+Such Monte-Carlo simulation can help you decide between several tradeoffs.
+One historically important tradeoff is between sample size and power (the probability to detect an effect of given size).
+More recently there has been growing interest in other resource relevant parameters as well [!citation], such as number of measurement occasions, reliability of measures etc.
+To show that there can also be alternative approaches for sample size planning beyond null hypothesis testing, we choose to visualize the density distribution of the parameter of interest (latent mean difference by gender of Machiavellism) instead of power.
+Such process still lets you formulate expectations for the precision of the analysis, e.g. with a sample size of 1000 per group 80% of the simulated standardized effect size fall into a range of +/- .1, but without necessarily rely on null hypothesis testing.
+For simplicity we do not show the code for the simulation/graphic, but it is available in the accompanying [GitHub repository](https://github.com/aaronpeikert/repro-tutorial)[^gh-repo]:.
+
+[^gh-repo]: https://github.com/aaronpeikert/repro-tutorial
+
+```{r, include=FALSE}
+res <- read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddd")
+```
+
+```{r hash}
+```
+
+```{r, include=FALSE}
+res_interval <- res %>%
+  select(n_obs, std_estimate) %>% 
+  filter(!is.na(std_estimate)) %>% 
+  group_by(n_obs) %>% 
+  summarise(interval = list(interval(std_estimate, seq(0.05, .2, 0.01))), 
+            .groups = "drop", median = median(std_estimate)) %>% 
+  unnest(c(interval)) %>% 
+  mutate(width = upper - lower, perc = 1 - alpha) %>% 
+  group_by(alpha) %>% 
+  arrange(n_obs) %>% 
+  mutate(across(c(width, upper, lower),
+                ~slide_dbl(.x, mean, na.rm = TRUE, .before = 2, .after = 0, .complete = FALSE))) %>% 
+  ungroup() %>% 
+  arrange(perc)
+```
+
+```{r, include=FALSE}
+choosen_perc <- .8
+choosen_width <- .2
+true_diff <- .2
+est_diff <- res %>% filter(n_obs == max(n_obs)) %>% pull(std_estimate) %>% mean()
+minn <- filter(res_interval, perc == choosen_perc, width < choosen_width) %>% 
+  filter(n_obs == min(n_obs))
+sim_n <- pull(res, n_obs)
+sim_nmax <- max(sim_n)
+sim_n_unique <- unique(sim_n)
+sim_nstep <- sim_n_unique[2] - sim_n_unique[1]
+```
+
+```{r, include=FALSE}
+plot_interval <- res_interval %>%
+  ggplot(aes(
+    n_obs,
+    ymin = lower,
+    ymax = upper,
+    fill = perc,
+    group = alpha
+  )) +
+  geom_ribbon() +
+  geom_line(aes(y = median), color = "white") +
+  geom_hline(yintercept = true_diff, linetype = "dotted") +
+  scale_fill_viridis_c(
+    begin = 1,
+    end = 0,
+    breaks  = 1 - seq(0.05, .2, 0.05),
+    labels = . %>% scales::percent(accuracy = 1)
+  ) +
+  scale_y_continuous(n.breaks = 10) +
+  scale_x_continuous(breaks = seq(0, sim_nmax, sim_nstep * 10)) +
+  theme_minimal() +
+  labs(x = "N per Group", y = "Standardized Effect Size") +
+  theme(legend.title = element_blank()) +
+  NULL
+```
+
+```{r, include=FALSE}
+plot_width <- res_interval %>%
+  ggplot(aes(n_obs, width, color = perc, group = perc)) +
+  geom_line() +
+  geom_point(
+    data = minn,
+    size = 3,
+    color = "black",
+    shape = 3
+  ) +
+  scale_color_viridis_c(
+    begin = 1,
+    end = 0,
+    breaks = 1 - seq(0.05, .2, 0.05),
+    labels = . %>% scales::percent(accuracy = 1)
+  ) +
+  theme_minimal() +
+  scale_y_log10(breaks = seq(0, 0.8, .1)) +
+  scale_x_continuous(breaks = seq(0, sim_nmax, sim_nstep * 10)) +
+  labs(x = "N per Group", y = "Width of quantile\n(Standardized Effect Size)") +
+  theme(legend.title = element_blank()) +
+  NULL
+```
+
+```{r, include=FALSE}
+simulation_plot <- plot_interval +
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank()) + 
+  plot_width +
+  plot_layout(nrow = 2, guides = 'collect') +
+  plot_annotation(tag_levels = 'A')
+```
+
+```{r, simulation-plot, echo=FALSE, fig.cap="*Plot A* depicts the range of effect sizes we observed in the simulation, where the colour encodes the density. The light yellow interval shows where 80% of the estimates land. The dotted line represents the simulated true effect size; the white line shows the median observed effect sizes. *Plot B* represents the width of the interval shown in Plot A on a logarithmic scale. The cross shows the minimum required sample size so that 80% of the estimates land in a range of +/- .1.  "}
+simulation_plot
 ```
 
 ### Randome Number Generation (optional) {#prng}
@@ -457,11 +582,11 @@ generate_data(500,
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code.
 To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
 It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
-The standard random number generator (RNG) produces high quality random numbers, but has is not safe to use in parrallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
+The standard random number generator (RNG) produces high quality random numbers, but is not safe to use in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
 Therefore, if you set a seed for one worker and another seed for another worker, you could end up with the same random numbers but with a phase shift.
 @lecuyerGoodParametersImplementations1999 proposed a more computationally expensive RNG, designed to generate many uncorrelated streams.
-While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the [`future`-package](futureverse.org)[^futureverse] to handles this for us across all workers:
+While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers:
 
 ```{r}
 set.seed(1235)
@@ -480,7 +605,6 @@ future::value(future::future(runif(1), seed = 1235))
 ## Preregistration (optional)
 
 <!--Hands-on: build simple functions tailored for your analysis-->
-
 
 Preregistration is the specification of a research plan in advance of data analysis.
 The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
@@ -504,31 +628,35 @@ Currently, there are various templates available that guide researchers in devel
 Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code.
 Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
 PAC essentially reverses the process of empirical research.
-Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results --- initially based on simulated data.
+Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results---initially based on simulated data.
 Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration.
 
 PAC works well within this reproducible framework.
+
 First, the preregistration becomes a part of the reproducible repository.
 It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project.
-If code was version-controlled and tagged (see Section XXX) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history.
+If code was version-controlled and tagged (see Section [Git]) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history.
 
 One way to ensure that you can expect your analysis to work with real data is to simulate data.
-A data simulation allows you to verify that the code runs error-free and lets you form more realistic expectations about the estimates' correctness and precision.
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
-The simulation showed that we have to gather at least `missing_rcode_simulation` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `missing_rcode_simulation`%.
+The simulation showed that we have to gather at least `r minn$n_obs` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `r round((est_diff - true_diff)*100/true_diff, 2)`%.
+These results are also visualized in Figure \@ref(fig:simulation-plot).
 If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
 A preregistration in code describes sufficiently how you want to analyze the data, but ideally, you also convey the why.
 Dynamic document generation combines code and text, enabling you to explain your reasoning.
 See the section on [R Markdown] for an example of a dynamic document generation paradigm.
+In fact, this manuscript and therefore the here presented Machiavellism example were preregistered as a full manuscript, and you can see the results on real data in section [Reproduce a Project].
 
 ### R Markdown
 
 <!--Hands on: Introduce R Markdown-->
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
+
 Above, we have already suggested [Markdown] as a universal and portable text format. 
 R Markdown extends regular Markdown by allowing useres you to include R code chunks (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown document.
 Upon rendering of the document, the code blocks are executed and their output is dynamically inserted into the document.
-This allows the creation of conditional text blocks, statistical results, or figures that are guarantueed to be uptodate because they are created everytime anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
+This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
+
 To create an R Markdown document, click on: 
 
 > File → New File → R Markdown...
@@ -545,11 +673,17 @@ runif(1)
 When you include code into an R Markdown, this code is run, and its results are included in the rendered document.
 With R Markdown, you can write whole articles (`r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/manuscript.Rmd", "like the one you are reading")`).
 You could, in principle, even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
-If you have simulated data, you could even already generate all figures and statistical results based on fake data, which will later be replaced by the real data.
+If you have simulated data, you could even include fake results.
+Packages like [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf)[^stargazer] [@stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html)[^apaTables] [@apaTables] and [`papaja`](http://frederikaust.com/papaja_man/)[^papaja] [@papaja] help you to create dynamically generated professional looking results.
+The package [`report`](https://github.com/easystats/report)[^report] [@report] is particularly noteworthy because it not only generates tables, but also a simple interpretation of the effects as actual prose (e.g it quantifies the size of an effect).
 Such a dynamic document is arguably the most concrete preregistration possible.
 One advantage is that writing the manuscript and writing the preregistration are no longer two distinct tasks.
 Therefore a preregistration can be thought of as simply rearranging tasks that you have to do anyway.
 
+[^report]: https://github.com/easystats/report
+[^stargazer]: https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf
+[^apaTables]: https://dstanley4.github.io/apaTables/articles/apaTables.html
+[^papaja]: http://frederikaust.com/papaja_man/
 <!--Hands on: gitignore resulting .html/pdf-->
 <!-- A preregistration needs to be public -->
 
@@ -893,6 +1027,7 @@ make README.md
 It is common practice to have a target all, that encompasses all important files of the project as the first target.
 If you do not specify a target, Make defaults to the first target, which is usually `all`.
 `repro` reminds you of that and suggests which file you might want to add to the target `all`.
+You can generally change the `Makefile` anyway you want, e.g. to add targets which are not supported by `repro`.
 After you have done so, you can then run in the terminal:
 
 ```bash
@@ -973,10 +1108,12 @@ This mechanism is triggered by `DOCKER=TRUE` in the make call:
 # this should be run in the terminal
 make DOCKER=TRUE
 ```
+The function `automate()` combines `automate_docker()` & `automate_make()`.
 
-You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manuel` to install software beyond R packages.
-Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manuel`.
+You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manual` to install software beyond R packages.
+Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manual`.
 We recommend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
+
 
 <!-- after this everything is optional? -->
 
@@ -992,7 +1129,6 @@ Most importantly the R version itself has to match.
 For example, @Peikert2019 illustrate how the generation of random numbers across different R versions is a threat to reproducibility.
 
 [^renv]: https://rstudio.github.io/renv/articles/renv.html
-
 
 ### High-performance computing environments (optional)
 
@@ -1045,16 +1181,39 @@ make docker &&
 make -B DOCKER=TRUE 
 ```
 
-Note that both this tutorial as well as our article on the reproducible workflow [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
-<!-- maybe we add here the real data? #25 -->
+Because you probably want to reproduce your own project each time something changes, you will often want to reproduce evertyhting.
+The `repro`-package contains a function designed for that purpose:
+
+```{r}
+repro::rerun()
+```
+
+This function automatically figures out how to reproduce a project and also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
+
+If you have written a [Preregistration as Code] you can swap the data file and reproduce the project.
+In fact, till after we preregistered the study `r link("https://github.com/aaronpeikert/repro-tutorial/releases/tag/ v0.0.1-preregistration", "preregistration")` were the results below based on simulated data.
+Only after we preregistered the whole manuscript and upon submission, they were based on actual data from https://openpsychometrics.org/_rawdata/.
+
+```{r}
+read_csv(here("data", "sd3.csv"), col_types = "dddddddddd") %>% 
+  planed_analysis() %>% 
+  extract_results()
+```
+
+Note that both [this tutorial](https://github.com/aaronpeikert/repro-tutorial)[^gh-repo2] as well as our article on the [reproducible workflow](https://github.com/aaronpeikert/reproducible-research)[^gh-repo3] [@Peikert2019] were created using this workflow and can be reproduced from their source code repositories.
+
+[^gh-repo2]: https://github.com/aaronpeikert/repro-tutorial
+[^gh-repo3]: https://github.com/aaronpeikert/reproducible-research
 
 ## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
 A prerequisite to reproducibility is the availability of code and data.
 We use containers to guarantee that all code components are available and work as expected.
-Ideally, all data is also stored in the repository.
-In practice, however, there are various reasons, which may prohibit you from making your data available, for example legal or regulatory or privacy concerns.
+Ideally, all data is also stored in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
+Sometimes it is just the required storage capacity that exceeds what Git can handle (Git gets slow around more than 100mb).
+In such case we strongly recommend using [DataLad [@DataladDatalad2021]](http://handbook.datalad.org/en/latest/)[^datalad] or the below procedure to guarantee that the data has not changed.
+In practice, however, there are various reasons, which may prohibit you from making your data publicly available, for example legal or regulatory or privacy concerns.
 You may find yourself in a situation where you can make the data only available on request.
 A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
 To at least check that the data was not changed, we suggest to provide a so called "hash", which is a cryptographic fingerprint.
@@ -1062,6 +1221,8 @@ If the data changes, so does its fingerprint or hash.
 The user can therefore compare if the data they have received is the same that was used in the original publication, as long as the original publication does contain the hash of the data.
 
 To verify the data integrity, you can include a line of code after reading the data that looks like this:
+
+[^datalad]: http://handbook.datalad.org/en/latest/
 
 ```{r}
 # create a dummy data.frame with two columns
@@ -1077,7 +1238,7 @@ We employed the same mechanism for our simulation to verify that the simulation 
 
 [^simhash]: https://github.com/aaronpeikert/repro-tutorial/blob/main/R/hash.R
 
-An compromise between making the data publicly available and keeping it closed is to publish synthetic data.
+An compromise between making the data publicly available and keeping it closed is to publish synthetic data [@vanlissa2020worcs].
 Such approach tries to recreate the marginal distribution and bivariate relationships in simulated data, e.g. with the R package `synthpop`[@nowokSynthpopBespokeCreation2016].
 The results of such data should generally not be interpreted.
 However, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data.
@@ -1119,7 +1280,7 @@ While the service is independent of GitHub---in terms of storage facilities and 
 Please note that you can only link public GitHub repositories to zenodo.
 You may log into zenodo.org through your GitHub account.
 
-> Log into zenodo.org → Account → [GitHub[^zenodo-github]](https://zenodo.org/account/settings/github/)
+> Log into zenodo.org → Account → [GitHub](https://zenodo.org/account/settings/github/)[^zenodo-github]
 
 [^zenodo-github]: https://zenodo.org/account/settings/github/
 
@@ -1131,11 +1292,12 @@ In software development, a release is the distribution of a piece of computer so
 GitHub has a "release" function, which creates a link to a specific snapshot of your project that then is available as a single compressed file.
 We believe that the idea of software releases can be leveraged for singling out important versions in a research project.
 We found it useful to label the following stages of development as release:
-- Preregistration (repository contains the final data analysis plan; also see the Section on PAC)
-- Completion of data collection (repository contains all study data)
-- Preprint (repository exactly reproduces a preprint that is hosted externally)
-- Submission or Resubmission (repository exactly reproduces a given version (re)submitted to a journal)
-- In Press (repository exactly reproduces the final manuscript as accepted by a scientific journal)
+
+* Preregistration (repository contains the final data analysis plan; also see the Section on PAC)
+* Completion of data collection (repository contains all study data)
+* Preprint (repository exactly reproduces a preprint that is hosted externally)
+* Submission or Resubmission (repository exactly reproduces a given version (re)submitted to a journal)
+* In Press (repository exactly reproduces the final manuscript as accepted by a scientific journal)
 
 You have the opportunity to describe the release in more detail in the accompanying release notes and to add extra files (e.g., complementing the Markdown source code of a journal article with a rendered PDF document).
 
@@ -1165,8 +1327,8 @@ Currently, this is a serious obstacle in adopting the workflow for researchers w
 The repro package, which we introduced here, supports scholars in creating reproducible workflows.
 It abstracts tedious and error-prone tasks such as the creation of a Makefile or the specification of a container.
 By extending the YAML specification that is used for storing meta information in R Markdown files, which are becoming increasingly popular among R users, repro helps users to implement @Peikert2019's workflow with minimal effort.
-Most importantly, repro is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow.
-Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the repro package.
+Most importantly, `repro`-is implemented such that the package itself is not needed to reproduce a workflow that was generated according to the workflow.
+Importantly, this means that users that adopt the workflow do not have to rely on the future availability and maintenance of the `repro`-package.
 
 # References
 

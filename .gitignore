@@ -15,3 +15,5 @@ apa7.csl
 *.svg
 *.png
 *.sif
+*.rds
+*.tex

@@ -1,10 +1,7 @@
 install.md: install.Rmd R/link.R
 	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
 
-manuscript.tex: manuscript.Rmd R/lavaan_helper.R R/simulation.R R/link.R
-	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
-
-preregistration.html: preregistration.Rmd R/simulation.R R/hash.R
+manuscript.tex: manuscript.Rmd data/overview.csv data/simulation_results.csv R/simulation.R R/simulation_funs.R R/link.R
 	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
 
 README.md: README.Rmd
