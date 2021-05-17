@@ -232,7 +232,7 @@ We will later see how this simplicity enables us to create many different docume
 
 ## Git
 
-Another advantage of Markdown is that because of its alikeness to plain text, you can easily version-control it with Git and leverage Gits features for tracking, displaying, and merging sequential and concurrent changes.
+Another advantage of Markdown is that because of its likeness to plain text, you can easily version-control it with Git and leverage Gits features for tracking, displaying, and merging sequential and concurrent changes.
 You may be familiar with Microsoft Words' "Track Changes"-Feature.
 Version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
@@ -346,21 +346,28 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
+
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 The machine learning community has begun to routinely simulate data to test models and their implementation [@braiekTestingMachineLearning2020].
-Beyond checking the technical side of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
-Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
-Beyond ensuring that the code runs without technical error and it lets you form more realistic expectations about the estimates' correctness and precision.
-No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about them.
-If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
+Other than checking technical and statistical aspects of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
+With simulated data you can check if the expected data and the planned analysis match.
+First of all, simulated data can be used as an initial check that the code for the planned analysis runs without error. 
+This is particularly important if you want to preregister pieces of your analysis before data were collected.
+For example, we can use simulated data to check whether a given data analysis outputs parameter estimates when we simulate missing data values.
+Second, Monte Carlo simulations allow us to form realistic expectations about the unbiasedness and precision of parameter estimates and it can help with sample size planning to obtain a sensible study design. 
+For a variety of standard models, there are analytic strategies to evaluate precision or statistical power, however, Monte Carlo simulation offers more flexibility in terms of mode realistic modeling conditions (e.g., missing data or non-normality).
+For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data. 
+No matter which analytic strategy you plan, it will come with assumptions about the data generating process under investigation. 
+A simulation forces us to deal with these assumptions and their consequences explicitly.
+If you identify unrealistic assumptions, you can either deliberately violate these assumptions and, by simulation, check if the analytic strategy is robust or modify the modeling approach to explicitly address them.
 We will show an example using structural equation modeling (SEM) for our Machiavellism example.
-However, the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
-One has to make many educated guesses to simulate data that closely matches your expectation.
-These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
-The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
+Note that the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
+Typically, you have to make a number of educated guesses to simulate data that closely matches your expectation.
+These guesses strongly depend on the study you are planning, and there cannot be a one-fits-all solution.
+Since we typically use parametric statistical models (general linear model or SEM) or hypothesis tests that can be expressed as Gaussian models, we can usually use these models directly to simulate data.
 
-If you are unfamiliar with the specifics of SEM, you may briefly skim the next sections and continue in section ["Randome Number Generation"](#prng).
+If you are unfamiliar with the specifics of SEM, you may briefly skim the next sections and continue in section ["Random Number Generation"](#prng).
 To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix.
 
 The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad [SD3, @Jones2013].
@@ -368,7 +375,7 @@ The selected model parameters should express our expectations for the Machiavell
 As a starting point, we can use already published information.
 @Jones2013 report a set of factor loadings from an Exploratory Structural Equation Model [@asparouhovExploratoryStructuralEquation2009].
 The estimates for the construction sample, which was recruited from Amazon’s Mechanical Turk (MTurk) and consists of 489 adults from Canada and the United States, can be seen in Table \@ref(tab:loadings))
-They report a gender difference (at the manifest level) depending on the study between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
+They report a gender difference (at the manifest level), which depending on the study ranges between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
 ```{r loadings, echo=FALSE}
 knitr::kable(t(data.frame(Item = as.character(1:9),
@@ -426,15 +433,16 @@ fit <-
 
 Now, `lavaan` warns us that this model may not be identified.
 We overlooked a crucial assumption of this model, that is, measurement invariance.
-This assumption is also baked into our simulation of the data.
+This assumption has also been incorporated into our simulation of the data.
 There is a good chance that this assumption is violated.
-We, therefore, adapt our analysis to plan for this contingency.
-After fitting the model with strong measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
+We therefore adjust our analysis plan to include tests for measurement invariance.
+We propose the following procedure. 
+After fitting the model with strong measurement invariance <!--AP: citation needed-->, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
-While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
-Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
-For simplicity, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
-Anyhow, remember that what we consider realistic for our case could be unfit for your case.
+While reconsidering our modeling assumptions, it is also unlikely that the data are perfectly normally distributed.
+First, we have rating scale items and thus our observations are categorical.
+Second, @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
+For simplicity of our illustration, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
 
 If you are satisfied with your assumptions for the data simulation, it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
@@ -459,7 +467,7 @@ generate_data(1000) %>%
   extract_results()
 ```
 
-Note, that this certainly results in different numbers each time we run it (see ["Randome Number Generation"](#prng)).
+Note, that this certainly results in different numbers each time we run it (see ["Random Number Generation"](#prng)).
 Of course it is already helpful to simulate a single dataset to test if the analysis works in principle, but repeating the analysis several times and vary parameters lets you verify more properties of your analysis.
 First, you can check if the planned analysis recovers the simulated values (`std_estimate` should be close to the simulated mean difference of 0.2).
 Second, it enables you to plan an appropriate sample size because you are able to quantify the sampling variability.
@@ -577,10 +585,10 @@ simulation_plot <- plot_interval +
 simulation_plot
 ```
 
-### Randome Number Generation (optional) {#prng}
+### Random Number Generation (optional) {#prng}
 
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code.
-To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
+To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`. Note however that the consistency of a given seed is not necessarily maintained across different R versions because the default algorithm for generating pseudo random numbers may change (see @Peikert2019 for a demonstration with different R versions).
 It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The standard random number generator (RNG) produces high quality random numbers, but is not safe to use in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
