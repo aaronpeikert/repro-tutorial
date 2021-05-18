@@ -25,13 +25,16 @@ you might think.
 
 ## 2.2 How to install a package manager for Windows 10?
 
-[Chocolately](https://chocolatey.org/)[1] is a great package manager for
-Windows 10. You should follow these installation instructions:
+[Chocolately](https://chocolatey.org/)\[1\] is a great package manager
+for Windows 10. You should follow these installation instructions:
 <https://chocolatey.org/docs/installation>, but if you are in a hurry:
 
 1.  Press Windows key + X, click on “Windows Powershell (Admin)”.
-2.  Paste:
-    `Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
+2.  Paste: `Set-ExecutionPolicy Bypass -Scope Process -Force;
+    [System.Net.ServicePointManager]::SecurityProtocol =
+    [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex
+    ((New-Object
+    System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
 3.  Press enter.
 4.  Close the PowerShell
 
@@ -64,14 +67,14 @@ Windows Pro or Education.
 
 ## 3.2 How to install a package manager for Mac OS?
 
-[Homebrew](https://brew.sh)[2] is a great package manager for Mac OS. To
-install it:
+[Homebrew](https://brew.sh)\[2\] is a great package manager for Mac OS.
+To install it:
 
 1.  Open a new terminal (Press Command + Space, type “Terminal”, press
     enter).
 2.  Paste `xcode-select --install` and press enter to install xcode.
-3.  Paste:
-    `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`.
+3.  Paste: `/bin/bash -c "$(curl -fsSL
+    https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`.
 4.  Press enter.
 5.  Close the terminal.
 
@@ -92,6 +95,8 @@ Since you probably already have R and RStudio you may skip this step.
 2.  Paste `brew install git make docker`.
 3.  Press enter.
 
-[1] <https://chocolatey.org/>
+<!-- end list -->
 
-[2] <https://brew.sh>
+1.  <https://chocolatey.org/>
+
+2.  <https://brew.sh>
