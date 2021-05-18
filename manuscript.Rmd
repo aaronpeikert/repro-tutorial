@@ -1173,8 +1173,9 @@ A reproducible project should not only be reproducible in theory, but it should 
 Typically, it is argued that results should be reproducible by a Ph.D. student from the same discipline who had experience with the statistical software used [@obels2020].
 Even if all code and data are available in a repository, if reproducibility takes too long because of a lack of structure and documentation, it must be regarded as non-reproducible [@obels2020].
 
-Ideally, you have a statement in the README that contains a few steps to reproduce the project, where most steps are automatic and standardized.
-This statement should also note the required software.
+Ideally, you have a statement in the README that contains a short description of how to reproduce the project, whereas most steps are automatic and standardized.
+This statement should also list all software requirements.
+<!--AP: I think this Figure is superfluous. Please remove. All the information is in the following code blocks.-->
 Figure \@ref(fig:readme) shows `r link("https://github.com/aaronpeikert/repro-tutorial#how-to-reproduce-this-manuscript", "the reproduction statement of this project")`.
 For example, you can download any git repository with these commands:
 
@@ -1184,7 +1185,7 @@ git clone https://github.com/aaronpeikert/repro-tutorial.git
 cd repro-tutorial
 ```
 
-Projects that combine Make and Docker and adhere to the standard proposed by @Peikert2019 can be reproduced with:
+Projects that combine Make and Docker and adhere to the standard proposed by @Peikert2019 can then be reproduced with:
 
 ```bash
 # this should be run in the terminal
@@ -1192,16 +1193,17 @@ make docker &&
 make -B DOCKER=TRUE 
 ```
 
-Because you probably want to reproduce your own project each time something changes, you will often want to reproduce everything.
-The `repro`-package contains a function designed for that purpose:
+Typically there is a need to repeatedly reproduce a project during the development phase (e.g., on every change of  the analysis cod or, every change to the dataset).
+The `repro`-package contains a function to reproduce all targets:
 
 ```{r}
 repro::rerun()
 ```
 
-This function automatically figures out how to reproduce a project and also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
+This function automatically figures out how to reproduce an entire project and also recognizes non-default reproducibility tools (like `renv` and `singularity`). 
+Of course, this automatic derivation of tools and steps is limited to the packages we have discussed here and the program may not always succeed if researchers deviate from our suggestions.
 
-If you have written a [Preregistration as Code] you can add the real data file to the project and reproduce the entire project with this single command.
+If you have written a [Preregistration as Code] you can add the real data file to the project and (re)produce the entire project with this single command.
 In fact, until after we preregistered the study `r link("https://github.com/aaronpeikert/repro-tutorial/releases/tag/ v0.0.1-preregistration", "preregistration")` were the results below based on simulated data.
 Only after we preregistered the whole manuscript and upon submission, they were based on actual data from https://openpsychometrics.org/_rawdata/.
 
