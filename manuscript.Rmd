@@ -4,6 +4,7 @@ author: Aaron Peikert and Andreas M. Brandmaier
 output:
   bookdown::pdf_document2:
     keep_tex: TRUE
+    toc: FALSE
 repro:
   packages:
     - tidyverse
@@ -29,6 +30,8 @@ repro:
 csl: apa7.csl
 numbered_headings: true
 bibliography: ["references.bib", "packages.bib"]
+abstract:
+  Computational reproducibility is the ability to obtain identical results from the *same* data with the *same* computer code. It is a building block for transparent and cumulative science because it enables other researchers, on other computers and later in time, to reproduce and thus understand how results came about while, at the same time, it avoids a variety of errors that may lead to erroneous reporting of statistical and computational results. In this tutorial, we demonstrate how the R package `repro` supports researchers in creating fully computationally reproducible research projects with a focus on current Open Science practices; starting from sketching the research proposal, over preregistering an analysis as executable code with simulated data, until the creation and dissemination of the final scientific report. 
 ---
 
 <!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
@@ -42,6 +45,7 @@ automate_load_scripts()
 source(here::here("R", "link.R"))
 ```
 
+```{r echo=FALSE}
 ```{r}
 # define a print method for objects of the class data.frame
 knit_print.data.frame = function(x, ...) {
@@ -179,9 +183,9 @@ check_github()
 ```
 
 
-If these commands detect that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
+If any of these commands find that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
 Please make sure that all three commands pass before you continue with the tutorial.
-This process is only required once per computer and does not need to be repeated per project.
+This process is only required once per computer and does not need to be repeated for each project.
 
 # Planning Phase
 
@@ -192,7 +196,7 @@ Therefore, we suggest starting early, ideally from the moment you decide to purs
 The first step towards reproducibility is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files without missing anything.
 <!-- Hands-on: Introducing RProjects-->
-RStudio's _R Projects_ facilitate this concept of a project folder.
+RStudio's _R Projects_ facilitate this concept of a project folder. The `repro` package offers an R Studio template, which sets up a file structure that follows best practices and conventions.<!--AP this is from your thesis - can you please add citations as to which practices and conventions these are?-->
 To create one, click on:
 
 > File → New Project... → New Directory → New Project
@@ -232,7 +236,7 @@ We will later see how this simplicity enables us to create many different docume
 
 ## Git
 
-Another advantage of Markdown is that because of its alikeness to plain text, you can easily version-control it with Git and leverage Gits features for tracking, displaying, and merging sequential and concurrent changes.
+Another advantage of Markdown is that because of its likeness to plain text, you can easily version-control it with Git and leverage Gits features for tracking, displaying, and merging sequential and concurrent changes.
 You may be familiar with Microsoft Words' "Track Changes"-Feature.
 Version control is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
@@ -327,8 +331,8 @@ knitr::include_graphics(idea_change)
 ```
 
 <!--I am troubled by how we should recommend to learn Git-->
-Git can be challenging to learn, because it requires a rather complex mental model.
-However, there is a subsets of commands which we present here and in the section on [GitHub] (commit, push, pull) which enable you to utilize Git for simple version control.
+Git can be challenging to learn, because it requires a rather complex mental model of maintaining potentially differing versions between different repositories (typically one central repository and one local repository per each author while each repository may have different branches).
+However, there is a subsets of commands which we present here and in the section on [GitHub] (commit, push, pull) which enable you to use Git for simple version control.
 There are many tutorials on learning Git and @vuorreCuratingResearchAssets2018 provide a good starting point.
 However Git is designed for collaboration, we therefore recommend finding a partner to attend an online lecture or workshop to learn the ins and outs of Git.
 
@@ -346,21 +350,28 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
+
 There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
 A step to prevent unpleasant surprises is to simulate data.
 The machine learning community has begun to routinely simulate data to test models and their implementation [@braiekTestingMachineLearning2020].
-Beyond checking the technical side of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
-Simulated data lets you verify that the data you expect to gather and the analysis you plan fit together.
-Beyond ensuring that the code runs without technical error and it lets you form more realistic expectations about the estimates' correctness and precision.
-No matter which analytic strategy you plan, it comes with assumptions and a simulation forces you to address these assumptions more directly than simply thinking about them.
-If you identify unrealistic assumptions, you can either violate these assumptions and see if the analytic strategy is robust or modify the analytical approach to address them.
+Other than checking technical and statistical aspects of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
+With simulated data you can check if the expected data and the planned analysis match.
+First of all, simulated data can be used as an initial check that the code for the planned analysis runs without error. 
+This is particularly important if you want to preregister pieces of your analysis before data were collected.
+For example, we can use simulated data to check whether a given data analysis outputs parameter estimates when we simulate missing data values.
+Second, Monte Carlo simulations allow us to form realistic expectations about the unbiasedness and precision of parameter estimates and it can help with sample size planning to obtain a sensible study design. 
+For a variety of standard models, there are analytic strategies to evaluate precision or statistical power, however, Monte Carlo simulation offers more flexibility in terms of mode realistic modeling conditions (e.g., missing data or non-normality).
+For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data. 
+No matter which analytic strategy you plan, it will come with assumptions about the data generating process under investigation. 
+A simulation forces us to deal with these assumptions and their consequences explicitly.
+If you identify unrealistic assumptions, you can either deliberately violate these assumptions and, by simulation, check if the analytic strategy is robust or modify the modeling approach to explicitly address them.
 We will show an example using structural equation modeling (SEM) for our Machiavellism example.
-However, the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
-One has to make many educated guesses to simulate data that closely matches your expectation.
-These guesses strongly depend on the study you are planning, and there cannot be a one fits all solution.
-The analytic strategy (i.e. SEM) often gives you a hint about how to simulate data.
+Note that the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
+Typically, you have to make a number of educated guesses to simulate data that closely matches your expectation.
+These guesses strongly depend on the study you are planning, and there cannot be a one-fits-all solution.
+Since we typically use parametric statistical models (general linear model or SEM) or hypothesis tests that can be expressed as Gaussian models, we can usually use these models directly to simulate data.
 
-If you are unfamiliar with the specifics of SEM, you may briefly skim the next sections and continue in section ["Randome Number Generation"](#prng).
+If you are unfamiliar with the specifics of SEM, you may briefly skim the next sections and continue in section ["Random Number Generation"](#prng).
 To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix.
 
 The selected model parameters should express our expectations for the Machiavellism subscale of the short dark triad [SD3, @Jones2013].
@@ -368,7 +379,7 @@ The selected model parameters should express our expectations for the Machiavell
 As a starting point, we can use already published information.
 @Jones2013 report a set of factor loadings from an Exploratory Structural Equation Model [@asparouhovExploratoryStructuralEquation2009].
 The estimates for the construction sample, which was recruited from Amazon’s Mechanical Turk (MTurk) and consists of 489 adults from Canada and the United States, can be seen in Table \@ref(tab:loadings))
-They report a gender difference (at the manifest level) depending on the study between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
+They report a gender difference (at the manifest level), which depending on the study ranges between `r min(cohend_jones_paulhus)` and `r max(cohend_jones_paulhus)`.
 
 ```{r loadings, echo=FALSE}
 knitr::kable(t(data.frame(Item = as.character(1:9),
@@ -426,15 +437,16 @@ fit <-
 
 Now, `lavaan` warns us that this model may not be identified.
 We overlooked a crucial assumption of this model, that is, measurement invariance.
-This assumption is also baked into our simulation of the data.
+This assumption has also been incorporated into our simulation of the data.
 There is a good chance that this assumption is violated.
-We, therefore, adapt our analysis to plan for this contingency.
-After fitting the model with strong measurement invariance, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
+We therefore adjust our analysis plan to include tests for measurement invariance.
+We propose the following procedure. 
+After fitting the model with strong measurement invariance <!--AP: citation needed-->, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
-While reconsidering our assumptions, it is also unlikely that the data is normally distributed.
-Not only would the actual items be Likert-like and therefore categorical, but also are the in @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
-For simplicity, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
-Anyhow, remember that what we consider realistic for our case could be unfit for your case.
+While reconsidering our modeling assumptions, it is also unlikely that the data are perfectly normally distributed.
+First, we have rating scale items and thus our observations are categorical.
+Second, @Jones2013 reported means not in the middle of the scale, thus suggesting some skewness to the items.
+For simplicity of our illustration, we do not simulate these likely data problems (but doing so would undoubtedly make the simulation more realistic).
 
 If you are satisfied with your assumptions for the data simulation, it helps to write a function that expresses them, like this one:
 <!--Hands-on: build simple functions tailored for your analysis-->
@@ -459,7 +471,7 @@ generate_data(1000) %>%
   extract_results()
 ```
 
-Note, that this certainly results in different numbers each time we run it (see ["Randome Number Generation"](#prng)).
+Note, that this certainly results in different numbers each time we run it (see ["Random Number Generation"](#prng)).
 Of course it is already helpful to simulate a single dataset to test if the analysis works in principle, but repeating the analysis several times and vary parameters lets you verify more properties of your analysis.
 First, you can check if the planned analysis recovers the simulated values (`std_estimate` should be close to the simulated mean difference of 0.2).
 Second, it enables you to plan an appropriate sample size because you are able to quantify the sampling variability.
@@ -577,10 +589,10 @@ simulation_plot <- plot_interval +
 simulation_plot
 ```
 
-### Randome Number Generation (optional) {#prng}
+### Random Number Generation (optional) {#prng}
 
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code.
-To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
+To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`. Note however that the consistency of a given seed is not necessarily maintained across different R versions because the default algorithm for generating pseudo random numbers may change (see @Peikert2019 for a demonstration with different R versions).
 It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The standard random number generator (RNG) produces high quality random numbers, but is not safe to use in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
@@ -651,9 +663,12 @@ In fact, this manuscript and therefore the here presented Machiavellism example 
 
 <!--Hands on: Introduce R Markdown-->
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
-We already learned about [Markdown], to write text.
-R Markdown allows you to include R code (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown.
-R Markdown is the smart combination of Markdown with dedicated code chunks that are evaluated to formatted text, statistical results, or images when the document is rendered to its final format
+
+Above, we have already suggested [Markdown] as a universal and portable text format. 
+R Markdown extends regular Markdown by allowing useres you to include R code chunks (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown document.
+Upon rendering of the document, the code blocks are executed and their output is dynamically inserted into the document.
+This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
+
 To create an R Markdown document, click on: 
 
 > File → New File → R Markdown...
@@ -1122,7 +1137,7 @@ The function `automate()` combines `automate_docker()` & `automate_make()`.
 
 You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manual` to install software beyond R packages.
 Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manual`.
-We recomend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
+We recommend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
 
 
 <!-- after this everything is optional? -->
@@ -1142,18 +1157,19 @@ For example, @Peikert2019 illustrate how the generation of random numbers across
 
 ### High-performance computing environments (optional)
 
-The `repro` package is particularly well-suited for computationally intensive data analyses and simulations that  are to be run on distributed computing environments.
-By using containers, `repro` ensures identical execution across platforms and thus guarantees that a data analysis or simulation that was designed and tested on a local computer will be executed in the identical manner on a remote machine or various remote machines across an entire computing cluster.
+The `repro` package is particularly well-suited for computationally intensive data analyses and simulations that  are to run on distributed computing environments.
+Through the use of containers, `repro` ensures identical execution across platforms, guaranteeing that a given data analysis or simulation designed and tested on a local machine will execute identically on a remote machine or multiple different remote machines across an entire computing cluster.
 Thereby, the repro package makes massive parallel computing in heterogeneous computing environments less error-prone while ensuring the full documentation of all computational steps taken — even if some or all of them were run in parallel on distributed platforms.
-Alone the sheer data size often warrants distributed computing, e.g. the European Bioinformatics Institute stores more than 120 Petabyte of publicly accessible data [@cookEuropeanBioinformaticsInstitute2018], single FMRI studies quickly amount to hundreds of Gigabyte[^openneuro] and even purely behavioral data like from the moral machine experiment [>10GB, @awadMoralMachineExperiment2018] can become to big to handle .
+The sheer volume of data often necessitates distributed computing, e.g. the European Bioinformatics Institute stores more than 120 Petabyte of publicly accessible data [@cookEuropeanBioinformaticsInstitute2018], single FMRI studies quickly amount to hundreds of Gigabyte[^openneuro] and even purely behavioral data like those from the moral machine experiment [>10GB, @awadMoralMachineExperiment2018] can become too large to be handled by a single local computer.
 
 [^openneuro]: https://openneuro.org/public/datasets
 
-As default, `repro` uses Docker, which is the defacto standard for cloud computing, as a container solution.
+As default container solution, `repro` uses Docker, which is a widely adopted standard for cloud computing.
 However, Docker requires administrator rights for execution.
 Whereas this is no issue on most modern cloud computing infrastructures, it is often an issue in classic HPC environments.
 Singularity is an alternative solution [@singularity].
-It was designed to run without administratot rights, while maintaining full compatibility with Docker images.
+It was designed to run without administrator rights, while maintaining full compatibility with Docker images.
+
 If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
 Importantly, this choice does not affect how code is executed inside the container.
 Like with Docker, the default `Makefile` generated by `repro` comes with a mechanism to automatically send all commands to Singularity.
@@ -1166,16 +1182,17 @@ make SINGULARITY=TRUE
 <!-- Hands on: add data via automate() -->
 <!-- Hands on: automatically download data via manually editing the Makefile -->
 
-## Reproduce a Project
+## Reproducing a Project
 
 A reproducible project should not only be reproducible in theory, but it should be simple to reproduce.
 Typically, it is argued that results should be reproducible by a Ph.D. student from the same discipline who had experience with the statistical software used [@obels2020].
 Even if all code and data are available in a repository, if reproducibility takes too long because of a lack of structure and documentation, it must be regarded as non-reproducible [@obels2020].
 
-Ideally, you have a statement in the README that contains a few steps to reproduce the project, where most steps are automatic and standardized.
-This statement should also note the required software.
+Ideally, you have a statement in the README that contains a short description of how to reproduce the project, whereas most steps are automatic and standardized.
+This statement should also list all software requirements.
+<!--AP: I think this Figure is superfluous. Please remove. All the information is in the following code blocks.-->
 Figure \@ref(fig:readme) shows `r link("https://github.com/aaronpeikert/repro-tutorial#how-to-reproduce-this-manuscript", "the reproduction statement of this project")`.
-E.g. you can download any git repository with these commands:
+For example, you can download any git repository with these commands:
 
 ```bash
 # this should be run in the terminal
@@ -1183,7 +1200,7 @@ git clone https://github.com/aaronpeikert/repro-tutorial.git
 cd repro-tutorial
 ```
 
-Projects that combine Make and Docker then can usually be reproduced with:
+Projects that combine Make and Docker and adhere to the standard proposed by @Peikert2019 can then be reproduced with:
 
 ```bash
 # this should be run in the terminal
@@ -1191,17 +1208,18 @@ make docker &&
 make -B DOCKER=TRUE 
 ```
 
-Because you probably want to reproduce your own project each time something changes, you will often want to reproduce evertyhting.
-The `repro`-package contains a function designed for that purpose:
+Typically there is a need to repeatedly reproduce a project during the development phase (e.g., on every change of  the analysis cod or, every change to the dataset).
+The `repro`-package contains a function to reproduce all targets:
 
 ```{r}
 repro::rerun()
 ```
 
-This function automatically figures out how to reproduce a project and also recognizes other employed reproducibility tools (like `renv` and `singularity`), but can of course only guess the appropriate way to reproduce a project.
+This function automatically figures out how to reproduce an entire project and also recognizes non-default reproducibility tools (like `renv` and `singularity`). 
+Of course, this automatic derivation of tools and steps is limited to the packages we have discussed here and the program may not always succeed if researchers deviate from our suggestions.
 
-If you have written a [Preregistration as Code] you can swap the data file and reproduce the project.
-In fact, till after we preregistered the study `r link("https://github.com/aaronpeikert/repro-tutorial/releases/tag/ v0.0.1-preregistration", "preregistration")` were the results below based on simulated data.
+If you have written a [Preregistration as Code] you can add the real data file to the project and (re)produce the entire project with this single command.
+In fact, until after we preregistered the study `r link("https://github.com/aaronpeikert/repro-tutorial/releases/tag/ v0.0.1-preregistration", "preregistration")` were the results below based on simulated data.
 Only after we preregistered the whole manuscript and upon submission, they were based on actual data from https://openpsychometrics.org/_rawdata/.
 
 ```{r}
@@ -1218,9 +1236,10 @@ Note that both [this tutorial](https://github.com/aaronpeikert/repro-tutorial)[^
 ## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
-A prerequisite to reproducibility is the availability of code and data [@akhlaghi2020towards].
+A prerequisite to reproducibility is the permanent availability of both code and data [@akhlaghi2020towards].
 We use containers to guarantee that all code components are available and work as expected.
-Ideally, all data is also stored in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs] and well documented [@codebook], but this is not always feasible.
+Ideally, all data are also stored well documented [@codebook] in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
+
 Sometimes it is just the required storage capacity that exceeds what Git can handle (Git gets slow around more than 100mb).
 In such case we strongly recommend using [DataLad [@DataladDatalad2021]](http://handbook.datalad.org/en/latest/)[^datalad] or the below procedure to guarantee that the data has not changed.
 In practice, however, there are various reasons, which may prohibit you from making your data publicly available, for example legal or regulatory or privacy concerns.
@@ -1230,7 +1249,7 @@ To at least check that the data was not changed, we suggest to provide a so call
 If the data changes, so does its fingerprint or hash.
 The user can therefore compare if the data they have received is the same that was used in the original publication, as long as the original publication does contain the hash of the data.
 
-To verify the data integrity, you can include a line of code after reading the data that looks like this:
+To verify data integrity, you can include a line of code after reading the data that looks like this:
 
 [^datalad]: http://handbook.datalad.org/en/latest/
 
@@ -1244,14 +1263,14 @@ if(hash != "5ba412f5a26f43842971dd74954fcdeb"){
 }
 ```
 
-We employed the same mechanism for our simulation to verify that the simulation is really reproducible[^simhash].
+We employed the same mechanism for our simulation to verify that the simulation is indeed reproducible[^simhash].
 
 [^simhash]: https://github.com/aaronpeikert/repro-tutorial/blob/main/R/hash.R
 
-An compromise between making the data publicly available and keeping it closed is to publish synthetic data [@vanlissa2020worcs].
-Such approach tries to recreate the marginal distribution and bivariate relationships in simulated data, e.g. with the R package `synthpop`[@nowokSynthpopBespokeCreation2016].
-The results of such data should generally not be interpreted.
-However, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data.
+A compromise between making the data publicly available and keeping it closed is the publication of synthetic data [@vanlissa2020worcs].
+Synthetic data are an attempt to recreate the marginal distribution and bivariate relationships in simulated data. The R package `synthpop`[@nowokSynthpopBespokeCreation2016] provides functions to generate synthetic data .
+Of course, the results of such synthetic data should generally not be interpreted but are rather meant to illustrate the workings and the structure of the output of a given data analysis.
+Also, synthetic data provides an opportunity for readers to test if a project is in principle reproducible, even though they have no access to the data.
 
 # Archival and Dissemination
 
