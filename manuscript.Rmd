@@ -1324,16 +1324,11 @@ To remove any software dependency including Docker from the archived project, on
 Such system image can subsequently be booted on any personal computer without relying on any software or service and therefore grantees reproducibility for decades to come.
 Currently, `repro` does not facilitate this conversion, but we hope to include this feature soon.
 
-## Archiving Data
-
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
 <!-- Hands on: explain how to archive data-->
 <!-- Hands on: explain how to archive docker images-->
 
-# Checklist
-
-<!-- Should we design a checklist? -->
 
 ```{r, results='asis', echo=FALSE}
 link_index()
