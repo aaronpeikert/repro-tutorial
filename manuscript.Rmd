@@ -203,7 +203,7 @@ To create one, click on:
  A great tool to capture ideas or meeting notes is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
  This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
-We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV.
+We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV [@vitae].
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -280,7 +280,7 @@ gert::git_add("idea.md")
 gert::git_commit("add a first concept")
 ```
 
-Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder <!-- Aaron, reference needed-->.
+Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder [@flake2020].
 This results in changes to your notes as follows:
 
 ```markdown
@@ -392,7 +392,7 @@ MACH ~~ c(1, 1)*MACH"
 [^lavaan]: https://lavaan.ugent.be
 
 Data simulation is particularly easy in lavaan syntax using the function `simulateData`.
-More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
+More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], faux [@faux], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
 The following code simulates data from the population model `model_truth` with 1000 cases in each group.
 
 ```{r, include=FALSE}
@@ -616,16 +616,16 @@ For us, a good preregistration is the same as a good plan; the only difference i
 
 The second advantage is transparency.
 A preregistration offers the interested reader more insight into the research process than a paper alone could.
-Some [citation!] argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
-While such an argument has some merits, we believe that often transparency outweighs these concerns.
+@szollosi_is_2020 argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
+While such an argument has some merits, we believe that often transparency outweighs these concerns [@nosekPreregistrationHardWorthwhile2019].
 Deviation from a preregistration is still possible.
 If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study, and any deviation will simply be explicitly marked as such.
 A preregistration, together with version control, allows their readers to inform themselves about these lessons learned.
 
 ### Preregistration as Code
 
-Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration. 
-Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code.
+Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration [@osfstandard; @socpsytemp; @howtoreplicate]. 
+Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code [@sep-ambiguity].
 Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
 PAC essentially reverses the process of empirical research.
 Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results---initially based on simulated data.
@@ -767,6 +767,8 @@ usethis::use_ccby_license()
 ```
 
 ### Data Documentation
+
+[@codebook]
 
 ### Code of Conduct
 
@@ -1139,7 +1141,7 @@ Alone the sheer data size often warrants distributed computing, e.g. the Europea
 As default, `repro` uses Docker, which is the defacto standard for cloud computing, as a container solution.
 However, Docker requires administrator rights for execution.
 Whereas this is no issue on most modern cloud computing infrastructures, it is often an issue in classic HPC environments.
-Singularity is an alternative solution.
+Singularity is an alternative solution [@singularity].
 It was designed to run without administratot rights, while maintaining full compatibility with Docker images.
 If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
 Importantly, this choice does not affect how code is executed inside the container.
@@ -1205,13 +1207,13 @@ Note that both [this tutorial](https://github.com/aaronpeikert/repro-tutorial)[^
 ## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
-A prerequisite to reproducibility is the availability of code and data.
+A prerequisite to reproducibility is the availability of code and data [@akhlaghi2020towards].
 We use containers to guarantee that all code components are available and work as expected.
-Ideally, all data is also stored in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
+Ideally, all data is also stored in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs] and well documented [@codebook], but this is not always feasible.
 Sometimes it is just the required storage capacity that exceeds what Git can handle (Git gets slow around more than 100mb).
 In such case we strongly recommend using [DataLad [@DataladDatalad2021]](http://handbook.datalad.org/en/latest/)[^datalad] or the below procedure to guarantee that the data has not changed.
 In practice, however, there are various reasons, which may prohibit you from making your data publicly available, for example legal or regulatory or privacy concerns.
-You may find yourself in a situation where you can make the data only available on request.
+You may find yourself in a situation where you can make the data only available on request [e.g. @share].
 A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
 To at least check that the data was not changed, we suggest to provide a so called "hash", which is a cryptographic fingerprint.
 If the data changes, so does its fingerprint or hash.
