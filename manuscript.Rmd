@@ -350,26 +350,29 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
+Monte Carlo simulations are a crucial tool to investigate properties of a statistical model and they are routinely employed to develop or evaluate statistical models.
+For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data.
 
-There are probably few things as frustrating as realizing that the data that you gathered cannot answer the research question you had in mind.
-A step to prevent unpleasant surprises is to simulate data.
-The machine learning community has begun to routinely simulate data to test models and their implementation [@braiekTestingMachineLearning2020].
-Other than checking technical and statistical aspects of the model, simulation is also beneficial on a conceptual level [@axelrodAdvancingArtSimulation1997].
-With simulated data you can check if the expected data and the planned analysis match.
-First of all, simulated data can be used as an initial check that the code for the planned analysis runs without error. 
-This is particularly important if you want to preregister pieces of your analysis before data were collected.
-For example, we can use simulated data to check whether a given data analysis outputs parameter estimates when we simulate missing data values.
-Second, Monte Carlo simulations allow us to form realistic expectations about the unbiasedness and precision of parameter estimates and it can help with sample size planning to obtain a sensible study design. 
-For a variety of standard models, there are analytic strategies to evaluate precision or statistical power, however, Monte Carlo simulation offers more flexibility in terms of mode realistic modeling conditions (e.g., missing data or non-normality).
-For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data. 
+While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
+First, you have to address and could plan for data analytic problems on a conceptual level before you made the considerable effort to acquire data [@axelrodAdvancingArtSimulation1997].
+Second, if you only simulate a single dataset, you can perform a simple technical check, that is the analysis software outputs parameter estimates [@braiekTestingMachineLearning2020], e.g. when the simulated data contains missings.
+Third, if you perform a Monte Carlo simulation, you may evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
+Fourth, you can plan your resources efficiently, e.g. determine required sample size to achieve certain precision or power [@brandmaier2018precision].
+
+A Monte Carlo simulation affords you an ideal planning opportunity.
+We realize that this comes at an expensive but believe the reduction in the risk that the data is not sufficient to answer the research questions offsets the required effort.
+This advantage is especially pronounced when you plan to preregister your study.
+In fact, we argue that a Monte Carlo simulation can combine the analysis, sample size planning and preregistration (see [Preregistration as Code].
+
 No matter which analytic strategy you plan, it will come with assumptions about the data generating process under investigation. 
 A simulation forces us to deal with these assumptions and their consequences explicitly.
 If you identify unrealistic assumptions, you can either deliberately violate these assumptions and, by simulation, check if the analytic strategy is robust or modify the modeling approach to explicitly address them.
-We will show an example using structural equation modeling (SEM) for our Machiavellism example.
-Note that the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
+
 Typically, you have to make a number of educated guesses to simulate data that closely matches your expectation.
 These guesses strongly depend on the study you are planning, and there cannot be a one-fits-all solution.
 Since we typically use parametric statistical models (general linear model or SEM) or hypothesis tests that can be expressed as Gaussian models, we can usually use these models directly to simulate data.
+We will show an example using structural equation modeling (SEM) for our Machiavellism example.
+Note that the general process applies to any statistical model, but the simulation here is specific to our hypothetical research question.
 
 If you are unfamiliar with the specifics of SEM, you may briefly skim the next sections and continue in section ["Random Number Generation"](#prng).
 To simulate data in SEM, one first specifies a model (typically in the form of a structural model and a measurement model), selects plausible population values for all parameters, computes the model-implied mean vector and covariance matrix, and then samples as many observations as needed from a multivariate normal distribution following with the given mean vector and covariance matrix.
@@ -419,29 +422,8 @@ simulated <- lavaan::simulateData(
 )
 ```
 
-And then fit the statistical model:
-
-```{r}
-model <- "MACH =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-MACH ~~ c(1, NA)*MACH
-MACH ~ c(0, NA)*1 + c(zero, diff)*1"
-fit <-
-  lavaan::cfa(
-    model,
-    data = simulated,
-    group = "group",
-    meanstructure = TRUE,
-    std.lv = TRUE
-  ) 
-```
-
-Now, `lavaan` warns us that this model may not be identified.
-We overlooked a crucial assumption of this model, that is, measurement invariance.
-This assumption has also been incorporated into our simulation of the data.
-There is a good chance that this assumption is violated.
-We therefore adjust our analysis plan to include tests for measurement invariance.
-We propose the following procedure. 
-After fitting the model with strong measurement invariance <!--AP: citation needed-->, we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
+We propose the following procedure for analyzing the data and dealing with possible violations of strong measurement invariance. 
+After fitting the model with strong measurement invariance [@flake2020], we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
 While reconsidering our modeling assumptions, it is also unlikely that the data are perfectly normally distributed.
 First, we have rating scale items and thus our observations are categorical.
