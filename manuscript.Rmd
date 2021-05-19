@@ -121,6 +121,12 @@ Once the empirical data has been collected, the results can be calculated and ap
 We have structured the tutorial with a _learning by doing_ approach in mind, such that readers can follow along at their own computers.
 We explicitly encourage readers to try out all R commands for themselves.
 Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R (tested with version `r with(R.version, paste0(major, ".", minor))`).
+To guide the reader through all steps of a research project, we will use a exemplary research question:
+
+> "Is there a mean difference in the personality trait 'Machiavellism' between genders?"
+
+This example serves only didactic purposes and not to derive substantive claims.
+Nevertheless, everything else is kept as close to a real research question as possible and we have preregistered the analysis without looking at the data beforehand and use actual data subsequently.
 
 Here, we present a workflow that has proven useful for our way of working with a strong focus on Open Science.
 However, not all steps are necessary to achieve reproducibility.
