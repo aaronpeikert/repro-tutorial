@@ -730,12 +730,18 @@ The `README.md` file will look pleasant in the browser, just like in Figure \@re
 ```{r readme-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
 readme <- here::here("images", "readme.png")
-webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
-                  file = readme,
-                  vwidth = 1920, # height & width are not resolution
-                  vheight = 1080, # but what website thinks the browser size is
-                  selector = "div#readme",
-                  zoom = 2) # higher resolution
+if (!file.exists(readme)) {
+  webshot2::webshot(
+    "https://github.com/aaronpeikert/repro-tutorial/",
+    file = readme,
+    vwidth = 1920,
+    # height & width are not resolution
+    vheight = 1080,
+    # but what website thinks the browser size is
+    selector = "div#readme",
+    zoom = 2
+  ) # higher resolution
+}
 ```
 
 ```{r readme, echo=FALSE, fig.cap="A screenshot of how a README.md is rendered/presented on GitHub.  ", out.width='100%'}
