@@ -23,6 +23,7 @@ RUN install2.r --error --skipinstalled \
   pander \ 
   patchwork \ 
   renv \ 
+  rticles \ 
   slider \ 
   targets \ 
   tidyverse \ 

@@ -21,6 +21,7 @@ repro:
     - lavaan
     - furrr
     - future.batchtools
+    - rticles
   scripts:
     - R/simulation.R
     - R/simulation_funs.R
@@ -42,7 +43,7 @@ source(here::here("R", "link.R"))
 ```
 
 ```{r}
-# define a ürint method for objects of the class data.frame
+# define a print method for objects of the class data.frame
 knit_print.data.frame = function(x, ...) {
   res = paste(c('', '', kable(x)), collapse = '\n')
   asis_output(res)
@@ -203,7 +204,7 @@ To create one, click on:
  A great tool to capture ideas or meeting notes is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
  This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
-We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV [@vitae].
+We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -1332,6 +1333,6 @@ Importantly, this means that users that adopt the workflow do not have to rely o
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
+knitr::write_bib(c(.packages(), "rticles", "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
                  "packages.bib")
 ```
