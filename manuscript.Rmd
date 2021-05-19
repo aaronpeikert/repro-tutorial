@@ -22,6 +22,7 @@ repro:
     - lavaan
     - furrr
     - future.batchtools
+    - rticles
   scripts:
     - R/simulation.R
     - R/simulation_funs.R
@@ -45,7 +46,8 @@ source(here::here("R", "link.R"))
 ```
 
 ```{r echo=FALSE}
-# define a ürint method for objects of the class data.frame
+```{r}
+# define a print method for objects of the class data.frame
 knit_print.data.frame = function(x, ...) {
   res = paste(c('', '', kable(x)), collapse = '\n')
   asis_output(res)
@@ -128,7 +130,6 @@ Here, we present a workflow that has proven useful for our way of working with a
 However, not all steps are necessary to achieve reproducibility.
 We have marked those steps that can be omitted as "optional" in the section headings.
 
-We have marked those steps that can be omitted as "optional" in the section headings.
 Table \@ref(tab:overview) shows all steps required to to create and open and reproducible research project as they are presented in the remainder of the manuscript.
 
 ```{r overview, echo=FALSE}
@@ -206,7 +207,7 @@ To create one, click on:
  A great tool to capture ideas or meeting notes is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
  This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
-We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts and presentations---and even your CV.
+We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
 To create a Markdown document, click on: 
 
 > File → New File → Markdown File
@@ -283,7 +284,7 @@ gert::git_add("idea.md")
 gert::git_commit("add a first concept")
 ```
 
-Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder <!-- Aaron, reference needed-->.
+Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder [@flake2020].
 This results in changes to your notes as follows:
 
 ```markdown
@@ -402,7 +403,7 @@ MACH ~~ c(1, 1)*MACH"
 [^lavaan]: https://lavaan.ugent.be
 
 Data simulation is particularly easy in lavaan syntax using the function `simulateData`.
-More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
+More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], faux [@faux], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
 The following code simulates data from the population model `model_truth` with 1000 cases in each group.
 
 ```{r, include=FALSE}
@@ -627,16 +628,16 @@ For us, a good preregistration is the same as a good plan; the only difference i
 
 The second advantage is transparency.
 A preregistration offers the interested reader more insight into the research process than a paper alone could.
-Some [citation!] argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
-While such an argument has some merits, we believe that often transparency outweighs these concerns.
+@szollosi_is_2020 argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
+While such an argument has some merits, we believe that often transparency outweighs these concerns [@nosekPreregistrationHardWorthwhile2019].
 Deviation from a preregistration is still possible.
 If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study, and any deviation will simply be explicitly marked as such.
 A preregistration, together with version control, allows their readers to inform themselves about these lessons learned.
 
 ### Preregistration as Code
 
-Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration. 
-Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code.
+Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration [@osfstandard; @socpsytemp; @howtoreplicate]. 
+Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code [@sep-ambiguity].
 Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
 PAC essentially reverses the process of empirical research.
 Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results---initially based on simulated data.
@@ -743,12 +744,18 @@ The `README.md` file will look pleasant in the browser, just like in Figure \@re
 ```{r readme-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
 readme <- here::here("images", "readme.png")
-webshot2::webshot("https://github.com/aaronpeikert/repro-tutorial/",
-                  file = readme,
-                  vwidth = 1920, # height & width are not resolution
-                  vheight = 1080, # but what website thinks the browser size is
-                  selector = "div#readme",
-                  zoom = 2) # higher resolution
+if (!file.exists(readme)) {
+  webshot2::webshot(
+    "https://github.com/aaronpeikert/repro-tutorial/",
+    file = readme,
+    vwidth = 1920,
+    # height & width are not resolution
+    vheight = 1080,
+    # but what website thinks the browser size is
+    selector = "div#readme",
+    zoom = 2
+  ) # higher resolution
+}
 ```
 
 ```{r readme, echo=FALSE, fig.cap="A screenshot of how a README.md is rendered/presented on GitHub.  ", out.width='100%'}
@@ -781,6 +788,8 @@ usethis::use_ccby_license()
 ```
 
 ### Data Documentation
+
+[@codebook]
 
 ### Code of Conduct
 
@@ -1050,6 +1059,11 @@ And it will fully reproduce the project, if you have all required software insta
 
 ## External Dependencies
 
+```{r, include=FALSE}
+container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
+```
+
+
 Modern data analysis is only feasible because researchers rely on much external software.
 One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
 The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
@@ -1065,10 +1079,10 @@ Such a snapshot of the software stack is called an "image".
 Packaging all needed software in such an image requires considerable amounts of storage space.
 There are two major strategies helping to keep the storage requirements reasonable.
 First, there is a community that maintains images for particular purposes.
-For example, there are ready-made images for R based on Ubuntu (a Linux operating system) containers [@boettigerIntroductionRockerDocker2017].
+For example, there are ready-made images for R, based on Ubuntu (a Linux operating system) containers [@boettigerIntroductionRockerDocker2017].
 Users can then install whatever they additionally need on top of these pre-made images.
-The image that was used for this article uses `r round(as.numeric(fs::file_size("reprotutorial.sif"))/1024^3, 2)`Gb of disc space.
-It does include Ubuntu, R, RStudio, LaTeX as well as many R packages like the tidyverse [@tidyverse], amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.
+`r ifelse(is.na(container_size), "", glue::glue("The image that was used for this article uses {round(container_size, 2)}Gb of disc space."))`
+Our image includes Ubuntu, R, RStudio, LaTeX as well as many R packages like the tidyverse [@tidyverse], amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.
 Second, instead of saving a binary image of the software, one can also save a container recipe, a so-called  `Dockerfile`.
 This recipe is a textual description of all commands that need to be executed to recreate the image.
 Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image.
@@ -1153,8 +1167,9 @@ The sheer volume of data often necessitates distributed computing, e.g. the Euro
 As default container solution, `repro` uses Docker, which is a widely adopted standard for cloud computing.
 However, Docker requires administrator rights for execution.
 Whereas this is no issue on most modern cloud computing infrastructures, it is often an issue in classic HPC environments.
-Singularity is an alternative solution.
+Singularity is an alternative solution [@singularity].
 It was designed to run without administrator rights, while maintaining full compatibility with Docker images.
+
 If you already have a Docker image, you can choose if you want to run this image with Docker or with Singularity.
 Importantly, this choice does not affect how code is executed inside the container.
 Like with Docker, the default `Makefile` generated by `repro` comes with a mechanism to automatically send all commands to Singularity.
@@ -1221,13 +1236,14 @@ Note that both [this tutorial](https://github.com/aaronpeikert/repro-tutorial)[^
 ## Closed Data (optional)
 
 <!-- Hands-on: check changed hash -->
-A prerequisite to reproducibility is the permanent availability of both code and data.
+A prerequisite to reproducibility is the permanent availability of both code and data [@akhlaghi2020towards].
 We use containers to guarantee that all code components are available and work as expected.
-Ideally, all data are also stored in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
+Ideally, all data are also stored well documented [@codebook] in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
+
 Sometimes it is just the required storage capacity that exceeds what Git can handle (Git gets slow around more than 100mb).
 In such case we strongly recommend using [DataLad [@DataladDatalad2021]](http://handbook.datalad.org/en/latest/)[^datalad] or the below procedure to guarantee that the data has not changed.
 In practice, however, there are various reasons, which may prohibit you from making your data publicly available, for example legal or regulatory or privacy concerns.
-You may find yourself in a situation where you can make the data only available on request.
+You may find yourself in a situation where you can make the data only available on request [e.g. @share].
 A major threat to reproducibility is that the data has changed in the meantime or multiple versions are circulating and it is not exactly clear what version was used originally.
 To at least check that the data was not changed, we suggest to provide a so called "hash", which is a cryptographic fingerprint.
 If the data changes, so does its fingerprint or hash.
@@ -1316,16 +1332,32 @@ You have the opportunity to describe the release in more detail in the accompany
 
 ## Archiving Docker
 
-## Archiving Data
+A valid point of criticism is that this workflow introduces a bulk of software solutions and services that may not be available for long.
+Superficially it relies on R, RStudio, Pandoc, Git, Make, Docker, Homebrew (OS X only) and Chocolaty (Windows only) as software and on GitHub, DockerHub, MRAN and Ubuntu Package Archive as services.
+These many breakpoints can be reduced to one service and one software.
+That is because all required software is bundled into the container, whose image can be stored.
+Hence, one needs a storage provider which saves the container image and the other files associated with the project.
+We already recommend to store all project files redundantly (your computer, on GitHub and zenodo.org).
+Building the Docker image from the Dockerfile still requires DockerHub, MRAN, and Ubuntu Package Archive to be online.
+We therefore suggest that you include an already build image into the releases.
+The Makefile generated by `repro` does include a target to facilitate this.
+To write a compressed image to disk use:
+
+```bash
+# this should be run in the terminal
+make save-docker
+```
+
+Unfortunately, this image can only be used when Docker is installed.
+To remove any software dependency including Docker from the archived project, one can convert the Docker image to a full system image.
+Such system image can subsequently be booted on any personal computer without relying on any software or service and therefore grantees reproducibility for decades to come.
+Currently, `repro` does not facilitate this conversion, but we hope to include this feature soon.
 
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
 <!-- Hands on: explain how to archive data-->
 <!-- Hands on: explain how to archive docker images-->
 
-# Checklist
-
-<!-- Should we design a checklist? -->
 
 ```{r, results='asis', echo=FALSE}
 link_index()
@@ -1346,6 +1378,6 @@ Importantly, this means that users that adopt the workflow do not have to rely o
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
+knitr::write_bib(c(.packages(), "rticles", "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
                  "packages.bib")
 ```
