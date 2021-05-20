@@ -56,8 +56,8 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 
 # Why you should care about reproducibility
 
-A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions.
-Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716].
+A cornerstone of scientific progress is the possibility to critically assess the validity of peer scientists’ scientific conclusions. <!-- CJ More fundamental: Reproducibility is a cornerstone of the scientific METHOD. I think it's more important to emphasize this, rather than critical assessment of others' work. See Karl Popper, The Logic of Scientific Discovery, Routledge, London, 1992, p. 66. --> 
+Scientific claims should not be credible because of their originators' authority but by the transparency and replicability of their supporting evidence [@aac4716]. <!-- CJ This is a red herring; nobody said that an argument to authority should be the foundation of scientific evidence. I would suggest focusing on replicability as an essential component of the scientific method. -->
 Here, *replicability* refers to the degree to which original studies and their derivatives yield consistent results.
 In other words, a successful replication study finds a consistent effect with an original study in a new sample of data.
 Enabling the assessment of scientific conclusions requires a systematic and rigorous approach to research.
@@ -65,15 +65,16 @@ Researchers across various fields have identified a *crisis* of non-replicabilit
 
 <!-- define replicability and then... 
  define reproducibility -->
-Even worse, researchers might often not even be able to achieve reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code.
-Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models.
+Even worse, researchers might often not even be able to achieve reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code. <!-- CJ I would introduce the topic of reproducibility differently. "Even worse" is editorializing; not appropriate for a scientific paper. Instead, consider saying: More fundamental even than replication across datasets is the reproducibility of findings within a single dataset. --> 
+When analyses are not properly documented, small mistakes, or circumstances outside the researcher's control (e.g., a corrupted file, a coauthor leaving academia) may render them non-reproducible. 
+Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models. <!-- CJ I think it's more important to focus on the methods that have been developed to ensure reproducibility!)-->
 With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken.
-With computationally intensive data analyses, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
-Only with access to both data and procedures can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.
+With computationally intensive data analyses <!-- CJ The complexity of the analyses is orthogonal to the necessity to make them reproducible. -->, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
+Only with access to both data and procedures <!-- CJ and software environment --> can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.
 
-In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- examples missing -->
-However, ensuring reproducibility of computational analyses is still tedious and difficult, and there are still no widely accepted standards that can guide researchers when setting up their data analyses.
-Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories do not provide sufficient information to reproduce relevant computational and statistical results.
+In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- CJ: This is the crucial point. I would start the paper with this. See my reference to Popper in the opening sentence. -->
+However, ensuring reproducibility of computational analyses is still tedious and difficult <!-- CJ I would not editorialize this. Moreover, this sounds discouraging. I would focus on what you have done to make reproducibility more attainable. -->, and there are still no widely accepted standards that can guide researchers when setting up their data analyses. <!-- CJ These are two separate points, each important enough to have their own sentence, with some further clarification. --> 
+Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories <!-- CJ you have not introduced any open repositories yet. --> do not provide sufficient information to reproduce relevant computational and statistical results.
 For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition.
 Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
 For 13 articles, at least one outcome could not be reproduced —-- even with the original authors' assistance.
