@@ -30,8 +30,7 @@ repro:
 csl: apa7.csl
 numbered_headings: true
 bibliography: ["references.bib", "packages.bib"]
-abstract:
-  Computational reproducibility is the ability to obtain identical results from the *same* data with the *same* computer code. It is a building block for transparent and cumulative science because it enables other researchers, on other computers and later in time, to reproduce and thus understand how results came about while, at the same time, it avoids a variety of errors that may lead to erroneous reporting of statistical and computational results. In this tutorial, we demonstrate how the R package `repro` supports researchers in creating fully computationally reproducible research projects with a focus on current Open Science practices; starting from sketching the research proposal, over preregistering an analysis as executable code with simulated data, until the creation and dissemination of the final scientific report. 
+abstract: "`r tryCatch(trimws(readr::read_file('abstract.Rmd')))`"
 ---
 
 <!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
@@ -739,28 +738,7 @@ This command will create a file with the name `README.Rmd`.
 <!--knit/rmarkdown will be explained in section above-->
 When you knit this file, it, in turn, creates a `README.md`.
 That means you can include R code or plots etc., within the readme.
-The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:readme).
-
-```{r readme-screenshot, include=FALSE}
-# unfortunately css selectors won't work for pdf so we'll use png instead
-readme <- here::here("images", "readme.png")
-if (!file.exists(readme)) {
-  webshot2::webshot(
-    "https://github.com/aaronpeikert/repro-tutorial/",
-    file = readme,
-    vwidth = 1920,
-    # height & width are not resolution
-    vheight = 1080,
-    # but what website thinks the browser size is
-    selector = "div#readme",
-    zoom = 2
-  ) # higher resolution
-}
-```
-
-```{r readme, echo=FALSE, fig.cap="A screenshot of how a README.md is rendered/presented on GitHub.  ", out.width='100%'}
-knitr::include_graphics(readme)
-```
+The `README.md` file will look pleasant in the browser on [GitHub](https://github.com/aaronpeikert/repro-tutorial#readme).
 
 ### License
 
@@ -1190,8 +1168,6 @@ Even if all code and data are available in a repository, if reproducibility take
 
 Ideally, you have a statement in the README that contains a short description of how to reproduce the project, whereas most steps are automatic and standardized.
 This statement should also list all software requirements.
-<!--AP: I think this Figure is superfluous. Please remove. All the information is in the following code blocks.-->
-Figure \@ref(fig:readme) shows `r link("https://github.com/aaronpeikert/repro-tutorial#how-to-reproduce-this-manuscript", "the reproduction statement of this project")`.
 For example, you can download any git repository with these commands:
 
 ```bash
