@@ -26,10 +26,27 @@ cd repro-tutorial
 
 Then build the Docker image, and run Make:
 
-``` bash
-make docker &&
-make -B DOCKER=TRUE 
+``` r
+repro::rerun(cache = TRUE)
 ```
+
+    ## • To reproduce this project, run the following code in a terminal:
+
+    ##   make docker &&
+    ##   make DOCKER=TRUE
+
+This does not rerun the simulation study (unless you make changes to
+it), because the computation may take a long time. If you are willing to
+reproduce everything use:
+
+``` r
+repro::rerun(cache = FALSE)
+```
+
+    ## • To reproduce this project, run the following code in a terminal:
+
+    ##   make docker &&
+    ##   make -B DOCKER=TRUE
 
 ## Abstract
 
