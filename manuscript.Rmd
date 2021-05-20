@@ -592,6 +592,7 @@ Therefore, if you set a seed for one worker and another seed for another worker,
 While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers:
 
 ```{r}
+# reproducible but unsafe in parallel code
 set.seed(1235)
 runif(1)
 set.seed(1235)
@@ -599,6 +600,7 @@ runif(1)
 ```
 
 ```{r}
+# reproducible and safe in parallel code
 future::value(future::future(runif(1), seed = 1235))
 future::value(future::future(runif(1), seed = 1235))
 ```
