@@ -896,9 +896,9 @@ You can view new pull request for any project with:
 usethis::browse_github_pulls()
 ```
 
-Before incorporating changes from someone else, they can be reviewed and adepted.
-This review step can also be useful for collaboration, because you can invite a collaborator to take a look at changes you want to do.
-It is therefore sometimes useful to create a pull request even though you have permission to push, because it invites your collaborators to comment or change your proposal.
+Before incorporating changes from someone else, they can be reviewed and adapted.
+This review step is particularly useful for remote collaboration, because collaborators can be explicitly pointed to changes and asked to approve them.
+Therefore, it is sometimes useful to create a pull request even though you have permission to push, because it invites your collaborators to comment on, change, or approve proposed changes.
 
 You can initiate a new pull request with:
 
@@ -918,33 +918,28 @@ After you or someone else has merged the pull request on GitHub, you can wrap it
 usethis::pr_finish()
 ```
 
-This process is especially useful if you want the feedback of a more senior researcher, because they do not need to know how to use Git but have a convenient web interface to provide comments or changes.
+This process can be executed via Github's web interface and can work well with collaborators who do not actually want to bother with installing and running the entire code base of a project.
 
-# Analyzing Data
+# The Data Analysis Phase
 
-While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to achieve long-term reproducibility are still missing, namely handling internal and external dependencies.
+So far, we have covered the generation of dynamic documents with [Markdown] and [R Markdown], and tracking changes with [Git] and [GitHub]. These are two of the four components [see @Peikert2019] to achieve long-term reproducibility. To complete computational reroducibility, researchers need to properly handle dependency relations between their files (internal dependencies) and all dependencies on external software, most importantly dependend R packages (external dependencies). In the following, we will show how the `repro` package supports researchers in mapping all dependencies completely and unambiguously.
 
 ## Internal Dependencies
 
 <!--I am not sure this is the right place, should we introduce this earlier? -->
 
-A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
-To do that, it is often crucial to understand how different project components relate to each other.
-You cannot run an analysis without data; you cannot render a dynamic document without an analysis, and so forth.
-Dependency tracking means that you capture the interrelations between the components of your analysis.
-The "components" of an analysis are often loosely mapped onto files.
-For a simple project, it might be enough to have a single R Markdown file.
-However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
-To better navigate the data analysis, a researcher often splits it across several scripts.
-For example, they create a script to load the data and another to run the analysis.
-This modularisation facilitates reuse because the loading script may be used by other projects building on the same data, while the analysis script may be employed on different data and so forth.
-The downside is that reproducibility is complicated because instead of reproducing everything in one step, multiple steps are required.
+A reader of a reproducible research project should be able to easily derive how it can be reproduced (ideally by a statement in your [README]).
+To do that, it is often crucial to understand how different project components relate to each other and depend on each other.
+For example, you cannot run an analysis without data, or you cannot render a statistical report without having the results from the statistical analysis that is reported.
+Dependency tracking means that you capture and map the interrelations between all components of your analysis.
+The "components" of an analysis are typically all involved files including raw data files, intermediate files (such as a preprocessed data file), and final results (such as a rendered manuscript in PDF format).
+With larger projects, there is typically a higher degree of modularization because code fragments are written for re-use in other projects (or are already re-used). Also, more complicated empirical research projects may have different hypotheses that are answered with different data sets and different statistical models, such that it often makes sense to split the different analyses into different files. Reproducibility then demands the careful documentation and mapping of all necessary steps in the correct order.
 
-Of course, there a several ways to solve this problem.
-One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or create a "main" script that combines all steps.
-We found Make to be particularly useful for two reasons.
-First, it is language agnostic, therefore fusing steps that are carried out in different programming languages.
-Second, it does implement a simple yet powerful caching mechanism of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning.
+Make is a build automation tool for software projects that typically are challenged by maintaing and resolving a variety of dependencies in the correct order when compiling a piece of software-
+We found _Make_ to be particularly useful for our purposes for two reasons.
+First, it is language-agnostic, therefore enabling us to map steps not only taken within R but also across different programming languages or other external programs.
+Second, it does implement a simple yet powerful caching mechanism of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning. 
+That is, Make determines automatically which branches in the dependency graph needs updating when files have changed and does not necessarily recompute or rebuild everything.
 
 Make is build around the concept of computational recipes.
 Like cooking recipes, the dish you want to create is at the top, followed by the necessary ingredients with the procedure at last.
@@ -971,25 +966,26 @@ arrabiata_sauce.csv: cook_sauce.R canned_tomatoes.csv
   Rscript -e 'source("cook_sauce.R")'
 ```
 
-When you cook something, and you have the necessary ingredients already at hand, would you throw it away just to prepare it again?
-Unlikely.
-Make behaves the same.
-If a file already exists, it does not recreate it unnecessarily.
-However, if a requirement is newer than its target, make recreates the target to reflect the updated dependency.
-Therefore, when you update the data file, the analysis is rerun.
-Because Make knows the whole dependency tree, its caching is smarter than many alternatives.
+If a target file already exists, Make only recreates it if necessary.
+If a dependency is newer than its target, make recreates the target to reflect the updated dependency.
+In our case, when we (re)build a manuscript and some dependent data file has changed, the data analysis is automatically rerun.
+This avoids mistakes in the reporting that are due to reports and analyses being out-of-sync.
 
-One alternative that is even smarter than Make is the R package [`targets` [@targets2021]](https://books.ropensci.org/targets/)[^targets].
-`targets` can infer more about your project than Make, because it analysis the R code you write to build the dependency tree.
+<!--
+AP: I suggest to remove this simply because it distracts from our primary tool and we need to shorten
+One alternative that is even smarter (in terms of automatically inferring dependencies) than Make is the R package [`targets` [@targets2021]](https://books.ropensci.org/targets/)[^targets].
+`targets` can infer more about your project than Make, because it analyzes the R code you write to build the dependency tree.
 For this inference to work well, you have to write everything in R, and you have to write everything strictly functional.
 
 [^targets]: https://books.ropensci.org/targets/
+-->
 
 <!--Hands on: Introduce Make-->
 <!--Hands on: Add targets for README.Rmd, preregistration.Rmd -->
 
-The `repro` package can automatically write Makefiles for simple scenarios.
-For this purpose, `repro` utilizes the YAML metadata:
+Writing Makefiles manually is cumbersome for larger projects. 
+Therefore, the `repro` package provides means to automatically write Makefiles for a given R project.
+To this end, `repro` extends the YAML metadata header of R Markdown files. `repro` introduces a new first-level tag `repro:` with second-level tags (`scripts:`, `packages:`, and `data:`) that take lists of dependent files. For example, if an R Markdown document depends on a further file with R code, the header would look like this:
 
 ```
 ---
@@ -1003,32 +999,32 @@ repro:
 ---
 ```
 
-This command will go through all R Markdown files, and their YAML metadata, in your repository and infer a `Makefile` from them:
+To automatically generate the Makefile, `repro` provides a command that goes through all R Markdown files in the project, parses their YAML metadata, and infers a `Makefile` from them:
 
 ```r
 automate_make()
 ```
 
-The generated `Makefile` automatically contains targets for all R Markdown documents.
-To, for example, generate the `README.md` from the `README.Rmd` you can run:
+The generated `Makefile` automatically contains separate targets for each R Markdown documents.
+The names of the Makefile targets are identical to the Markdown file names.
+For example, to generate the Markdown file `README.md` from the R Markdown `README.Rmd`, you can run:
 
 ```bash
 # this should be run in the terminal
 make README.md
 ```
 
-It is common practice to have a target all, that encompasses all important files of the project as the first target.
-If you do not specify a target, Make defaults to the first target, which is usually `all`.
-`repro` reminds you of that and suggests which file you might want to add to the target `all`.
-You can generally change the `Makefile` anyway you want, e.g. to add targets which are not supported by `repro`.
-After you have done so, you can then run in the terminal:
+It is common practice to name the very first target in a Makefile "all" and have it include all important files of the project.
+If you do not specify a target when calling Make, Make defaults to this first target.
+`repro` reminds you of that common practice and suggests which file you might want to add to the target `all`.
+Thus, if researchers who try to reproduce a given project and are unaware of its potentially various contents, will always build all reproducible artifacts of a repository when calling Make without further arguments:
 
 ```bash
 # this should be run in the terminal
 make
 ```
 
-And it will fully reproduce the project, if you have all required software installed.
+Running this command fully reproduces the entire project -- but only if you have all required software installed. Next, we will describe how `repro` helpts to manage all software dependencies automatically.
 
 ## External Dependencies
 
@@ -1037,11 +1033,11 @@ container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 ```
 
 
-Modern data analysis is only feasible because researchers rely on much external software.
-One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
+Modern data analysis is only feasible because researchers rely on much external software. 
 The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
+External dependencies are unavoidable but, at the same time, a major threat to long-term reproducibility.
 The critical problem is the fragility of a software setup.
-Many components have to fit perfectly together, and each change, e.g. an update, risks that balance .
+Many components have to fit perfectly together, and each change, e.g. a software update or bug fixe, risks that balance.
 At the same time, software updates are very much necessary to remove errors or improve methodology [@epskamp2019].
 Another problem is that the software environment is also variable and what works on one machine might not work on any other.
 Containers directly address such issues.
@@ -1117,7 +1113,7 @@ We recommend @wiebelsLeveragingContainersReproducible2021 as a starting point fo
 
 ### renv (alternative)
 
-Docker can be a bit unfriendly, because it requires a complicated mental model and some knowledge about how to install software on Linux.
+Setting up and running Docker is not always painless, because it requires a complicated mental model of the underlying virtual computer and, specifically, knowledge about Linux environments.
 An R-focused alternative is the R package [`renv`](https://rstudio.github.io/renv/articles/renv.html)[^renv][@R-renv].
 `renv` isolates all R packages used in a project and records there version as well as the source from where they where installed.
 This mechanism is faster and simpler to use than Docker, at the expense of only tracking R packages.
