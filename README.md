@@ -11,8 +11,6 @@ or
 proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 <!-- badges: end -->
 
-WIP
-
 ## How to reproduce this manuscript
 
 To reproduce this project Git, Make, and Docker is required (see [the
@@ -32,6 +30,23 @@ Then build the Docker image, and run Make:
 make docker &&
 make -B DOCKER=TRUE 
 ```
+
+## Abstract
+
+Computational reproducibility is the ability to obtain identical results
+from the *same* data with the *same* computer code. It is a building
+block for transparent and cumulative science because it enables other
+researchers, on other computers and later in time, to reproduce and thus
+understand how results came about while, at the same time, it avoids a
+variety of errors that may lead to erroneous reporting of statistical
+and computational results. In this tutorial, we demonstrate how the R
+package `repro` supports researchers in creating fully computationally
+reproducible research projects with a focus on current Open Science
+practices; starting from sketching the research proposal, over
+preregistering an analysis as executable code with simulated data, until
+the creation and dissemination of the final scientific report.
+
+![](images/nutshell.svg)<!-- -->
 
 ## Code of Conduct
 

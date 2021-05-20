@@ -30,8 +30,7 @@ repro:
 csl: apa7.csl
 numbered_headings: true
 bibliography: ["references.bib", "packages.bib"]
-abstract:
-  Computational reproducibility is the ability to obtain identical results from the *same* data with the *same* computer code. It is a building block for transparent and cumulative science because it enables other researchers, on other computers and later in time, to reproduce and thus understand how results came about while, at the same time, it avoids a variety of errors that may lead to erroneous reporting of statistical and computational results. In this tutorial, we demonstrate how the R package `repro` supports researchers in creating fully computationally reproducible research projects with a focus on current Open Science practices; starting from sketching the research proposal, over preregistering an analysis as executable code with simulated data, until the creation and dissemination of the final scientific report. 
+abstract: "`r tryCatch(trimws(readr::read_file('abstract.Rmd')))`"
 ---
 
 <!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
@@ -46,7 +45,6 @@ source(here::here("R", "link.R"))
 ```
 
 ```{r echo=FALSE}
-```{r}
 # define a print method for objects of the class data.frame
 knit_print.data.frame = function(x, ...) {
   res = paste(c('', '', kable(x)), collapse = '\n')
@@ -196,8 +194,12 @@ Therefore, we suggest starting early, ideally from the moment you decide to purs
 The first step towards reproducibility is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files without missing anything.
 <!-- Hands-on: Introducing RProjects-->
-RStudio's _R Projects_ facilitate this concept of a project folder. The `repro` package offers an R Studio template, which sets up a file structure that follows best practices and conventions.<!--AP this is from your thesis - can you please add citations as to which practices and conventions these are?-->
+RStudio's _R Projects_ facilitate this concept of a project folder.
+We recomend the [`here`](https://github.com/r-lib/here)[^here] package [@R-here] to refer to files, because it works consistently across different operating systems, and between R scripts and [R Markdown].
+The `repro` package offers an R Studio template, which sets up a file structure that follows best practices and conventions for placing scripts and data [@rextensions].
 To create one, click on:
+
+[^here]: https://github.com/r-lib/here
 
 > File → New Project... → New Directory → New Project
 
@@ -725,28 +727,7 @@ This command will create a file with the name `README.Rmd`.
 <!--knit/rmarkdown will be explained in section above-->
 When you knit this file, it, in turn, creates a `README.md`.
 That means you can include R code or plots etc., within the readme.
-The `README.md` file will look pleasant in the browser, just like in Figure \@ref(fig:readme).
-
-```{r readme-screenshot, include=FALSE}
-# unfortunately css selectors won't work for pdf so we'll use png instead
-readme <- here::here("images", "readme.png")
-if (!file.exists(readme)) {
-  webshot2::webshot(
-    "https://github.com/aaronpeikert/repro-tutorial/",
-    file = readme,
-    vwidth = 1920,
-    # height & width are not resolution
-    vheight = 1080,
-    # but what website thinks the browser size is
-    selector = "div#readme",
-    zoom = 2
-  ) # higher resolution
-}
-```
-
-```{r readme, echo=FALSE, fig.cap="A screenshot of how a README.md is rendered/presented on GitHub.  ", out.width='100%'}
-knitr::include_graphics(readme)
-```
+The `README.md` file will look pleasant in the browser on [GitHub](https://github.com/aaronpeikert/repro-tutorial#readme).
 
 ### License
 
@@ -1135,7 +1116,7 @@ An R-focused alternative is the R package [`renv`](https://rstudio.github.io/ren
 `renv` isolates all R packages used in a project and records there version as well as the source from where they where installed.
 This mechanism is faster and simpler to use than Docker, at the expense of only tracking R packages.
 `renv` therefore is already of great use for reproducibility [@vanlissa2020worcs].
-However, even when your project relies solely on R, external dependencies can still change the outcome of computations, like the operating system, the compilers used, the BLAS system in use and so forth.
+However, even when your project relies solely on R, external dependencies can still change the outcome of computations, like the operating system, the compilers used, the BLAS (Basic Linear Algebra Subprograms, responsible for carrying out many computations like matrix multiplication needed in the linear regression) system in use and so forth.
 Most importantly the R version itself has to match.
 For example, @Peikert2019 illustrate how the generation of random numbers across different R versions is a threat to reproducibility.
 
@@ -1176,8 +1157,6 @@ Even if all code and data are available in a repository, if reproducibility take
 
 Ideally, you have a statement in the README that contains a short description of how to reproduce the project, whereas most steps are automatic and standardized.
 This statement should also list all software requirements.
-<!--AP: I think this Figure is superfluous. Please remove. All the information is in the following code blocks.-->
-Figure \@ref(fig:readme) shows `r link("https://github.com/aaronpeikert/repro-tutorial#how-to-reproduce-this-manuscript", "the reproduction statement of this project")`.
 For example, you can download any git repository with these commands:
 
 ```bash
@@ -1224,7 +1203,8 @@ Note that both [this tutorial](https://github.com/aaronpeikert/repro-tutorial)[^
 <!-- Hands-on: check changed hash -->
 A prerequisite to reproducibility is the permanent availability of both code and data [@akhlaghi2020towards].
 We use containers to guarantee that all code components are available and work as expected.
-Ideally, all data are also stored well documented [@codebook] in the repository [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
+Ideally, all data are also stored well documented [@codebook] in the repository following the FAIR principles [@wilkinsonFAIRGuidingPrinciples2016].
+We believe that sharing data is highly beneficial for the research community [for a more comprehensive argument for publishing data see @vanlissa2020worcs], but this is not always feasible.
 
 Sometimes it is just the required storage capacity that exceeds what Git can handle (Git gets slow around more than 100mb).
 In such case we strongly recommend using [DataLad [@DataladDatalad2021]](http://handbook.datalad.org/en/latest/)[^datalad] or the below procedure to guarantee that the data has not changed.
@@ -1364,6 +1344,6 @@ Importantly, this means that users that adopt the workflow do not have to rely o
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "rticles", "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
+knitr::write_bib(c(.packages(), "here", "rticles", "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
                  "packages.bib")
 ```

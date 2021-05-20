@@ -9,8 +9,6 @@ output: github_document
 [![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 <!-- badges: end -->
 
-WIP
-
 ## How to reproduce this manuscript
 
 To reproduce this project Git, Make, and Docker is required (see [the installation guide](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)).
@@ -27,6 +25,15 @@ Then build the Docker image, and run Make:
 ```bash
 make docker &&
 make -B DOCKER=TRUE 
+```
+
+## Abstract
+
+```{r abstract, child = 'abstract.Rmd'}
+```
+
+```{r, echo=FALSE}
+knitr::include_graphics("images/nutshell.svg")
 ```
 
 ## Code of Conduct
