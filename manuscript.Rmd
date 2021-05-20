@@ -195,7 +195,7 @@ This process is only required once per computer and does not need to be repeated
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
-While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay off through your increased productivity.
+While you may be tempted to consider reproducibility only when you are close to completing a project, we believe that upfront investment pays off in your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you achieve reproducibility gradually.
 The first step towards reproducibility is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files without missing anything.
@@ -212,7 +212,7 @@ To create one, click on:
 ## Markdown
 
 <!--Keep notes.-->
- A great tool to capture ideas or meeting notes is Markdown.
+ A great tool to capture ideas or meeting notes and eventually complete entire journal articles is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
  This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
 We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
@@ -359,7 +359,7 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
 Monte Carlo simulations are a crucial tool to investigate properties of a statistical model and they are routinely employed to develop or evaluate statistical models.
-For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data.
+For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data. In Bayesian data analysis, prior predictive checks generate data from a model according to the prior distribution in order to asses whether a prior is appropriate [@gabry2019visualization].
 
 While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
 First, you have to address and could plan for data analytic problems on a conceptual level before you made the considerable effort to acquire data [@axelrodAdvancingArtSimulation1997].
