@@ -1149,7 +1149,7 @@ An R-focused alternative is the R package [`renv`](https://rstudio.github.io/ren
 `renv` isolates all R packages used in a project and records there version as well as the source from where they where installed.
 This mechanism is faster and simpler to use than Docker, at the expense of only tracking R packages.
 `renv` therefore is already of great use for reproducibility [@vanlissa2020worcs].
-However, even when your project relies solely on R, external dependencies can still change the outcome of computations, like the operating system, the compilers used, the BLAS system in use and so forth.
+However, even when your project relies solely on R, external dependencies can still change the outcome of computations, like the operating system, the compilers used, the BLAS (Basic Linear Algebra Subprograms, responsible for carrying out many computations like matrix multiplication needed in the linear regression) system in use and so forth.
 Most importantly the R version itself has to match.
 For example, @Peikert2019 illustrate how the generation of random numbers across different R versions is a threat to reproducibility.
 
