@@ -574,7 +574,8 @@ simulation_plot
 ### Random Number Generation (optional) {#prng}
 
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code.
-To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`. Note however that the consistency of a given seed is not necessarily maintained across different R versions because the default algorithm for generating pseudo random numbers may change (see @Peikert2019 for a demonstration with different R versions).
+To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
+Note however that the consistency of a given seed is not necessarily maintained across different R versions because the default algorithm for generating pseudo random numbers may change (see @Peikert2019 for a demonstration with different R versions).
 It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The standard random number generator (RNG) produces high quality random numbers, but is not safe to use in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
@@ -603,7 +604,7 @@ future::value(future::future(runif(1), seed = 1235))
 Preregistration is the specification of a research plan in advance of data analysis.
 The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
 Thus, it serves as a tool that may help to increase the credibility of empirical results.
-Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages.
+Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages [@nosekPreregistrationHardWorthwhile2019].
 First, a preregistration is an opportunity to plan a study carefully.
 Gathering empirical data requires many resources, and better planning increases the chances that these efforts are worthwhile.
 For us, a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
@@ -622,8 +623,10 @@ Currently, there are various templates available that guide researchers in devel
 Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code [@sep-ambiguity].
 Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
 PAC essentially reverses the process of empirical research.
-Before researchers gather data, they write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results---initially based on simulated data.
+Before researchers gather data, they write a reproducible, dynamically generated manuscript (see [R Markdown]) including the sections Introduction, Methods, and Results---initially based on simulated data.
 Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration.
+One particular advantage of this approach is that you can precisely define if-else conditions under which you choose a different analytic strategy to address possible complications (e.g. to establish partial measurement invariance, when full measurement invariance is not attainable).
+This approach allows for more flexibility than a traditional template based preregistration but is still well defined.
 
 PAC works well within this reproducible framework.
 
@@ -631,11 +634,12 @@ First, the preregistration becomes a part of the reproducible repository.
 It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project.
 If code was version-controlled and tagged (see Section [Git]) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history.
 
-One way to ensure that you can expect your analysis to work with real data is to simulate data.
+One way to ensure that your analysis to works with real data is to simulate data.
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
 The simulation showed that we have to gather at least `r minn$n_obs` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `r round((est_diff - true_diff)*100/true_diff, 2)`%.
 These results are also visualized in Figure \@ref(fig:simulation-plot).
 If you went to the trouble to simulate data, we argue that you get a preregistration almost for free.
+
 A preregistration in code describes sufficiently how you want to analyze the data, but ideally, you also convey the why.
 Dynamic document generation combines code and text, enabling you to explain your reasoning.
 See the section on [R Markdown] for an example of a dynamic document generation paradigm.
