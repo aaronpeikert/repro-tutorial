@@ -1244,23 +1244,23 @@ Also, synthetic data provides an opportunity for readers to test if a project is
 
 # Archival and Dissemination
 
-The open nature of the here proposed workflow does blur the lines between published and unpublished.
-However, even when your Git repository is public, you may want to signify important stages of your project, like preregistration, preprint, submission and acceptance to the journal.
-These milestones deserve to be archived.
-A project is only then properly archived when it is stored at least at two independent storage locations and reproducible from all locations.
-Therefore, you should make extra sure that the project at these points is reproducible.
-To ensure reproducible, you could ask a coworker or collaborator to reproduce the project independently from you.
+In a public repository, you may want to mark important stages of your project, like preregistration, preprint, submission and acceptance at a scientific journal.
+We suggest to archive these milestones individually.
+A reproducible project is only then properly archived when it is stored at least at two independent storage locations and reproducible from all locations. <!--AP citation? -->
+To really make sure that a given project is reproducible, one should aim for an explicit test of reproduction before the project is published. 
+We recommend to check out and reproduce the project in a new directory in a "fresh" environment (in particular, a new R session should be used for this). 
+For maximal validitiy of this test, we suggest to ask a coworker or collaborator to reproduce the project independently from you.
 The sections [Creating a DOI] and [Creating a Release] describe how you can easily create three different openly accessible longterm archived copies of your project.
 
-When you disseminate the paper across more locations than just GitHub it can be ambiguous which version of code and data have created the document (e.g. the manuscript.pdf).
-To create a clear link between the repository version and some end result you can automatically include the hash of the commit.
-Either you use Git from within R:
+When you disseminate multiple versions of a document (e.g., at different stages of a review process), it seems good practice to specify the exact version of code and data used to create a given document (e.g. the final type-set version of a journal article).
+To create a clear link between the repository version and a given end result you can automatically include the unique hash identifying the project state in the git version history.
+<!--Either you use Git from within R:
 
 ```{r}
 system2("git", c("rev-parse",  "--short",  "HEAD"), stdout = TRUE)
 ```
-
-Or you can use the `gert` package:
+-->
+To this end, we use the `gert` package:
 
 ```{r}
 strtrim(gert::git_commit_id(), 7)
@@ -1268,13 +1268,14 @@ strtrim(gert::git_commit_id(), 7)
 
 ## Creating a DOI
 
-The approach we advocate for distributes the research project, e.g. across GitHub, preregistration platforms, the publishers site, and more.
+Typical open research project will have their contents available from multiple sites, e.g. from GitHub, preregistration platforms, preprint servers, or publisher websites. 
+Under these circumstances it is important to provide unique links 
 Digital Object Identifiers (DOI) tie all these locations together under one link [@derisiWhatWhysDOIs2003].
 Not only can a DOI resolve to several locations, several parts of a research project can get their own DOI besides the DOI of the publication.
 This is useful to link or cite a specific part of a research project, such as the preregistration, an illustration in the paper or the data that was gathered.
-The DOI can also contain information about the license of the object it refers to.
+The DOI can also contain information about the license of its target.
 <!-- public releases like preregistration, preprint -->
-zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides doi for these archives.
+zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides DOIs for these archives.
 While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
 Please note that you can only link public GitHub repositories to zenodo.
 You may log into zenodo.org through your GitHub account.
@@ -1283,7 +1284,7 @@ You may log into zenodo.org through your GitHub account.
 
 [^zenodo-github]: https://zenodo.org/account/settings/github/
 
-After you have linked a GitHub repository you trigger the archivation by creating a GitHub release, as described in the next section.
+After you have linked a GitHub repository, you trigger the archival by creating a GitHub release, as described in the next section.
 
 ## Creating a Release
 
@@ -1302,15 +1303,15 @@ You have the opportunity to describe the release in more detail in the accompany
 
 ## Archiving Docker
 
-A valid point of criticism is that this workflow introduces a bulk of software solutions and services that may not be available for long.
-Superficially it relies on R, RStudio, Pandoc, Git, Make, Docker, Homebrew (OS X only) and Chocolaty (Windows only) as software and on GitHub, DockerHub, MRAN and Ubuntu Package Archive as services.
-These many breakpoints can be reduced to one service and one software.
+A central point of criticism is that the proposed workflow introduces a bulk of software solutions and services that may not be available in the long run.
+First and foremost, it relies on R, RStudio, Pandoc, Git, Make, Docker, Homebrew (OS X only) and Chocolaty (Windows only) as software and on GitHub, DockerHub, MRAN and Ubuntu Package Archive as services.
+These many breakpoints can be reduced to a single service and a single piece of software.
 That is because all required software is bundled into the container, whose image can be stored.
 Hence, one needs a storage provider which saves the container image and the other files associated with the project.
-We already recommend to store all project files redundantly (your computer, on GitHub and zenodo.org).
+We already recommend to store all project files redundantly (your computer, a remote git server such as GitHub, and a publicly funded, open-science-compatible service provider such as zenodo.org).
 Building the Docker image from the Dockerfile still requires DockerHub, MRAN, and Ubuntu Package Archive to be online.
-We therefore suggest that you include an already build image into the releases.
-The Makefile generated by `repro` does include a target to facilitate this.
+We therefore suggest that you include an already built image into the releases.
+The Makefile generated by `repro` does include a target to do so.
 To write a compressed image to disk use:
 
 ```bash
@@ -1318,10 +1319,10 @@ To write a compressed image to disk use:
 make save-docker
 ```
 
-Unfortunately, this image can only be used when Docker is installed.
-To remove any software dependency including Docker from the archived project, one can convert the Docker image to a full system image.
-Such system image can subsequently be booted on any personal computer without relying on any software or service and therefore grantees reproducibility for decades to come.
-Currently, `repro` does not facilitate this conversion, but we hope to include this feature soon.
+This image allows anyone with a computer equipped with Docker to reproduce the analysis (if the repository contains all code and data and has no other external dependencies).
+Last, one can convert the Docker image to a full bootable system image.
+Such a system image can subsequently be booted on any personal computer without relying on any software or service and therefore grantees reproducibility for decades to come.
+Currently, `repro` does not yet facilitate this conversion, but we hope to include this feature soon.
 
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
