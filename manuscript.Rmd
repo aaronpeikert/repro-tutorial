@@ -738,7 +738,7 @@ This command will create a file with the name `README.Rmd`.
 <!--knit/rmarkdown will be explained in section above-->
 When you knit this file, it, in turn, creates a `README.md`.
 That means you can include R code or plots etc., within the readme.
-The `README.md` file will look pleasant in the browser on `r link("https://github.com/aaronpeikert/repro-tutorial#readme", "GitHub")`.
+The `README.md` file will look pleasant in the browser on [GitHub](https://github.com/aaronpeikert/repro-tutorial#readme).
 
 ### License
 
