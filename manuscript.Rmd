@@ -589,17 +589,19 @@ The standard random number generator (RNG) produces high quality random numbers,
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
 Therefore, if you set a seed for one worker and another seed for another worker, you could end up with the same random numbers but with a phase shift.
 @lecuyerGoodParametersImplementations1999 proposed a more computationally expensive RNG, designed to generate many uncorrelated streams.
-While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers:
+While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers. 
 
+<!--
 ```{r}
 set.seed(1235)
 runif(1)
 set.seed(1235)
 runif(1)
 ```
+-->
+By wrapping code that uses the internal random number generator (here, the command to create a random number from the uniform distribution, `runif(1)`) with the `future` approach, we guarantee that the random numbers will differ across parallel executions of that code, will achieve a high quality of randomness, but still will be deterministic and thus reproducible:
 
 ```{r}
-future::value(future::future(runif(1), seed = 1235))
 future::value(future::future(runif(1), seed = 1235))
 ```
 
