@@ -195,7 +195,8 @@ Therefore, we suggest starting early, ideally from the moment you decide to purs
 The first step towards reproducibility is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files without missing anything.
 <!-- Hands-on: Introducing RProjects-->
-RStudio's _R Projects_ facilitate this concept of a project folder. The `repro` package offers an R Studio template, which sets up a file structure that follows best practices and conventions.<!--AP this is from your thesis - can you please add citations as to which practices and conventions these are?-->
+RStudio's _R Projects_ facilitate this concept of a project folder.
+The `repro` package offers an R Studio template, which sets up a file structure that follows best practices and conventions for placing scripts and data [@rextensions].
 To create one, click on:
 
 > File → New Project... → New Directory → New Project
