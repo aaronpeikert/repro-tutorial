@@ -1088,24 +1088,26 @@ automate_docker()
 [^mran]: https://mran.microsoft.com/timemachine
 
 From the `Dockerfile` you can then build an image.
-While you can do so manually we prefer to use Make, see [Internal Dependencies].
-The `Makefile` build by `repro` does contain a recipe for creating the `Dockerfile`.
+While you can do so manually, we suggest to again use Make ( see [Internal Dependencies]).
+The `Makefile` built by `repro` does contain a recipe for creating the `Dockerfile`.
 
 ```bash
 make docker
 ```
 
-The `Makefile` from `repro` does also include a mechanism to send commands conditionally through the Docker container.
-This mechanism is triggered by `DOCKER=TRUE` in the make call:
+Importantly, the `Makefile` created by `repro` includes a mechanism to execute commands in the Docker container instead of locally.
+This mechanism is triggered by the argument `DOCKER=TRUE` appended to any make call. 
+The following call builds all targets inside the container instead of in the local computing environment:
 
 ```bash
 # this should be run in the terminal
 make DOCKER=TRUE
 ```
-The function `automate()` combines `automate_docker()` & `automate_make()`.
 
-You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manual` to install software beyond R packages.
-Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manual`.
+Last, to create or update the container and all Make targets, `repro` provides a single function `automate()` that calls `automate_docker()` and `automate_make()`.
+ 
+You can also manually edit the `Dockerfile` by changing the file `.repro/Dockerfile_manual` to install software other than R packages.
+Remember to run `repro::automate()` every time you made edits to `.repro/Dockerfile_manual`.
 We recommend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
 
 
