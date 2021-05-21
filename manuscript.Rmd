@@ -69,35 +69,42 @@ Even worse, researchers might often not even be able to achieve reproducibility-
 When analyses are not properly documented, small mistakes, or circumstances outside the researcher's control (e.g., a corrupted file, a coauthor leaving academia) may render them non-reproducible. 
 Over the past decades, computational statistical methods have radically changed the ability of researchers from all disciplines to process and analyze data with complex statistical models. <!-- CJ I think it's more important to focus on the methods that have been developed to ensure reproducibility!)-->
 With these advances came challenges that contribute to broader concerns of irreproducibility in the published literature, among them the lack of exact and unambiguous documentation of computational methods and each computational step taken.
+
 With computationally intensive data analyses <!-- CJ The complexity of the analyses is orthogonal to the necessity to make them reproducible. -->, access to the steps taken to process data and generate findings is as important as access to the data themselves [@vanlissa2020worcs].
-Only with access to both data and procedures <!-- CJ and software environment --> can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.
+Only with access to both data and procedures <!-- CJ and software environment --> can we guarantee full computational reproducibility, meaning that the creations emanating from a given data analysis (a statistical result or an entire manuscript describing the results) can be exactly reproduced at any time in the future, by any person, and on any computer.<!-- CJ this final claim is questionable, at least before introducing the concept of containerization. Just using data and procedures, you cannot guarantee reproducibility on any computer.-->
 
 In fact, the research community has long accepted reproducibility as an important element of "good scientific practice." <!-- CJ: This is the crucial point. I would start the paper with this. See my reference to Popper in the opening sentence. -->
 However, ensuring reproducibility of computational analyses is still tedious and difficult <!-- CJ I would not editorialize this. Moreover, this sounds discouraging. I would focus on what you have done to make reproducibility more attainable. -->, and there are still no widely accepted standards that can guide researchers when setting up their data analyses. <!-- CJ These are two separate points, each important enough to have their own sentence, with some further clarification. --> 
 Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories <!-- CJ you have not introduced any open repositories yet. --> do not provide sufficient information to reproduce relevant computational and statistical results.
-For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition.
+For example, @hardwicke2018 attempted to replicate open materials in the journal Cognition. <!-- CJ How do you replicate open materials? At least in the social sciences "open materials" is taken to mean that you have used a permissive license on a newly developed questionnaire or other research material. -->
+
 Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
 For 13 articles, at least one outcome could not be reproduced —-- even with the original authors' assistance.
 @obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available.
 The authors could execute only 31 of the scripts without error and were able to reproduce the results of only 21 articles (within a reasonable period of time).
-Thus, there is a dire need to establish standards for reproducible workflows for scientific rigor.
+Thus, there is a dire need to establish standards for reproducible workflows for scientific rigor.<!-- CJ It does not automatically follow that the problem you describe necessitates reproducible workflows. I would procede as follows: 1) use this example to conclude the existence of a problem (even "open" studies do not reproduce), 2) present workflows as a solution. -->
 
-From our personal experience, the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step.
-If reproduction would require merely minutes instead of hours, it could greatly facilitate collaboration within and across research projects.
+From our personal experience,<!--CJ This undermines the credibility of the argument. This is not an opinion piece--> the lack of a proper incentive structure and the dreary perspective of having to spend several extra hours if not days to properly set of a code repository to become reproducible, makes many scholars skip this extra step. <!-- CJ I am not sure this is the primary reason. Indeed, incentives are important - but in that context, perhaps reference DORA? I think you were just on a good track, arguing that even with the best intentions, researchers often fail to make their work reproducible. Your workflow will ensure that their next attempt is succesful.-->
+If reproduction would require merely minutes instead of hours,<!-- CJ Now we're back to ease-of-use, not incentives.-->
+it could greatly facilitate collaboration within and across research projects. <!-- CJ This is a different, third argument: In order to collaborate effectively, researchers should be looking at exactly the same data, code and results. I suggest to organize these arguments, and address them each exhaustively in turn. --> 
 <!-- Guiding principle: spending machine compute time instead of human research time -->
-To achieve this boost in productivity, we must place the burden of reproducibility upon computers instead of the researchers.
-To this end, we demand that a scientific product (no matter whether this is a preliminary report or a full research article) should both be understandable by researchers and automatically reproducible by computers with minimal constraints to the researchers' own workflows.
+To achieve this boost in productivity, we must place the burden of reproducibility upon computers instead of the researchers.<!-- CJ I understand what you mean, but it's not yet communicated effectively because you have not yet made explicit that reproducible projects will indeed facilitate collaboration, and increase opportunities for collaboration (e.g., with strangers through github), and will therefore lead to a boost in productivity. Also - ask yourself if this boost in productivity is convincing to individual researchers, your target audience. It seems like this would be more convincing to management and policy makers.-->
+To this end, we demand <!-- CJ It's you creating the product, so.. you demand this of yourself? Or do you mean that you demand this of your readership? Either way, strange choice of words.-->
+that a scientific product (no matter whether this is a preliminary report or a full research article) should both be understandable by researchers and automatically reproducible by computers with minimal constraints to the researchers' own workflows. <!-- CJ This is ambiguous. The point of "understandable by researchers and automatically reproducible by computers" requires clarification. "Minimal constraints to the workflow" is also not clear. Aren't you providing readers with a workflow? -->
 
 <!-- Which problems are solved by which tool (like in Andreas talk)-->
 <!--stolen from: https://brandmaier.github.io/reproducible-data-analysis-materials/KULeuvenQuantPsy2020.html#11 -->
-We identified the following common four causes for non-reproducibility:
+We identified the following common four causes for non-reproducibility: <!-- CJ How did you identify these causes? Is this exhaustive?-->
 
 1.	Multiple inconsistent versions of code and data; for example, the dataset has changed over time because outliers were removed at a later stage, or the code has changed because a bug was removed at some point in time;
 2.	Copy-and-paste errors; for example, results are manually copied from a computing environment into a text processor, causing inconsistencies between the reported result and the reproduced result;
 3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;
 4.	Broken dependencies; for example, a given analysis depends on a software package that might not be available on a different computer or no longer exists.
-
-We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]:
+<!-- CJ 5. Missing steps: Some of the steps are documented (e.g., final analysis), but other steps were conducted manually and not documented (e.g., copy-pasting results from one program to another; reverse coding items on the fly).-->
+We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]: <!-- CJ In fact, this is the central message of your paper: "We have developed this new workflow, based on four pillars." I would suggest mentioning this very clearly in the opening paragraph. The opening paragraph should at least:
+1) Introduce the topic area
+2) Introduce the problem/knowledge gap
+3) Introduce how you will fill this knowledge gap-->
 
 1. Version control
 2. Dynamic document creation
@@ -105,9 +112,9 @@ We have developed a workflow that leverages established tools and practices from
 4. Software management
 
 
-This tutorial follows the recommendations of @Peikert2019 and uses _Git_ for version control, _R Markdown_ for dynamic document creation, _Make_ for dependency tracking, and _Docker_ for software management.
+This tutorial follows the recommendations of @Peikert2019 and uses _Git_ for version control, _R Markdown_ for dynamic document creation, _Make_ for dependency tracking, and _Docker_ for software management. <!-- CJ None of these terms have been defined yet-->
 The interplay of these four components is shown in Figure \@ref(fig:schematic).
-However, which tools you use to implement these concepts is a matter of taste and project requirements, and other choices are possible depending on the context and the degree of reproducibility one aims for [e.g., @vanlissa2020worcs; @turingway2021turing].
+However, which tools you use to implement these concepts is a matter of taste and project requirements, and other choices are possible depending on the context and the degree of reproducibility one aims for [e.g., @vanlissa2020worcs; @turingway2021turing].<!-- CJ But readers do not yet know what these concepts are, nor what tools exist. At this point in the writing, I think you need to take them by the hand and explain. After doing that, you can let them know that there are alternatives.-->
 At several points, we suggest other viable alternatives.
 
 ```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
@@ -116,10 +123,10 @@ knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 ```
 
 This tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on.
-This paper was designed to help researchers to practically apply the TOP guidelines [except for number 8. which does not apply to single research projects, @nosekPromotingOpenResearch2015; @vanlissa2020worcs].
-We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely.
+This paper was designed to help researchers to practically apply the TOP guidelines [except for number 8. which does not apply to single research projects, @nosekPromotingOpenResearch2015; @vanlissa2020worcs].<!-- CJ Is this really the case? Seems like there is little attention to the TOP guidelines, and the present paper is much more widely applicable. Maybe make the general point that workflows can help address formal guidelines for transparency, like TOP and FAIR - and consider citing WORCS for more information. Then explain that your workflow is flexible enough to go beyond--> 
+We start by sketching an initial idea in a repository shared with colleagues that potentially collaborate only remotely.<!-- CJ Is this the description of the workflow?-->
 We continue with the creation of a concrete data analysis plan, which ideally is already implemented in code, and a dynamic report document that can be preregistered.
-Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact using a unique DOI in a persistent location.
+Once the empirical data has been collected, the results can be calculated and appear directly in the dynamically generated document, where ideally only the discussion section needs to be added before the whole archive can be permanently stored as a fully reproducible digital artifact in a persistent location, and be assigned a DOI to increase findability.<!--CJ All DOIs are unique, and it is not stored using a DOI-->
 
 We have structured the tutorial with a _learning by doing_ approach in mind, such that readers can follow along at their own computers.
 We explicitly encourage readers to try out all R commands for themselves.
@@ -131,7 +138,7 @@ To guide the reader through all steps of a research project, we will use a exemp
 This example serves only didactic purposes and not to derive substantive claims.
 Nevertheless, everything else is kept as close to a real research question as possible and we have preregistered the analysis without looking at the data beforehand and use actual data subsequently.
 
-Here, we present a workflow that has proven useful for our way of working with a strong focus on Open Science.
+Here, we present a workflow that has proven useful for our way of working with a strong focus on Open Science.<!-- CJ What do you mean here? -->
 However, not all steps are necessary to achieve reproducibility.
 We have marked those steps that can be omitted as "optional" in the section headings.
 
@@ -161,20 +168,20 @@ pander::pander(
 
 <!-- keep it brief, let `repro` do the work -->
 
-This tutorial is targeted at scholars with at least intermediate R knowledge and we assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md", "installation guide")`).
-To create reproducible research projects in R, we have implemented our workflow in the  [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]:
+This tutorial is targeted at scholars with at least intermediate R knowledge<!--CJ This sounds like something that belongs in the beginning of the introduction; it's not part of setup--> and we assume that you have already installed R and RStudio (if not, check the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md", "installation guide")`).
+To create reproducible research projects in R, we have implemented our workflow in the  [`repro`-package](https://github.com/aaronpeikert/repro)[^repropackage]: <!-- CJ This also seems like something that should be mentioned in the intro; once people are setting up their systems, they should havebeen told what they're setting them up for-->
 
 [^repropackage]: https://github.com/aaronpeikert/repro
 
 ```r
 # -- type this on the R console --
 if(!requireNamespace("remotes"))install.packages("remotes")
-remotes::install_github("aaronpeikert/repro")
+remotes::install_github("aaronpeikert/repro") # CJ Suggest publishing (at least aminimal working version) of the repro package to CRAN before publishing this paper, to reduce one layer of complexity for users
 library("repro")
 ```
 
 The [`repro`-package](https://github.com/aaronpeikert/repro) contains several helpers to work with the suggested tools for reproducibility.
-For example, the package can check if your computer has all the required software packages installed and ready.
+For example, the package can check if your computer has all the required software packages installed and ready. <!-- CJ Does repro assume that these have already been installed  by hand? -->
 
 ```{r}
 # -- type this on the R console --
@@ -188,11 +195,11 @@ check_github()
 ```
 
 
-If any of these commands find that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.
+If any of these commands find that a given software requirement is not installed or set up properly, you will get a message with detailed instructions (tailored to your operating system) on how to set up your computer.<!-- CJ I think you should explain your philosophy that the package provides additional tutorial instructions depending on the user's situation before diving into the actual tutorial. I foresee that people are going to be puzzled when the tutorial steps present them with additional mini tutorials. Explain in the introduction what the problem is (users need to install andfamiliarize themselves with many different software solutions) and how you solved it (you wrote a package that tells users what dependencies they need to install and how -->
 Please make sure that all three commands pass before you continue with the tutorial.
 This process is only required once per computer and does not need to be repeated for each project.
 
-# Planning Phase
+# Planning Phase <!-- CJ This reminds me of the WORCS phases, which is fine, but it's the only header that does remind me of these phases. You've not introduced a breakdown of the research process into phases anywhere. Moreover, the text below does not really relate to "planning"; it goes back to reasons for reproducibility, and then an explanation of technical tools (Rmarkdown and Git), neither of which relate to planning! -->
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
