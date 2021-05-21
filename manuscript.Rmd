@@ -203,8 +203,10 @@ This process is only required once per computer and does not need to be repeated
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
-While you may be tempted to consider reproducibility only when you are close to completing a project, we believe that upfront investment pays off in your increased productivity.
-Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you achieve reproducibility gradually.
+
+While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay off through your increased productivity.
+Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you achieve reproducibility gradually.<!--CJ The three preceding sentences belong in the introduction; this tutorial part should be more applied, less conceptual-->
+
 The first step towards reproducibility is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files without missing anything.
 <!-- Hands-on: Introducing RProjects-->
@@ -222,7 +224,7 @@ To create one, click on:
 <!--Keep notes.-->
  A great tool to capture ideas or meeting notes and eventually complete entire journal articles is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
- This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
+ This way, Markup<!-- CJ Up or down?--> does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
 We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
 To create a Markdown document, click on: 
 
@@ -248,15 +250,17 @@ To do list:
 cat("```markdown", markdown_example, "```", sep = "")
 ```
 
-We will later see how this simplicity enables us to create many different document formats (i.e. Word, PDF, HTML) and incorporate code (i.e. R, Python, Julia).
+We will later see how this simplicity enables us to create many different document formats (i.e. Word, PDF, HTML) and incorporate code in different languages (i.e. R, Python, Julia).
 
 ## Git
 
-Another advantage of Markdown is that because of its likeness to plain text, you can easily version-control it with Git and leverage Gits features for tracking, displaying, and merging sequential and concurrent changes.
+Another advantage of Markdown is that because of its likeness to plain text<!-- CJ This will not make sense to someone who does not yet know how git works and why plain text is preferred, i.e., your target audience-->,
+you can easily version-control it with Git and leverage Gits features for tracking, displaying, and merging sequential and concurrent changes.
 You may be familiar with Microsoft Words' "Track Changes"-Feature.
-Version control is similar in its basic idea but more potent in its features.
+Version control <!-- CJ You're now introducing version control after using it in a sentence (preceding). That's too late. Moreover, as the paragraph is labeled "Git", I feel that you should explain git, not version control. Also... shouldn't tools be introduced in the introduction, instead of the tutorial? The tutorial should show users how to use tools that have been explained to them in the introduction.--> 
+  is similar in its basic idea but more potent in its features.
 Instead of tracking only one file, you can keep track of the whole project directory, and instead of losing all changes when you agree to them, the entire history is preserved transparently.
-For example, this paper has been going through `r system2("git", c("rev-list",  "--count",  "HEAD"), stdout = TRUE)` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/main", "iterations")`.
+For example, this paper has been going through `r system2("git", c("rev-list",  "--count",  "HEAD"), stdout = TRUE)` `r link("https://github.com/aaronpeikert/repro-tutorial/commits/main", "iterations")`. <!-- CJ Weird flex, readers will only see the number and won't know that it was dynamically generated from a git call. They also won't understand how that number conveys anything about the benefits of git.-->
 To activate Git in a given project, you can call:
 <!-- Hands-on: Introduce Git -->
 
@@ -286,13 +290,13 @@ Independent t-test
 Can we use openpsychometrics.org data?
 ```
 
-And you could commit it in Git.
-For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert], which wraps most git commands into R functions.
+And you could commit it in Git.<!-- CJ Do people know what a commit is yet?-->
+For convenience, we use the [`gert`-package](https://github.com/r-lib/gert) [@R-gert], which wraps most git commands into R functions.<!-- CJ Actually, I believe gert is an independent git client - but not 100% sure-->
 Alternatively, we suggest to either work directly in the terminal (for example, RStudio offers a command shell with various options accessible in the Menu Tools → Terminal), or work using the Git pane in RStudio that offers buttons for basic operations.
 <!--I am leaning towards doing everything in R, not sure though-->
 <!--For Git we maybe should use RStudio's Git pane?-->
-
-To commit your first changes to the project, start with staging all files to be included in the commit using `git_add()`.
+<!-- CJ No preference yet. I think command line R is convenient, but the R git pane gives a nice overview of new and changed files etc. That would be very instructive to new users. Maybe you can demo how the command line relates to the git pane? I.e., the git pane will be updated when using gert::git_add()-->
+To commit your first changes to the project, start with staging all files <!-- CJ do they know what staging is yet? Do they need to know?--> to be included in the commit using `git_add()`.
 Here, we stage our idea collection in the file `idea.md` and then commit it to our local repository with a meaningful commit message that will later help us keep track of all the changes over time.
 
 ```r
@@ -300,7 +304,7 @@ gert::git_add("idea.md")
 gert::git_commit("add a first concept")
 ```
 
-Now assume that after discussing with your colleagues, you settle onto a final analysis strategy using latent variable models with tests for measurement invariance because power is greater and you want to exclude bias in measurement as possible confounder [@flake2020].
+Now assume that after discussing with your colleagues, you decide on a different strategy for the final analysis <!-- CJ I missed what the original plan was-->: using latent variable models with tests for measurement invariance <!--CK consider dropping, it's not essential and confusing to readers who don't know SEM: because power is greater and you want to exclude bias in measurement as possible confounder--> [@flake2020].
 This results in changes to your notes as follows:
 
 ```markdown
@@ -326,10 +330,10 @@ Again, stage the changes to this file and commit like before using `git_add()` a
 gert::git_commit_all("switch to CFA to exclude bias in measurement as possible confounder")
 ```
 
-And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change).
-This detection of what has changed works on a line-by-line basis.
+And GitHub can show you what has changed, like in Figure \@ref(fig:idea-change). <!-- CJ Is the project linked to github yet? Have the changes been pushed? Do readers know what github is yet? -->
+This detection of what has changed works on a line-by-line basis. <!-- CJ this should have been explained when you first introduced git -->
 We recommend therefore to keep each sentence in a Markdown on its own line to generate clean difference views.
-GitHub is, in its essence, a web interface to Git, and you may learn more about how to use it under the section on [GitHub].
+GitHub is, in its essence, a web interface to Git, and you may learn more about how to use it under the section on [GitHub]. <!-- CJ This should have been introduced earlier-->
 
 ```{r idea-change-screenshot, include=FALSE}
 # unfortunately css selectors won't work for pdf so we'll use png instead
@@ -347,10 +351,12 @@ knitr::include_graphics(idea_change)
 ```
 
 <!--I am troubled by how we should recommend to learn Git-->
+<!-- CJ I think you should avoid teaching people git. You're not teaching them R or how to use RStudio either. Instead, teach readers only the absolute minimum they need to use it. If possible, consider importing the git_update() function into repro, because that will save a lot of explaining in the paper. Do provide a link to a good resource for people who want to learn more; I believe github has tutorial pages.-->
+<!-- CJ Also, I feel like most of what is said about git below here should have been in the introduction. Some other snippets (e.g., explaining commit, push and pull) should have been presented before you tell users to make commits. It comes too late here-->
 Git can be challenging to learn, because it requires a rather complex mental model of maintaining potentially differing versions between different repositories (typically one central repository and one local repository per each author while each repository may have different branches).
 However, there is a subsets of commands which we present here and in the section on [GitHub] (commit, push, pull) which enable you to use Git for simple version control.
 There are many tutorials on learning Git and @vuorreCuratingResearchAssets2018 provide a good starting point.
-However Git is designed for collaboration, we therefore recommend finding a partner to attend an online lecture or workshop to learn the ins and outs of Git.
+However Git is designed for collaboration, we therefore recommend finding a partner to attend an online lecture or workshop to learn the ins and outs of Git.<!-- CJ I think this is a good sentiment; however, I would (also) provide a link to a good tutorial, and emphasize that all they need to know to get started will be covered in this tutorial, otherwise people get frustrated that they have to go read another tutorial halfway through your tutorial.-->
 
 ## Simulation (optional)
 
@@ -366,19 +372,19 @@ loadings_jones_paulhus <- c(38, 31, 40, 52, 59, 71, 62, 46, 51)/100
 cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
-Monte Carlo simulations are a crucial tool to investigate properties of a statistical model and they are routinely employed to develop or evaluate statistical models.
-For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data. In Bayesian data analysis, prior predictive checks generate data from a model according to the prior distribution in order to asses whether a prior is appropriate [@gabry2019visualization].
+Monte Carlo simulations <!-- CJ Explain what this is! Or consider using plain language instead.--> are a crucial tool to investigate properties of a statistical model and they are routinely employed to develop or evaluate statistical models.
+For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data.
 
-While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
+While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.<!-- CJ I feel that this is a better opening paragraph, because it introduces the concept of simulating data! However, consider that some readers may have no idea of what that means, and might require even more detail.-->
 First, you have to address and could plan for data analytic problems on a conceptual level before you made the considerable effort to acquire data [@axelrodAdvancingArtSimulation1997].
 Second, if you only simulate a single dataset, you can perform a simple technical check, that is the analysis software outputs parameter estimates [@braiekTestingMachineLearning2020], e.g. when the simulated data contains missings.
 Third, if you perform a Monte Carlo simulation, you may evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 Fourth, you can plan your resources efficiently, e.g. determine required sample size to achieve certain precision or power [@brandmaier2018precision].
 
-A Monte Carlo simulation affords you an ideal planning opportunity.
-We realize that this comes at an expensive but believe the reduction in the risk that the data is not sufficient to answer the research questions offsets the required effort.
+A Monte Carlo simulation affords you an ideal planning opportunity.<!-- CJ Put the other monte carlo stuff here, and explain what it is-->
+We realize that this comes at an expensive but believe the reduction in the risk that the data is not sufficient to answer the research questions offsets the required effort.<!-- CJ What are you trying to say in this sentence? -->
 This advantage is especially pronounced when you plan to preregister your study.
-In fact, we argue that a Monte Carlo simulation can combine the analysis, sample size planning and preregistration (see [Preregistration as Code].
+In fact, a Monte Carlo simulation can help plan the analysis in detail, form the basis of power calculation and sample size planning, and can be preregistered integrally (see [Preregistration as Code].<!-- CJ Should this preregistration as code have been introduced earlier? There, you could discuss the notion of simulating data-->
 
 No matter which analytic strategy you plan, it will come with assumptions about the data generating process under investigation. 
 A simulation forces us to deal with these assumptions and their consequences explicitly.
@@ -409,7 +415,7 @@ knitr::kable(t(data.frame(Item = as.character(1:9),
 Typically, it is recommended to choose conservative values in the study planning phase [@brandmaier2018precision].
 This way, we make sure that our analytic strategy is viable even in non-optimal circumstances, for example if the measurement instrument works less well then expected or the population characteristics are more different than expected.
 As a heuristic guess, we assume that the factor loadings are 30% lower than those reported by @Jones2013 and that the standardized mean difference is only 0.2.
-These assumption can be simply translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
+These assumption can be simply<!--CJ I wouldn't use this word here. People might find this all quite complicated, and could be disparaged if they read that this should be simple--> translated into [`lavaan` [@R-lavaan]](https://lavaan.ugent.be)[^lavaan] model syntax:
 
 ```{r}
 model_truth <-
@@ -423,7 +429,7 @@ MACH ~~ c(1, 1)*MACH"
 
 Data simulation is particularly easy in lavaan syntax using the function `simulateData`.
 More complicated simulations (for example, including missing data simulation) are possible with other packages, e.g., simsem [@simsem], faux [@faux], or simstudy [@goldfeldSimstudyIlluminatingResearch2020].
-The following code simulates data from the population model `model_truth` with 1000 cases in each group.
+The following code simulates data from the population model `model_truth` with 1000 cases in each group. <!-- CJ I'm left wondering whether the example shouldn't simply be a t-test with observed variables. Everybody knows linear models. Lavaan is quite a specialized piece of software, and you might lose a lot of readers when the examples relate to SEM and require understanding of factor loadings, model implied covariance matrices, etc -->
 
 ```{r, include=FALSE}
 set.seed(1234)
@@ -438,8 +444,8 @@ simulated <- lavaan::simulateData(
 )
 ```
 
-We propose the following procedure for analyzing the data and dealing with possible violations of strong measurement invariance. 
-After fitting the model with strong measurement invariance [@flake2020], we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test.
+We propose the following procedure for analyzing the data and dealing with possible violations of strong measurement invariance. <!-- CJ Again, mweasurement invariance is probably too technical for an introductory example in a paper about workflows, not SEM-->
+After fitting the model with strong measurement invariance [@flake2020], we automatically free equality constraints, first on loadings, and then on intercepts based on the Lagrange Multiplier test. <!-- CJ This is really getting too complex for an example -->
 The model is iteratively refit and improved until at most three loadings, or three intercepts are freed, or the Lagrange Multiplier test is not significant for the constraints on loadings or intercepts.
 While reconsidering our modeling assumptions, it is also unlikely that the data are perfectly normally distributed.
 First, we have rating scale items and thus our observations are categorical.
@@ -468,6 +474,11 @@ generate_data(1000) %>%
   planed_analysis() %>% 
   extract_results()
 ```
+<!-- CJ I would just use an example as simple as something like this:
+x <- rnorm(100)
+y <- .2 + 2.3 * x + rnorm(100)
+That's already going to be a big step for many, but hopefully manageable. After grokking that, they can get back to the true point of the paper: Workflows.
+-->
 
 Note, that this certainly results in different numbers each time we run it (see ["Random Number Generation"](#prng)).
 Of course it is already helpful to simulate a single dataset to test if the analysis works in principle, but repeating the analysis several times and vary parameters lets you verify more properties of your analysis.
@@ -592,14 +603,14 @@ simulation_plot
 Strict reproducibility is at stake with any code that is based on the computer's pseudo random number generator (PRNG) because random numbers will almost always differ with each execution of the code.
 To consistently get the same results while preserving the pseudo-random property of the generated numbers, it is good practice to set a random seed that sets the PRNG into a restorable state, in R code: `set.seed(1235)`.
 Note however that the consistency of a given seed is not necessarily maintained across different R versions because the default algorithm for generating pseudo random numbers may change (see @Peikert2019 for a demonstration with different R versions).
-It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
+It is a little more complicated to achieve uncorrelated random numbers in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).<!-- CJ This is probably too specialized for a paper about workflows. You have not introduced parallelization, so it doesn't make sense to talk about special provisions for paralellized code. -->
 The standard random number generator (RNG) produces high quality random numbers, but is not safe to use in parallelized code (e.g., when the same code is run with different portions of data in a computer cluster).
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
 Therefore, if you set a seed for one worker and another seed for another worker, you could end up with the same random numbers but with a phase shift.
 @lecuyerGoodParametersImplementations1999 proposed a more computationally expensive RNG, designed to generate many uncorrelated streams.
-While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers. 
 
-<!--
+While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers:<!-- CJ These are many technical terms that apply only to parallelized code; a concept you have not introduced and one that seems out of scope-->
+
 ```{r}
 # reproducible but unsafe in parallel code
 set.seed(1235)
@@ -607,7 +618,7 @@ runif(1)
 set.seed(1235)
 runif(1)
 ```
--->
+
 By wrapping code that uses the internal random number generator (here, the command to create a random number from the uniform distribution, `runif(1)`) with the `future` approach, we guarantee that the random numbers will differ across parallel executions of that code, will achieve a high quality of randomness, but still will be deterministic and thus reproducible:
 
 ```{r}
@@ -623,30 +634,32 @@ future::value(future::future(runif(1), seed = 1235))
 
 Preregistration is the specification of a research plan in advance of data analysis.
 The goal of preregistration is transparency and a clear-cut divide into exploration and confirmation.
-Thus, it serves as a tool that may help to increase the credibility of empirical results.
-Without getting into too much detail of the meta-scientific arguments for preregistration, we want to note two advantages [@nosekPreregistrationHardWorthwhile2019].
+Thus, it serves as a tool that may help to increase the credibility of empirical results.<!-- CJ For this sentence to make sense, you have to briefly mention the problem with non-preregistered studies: Undisclosed exploration, HARKing, and the file drawer effect-->
+Without getting into too much detail of the meta-scientific arguments for preregistration <!-- CJ I think you do need to mention some of those arguments.-->, we want to note two advantages [@nosekPreregistrationHardWorthwhile2019].
 First, a preregistration is an opportunity to plan a study carefully.
 Gathering empirical data requires many resources, and better planning increases the chances that these efforts are worthwhile.
-For us, a good preregistration is the same as a good plan; the only difference is that a preregistration is made public beforehand.
+A preregistration is essentially a detailed research plan; the only difference is that a preregistration is made public <!-- CJ Not necessarily! prereg can be deposited in a private or embargoed repository. The crucial point is that it is time-stamped and indelible, so that future auditors may verify correspondence between the prereg and final analysis. --> beforehand.
 
 The second advantage is transparency.
-A preregistration offers the interested reader more insight into the research process than a paper alone could.
+A preregistration offers the interested reader more insight into the research process than a paper alone could.<!-- CJ Yes, but is that so important? -->
 @szollosi_is_2020 argue that preregistration can not fulfil its promise to reduce the false discovery rate of science if we allow deviating from them.
-While such an argument has some merits, we believe that often transparency outweighs these concerns [@nosekPreregistrationHardWorthwhile2019].
-Deviation from a preregistration is still possible.
-If researchers deviate from their preregistration, they probably have good reason to do so, which means they have learned something from the process of conducting the study, and any deviation will simply be explicitly marked as such.
-A preregistration, together with version control, allows their readers to inform themselves about these lessons learned.
+While such an argument has some merits, we believe that often transparency outweighs these concerns [@nosekPreregistrationHardWorthwhile2019]. <!-- CJ Not clear how transparency outweighs (?) concerns about inflated false positive rate.-->
+Researchers may have good reason to deviate from a preregistration; for instance, if real data are found to violate assumptions (e.g., about distributions, or measurement levels) that were made at the time of study planning.
+To account for such unforeseen circumstances, there is some room to deviate from a preregistration - provided the deviation is clearly disclosed.
+A preregistration, together with version control, allows their readers to inform themselves about these lessons learned. <!-- CJ I would emphasize here that version control functions as a research log / diary, which shows how a project progressed from idea to prereg to preliminary analysis to corrected analyses with some deviations from the original plan. If the project log is straigfhtforward, with some disclosed deviations from prereg - the research is credible. If the project log is convoluted as f***, then it's not credible.-->
 
 ### Preregistration as Code
 
 Currently, there are various templates available that guide researchers in developing data analysis plans for preregistration [@osfstandard; @socpsytemp; @howtoreplicate]. 
-Still, with any natural-language representation of an analysis plan, there remains ambiguity when turning the natural language description of a given data analysis into code [@sep-ambiguity].
+All of these templates use natural language to describe the analysis plan.
+The crucial limitation of any natural-language representation of an analysis plan is that it leaves room for ambiguity when translating the plan into code [@sep-ambiguity].
+Preregistration as code (PAC) addresses this limitation, by... <!-- CJ Provide definition first.-->
 Here, we discuss preregistration as code (PAC) with the R package repro, which leaves no room for ambiguity.
 PAC essentially reverses the process of empirical research.
 Before researchers gather data, they write a reproducible, dynamically generated manuscript (see [R Markdown]) including the sections Introduction, Methods, and Results---initially based on simulated data.
 Then, the source code of this manuscript serves as an unambiguous description of the analysis plan and is published as a preregistration.
-One particular advantage of this approach is that you can precisely define if-else conditions under which you choose a different analytic strategy to address possible complications (e.g. to establish partial measurement invariance, when full measurement invariance is not attainable).
-This approach allows for more flexibility than a traditional template based preregistration but is still well defined.
+One particular advantage of this approach is that you can precisely define if-else conditions under which you choose a different analytic strategy to address possible complications (e.g. to establish partial measurement invariance, when full measurement invariance is not attainable). <!-- CJ This is a great idea, but I feel like you should first explain the general concept of PAC in more detail before presenting specific benefits, like forking paths.-->
+This approach allows for more flexibility <!-- CJ This is confusing, because you just said that traditional templates allowed for too much flexibility--> than a traditional template based preregistration but is still well defined.
 
 PAC works well within this reproducible framework.
 
@@ -654,7 +667,7 @@ First, the preregistration becomes a part of the reproducible repository.
 It is part of the set of version-controlled files and provides transparency about when the preregistration file, data files, and code files were changed over the course of a research project.
 If code was version-controlled and tagged (see Section [Git]) before data collection, all deviations from the preregistration or any post-hoc additions that were performed after data collection are transparent and are visible and comparable in the version history.
 
-One way to ensure that your analysis to works with real data is to simulate data.
+One way to ensure that your analysis to works with real data is to simulate data. <!-- CJ I'm having flashbacks to the previous paragraph about simulating data. Haven't you said this already? Merge all sections about the same topic-->
 We, for example, simulated data for the Machiavellism subscale of the short dark triad (SD3) and analyzed this with structural equation modelling (SEM).
 The simulation showed that we have to gather at least `r minn$n_obs` observations per group to archive enough precision and that our solution to a data problem we expect (insufficient measurement invariance) introduces a bias of `r round((est_diff - true_diff)*100/true_diff, 2)`%.
 These results are also visualized in Figure \@ref(fig:simulation-plot).
@@ -670,7 +683,7 @@ In fact, this manuscript and therefore the here presented Machiavellism example 
 <!--Hands on: Introduce R Markdown-->
 As @knuthCWEBSystemStructured states: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
 
-Above, we have already suggested [Markdown] as a universal and portable text format. 
+Above, we have already suggested [Markdown] as a universal and portable text format. <!-- CJ I feel like these sections should be merged. It does not make sense to introduce markdown first, and then several pages down, introduce R Markdown.-->
 R Markdown extends regular Markdown by allowing useres you to include R code chunks (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown document.
 Upon rendering of the document, the code blocks are executed and their output is dynamically inserted into the document.
 This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
@@ -691,7 +704,7 @@ runif(1)
 When you include code into an R Markdown, this code is run, and its results are included in the rendered document.
 With R Markdown, you can write whole articles (`r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/manuscript.Rmd", "like the one you are reading")`).
 You could, in principle, even write large parts of the manuscript as part of your preregistration, i.e. the introduction, theoretical background, the method section and parts of the discussion.
-If you have simulated data, you could even include fake results.
+If you have simulated data, you could even analyze them to include dummy results.
 Packages like [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf)[^stargazer] [@stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html)[^apaTables] [@apaTables] and [`papaja`](http://frederikaust.com/papaja_man/)[^papaja] [@papaja] help you to create dynamically generated professional looking results.
 The package [`report`](https://github.com/easystats/report)[^report] [@report] is particularly noteworthy because it not only generates tables, but also a simple interpretation of the effects as actual prose (e.g it quantifies the size of an effect).
 Such a dynamic document is arguably the most concrete preregistration possible.
@@ -707,22 +720,22 @@ Therefore a preregistration can be thought of as simply rearranging tasks that y
 
 ### Preregistration on GitHub
 
-An essential aspect of a preregistration is that you have to make it public.
-Of course, if you commit the preregistration to Git and upload it into a public repository, it is also public.
+An essential aspect of a preregistration is that you have to make it public. <!-- CJ This requires a reference. I believe I found one that defined prereg as an "indelible, time-stamped record". That's useful-->
+Of course, if you commit the preregistration to Git and upload it into a public repository, it is also public. <!-- CJ You should credit my paper for this, as I'm the first to make this argument.-->
 However, simply using GitHub as a preregistration site is not ideal.
 First, you can delete your GitHub repository whenever you want.
 Second, while Git meticulously records when you made which change, committing and publishing are two different steps.
 Therefore, you can choose to upload to GitHub after conducting the study while still making it look like you have made the preregistration public before conducting the study.
 Third, any person with some experience in Git can retroactively change the history.
 You can alleviate these downsides by using zenodo.org to give a digital object identifier (DOI) to your preregistration because zenondo.org saves an unchangeable copy of your repository.
-You can learn more about this in [Creating a public release].
+You can learn more about this in [Creating a public release].<!-- CJ That's a great idea! -->
 
 ## Prepare public release (optional)
 
 An open research project usually entails that you publish content to the public web, without an intermediate publisher.
 Since you are directly responsible for such content, you have to prepare a few things that are usually done by the publisher for you.
 
-### README (optional)
+### README (optional) <!-- CJ I think this is too much information about the readme file. -->
 
 One of the most significant benefits of open research is that other people can freely reuse materials, ideally including everything from stimuli, over computerized experiments, to data analysis code.
 To use your materials, they first have to find them and learn how to use them.
@@ -754,9 +767,9 @@ For example, according to German copyright law, a repository without a license m
 In many countries (i.e. the USA, European Union), a content creator has exclusive right to use their creation[@stoddenLegalFrameworkReproducible2009].
 A license is the legal authorization of other people to use what you have created.
 <!---exact copy from our previous manuscript, do we need to change? -->
-In our experience, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media (such as stimulus materials if you created them).
+In our experience <!-- CJ This sentence should not be used in relation to legal matters. Refer to a trusted legal authority, not personal experience. -->, the [Creative Commons - Attribution license (CC-BY)](https://creativecommons.org/licenses/by/4.0/) is often appropriate for sharing texts, R Markdown files, generated figures, and other media (such as stimulus materials if you created them).
 In contrast, scripts and any other computer code are often best shared under the [MIT license](https://opensource.org/licenses/MIT) (or similar permissive licenses).
-Copyright does often not apply to data, we therefore recommend to share data with a CC0 license to clarify that you do not hold copyright to it.
+Copyright does often not apply to data <!-- CJ Reference, also this is a very important point that might require some elaboration.-->, we therefore recommend to share data with a CC0 license to clarify that you do not hold copyright to it.
 Giving data another license than CC0 is often just confusing, because a license is invalid if there is no copyright.
 All licenses assure maximal freedom for future users while requiring the attribution, if possible, of the original authors in derivative work.
 These licenses are also in line with the recommendations by the Reproducible Research Standard [@stoddenEnhancingReproducibilityComputational2016; @stoddenEnablingReproducibleResearch2009].
@@ -764,7 +777,7 @@ A great resource to choose a license is [choosealicense.com](https://choosealice
 However, no resource, including our recommendation, replaces legal advice.
 <!-- plagiary end -->
 It is important to get written consent from collaborators when you change/add the license.
-However, if their first contribution occurs after adding a license, they give their consent by contributing.
+However, if their first contribution occurs after adding a license, they give their consent by contributing.<!-- CJ Is this true by default, or should it be included in your contributor guidelines or someting?-->
 To add a CC-BY license to your project, simply run (there are similar commands for other licenses):
 
 <!--Hands on: Add a license-->
@@ -776,7 +789,7 @@ usethis::use_ccby_license()
 
 [@codebook]
 
-### Code of Conduct
+### Code of Conduct <!-- CJ I have mixed feelings about this. Considering that CoC is a recent development in software communities, and that it has caused substantial debate (and some casualties) in those communities, and considering that it is not currently "a thing" in scientific communities, and considering that it does not directly relate to reproducible workflows - I sincerely doubt whether this has any place in the present tutorialn. I would recommend sticking with solutions that solve issues experienced by scientists, not by programmers.-->
 
 We strongly suggest that you strive for respectful interactions with anyone who might want to contribute.
 We hope it comes naturally to you.
@@ -798,14 +811,14 @@ You can also consider alternative Codes of Conduct, like the `r link("https://op
 If you have considered what you want to tell the public about the project with a readme, have chosen a license and thought about how to make collaboration welcoming, you may publish your Git repository.
 See the section on [GitHub] on how to publish your project.
 
-## Collaboration
+## Collaboration <!-- CJ This should be in the introduction - in fact, there was already a remark about it. Merge those sections -->
 
 Often, reproducibility is reduced to the merits it has for the reader.
 However, we argue that reproducibility is vital for collaboration, not only in the sense that the consumer of a scientific product builds upon it but also that the creators work together.
 The time that you invest into ensuring reproducibility is directed at ensuring effective collaboration.
 Therefore, reproducibility is at its core about collaboration.
 
-### GitHub
+### GitHub <!-- CJ merge this with your earlier github section -->
 
 On your local machine, you use Git to track changes.
 Online services like GitHub allow you to share these changes with others and collaborate with them.
@@ -842,7 +855,7 @@ Downloading changes, e.g. from your collaborators is called "pull".
 gert::git_pull()
 ```
 
-### GitHub Issues
+### GitHub Issues <!-- CJ This is another example of something not essential for reproducibility; consider leavcing it out of the paper. Definitely not worth it's own header! -->
 
 <!--Hands on: Introduce GitHub Issues-->
 Effective collaboration needs effective organization.
@@ -884,7 +897,7 @@ While it is a valuable device for working with direct collaborators, it is also 
 Even if a journal does not support this, it enables post-publication review.
 Readers of your manuscript can ask questions or point out how to improve it after you have published it.
 
-### GitHub Pull Requests
+### GitHub Pull Requests <!-- CJ Same, not relevant -->
 
 <!--Hands on: Introduce GitHub PR and review-->
 There are various ways, in which other scholars may interact with your published repository.
@@ -938,26 +951,31 @@ So far, we have covered the generation of dynamic documents with [Markdown] and 
 
 ## Internal Dependencies
 
-<!--I am not sure this is the right place, should we introduce this earlier? -->
+<!--I am not sure this is the right place, should we introduce this earlier? --> <!-- CJ Yes-->
 
-A reader of a reproducible research project should be able to easily derive how it can be reproduced (ideally by a statement in your [README]).
-To do that, it is often crucial to understand how different project components relate to each other and depend on each other.
-For example, you cannot run an analysis without data, or you cannot render a statistical report without having the results from the statistical analysis that is reported.
-Dependency tracking means that you capture and map the interrelations between all components of your analysis.
-The "components" of an analysis are typically all involved files including raw data files, intermediate files (such as a preprocessed data file), and final results (such as a rendered manuscript in PDF format).
-With larger projects, there is typically a higher degree of modularization because code fragments are written for re-use in other projects (or are already re-used). Also, more complicated empirical research projects may have different hypotheses that are answered with different data sets and different statistical models, such that it often makes sense to split the different analyses into different files. Reproducibility then demands the careful documentation and mapping of all necessary steps in the correct order.
+A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
+To do that, it is often crucial to understand how different project components relate to each other.
+You cannot run an analysis without data; you cannot render a dynamic document without an analysis, and so forth.
+Dependency tracking means that you capture the interrelations between the components of your analysis.
+The "components" of an analysis are often loosely mapped onto files.
+For a simple project, it might be enough to have a single R Markdown file.
+However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
+To better navigate the data analysis, a researcher often splits it across several scripts.
+For example, they create a script to load the data and another to run the analysis.
+This modularisation <!-- CJ Are you using UK or US spelling? Modularization? --> facilitates reuse because the loading script may be used by other projects building on the same data, while the analysis script may be employed on different data and so forth.
+The downside is that reproducibility is complicated because instead of reproducing everything in one step, multiple steps are required.
 
-Make is a build automation tool for software projects that typically are challenged by maintaing and resolving a variety of dependencies in the correct order when compiling a piece of software-
-We found _Make_ to be particularly useful for our purposes for two reasons.
-First, it is language-agnostic, therefore enabling us to map steps not only taken within R but also across different programming languages or other external programs.
-Second, it does implement a simple yet powerful caching mechanism of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning. 
-That is, Make determines automatically which branches in the dependency graph needs updating when files have changed and does not necessarily recompute or rebuild everything.
+Of course, there a several ways to solve this problem.
+One could build an R package to separate analysis <!-- CJ This sentence is going to lose all readers who are not R package developers, i.e., the entire target readership--> and data or use code externalization <!-- CJ Now you're even losing me ;) --> in the RMarkdown to facilitating reuse or create a "main" script that combines all steps.
+We found Make to be particularly useful for two reasons. <!-- CJ Unless I'm mistaken, Make has not yet been introduced? -->
+First, it is language agnostic, therefore fusing steps that are carried out in different programming languages. <!-- CJ This is confusing, because you have not yet explained what make is / does -->
+Second, it does implement a simple yet powerful caching mechanism <!-- CJ Eh?? What is this --> of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning.
 
-Make is build around the concept of computational recipes.
+Make is build around the concept of computational recipes.<!-- CJ This is better. Start with this (and add one sentence first with a definition of Make-->
 Like cooking recipes, the dish you want to create is at the top, followed by the necessary ingredients with the procedure at last.
 In Make the dish is usually a file and is called "target".
 The ingredients are called "requirements" and are usually also files.
-The procedures are formulated as shell commands.
+The procedures are formulated as shell commands. <!-- CJ This might shock you, but many readers won't know what shell commands are. -->
 One (hypothetical) example is this:
 
 ```
@@ -1045,7 +1063,9 @@ container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 ```
 
 
-Modern data analysis is only feasible because researchers rely on much external software. 
+
+Modern data analysis is only feasible because researchers rely on much external software. <!-- CJ This is kind of a sweeping statement... what does it mean?-->
+One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
 The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
 External dependencies are unavoidable but, at the same time, a major threat to long-term reproducibility.
 The critical problem is the fragility of a software setup.
