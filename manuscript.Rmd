@@ -195,7 +195,7 @@ This process is only required once per computer and does not need to be repeated
 
 <!-- researcher should begin early to enjoy most benefits -->
 Reproducibility is invaluable for effective collaboration---including with your "past self".
-While you might be tempted to consider reproducibility only when you about to finish a project, upfront investments pay off through your increased productivity.
+While you may be tempted to consider reproducibility only when you are close to completing a project, we believe that upfront investment pays off in your increased productivity.
 Therefore, we suggest starting early, ideally from the moment you decide to pursue a project to incorporate tools to help you achieve reproducibility gradually.
 The first step towards reproducibility is to bundle all required files in one folder.
 This way, you never lose anything, and you can easily share the files without missing anything.
@@ -212,7 +212,7 @@ To create one, click on:
 ## Markdown
 
 <!--Keep notes.-->
- A great tool to capture ideas or meeting notes is Markdown.
+ A great tool to capture ideas or meeting notes and eventually complete entire journal articles is Markdown.
  Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
  This way, Markup does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX) and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
 We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
@@ -359,7 +359,7 @@ cohend_jones_paulhus <- c(24, 29, 35)/100
 ```
 
 Monte Carlo simulations are a crucial tool to investigate properties of a statistical model and they are routinely employed to develop or evaluate statistical models.
-For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data.
+For example, @maccallum1999sample used Monte Carlo simulations to investigate optimal sample size for exploratory factor analysis, or @curran1996robustness studied the robustness of the $\chi^2$ test statistic under non-normal data. In Bayesian data analysis, prior predictive checks generate data from a model according to the prior distribution in order to asses whether a prior is appropriate [@gabry2019visualization].
 
 While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
 First, you have to address and could plan for data analytic problems on a conceptual level before you made the considerable effort to acquire data [@axelrodAdvancingArtSimulation1997].
@@ -589,8 +589,9 @@ The standard random number generator (RNG) produces high quality random numbers,
 The problem is that concurrent random number streams are correlated, because they repeat after some time.
 Therefore, if you set a seed for one worker and another seed for another worker, you could end up with the same random numbers but with a phase shift.
 @lecuyerGoodParametersImplementations1999 proposed a more computationally expensive RNG, designed to generate many uncorrelated streams.
-While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers:
+While this RNG is available as a low level interface in R (with `RNGkind("L'Ecuyer-CMRG")`), we rely on the excellent parallelization framework around the [`future`-package](futureverse.org)[^futureverse] to handle this for us across all workers. 
 
+<!--
 ```{r}
 # reproducible but unsafe in parallel code
 set.seed(1235)
@@ -598,10 +599,11 @@ runif(1)
 set.seed(1235)
 runif(1)
 ```
+-->
+By wrapping code that uses the internal random number generator (here, the command to create a random number from the uniform distribution, `runif(1)`) with the `future` approach, we guarantee that the random numbers will differ across parallel executions of that code, will achieve a high quality of randomness, but still will be deterministic and thus reproducible:
 
 ```{r}
 # reproducible and safe in parallel code
-future::value(future::future(runif(1), seed = 1235))
 future::value(future::future(runif(1), seed = 1235))
 ```
 
@@ -898,9 +900,9 @@ You can view new pull request for any project with:
 usethis::browse_github_pulls()
 ```
 
-Before incorporating changes from someone else, they can be reviewed and adepted.
-This review step can also be useful for collaboration, because you can invite a collaborator to take a look at changes you want to do.
-It is therefore sometimes useful to create a pull request even though you have permission to push, because it invites your collaborators to comment or change your proposal.
+Before incorporating changes from someone else, they can be reviewed and adapted.
+This review step is particularly useful for remote collaboration, because collaborators can be explicitly pointed to changes and asked to approve them.
+Therefore, it is sometimes useful to create a pull request even though you have permission to push, because it invites your collaborators to comment on, change, or approve proposed changes.
 
 You can initiate a new pull request with:
 
@@ -920,33 +922,28 @@ After you or someone else has merged the pull request on GitHub, you can wrap it
 usethis::pr_finish()
 ```
 
-This process is especially useful if you want the feedback of a more senior researcher, because they do not need to know how to use Git but have a convenient web interface to provide comments or changes.
+This process can be executed via Github's web interface and can work well with collaborators who do not actually want to bother with installing and running the entire code base of a project.
 
-# Analyzing Data
+# The Data Analysis Phase
 
-While you already know how to write dynamic documents with [Markdown] and [R Markdown], and track changes with [Git] and [GitHub], two components to achieve long-term reproducibility are still missing, namely handling internal and external dependencies.
+So far, we have covered the generation of dynamic documents with [Markdown] and [R Markdown], and tracking changes with [Git] and [GitHub]. These are two of the four components [see @Peikert2019] to achieve long-term reproducibility. To complete computational reroducibility, researchers need to properly handle dependency relations between their files (internal dependencies) and all dependencies on external software, most importantly dependend R packages (external dependencies). In the following, we will show how the `repro` package supports researchers in mapping all dependencies completely and unambiguously.
 
 ## Internal Dependencies
 
 <!--I am not sure this is the right place, should we introduce this earlier? -->
 
-A reader of your reproducible manuscript should be able to derive how they are to reproduce it (ideally by a statement in your [README]).
-To do that, it is often crucial to understand how different project components relate to each other.
-You cannot run an analysis without data; you cannot render a dynamic document without an analysis, and so forth.
-Dependency tracking means that you capture the interrelations between the components of your analysis.
-The "components" of an analysis are often loosely mapped onto files.
-For a simple project, it might be enough to have a single R Markdown file.
-However, while it is easy to understand how to reproduce the end result, this approach quickly gets unwieldy.
-To better navigate the data analysis, a researcher often splits it across several scripts.
-For example, they create a script to load the data and another to run the analysis.
-This modularisation facilitates reuse because the loading script may be used by other projects building on the same data, while the analysis script may be employed on different data and so forth.
-The downside is that reproducibility is complicated because instead of reproducing everything in one step, multiple steps are required.
+A reader of a reproducible research project should be able to easily derive how it can be reproduced (ideally by a statement in your [README]).
+To do that, it is often crucial to understand how different project components relate to each other and depend on each other.
+For example, you cannot run an analysis without data, or you cannot render a statistical report without having the results from the statistical analysis that is reported.
+Dependency tracking means that you capture and map the interrelations between all components of your analysis.
+The "components" of an analysis are typically all involved files including raw data files, intermediate files (such as a preprocessed data file), and final results (such as a rendered manuscript in PDF format).
+With larger projects, there is typically a higher degree of modularization because code fragments are written for re-use in other projects (or are already re-used). Also, more complicated empirical research projects may have different hypotheses that are answered with different data sets and different statistical models, such that it often makes sense to split the different analyses into different files. Reproducibility then demands the careful documentation and mapping of all necessary steps in the correct order.
 
-Of course, there a several ways to solve this problem.
-One could build an R package to separate analysis and data or use code externalization in the RMarkdown to facilitating reuse or create a "main" script that combines all steps.
-We found Make to be particularly useful for two reasons.
-First, it is language agnostic, therefore fusing steps that are carried out in different programming languages.
-Second, it does implement a simple yet powerful caching mechanism of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning.
+Make is a build automation tool for software projects that typically are challenged by maintaing and resolving a variety of dependencies in the correct order when compiling a piece of software-
+We found _Make_ to be particularly useful for our purposes for two reasons.
+First, it is language-agnostic, therefore enabling us to map steps not only taken within R but also across different programming languages or other external programs.
+Second, it does implement a simple yet powerful caching mechanism of results which is welcome in computing-intensive analysis often found in neuroimaging or machine learning. 
+That is, Make determines automatically which branches in the dependency graph needs updating when files have changed and does not necessarily recompute or rebuild everything.
 
 Make is build around the concept of computational recipes.
 Like cooking recipes, the dish you want to create is at the top, followed by the necessary ingredients with the procedure at last.
@@ -973,25 +970,26 @@ arrabiata_sauce.csv: cook_sauce.R canned_tomatoes.csv
   Rscript -e 'source("cook_sauce.R")'
 ```
 
-When you cook something, and you have the necessary ingredients already at hand, would you throw it away just to prepare it again?
-Unlikely.
-Make behaves the same.
-If a file already exists, it does not recreate it unnecessarily.
-However, if a requirement is newer than its target, make recreates the target to reflect the updated dependency.
-Therefore, when you update the data file, the analysis is rerun.
-Because Make knows the whole dependency tree, its caching is smarter than many alternatives.
+If a target file already exists, Make only recreates it if necessary.
+If a dependency is newer than its target, make recreates the target to reflect the updated dependency.
+In our case, when we (re)build a manuscript and some dependent data file has changed, the data analysis is automatically rerun.
+This avoids mistakes in the reporting that are due to reports and analyses being out-of-sync.
 
-One alternative that is even smarter than Make is the R package [`targets` [@targets2021]](https://books.ropensci.org/targets/)[^targets].
-`targets` can infer more about your project than Make, because it analysis the R code you write to build the dependency tree.
+<!--
+AP: I suggest to remove this simply because it distracts from our primary tool and we need to shorten
+One alternative that is even smarter (in terms of automatically inferring dependencies) than Make is the R package [`targets` [@targets2021]](https://books.ropensci.org/targets/)[^targets].
+`targets` can infer more about your project than Make, because it analyzes the R code you write to build the dependency tree.
 For this inference to work well, you have to write everything in R, and you have to write everything strictly functional.
 
 [^targets]: https://books.ropensci.org/targets/
+-->
 
 <!--Hands on: Introduce Make-->
 <!--Hands on: Add targets for README.Rmd, preregistration.Rmd -->
 
-The `repro` package can automatically write Makefiles for simple scenarios.
-For this purpose, `repro` utilizes the YAML metadata:
+Writing Makefiles manually is cumbersome for larger projects. 
+Therefore, the `repro` package provides means to automatically write Makefiles for a given R project.
+To this end, `repro` extends the YAML metadata header of R Markdown files. `repro` introduces a new first-level tag `repro:` with second-level tags (`scripts:`, `packages:`, and `data:`) that take lists of dependent files. For example, if an R Markdown document depends on a further file with R code, the header would look like this:
 
 ```
 ---
@@ -1005,32 +1003,32 @@ repro:
 ---
 ```
 
-This command will go through all R Markdown files, and their YAML metadata, in your repository and infer a `Makefile` from them:
+To automatically generate the Makefile, `repro` provides a command that goes through all R Markdown files in the project, parses their YAML metadata, and infers a `Makefile` from them:
 
 ```r
 automate_make()
 ```
 
-The generated `Makefile` automatically contains targets for all R Markdown documents.
-To, for example, generate the `README.md` from the `README.Rmd` you can run:
+The generated `Makefile` automatically contains separate targets for each R Markdown documents.
+The names of the Makefile targets are identical to the Markdown file names.
+For example, to generate the Markdown file `README.md` from the R Markdown `README.Rmd`, you can run:
 
 ```bash
 # this should be run in the terminal
 make README.md
 ```
 
-It is common practice to have a target all, that encompasses all important files of the project as the first target.
-If you do not specify a target, Make defaults to the first target, which is usually `all`.
-`repro` reminds you of that and suggests which file you might want to add to the target `all`.
-You can generally change the `Makefile` anyway you want, e.g. to add targets which are not supported by `repro`.
-After you have done so, you can then run in the terminal:
+It is common practice to name the very first target in a Makefile "all" and have it include all important files of the project.
+If you do not specify a target when calling Make, Make defaults to this first target.
+`repro` reminds you of that common practice and suggests which file you might want to add to the target `all`.
+Thus, if researchers who try to reproduce a given project and are unaware of its potentially various contents, will always build all reproducible artifacts of a repository when calling Make without further arguments:
 
 ```bash
 # this should be run in the terminal
 make
 ```
 
-And it will fully reproduce the project, if you have all required software installed.
+Running this command fully reproduces the entire project -- but only if you have all required software installed. Next, we will describe how `repro` helpts to manage all software dependencies automatically.
 
 ## External Dependencies
 
@@ -1039,11 +1037,11 @@ container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 ```
 
 
-Modern data analysis is only feasible because researchers rely on much external software.
-One downside is that a considerable number of external dependencies may hinder collaboration and long term reproducibility.
+Modern data analysis is only feasible because researchers rely on much external software. 
 The dependency on a single R package may easily create a dependency tree of more than hundred direct or indirect dependencies [@epskamp2019].
+External dependencies are unavoidable but, at the same time, a major threat to long-term reproducibility.
 The critical problem is the fragility of a software setup.
-Many components have to fit perfectly together, and each change, e.g. an update, risks that balance .
+Many components have to fit perfectly together, and each change, e.g. a software update or bug fixe, risks that balance.
 At the same time, software updates are very much necessary to remove errors or improve methodology [@epskamp2019].
 Another problem is that the software environment is also variable and what works on one machine might not work on any other.
 Containers directly address such issues.
@@ -1094,24 +1092,26 @@ automate_docker()
 [^mran]: https://mran.microsoft.com/timemachine
 
 From the `Dockerfile` you can then build an image.
-While you can do so manually we prefer to use Make, see [Internal Dependencies].
-The `Makefile` build by `repro` does contain a recipe for creating the `Dockerfile`.
+While you can do so manually, we suggest to again use Make ( see [Internal Dependencies]).
+The `Makefile` built by `repro` does contain a recipe for creating the `Dockerfile`.
 
 ```bash
 make docker
 ```
 
-The `Makefile` from `repro` does also include a mechanism to send commands conditionally through the Docker container.
-This mechanism is triggered by `DOCKER=TRUE` in the make call:
+Importantly, the `Makefile` created by `repro` includes a mechanism to execute commands in the Docker container instead of locally.
+This mechanism is triggered by the argument `DOCKER=TRUE` appended to any make call. 
+The following call builds all targets inside the container instead of in the local computing environment:
 
 ```bash
 # this should be run in the terminal
 make DOCKER=TRUE
 ```
-The function `automate()` combines `automate_docker()` & `automate_make()`.
 
-You can also manually edit the `Dockerfile` by amending the file `.repro/Dockerfile_manual` to install software beyond R packages.
-Remember to run `repro::automate()` after you made edits to `.repro/Dockerfile_manual`.
+Last, to create or update the container and all Make targets, `repro` provides a single function `automate()` that calls `automate_docker()` and `automate_make()`.
+ 
+You can also manually edit the `Dockerfile` by changing the file `.repro/Dockerfile_manual` to install software other than R packages.
+Remember to run `repro::automate()` every time you made edits to `.repro/Dockerfile_manual`.
 We recommend @wiebelsLeveragingContainersReproducible2021 as a starting point for researcher who want to better understand how they can employ Docker for research.
 
 
@@ -1119,7 +1119,7 @@ We recommend @wiebelsLeveragingContainersReproducible2021 as a starting point fo
 
 ### renv (alternative)
 
-Docker can be a bit unfriendly, because it requires a complicated mental model and some knowledge about how to install software on Linux.
+Setting up and running Docker is not always painless, because it requires a complicated mental model of the underlying virtual computer and, specifically, knowledge about Linux environments.
 An R-focused alternative is the R package [`renv`](https://rstudio.github.io/renv/articles/renv.html)[^renv][@R-renv].
 `renv` isolates all R packages used in a project and records there version as well as the source from where they where installed.
 This mechanism is faster and simpler to use than Docker, at the expense of only tracking R packages.
@@ -1248,23 +1248,23 @@ Also, synthetic data provides an opportunity for readers to test if a project is
 
 # Archival and Dissemination
 
-The open nature of the here proposed workflow does blur the lines between published and unpublished.
-However, even when your Git repository is public, you may want to signify important stages of your project, like preregistration, preprint, submission and acceptance to the journal.
-These milestones deserve to be archived.
-A project is only then properly archived when it is stored at least at two independent storage locations and reproducible from all locations.
-Therefore, you should make extra sure that the project at these points is reproducible.
-To ensure reproducible, you could ask a coworker or collaborator to reproduce the project independently from you.
+In a public repository, you may want to mark important stages of your project, like preregistration, preprint, submission and acceptance at a scientific journal.
+We suggest to archive these milestones individually.
+A reproducible project is only then properly archived when it is stored at least at two independent storage locations and reproducible from all locations. <!--AP citation? -->
+To really make sure that a given project is reproducible, one should aim for an explicit test of reproduction before the project is published. 
+We recommend to check out and reproduce the project in a new directory in a "fresh" environment (in particular, a new R session should be used for this). 
+For maximal validitiy of this test, we suggest to ask a coworker or collaborator to reproduce the project independently from you.
 The sections [Creating a DOI] and [Creating a Release] describe how you can easily create three different openly accessible longterm archived copies of your project.
 
-When you disseminate the paper across more locations than just GitHub it can be ambiguous which version of code and data have created the document (e.g. the manuscript.pdf).
-To create a clear link between the repository version and some end result you can automatically include the hash of the commit.
-Either you use Git from within R:
+When you disseminate multiple versions of a document (e.g., at different stages of a review process), it seems good practice to specify the exact version of code and data used to create a given document (e.g. the final type-set version of a journal article).
+To create a clear link between the repository version and a given end result you can automatically include the unique hash identifying the project state in the git version history.
+<!--Either you use Git from within R:
 
 ```{r}
 system2("git", c("rev-parse",  "--short",  "HEAD"), stdout = TRUE)
 ```
-
-Or you can use the `gert` package:
+-->
+To this end, we use the `gert` package:
 
 ```{r}
 strtrim(gert::git_commit_id(), 7)
@@ -1272,13 +1272,14 @@ strtrim(gert::git_commit_id(), 7)
 
 ## Creating a DOI
 
-The approach we advocate for distributes the research project, e.g. across GitHub, preregistration platforms, the publishers site, and more.
+Typical open research project will have their contents available from multiple sites, e.g. from GitHub, preregistration platforms, preprint servers, or publisher websites. 
+Under these circumstances it is important to provide unique links 
 Digital Object Identifiers (DOI) tie all these locations together under one link [@derisiWhatWhysDOIs2003].
 Not only can a DOI resolve to several locations, several parts of a research project can get their own DOI besides the DOI of the publication.
 This is useful to link or cite a specific part of a research project, such as the preregistration, an illustration in the paper or the data that was gathered.
-The DOI can also contain information about the license of the object it refers to.
+The DOI can also contain information about the license of its target.
 <!-- public releases like preregistration, preprint -->
-zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides doi for these archives.
+zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides DOIs for these archives.
 While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
 Please note that you can only link public GitHub repositories to zenodo.
 You may log into zenodo.org through your GitHub account.
@@ -1287,7 +1288,7 @@ You may log into zenodo.org through your GitHub account.
 
 [^zenodo-github]: https://zenodo.org/account/settings/github/
 
-After you have linked a GitHub repository you trigger the archivation by creating a GitHub release, as described in the next section.
+After you have linked a GitHub repository, you trigger the archival by creating a GitHub release, as described in the next section.
 
 ## Creating a Release
 
@@ -1306,15 +1307,15 @@ You have the opportunity to describe the release in more detail in the accompany
 
 ## Archiving Docker
 
-A valid point of criticism is that this workflow introduces a bulk of software solutions and services that may not be available for long.
-Superficially it relies on R, RStudio, Pandoc, Git, Make, Docker, Homebrew (OS X only) and Chocolaty (Windows only) as software and on GitHub, DockerHub, MRAN and Ubuntu Package Archive as services.
-These many breakpoints can be reduced to one service and one software.
+A central point of criticism is that the proposed workflow introduces a bulk of software solutions and services that may not be available in the long run.
+First and foremost, it relies on R, RStudio, Pandoc, Git, Make, Docker, Homebrew (OS X only) and Chocolaty (Windows only) as software and on GitHub, DockerHub, MRAN and Ubuntu Package Archive as services.
+These many breakpoints can be reduced to a single service and a single piece of software.
 That is because all required software is bundled into the container, whose image can be stored.
 Hence, one needs a storage provider which saves the container image and the other files associated with the project.
-We already recommend to store all project files redundantly (your computer, on GitHub and zenodo.org).
+We already recommend to store all project files redundantly (your computer, a remote git server such as GitHub, and a publicly funded, open-science-compatible service provider such as zenodo.org).
 Building the Docker image from the Dockerfile still requires DockerHub, MRAN, and Ubuntu Package Archive to be online.
-We therefore suggest that you include an already build image into the releases.
-The Makefile generated by `repro` does include a target to facilitate this.
+We therefore suggest that you include an already built image into the releases.
+The Makefile generated by `repro` does include a target to do so.
 To write a compressed image to disk use:
 
 ```bash
@@ -1322,10 +1323,10 @@ To write a compressed image to disk use:
 make save-docker
 ```
 
-Unfortunately, this image can only be used when Docker is installed.
-To remove any software dependency including Docker from the archived project, one can convert the Docker image to a full system image.
-Such system image can subsequently be booted on any personal computer without relying on any software or service and therefore grantees reproducibility for decades to come.
-Currently, `repro` does not facilitate this conversion, but we hope to include this feature soon.
+This image allows anyone with a computer equipped with Docker to reproduce the analysis (if the repository contains all code and data and has no other external dependencies).
+Last, one can convert the Docker image to a full bootable system image.
+Such a system image can subsequently be booted on any personal computer without relying on any software or service and therefore grantees reproducibility for decades to come.
+Currently, `repro` does not yet facilitate this conversion, but we hope to include this feature soon.
 
 <!-- Hands on: add commit hash to results-->
 <!-- Hands on: git tag + github release-->
