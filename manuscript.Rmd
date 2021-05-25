@@ -56,15 +56,17 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 
 # Introduction
 
-The papers aim is twofold.
-First, we want to introduce the reader to a workflow that ensures reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code. 
+Increasingly, scientists openly share their data, materials, and analysis code. Sharing these digital artifacts increases scientific efficiency by enabling researchers to learn from each other, reuse materials, or review published research results. However, making a research project reproducible comes with a variety of challenges and there is a dire need for standards of reproducibility.
+
+This paper has two aims.
+First, we want to introduce the reader to a workflow [see @Peikert2019 for details] that ensures reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code. 
 The research community has long accepted reproducibility as integral to "good scientific practice."
 Often, however, projects can not be reproduced by other research teams, despite the best efforts by the creators.
-We present four reasons that lead to irreproducibility, explain four solutions from the software engineering community that eliminate these and show the researchers how the R package `repro` helps them to implement the solutions.
+We present four common threats to reproducibility and explain how we can address these with a combination of four solutions from the software engineering community. Specifically, we demonstrate how the R package `repro` supports researchers in implementing this solution.
 The second objective is to present an alternative preregistration scheme that builds upon a reproducible workflow, the so-called preregistration as code (PAC), where the researchers write the bulk of the manuscript, including the sections Introduction, Methods, and Results---initially based on simulated data, before they gather data.
 
 This tutorial is aimed at researchers who are willing to make code, data, and materials available and should help them to ensure reproducibility of relevant statistical results.
-While the willingness to share materials is required for reproducing a project it is not sufficient.
+While the willingness to share materials is required for reproducing a project, it is not sufficient.
 For example, @hardwicke2018 attempted to reproduce results from open materials in the journal Cognition. 
 Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
 For 13 articles, at least one outcome could not be reproduced—--even with the original authors' assistance.
@@ -80,9 +82,56 @@ The remainder of this paper is structured along these lines.
 The first part introduces theoretical concepts and software solutions that together form a rigorous reproducibility standard.
 The second part is a tutorial that shows how these software solutions can be easily employed by researchers with the help of the R package `repro`.
 
+After introducing the conceptual building blocks, this tutorial guides the reader through each step of an open research project with an emphasis on guaranteeing reproducibility from the very first step on.
+We have structured the tutorial with a _learning by doing_ approach in mind, such that readers can follow along at their own computers.
+We explicitly encourage readers to try out all R commands for themselves.
+Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R (tested with version `r with(R.version, paste0(major, ".", minor))`).
+To guide the reader through all steps of a research project, we will use a exemplary research question:
+
+> "Is there a mean difference in the personality trait 'Machiavellism' between genders?"
+
+This example serves only didactic purposes and not to derive substantive claims.
+Nevertheless, everything else is kept as close to a real research question as possible.
+
 # Concepts and Software Solutions
 
 <!-- could andreas write this? --->
+We identified the following common threat to reproducibility: <!-- CJ How did you identify these causes? Is this exhaustive?-->
+
+1.	The existence of multiple inconsistent versions of code, data, or both; for example, the dataset could have changed over time because outliers were removed at a later stage, or the analysis code could have been modified during writing of a paper because a bug was removed at some point in time; it may then be unclear, which version of code and data was used to produce some reported set of results.
+2.	Copy-and-paste; for example, often, results are manually copied from a statistical computing language into a text processor; if a given analysis is re-run and results are manually updated in the text processor, this may inadvertently lead to inconsistencies between the reported result and the reproduced result;
+3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order; 
+4.	Code dependencies; for example, a given analysis may depend on a specific version of a specific software package that might not be available on a different computer or no longer exist; or, a different version of the same software may produce different results.
+<!-- CJ 5. Missing steps: Some of the steps are documented (e.g., final analysis), but other steps were conducted manually and not documented (e.g., copy-pasting results from one program to another; reverse coding items on the fly).-->
+
+We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term and cross-platform computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]: <!-- CJ In fact, this is the central message of your paper: "We have developed this new workflow, based on four pillars." I would suggest mentioning this very clearly in the opening paragraph. The opening paragraph should at least:
+1) Introduce the topic area
+2) Introduce the problem/knowledge gap
+3) Introduce how you will fill this knowledge gap-->
+
+1. Version control
+2. Dynamic document creation
+3. Dependency tracking
+4. Software management
+
+In the remainder of this section, we will briefly explain why each of these four building blocks is needed and how it plays a role in guaranteeing reproducibility.
+To resolve ambiguity across multiple versions of code and data that may be come into existence during the development phase of a research project, we recommend the use of a version control system. A version control system
+tracks changes to all project-related files (e.g., materials, data, and code) over time. At a later stage, single files or the entire project can be compared to or reverted to an earlier version. Additional features such as branches allow parallel versions to exist that can be merged later. Specific snapshots of a repository can be marked, such that one can clearly label a given project status as the one that created a given preregistration, a given preprint, or the final authors' version accepted at a journal. Using version control protects against loss of files and also supports remote collaboration with semi-automated tools for tracking and merging changes.
+
+Second, we rely on dynamic document generation. The traditional way of writing a scientific report based on a statistical data analysis uses two separate steps. Dynamic document generation fuses both steps and can be traced back to @knuthCWEBSystemStructured who put it this way: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer." This paradigm has gained popularity with the Sweave approach [@leisch2002sweave] that allowed embedding the data analysis into a TeX document, which then could be dynamically rendered into a final manuscript. As of recently, R Markdown has added to the success of this idea. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
+This way, Markdown does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX), works well with version control systems, and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
+We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
+R Markdown extends regular Markdown by allowing useres you to include R code chunks (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown document.
+Upon rendering of the document, the code blocks are executed and their output is dynamically inserted into the document.
+This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
+
+<!-- TODO Andreas: Internal and externdal dependencies -->
+
+
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
+# file gets downloaded in Makefile
+knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
+```
 
 # Tutorial
 
