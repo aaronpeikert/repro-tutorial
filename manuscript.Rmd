@@ -61,7 +61,7 @@ Sharing these digital artifacts increases scientific efficiency by enabling rese
 However, making a research project reproducible comes with a variety of challenges and there is a dire need for standards of reproducibility.
 
 This paper has two aims.
-First, we want to introduce the reader to a workflow [see @Peikert2019 for details] that ensures reproducibility---defined as the ability to obtain identical results from the *same* data with the *same* computer code. 
+First, we want to introduce the reader to a workflow [see @Peikert2019 for details] that ensures reproducibility---defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code. 
 The research community has long accepted reproducibility as integral to "good scientific practice", because empirical research hinges on its objectivity meaning "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper]
 Often, however, projects can not be reproduced by other research teams, despite the best efforts by the creators.
 We present four common threats to reproducibility and explain how we can address these with a combination of four solutions from the software engineering community.
