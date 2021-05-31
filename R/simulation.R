@@ -1,60 +1,73 @@
-suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(here))
-suppressPackageStartupMessages(library(lavaan))
-suppressPackageStartupMessages(library(furrr))
-
-source(here("R", "simulation_funs.R"))
-# if you have access to a hpc envir specify this in R/hpc.R
-# see https://github.com/aaronpeikert/repro-tutorial/blob/hpc/R/hpc.R
-# or `git checkout hpc R/hpc.R`
-# if no hpc is availible we use local multicore with all available cores
-# to speed up consider reduce nsim; increase nstep ↓↓↓
-
-hpc_config <- here::here("R", "hpc.R")
-if(fs::file_exists(hpc_config)){
-  source(hpc_config)
-} else {
-  plan(list(transparent,
-            tweak(multisession)))
-}
-# debug:
-#   plan(transparent)
-
-nmin <- 100
-nmax <- 10000
-nstep <- 100
-n_sim <- 1000
-seed <- 1234
-n_obs <- seq(nmin, nmax, nstep)
-
-options(scipen = 999)
-
-to_export <- ls_funs() %>% map(get)
-to_export <-
-  c(to_export, list(
-    n_obs = seq(nmin, nmax, nstep),
-    n_sim = n_sim
-  ))
-out_file <- here::here("data", "simulation_results.csv")
-if(!fs::file_exists(out_file)){
-  message("This may take a while! You fit approximately ", n_sim*length(n_obs)*5*2, " SEMs.")
-  res_raw %<-% simulation_study(n_obs, n_sim,
-                                furrr_options(
-                                  globals = to_export,
-                                  seed = seed,
-                                  packages = c("furrr", "lavaan", "tidyverse"),
-                                  scheduling = 10
-                                ))
-  invisible(res_raw)
-  fs::dir_create("data")
-  readr::write_csv(res_raw, here::here("data", "simulation_results.csv"))
-  readr::write_rds(res_raw, here::here("data", "simulation_results.rds"))
+with_lecuyer <- function(seed, code) {
+  withr::with_seed(
+    seed,
+    code,
+    .rng_kind = "L'Ecuyer-CMRG"
+  )
 }
 
-if(fs::file_exists(hpc_config)){
-  list(local = sessioninfo::session_info(),
-       login_node = value(future(sessioninfo::session_info())),
-       worker = value(future(value(future(sessioninfo::session_info())))))
-} else {
-  sessioninfo::session_info()
+generate_seeds <- function(k, seed) {
+  with_lecuyer(
+    seed,
+    purrr::accumulate(seq_len(k), function(x, y) # discard y
+      parallel::nextRNGStream(x), .init = .Random.seed)
+  )
 }
+
+error <- function(i){
+  as.numeric(scale(rnorm(i), scale = FALSE)) # only centered
+}
+
+simulate_data_ <- function(n, df, d, i){
+  stopifnot(n %% 2L == 0L)
+  group <- rep(c(0L, 1L), each = n/2)
+  rand <-  matrix(rchisq(n * i, df/i), ncol = i) # sum of n chisq has df of n*df
+  effect <- rand + d * group
+  colnames(effect) <- stringr::str_c("x", seq_len(i))
+  dplyr::mutate(tibble::as_tibble(effect),
+                group = group)
+}
+
+simulate_data <- function(seed, n, df, d, i = 9, ...){
+  stopifnot(length(list(...)) == 0L)
+  with_lecuyer(seed, simulate_data_(n, df, d, i))
+}
+
+planned_analysis <- function(data){
+  x <- rowMeans(dplyr::select(data, dplyr::starts_with("x")))
+  y <- as.factor(data$group)
+  skew <- moments::skewness(x)
+  rank <- abs(skew) > 1
+  if(rank){
+    x <- rank(x)
+  }
+  test <- t.test(x ~ y)
+  list(test = test, skew = skew, rank = rank, n = length(x))
+}
+
+extract_results <- function(analysis){
+  list(p_value = analysis$test$p.value,
+       skew = analysis$skew)
+}
+
+simulation_study <- function(setup){
+  all_steps <- purrr::compose(extract_results, planned_analysis, simulate_data)
+  out <- dplyr::mutate(setup, results = purrr::pmap(setup, all_steps))
+  #tidyr::unnest(out, results)
+  out
+}
+
+setup <- tidyr::expand_grid(
+  seed = generate_seeds(10, 1002),
+  n = seq(10, 1000, 10),
+  df = 8, # skew = sqrt(8/df)
+  d = seq(0, .5, 0.1)
+)
+
+res <- simulation_study(setup)
+
+test <- res %>% 
+  select(-seed) %>% 
+  group_by(across(-results)) %>% 
+  unnest_wider(results) %>% 
+  summarise(power = mean(p_value < 0.05), .groups = "drop")
