@@ -130,7 +130,7 @@ Using version control protects against loss of files and also supports remote co
 Second, we rely on dynamic document generation.
 The traditional way of writing a scientific report based on a statistical data analysis uses two separate steps which are conducted in two different programs.
 In a word processor the researcher writes the text and in another software they conduct the analysis.
-Both steps are linked by manually copying and pasting results from one software to the other; a process that often produces in inconsistencies [@nuijtenPrevalenceStatisticalReporting2016].
+Both steps are linked by manually copying and pasting results from one software to the other; a process that often produces inconsistencies [@nuijtenPrevalenceStatisticalReporting2016].
 
 Dynamic document generation fuses both steps and can be traced back to @knuthCWEBSystemStructured who put it this way: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
 This paradigm has gained popularity with the Sweave approach [@leisch2002sweave] that allowed embedding the data analysis into a TeX document, which then could be dynamically rendered into a final manuscript.
