@@ -123,7 +123,7 @@ The remainder of this section briefly explains why each of these four building b
 First, to resolve ambiguity across multiple versions of code and data that may be come into existence during the development phase of a research project, we recommend the use of a version control system.
 A version control system tracks changes to all project-related files (e.g., materials, data, and code) over time.
 At a later stage, single files or the entire project can be compared to or reverted to an earlier version.
-Additional features such as branches allow parallel versions to exist that can be merged later.
+Additional features, such as branches, facilitate collaboration.
 Specific snapshots of a repository can be marked, such that one can clearly label a given project status as the one that created a given preregistration, a given preprint, or the final authors' version accepted at a journal.
 Using version control protects against loss of files and also supports remote collaboration with semi-automated tools for tracking and merging changes.
 
@@ -135,7 +135,7 @@ Both steps are linked by manually copying and pasting results from one software 
 Dynamic document generation fuses both steps and can be traced back to @knuthCWEBSystemStructured who put it this way: "The main idea is to regard a program as a communication to human beings rather than as a set of instructions to a computer."
 This paradigm has gained popularity with the Sweave approach [@leisch2002sweave] that allowed embedding the data analysis into a TeX document, which then could be dynamically rendered into a final manuscript.
 As of recently, R Markdown has added to the success of this idea.
-Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
+R Markdown uses Markdown for writing the text, and R (or other programming languages) for the analysis. Markdown is a lightweight text format that is very close to plain text with a minimal subset of reserved symbols for formatting instructions.
 This way, Markdown does not need any specialized software for editing, it is highly fool-proof (unlike for example LaTeX), works well with version control systems, and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
 We suggest to use Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
 R Markdown extends regular Markdown by allowing users to include R code chunks (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown document.
@@ -207,6 +207,28 @@ knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
 
 # Tutorial
 
+A major hurdle for adoption of the before mentioned tools for researchers is that they are typically used through a command line interface (CLI).
+The CLI is vastly more user friendly than its predecessor, the punch card, but many users (including the authors) prefer a graphical user interface (GUI) over text based interactions for most tasks.
+A GUI has the obvious disadvantages for reproducibility, that it requires a user who clicks on the correct buttons in the correct order.
+Depending on the number of steps this is not only much effort but also error prone.
+This tutorial seeks a compromise.
+We use a GUI (and similar helpers) where we can, to create a reproducible workflow but the reproduction of such workflow does not rely on manual steps.
+At several points we rely on or have self developed a CLI that wraps a more complicated (and powerful) CLI.
+These wrapper use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in laymans terms.
+We hope this make reproducibility tools more accessible by enabling untrained users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
+These alternative tools are merely an assistance system and as users get more comfortable they can use the underlying tools directly to solve more complex problems.
+
+One example for such assistance are the check functions from `repro`.
+
+
+
+
+Two properties of CLI tools make them useful but at the same time difficult to learn.
+Many CLI tools are decades old, and are therefore stable, widely used, and widely supported.
+Because of their age they seem archaic and are difficult to use when compared to more modern computer tools.
+These tools are also more powerful than many GUI counterparts, because of their flexibility---many options to change their behavior and composabibility---the output of one, can be the input of another.
+
+
 # Preregistration as Code 
 
 We argue that a preregistration as code (PAC) is an excellent planning tool that offers several benefits over traditional preregistration.
@@ -234,7 +256,7 @@ A preregistration as code offers four advantages over classical preregistration.
 First, a PAC removes any ambiguity regarding the translation of an analysis plan into code.
 Second, despite being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis over the other, i.e. if distributional assumptions are not met, employ robust methods or automated variable selection mechanisms.
-Third, deviations from the preregistration are more explicit because they are reflected in changes to the code a property facilitated by version control.
+Third, deviations from the preregistration are more explicit because they are reflected in changes to the codes a property facilitated by version control.
 Fourth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
 
 # References
