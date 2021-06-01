@@ -144,14 +144,38 @@ This allows the creation of (conditionally) formatted text, statistical results,
 
 One would hope that sharing a literate statistical analysis would allow others (including one own's future self) to simply download and run (ie., reproduce) a given analysis.
 However, as @ argue, in most instances this approach fails.
-In practice, dependencies on external software (such as system libraries or components of the programming language) are frequently unmentioned and the components or packages are not included.
+In practice, dependencies between project files (the raw data was preprocessed) or on external software (such as system libraries or components of the programming language) are frequently unmentioned.
+
+To automatically resolve dependencies between project files we rely on dependency tracking.
+In essence, developers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and in the end a final product.
+Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipe_).
+In the context of a scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results, such as preprocessed data files, simulation results, analysis results).
+
+We recommend to use Make for dependency tracking because it is language independent.
+To make this more concrete, consider the following hypothetical example, in which a research project contains a script to simulate data (`simulate.R`) and a scientific report of the simulation results written in R Markdown (`manuscript.Rmd`).
+A Makefile could then look like this:
+
+```
+manuscript.pdf: manuscript.Rmd simulation_results.csv 
+  Rscript -e 'rmarkdown::render("manuscript.Rmd")'
+
+simulation_results.csv: simulate.R
+  Rscript -e 'source("simulate.R")'
+```
+There are two targets, the final rendered report (`manuscript.pdf`, l.1) and the simulation results (`simulation_results.csv`, l.4).
+Each target is followed by a colon and a list of requirements.
+If a requirement is  newer than the target, the recipe will be executed to rebuild the target.
+If a requirement does not exist, Make seeks to find a recipe to build the requirement first before building the target.
+Here, if one were to build the final `manuscript.pdf` by rendering the R Markdown with the command shown in l.2, Make would make sure that the file `simulation_results.csv` exists; if not, it would find that this is also a target and issue the command in l.5 to run the simulation first before rendering the manuscript.
+This way, we ensure that the simulation is always run before the manuscript is built and that the manuscript is rebuilt if the simulation code was changed.
+
 Troubleshooting  issues specific to a certain programming language or dependent tool typically requires considerable expertise and hinder reproducibility.
 
 ```{r, include=FALSE}
 container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 ```
 
-One solution to this problem is to provide not only the analysis script but all dependent software packages and system libraries in a so-called _container_.
+One solution to problem of exteranal software dependencies is to provide not only the analysis script but all dependent software packages and system libraries in a so-called _container_.
 "By packaging the key elements of the computational  environment  needed  to  run  the  desired  software, [...] they  make the software much easier to use, and the results easier to reproduce [@silverSoftwareSimplified2017].
 Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself.
 The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
@@ -171,28 +195,9 @@ However, they rely on the assumption that all software repositories will remain 
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
 With the `repro`-package adding R packages dependencies is as simple as adding them to the header under the tag `packages:`
 
-The fourth and last concept we rely on is 
-In software projects, tools like the make utility, are used to automatically determine, which pieces of a program need to be recompiled when the source code or dependent libraries are changed and also to issue the commands how to build the final product.
-In essence, developers provide a single _Makefile_, which can be thought of as a collection of computational recipes.
-Similar to a collection of cooking recipes, we can have multiple products (_targets_ in Make speak) with different ingredients (_requirements_) and different steps of preparation (_recipe_).
-In the context of a scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results, such as preprocessed data files, simulation results, analysis results).
-To make this more concrete, consider the following hypothetical example, in which a research project contains a script to simulate data (`simulate.R`) and a scientific report of the simulation results written in R Markdown (`manuscript.Rmd`).
-A Makefile could then look like this:
 
-```
-manuscript.pdf: manuscript.Rmd simulation_results.csv 
-  Rscript -e 'rmarkdown::render("manuscript.Rmd")'
 
-simulation_results.csv: simulate.R
-  Rscript -e 'source("simulate.R")'
-```
 
-There are two targets, the final rendered report (`manuscript.pdf`, l.1) and the simulation results (`simulation_results.csv`, l.4).
-Each target is followed by a colon and a list of requirements.
-If a requirement is  newer than the target, the recipe will be executed to rebuild the target.
-If a requirement does not exist, Make seeks to find a recipe to build the requirement first before building the target.
-Here, if one were to build the final `manuscript.pdf` by rendering the R Markdown with the command shown in l.2, Make would make sure that the file `simulation_results.csv` exists; if not, it would find that this is also a target and issue the command in l.5 to run the simulation first before rendering the manuscript.
-This way, we ensure that the simulation is always run before the manuscript is built and that the manuscript is rebuilt if the simulation code was changed. <!-- AP: I was just wondering... is this true? Is the caching mechanism transitive?-->
 
 To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref{schematic}), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), containerization (using Docker).
 While R Markdown and git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside studies of information technology, which represents a considerable hurdle in the acceptance and implementation of the workflow.
