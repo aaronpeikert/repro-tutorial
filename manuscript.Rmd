@@ -152,7 +152,7 @@ container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 ```
 
 One solution to this problem is to provide not only the analysis script but all dependent software packages and system libraries in a so-called _container_.
-"By packaging the key elements of the computational  environment  needed  to  run  the  desired  software, [...] they  make the software much easier to use, and the results easier to reproduce [@silver2017].
+"By packaging the key elements of the computational  environment  needed  to  run  the  desired  software, [...] they  make the software much easier to use, and the results easier to reproduce [@silverSoftwareSimplified2017].
 Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself.
 The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
 Docker does this without interfering with the already installed software by using a virtual software environment that is independent of the host software environment.
