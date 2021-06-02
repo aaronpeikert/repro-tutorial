@@ -204,7 +204,6 @@ While R Markdown and git are well integrated into the R environment through R St
 To remove this hurdle, we have developed a new R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 In the remainder, we will walk you through a complete research project, from sketching the very first idea over preregistration, data analysis, and submission of a preprint while focusing on how the `repro`-package enables users to maintain reproducibility of all steps.
 
-
 ```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
 # file gets downloaded in Makefile
 knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
@@ -219,14 +218,67 @@ Depending on the number of steps this is not only much effort but also error pro
 This tutorial seeks a compromise.
 We use a GUI (and similar helpers) where we can, to create a reproducible workflow but the reproduction of such workflow does not rely on manual steps.
 At several points we rely on or have self developed a CLI that wraps a more complicated (and powerful) CLI.
-These wrapper use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in laymans terms.
+These wrapper use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in laymans terms and are accessible from within R.
 We hope this make reproducibility tools more accessible by enabling untrained users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
 These alternative tools are merely an assistance system and as users get more comfortable they can use the underlying tools directly to solve more complex problems.
+Please install the package [`gert`](https://github.com/r-lib/gert)[@R-gert] which wraps Git commands and [`repro`](https://github.com/aaronpeikert)[@R-repro] so they can act as assistance systems while you follow the tutorial:
+
+```{r, eval=FALSE}
+install.packages("gert")
+# repro is not on CRAN yet, install from GitHub
+if(!requireNamespace("remotes"))install.packages("remotes")
+remotes::install_github("aaronpeikert/repro")
+```
 
 One example for such assistance are the check functions from `repro`.
+They verify that you indeed have installed and setup the required software for this workflow:
 
+```{r}
+# `package::function()` → use function from package without `library(package)`
+repro::check_git()
+repro::check_make()
+repro::check_docker()
+```
 
+They detect the users system state and explain what this means to the user.
+Sometimes they ask the user to do something, e.g. the following happens if you were a windows user who does not have installed Git:
 
+```{r, include=FALSE}
+opts <- options()
+options(repro.os = "windows",
+        repro.git = FALSE)
+```
+
+```{r}
+check_git()
+```
+
+```{r, include=FALSE}
+options(opts)
+```
+
+Before you continue we ask you to run the above commands to check Git, Make, and Docker.
+If necessary follow the instructions of repro to install them.
+
+The first concept we want to practically apply is version control with Git.
+Git tracks files within one project folder.
+We start by creating such project folder with RStudio:
+
+> File → New Project... → New Directory → Example Repro Template
+
+This creates a project containing an example analysis, but you may use any other template or existing R Project.
+
+To prevent Git from accidentally committing files or you do not want to track you can use the `.gitignore`, for example:
+
+```{r}
+usethis::use_git_ignore("private.md")
+```
+
+We activate Git in any project with:
+
+```{r, eval=FALSE}
+usethis::use_git()
+```
 
 Two properties of CLI tools make them useful but at the same time difficult to learn.
 Many CLI tools are decades old, and are therefore stable, widely used, and widely supported.
@@ -267,6 +319,6 @@ Fourth, the preregistration is merely a development stage of the final manuscrip
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "here", "rticles", "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
+knitr::write_bib(c(.packages(), "repro", "here", "rticles", "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
                  "packages.bib")
 ```
