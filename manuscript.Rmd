@@ -153,8 +153,8 @@ Upon rendering of the document, the code blocks are executed and their output is
 This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
 
 One would hope that sharing a literate statistical analysis would allow others (including one own's future self) to simply download and run (ie., reproduce) a given analysis.
-However, as @ argue, in most instances this approach fails.
-In practice, dependencies between project files (the raw data was preprocessed) or on external software (such as system libraries or components of the programming language) are frequently unmentioned.
+However, while using version control and dynamic document generation are becoming more common @ argue in most instances this approach fails to garuntee reproducibility.
+In practice, dependencies between project files (e.g. the raw data was preprocessed) or on external software (such as system libraries or components of the programming language) are frequently unmentioned.
 
 To automatically resolve dependencies between project files we rely on dependency tracking.
 In essence, developers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and in the end a final product.
@@ -186,7 +186,7 @@ Troubleshooting  issues specific to a certain programming language or dependent 
 container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 ```
 
-One solution to problem of exteranal software dependencies is to provide not only the analysis script but all dependent software packages and system libraries in a so-called _container_.
+One solution to problem of external software dependencies is to provide not only the analysis script but all dependent software packages and system libraries in a so-called _container_.
 "By packaging the key elements of the computational  environment  needed  to  run  the  desired  software, [...] they  make the software much easier to use, and the results easier to reproduce [@silverSoftwareSimplified2017].
 Instead of leaving it to the user which software should be installed how on their computer, Docker provides all software used in an analysis, including the operating system itself.
 The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
