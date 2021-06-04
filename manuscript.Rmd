@@ -216,7 +216,7 @@ The CLI is vastly more user friendly than its predecessor, the punch card, but m
 A GUI has the obvious disadvantages for reproducibility, that it requires a user who clicks on the correct buttons in the correct order.
 Depending on the number of steps this is not only much effort but also error prone.
 This tutorial seeks a compromise.
-We use a GUI (and similar helpers) where we can, to create a reproducible workflow but the reproduction of such workflow does not rely on manual steps.
+We use simpler alternatives including a GUI where we can, to create a reproducible workflow but the reproduction of such workflow does not rely on manual steps.
 At several points we rely on or have self developed a CLI that wraps a more complicated (and powerful) CLI.
 These wrapper use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in laymans terms and are accessible from within R.
 We hope this make reproducibility tools more accessible by enabling untrained users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
@@ -268,13 +268,15 @@ We start by creating such project folder with RStudio:
 
 This creates a project containing an example analysis, but you may use any other template or existing R Project.
 
-To prevent Git from accidentally committing files or you do not want to track you can use the `.gitignore`, for example:
+You can prevent Git from accidentally committing files which you do not want to track with the `.gitignore`, for example:
 
 ```{r}
 usethis::use_git_ignore("private.md")
 ```
 
-We activate Git in any project with:
+Now the file `private.md` will not be committed to Git and therefore will not be made public.
+
+After you have ignored sensitive files (like not yet anonymized data) you can activate Git with:
 
 ```{r, eval=FALSE}
 usethis::use_git()
