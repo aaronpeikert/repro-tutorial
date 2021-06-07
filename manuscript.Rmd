@@ -334,6 +334,20 @@ Fourth, the preregistration is merely a development stage of the final manuscrip
 # References
 
 ```{r, include=FALSE}
-knitr::write_bib(c(.packages(), "repro", "here", "rticles", "gert", "bookdown", "lavaan", "knitr", "targets", "renv", "tidyverse"),
-                 "packages.bib")
+knitr::write_bib(
+  c(
+    .packages(),
+    "repro",
+    "here",
+    "rticles",
+    "gert",
+    "bookdown",
+    "lavaan",
+    "knitr",
+    "targets",
+    "renv",
+    "tidyverse"
+  ),
+  "packages.bib"
+)
 ```
