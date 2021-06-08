@@ -1,10 +1,7 @@
 ---
 title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
 author: Aaron Peikert and Andreas M. Brandmaier 
-output:
-  bookdown::pdf_document2:
-    keep_tex: TRUE
-    toc: FALSE
+output: bookdown::pdf_document2
 repro:
   packages:
     - tidyverse
@@ -102,10 +99,10 @@ Nevertheless, everything else is kept as close to a real research question as po
 
 We identified the following common threat to reproducibility: <!-- CJ How did you identify these causes? Is this exhaustive?-->
 
-1.	The existence of multiple inconsistent versions of code, data, or both; for example, the dataset could have changed over time because outliers were removed at a later stage, or the analysis code could have been modified during writing of a paper because a bug was removed at some point in time; it may then be unclear, which version of code and data was used to produce some reported set of results.
-2.	Copy-and-paste; for example, often, results are manually copied from a statistical computing language into a text processor; if a given analysis is re-run and results are manually updated in the text processor, this may inadvertently lead to inconsistencies between the reported result and the reproduced result;
-3.	Ambiguous order of code execution; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order; 
-4.	Code dependencies; for example, a given analysis may depend on a specific version of a specific software package that might not be available on a different computer or no longer exist; or, a different version of the same software may produce different results.
+1.	**Multiple inconsistent versions of code, data, or both**; for example, the dataset could have changed over time because outliers were removed at a later stage, or the analysis code could have been modified during writing of a paper because a bug was removed at some point in time; it may then be unclear, which version of code and data was used to produce some reported set of results.
+2.	**Copy-and-paste**; for example, often, results are manually copied from a statistical computing language into a text processor; if a given analysis is re-run and results are manually updated in the text processor, this may inadvertently lead to inconsistencies between the reported result and the reproduced result;
+3.	**Ambiguous order of code execution**; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order; 
+4.	**External code dependencies**; for example, a given analysis may depend on a specific version of a specific software package that might not be available on a different computer or no longer exist; or, a different version of the same software may produce different results.
 <!-- CJ 5. Missing steps: Some of the steps are documented (e.g., final analysis), but other steps were conducted manually and not documented (e.g., copy-pasting results from one program to another; reverse coding items on the fly).-->
 
 We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term and cross-platform computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]: <!-- CJ In fact, this is the central message of your paper: "We have developed this new workflow, based on four pillars." I would suggest mentioning this very clearly in the opening paragraph. The opening paragraph should at least:
@@ -149,7 +146,7 @@ Dynamic document generation fuses both steps and can be traced back to @knuthCWE
 Markdown is a lightweight text format in plain text with minimal reserved symbols for formatting instructions.
 This way, Markdown does not need any specialized software for editing.
 It is highly fool-proof (unlike, for example, LaTeX), works well with version control systems, and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
-We suggest using Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles] and presentations[@revealjs]---and even your CV [@vitae].
+We suggest using Markdown for everything, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles], and presentations[@revealjs] or even your CV [@vitae].
 R Markdown extends regular Markdown by allowing users to include R code chunks (in fact, arbitrary computer code; see @riedererChapter15Other) into a Markdown document.
 Upon rendering the document, the code blocks are executed, and their output is dynamically inserted into the document.
 This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
@@ -160,14 +157,14 @@ In practice, dependencies between project files (e.g. the raw data was preproces
 
 To automatically resolve dependencies between project files, we rely on **dependency tracking**.
 In essence, developers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and, in the end, a final product.
-Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipe_).
+Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipes_).
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, analysis results).
 
 We recommend using **Make** for dependency tracking because it is language independent.
 To make this more concrete, consider the following hypothetical example, in which a research project contains a script to simulate data (`simulate.R`) and a scientific report of the simulation results written in R Markdown (`manuscript.Rmd`).
 A Makefile could then look like this:
 
-```
+```{bash, eval=FALSE}
 manuscript.pdf: manuscript.Rmd simulation_results.csv 
   Rscript -e 'rmarkdown::render("manuscript.Rmd")'
 
@@ -208,6 +205,8 @@ This recipe is a textual description of all commands that need to be executed to
 Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image.
 However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
+
+\@ref{schematic}
 
 To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref{schematic}), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), containerization (using Docker).
 While R Markdown and git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside studies of information technology, which represents a considerable hurdle in the acceptance and implementation of the workflow.
