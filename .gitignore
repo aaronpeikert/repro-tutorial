@@ -19,3 +19,4 @@ apa7.csl
 *.tex
 *.tar.gz
 temp.bib
+*.log
