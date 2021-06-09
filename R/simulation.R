@@ -37,12 +37,13 @@ planned_analysis <- function(data){
   x <- rowMeans(dplyr::select(data, dplyr::starts_with("x")))
   y <- as.factor(data$group)
   skew <- moments::skewness(x)
-  rank <- abs(skew) > 1
-  if(rank){
+  # skewness cutoff
+  use_rank <- abs(skew) > 1
+  if(use_rank){
     x <- rank(x)
   }
   test <- t.test(x ~ y)
-  list(test = test, skew = skew, rank = rank, n = length(x))
+  list(test = test, skew = skew, use_rank = use_rank, n = length(x))
 }
 
 extract_results <- function(analysis){
