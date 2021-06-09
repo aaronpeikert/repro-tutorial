@@ -341,11 +341,6 @@ After you have ignored sensitive files (like not yet anonymized data) you can ac
 usethis::use_git()
 ```
 
-Two properties of CLI tools make them useful but at the same time difficult to learn.
-Many CLI tools are decades old, and are therefore stable, widely used, and widely supported.
-Because of their age they seem archaic and are difficult to use when compared to more modern computer tools.
-These tools are also more powerful than many GUI counterparts, because of their flexibility---many options to change their behavior and composabibility---the output of one, can be the input of another.
-
 # Preregistration as Code 
 
 We argue that a preregistration as code (PAC) is an excellent planning tool that offers several benefits over traditional preregistration.
