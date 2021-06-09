@@ -121,7 +121,7 @@ The second objective is to present an alternative preregistration scheme that bu
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalised to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
-This tutorial aims at researchers who are willing to make code, data, and materials available and should help them ensure the reproducibility of relevant statistical results.
+This tutorial aims at researchers who are willing to make all code, data, and materials---publicly or on request---available and should help them ensure the reproducibility of relevant statistical results.
 While the willingness to share materials is required for reproducing a project, it is not sufficient.
 For example, @hardwicke2018 attempted to reproduce results from open materials in the journal Cognition. 
 Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
