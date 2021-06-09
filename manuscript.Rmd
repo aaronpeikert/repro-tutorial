@@ -1,5 +1,5 @@
 ---
-title: A Hitchhiker's Guide to Reproducible Research
+title: A Hitchhiker's Guide to Reproducible Research in R
 author:
   - name: Aaron Peikert
     affil: 1, *
