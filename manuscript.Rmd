@@ -285,9 +285,8 @@ Please install the package [`gert`](https://github.com/r-lib/gert)[@R-gert] whic
 
 ```{r, eval=FALSE}
 install.packages("gert")
-# repro is not on CRAN yet, install from GitHub
-if(!requireNamespace("remotes"))install.packages("remotes")
-remotes::install_github("aaronpeikert/repro")
+# repro is not on CRAN yet
+install.packages('repro', repos = 'https://aaronpeikert.r-universe.dev')
 ```
 
 One example for such assistance are the check functions from `repro`.
