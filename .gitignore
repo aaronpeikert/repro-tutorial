@@ -18,3 +18,5 @@ apa7.csl
 *.rds
 *.tex
 *.tar.gz
+temp.bib
+*.log

@@ -1,7 +1,63 @@
 ---
-title: "A Hitchhiker's Guide to Reproducible Research" # replace with something serious
-author: Aaron Peikert and Andreas M. Brandmaier 
-output: bookdown::pdf_document2
+title: A Hitchhiker's Guide to Reproducible Research
+author:
+  - name: Aaron Peikert
+    affil: 1, *
+    orcid: 0000-0001-7813-818X
+  - name: Caspar J. Van Lissa
+    affil: 2, 3
+    orcid: 0000-0002-0808-5024
+  - name: Andreas M. Brandmaier
+    affil: 1, 4
+    orcid: 0000-0001-8765-6982
+affiliation:
+  - num: 1
+    address: |
+      Center for Lifespan Psychology---Max Planck Institute for Human Development
+      Lentzeallee 94, 14195 Berlin, Germany
+  - num: 2
+    address: |
+      Department of Methodology & Statistics---Utrecht University faculty of Social and Behavioral Sciences, Utrecht, Netherlands
+  - num: 3
+    address: |
+      Open Science Community Utrecht, Utrecht, Netherlands
+  - num: 4
+    address: |
+      Max Planck UCL Centre for Computational Psychiatry and Ageing Research
+      Berlin, Germany and London, UK
+# firstnote to eighthnote
+correspondence: |
+  peikert@mpib-berlin.mpg.de
+journal: psych
+type: tutorial
+status: submit
+bibliography: temp.bib
+appendix: appendix.tex
+simplesummary: |
+  A Simple summary goes here.
+abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
+keywords: |
+  keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
+  to the article, yet reasonably common within the subject discipline.).
+acknowledgement: |
+  All sources of funding of the study should be disclosed. Please clearly 
+  indicate grants that you have received in support of your research work. 
+  Clearly state if you received funds for covering the costs to publish in open 
+  access.
+authorcontributions: |
+  For research articles with several authors, a short paragraph specifying their 
+  individual contributions must be provided. The following statements should be 
+  used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the 
+  experiments; X.X. and Y.Y. analyzed the data; W.W. contributed 
+  reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
+  limited to those who have contributed substantially to the work reported.
+conflictsofinterest: |
+  The authors declare no conflict of interest.
+abbreviations:
+  - short: GUI
+    long: Graphical User Interface
+  - short: CLI
+    long: Comand Line Interface
 repro:
   packages:
     - tidyverse
@@ -24,15 +80,13 @@ repro:
     - R/simulation.R
     - R/simulation_funs.R
     - R/link.R
-csl: apa7.csl
-numbered_headings: true
-bibliography: ["references.bib", "packages.bib"]
-abstract: "`r tryCatch(trimws(readr::read_file('abstract.Rmd')))`"
+output:
+  bookdown::markdown_document2:
+    base_format: rticles::mdpi_article
+header-includes:
+   - \usepackage[labelformat=empty]{caption}
 ---
 
-<!-- the HTML comments, like this one, are meta comments, mainly describing the intent --->
-<!-- each sentence below a heading summarizes what I want to say there --->
-<!-- "Hands-on:" means concrete practical application, they roughly proceed from easy/familiar to hard/unfamiliar-->
 
 ```{r setup, include=FALSE}
 library(repro)
@@ -65,7 +119,7 @@ We present four common threats to reproducibility and explain how we can address
 Specifically, we demonstrate how the R package `repro` supports researchers in implementing this solution.
 The second objective is to present an alternative preregistration scheme that builds upon a reproducible workflow, the so-called preregistration as code (PAC), where the researchers write the bulk of the manuscript, including the sections Introduction, Methods, and Results---initially based on simulated data, before they gather data.
 
-[^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalised to inter-subjective criticism (Footnote *¹, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
+[^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalised to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
 This tutorial aims at researchers who are willing to make code, data, and materials available and should help them ensure the reproducibility of relevant statistical results.
 While the willingness to share materials is required for reproducing a project, it is not sufficient.
@@ -119,7 +173,6 @@ The remainder of this section briefly explains why each of these four building b
 
 First, to resolve ambiguity across multiple versions of code and data that come into existence during the development phase of a research project, we recommend using a **version control** system.
 Version control allows a clear link between which results were generated by which version of code and data.
-
 A version control system tracks changes to all project-related files (e.g., materials, data, and code) over time.
 At a later stage, single files or the entire project can be compared to or reverted to an earlier version.
 A version-controlled project makes the loss of files unlikely and also supports remote collaboration.
@@ -206,16 +259,14 @@ Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial
 However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
 
-\@ref{schematic}
-
-To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref{schematic}), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), containerization (using Docker).
+To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), containerization (using Docker).
 While R Markdown and git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside studies of information technology, which represents a considerable hurdle in the acceptance and implementation of the workflow.
 To remove this hurdle, we have developed a new R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 In the remainder, we will walk you through a complete research project, from sketching the very first idea over preregistration, data analysis, and submission of a preprint while focusing on how the `repro`-package enables users to maintain reproducibility of all steps.
 
 ```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
 # file gets downloaded in Makefile
-knitr::include_graphics("images/nutshell.svg", auto_pdf = TRUE)
+knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 ```
 
 # Tutorial
@@ -296,7 +347,6 @@ Many CLI tools are decades old, and are therefore stable, widely used, and widel
 Because of their age they seem archaic and are difficult to use when compared to more modern computer tools.
 These tools are also more powerful than many GUI counterparts, because of their flexibility---many options to change their behavior and composabibility---the output of one, can be the input of another.
 
-
 # Preregistration as Code 
 
 We argue that a preregistration as code (PAC) is an excellent planning tool that offers several benefits over traditional preregistration.
@@ -344,6 +394,7 @@ knitr::write_bib(
     "renv",
     "tidyverse"
   ),
-  "packages.bib"
+  here("packages.bib")
 )
+cat(c(readLines(here::here("packages.bib")), "\n", readLines(here::here("references.bib"))), sep = "\n", file = "temp.bib")
 ```
