@@ -316,7 +316,9 @@ check_git()
 options(opts)
 ```
 
-Before you continue we ask you to run the above commands to check Git, Make, and Docker.
+The messages emitted by `repro` and other packages we present try to take the user by the hand to help them solve problems.
+This tutorial describes steps that we expect apply to all users, the messages from the packages fill the gap to your specific situation and extend the tutorial in this way.
+Before you continue, we ask you to run the above commands to check Git, Make, and Docker.
 If necessary follow the instructions of repro to install them.
 
 The first concept we want to practically apply is version control with Git.
