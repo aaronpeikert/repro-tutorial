@@ -271,16 +271,16 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 
 # Tutorial
 
-A major hurdle for adoption of the before mentioned tools for researchers is that they are typically used through a command line interface (CLI).
-The CLI is vastly more user friendly than its predecessor, the punch card, but many users (including the authors) prefer a graphical user interface (GUI) over text based interactions for most tasks.
-A GUI has the obvious disadvantages for reproducibility, that it requires a user who clicks on the correct buttons in the correct order.
-Depending on the number of steps this is not only much effort but also error prone.
+A significant hurdle for adopting the before-mentioned tools for researchers is that they are typically used through a command-line interface (CLI).
+The CLI is vastly more user friendly than its predecessor, the punch card, but many users (including the authors) prefer a graphical user interface (GUI) over text-based interactions for most tasks.
+A GUI has the apparent disadvantages for reproducibility that it requires a user who clicks on the correct buttons in the correct order.
+Depending on the number of steps, this is not only much effort but also error-prone.
 This tutorial seeks a compromise.
-We use simpler alternatives including a GUI where we can, to create a reproducible workflow but the reproduction of such workflow does not rely on manual steps.
-At several points we rely on or have self developed a CLI that wraps a more complicated (and powerful) CLI.
-These wrapper use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in laymans terms and are accessible from within R.
-We hope this make reproducibility tools more accessible by enabling untrained users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
-These alternative tools are merely an assistance system and as users get more comfortable they can use the underlying tools directly to solve more complex problems.
+We use simpler alternatives, including a GUI where we can, to create a reproducible workflow, but the reproduction of such workflow does not rely on manual steps.
+At several points, we rely on or have self-developed a CLI that wraps a more complicated (and powerful) CLI.
+These wrappers use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in layman's terms and are accessible from within R.
+We hope this makes reproducibility tools more accessible by enabling untrained users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
+These alternative tools are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
 Please install the package [`gert`](https://github.com/r-lib/gert)[@R-gert] which wraps Git commands and [`repro`](https://github.com/aaronpeikert)[@R-repro] so they can act as assistance systems while you follow the tutorial:
 
 ```{r, eval=FALSE}
@@ -299,7 +299,7 @@ repro::check_make()
 repro::check_docker()
 ```
 
-They detect the users system state and explain what this means to the user.
+They detect the users' system state and explain what this means to the user.
 Sometimes they ask the user to do something, e.g. the following happens if you were a windows user who does not have installed Git:
 
 ```{r, include=FALSE}
@@ -317,11 +317,11 @@ options(opts)
 ```
 
 The messages emitted by `repro` and other packages we present try to take the user by the hand to help them solve problems.
-This tutorial describes steps that we expect apply to all users, the messages from the packages fill the gap to your specific situation and extend the tutorial in this way.
+This tutorial describes steps that we expect to apply to all users; the messages from the packages fill the gap to your specific situation and extend the tutorial in this way.
 Before you continue, we ask you to run the above commands to check Git, Make, and Docker.
-If necessary follow the instructions of repro to install them.
+If necessary, follow the instructions of repro to install them.
 
-The first concept we want to practically apply is version control with Git.
+The first concept we want to apply practically is version control with Git.
 Git tracks files within one project folder.
 We start by creating such project folder with RStudio:
 
@@ -329,42 +329,42 @@ We start by creating such project folder with RStudio:
 
 This creates a project containing an example analysis, but you may use any other template or existing R Project.
 
-You can prevent Git from accidentally committing files which you do not want to track with the `.gitignore`, for example:
+You can prevent Git from accidentally committing files that you do not want to track with the `.gitignore`, for example:
 
 ```{r, eval=FALSE}
 usethis::use_git_ignore("private.md")
 ```
 
-Now the file `private.md` will not be committed to Git and therefore will not be made public.
+Now the file `private.md` will not be committed to Git and will not be made public.
 
-After you have ignored sensitive files (like not yet anonymized data) you can activate Git with:
+After you have ignored sensitive files (like not yet anonymized data), you can activate Git with:
 
 ```{r, eval=FALSE}
 usethis::use_git()
 ```
 
-If you made changes to a file you have to stage and then commit these changes.
+If you made changes to a file, you have to stage and then commit these changes.
 The easiest way is to use the RStudio Git pane.
-You click on the empty box next to the file you want to stage and when a tick appears the file is staged.
-After you have staged all files you want click on the commit button, explain curtly why you made those changes in a commit message and then click on commit.
+You click on the empty box next to the file you want to stage, and when a tick appears, the file is staged.
+After you have staged all files you want, click on the commit button, explain curtly why you made those changes in a commit message and then click on commit.
 
 The files you created and the changes you made still have not left your computer.
-To backup and share the files, you can publicly upload those changes to GitHub with:
+To back up and share the files, you can publicly upload those changes to GitHub with:
 
 ```{r, eval=FALSE}
 usethis::use_github()
 ```
 
-Depending on your computer configuration this may ask to setup a secure connection to GitHub.
+Depending on your computer configuration, this may ask to set up a secure connection to GitHub.
 
-If you are not yet ready to share you project publicly use:
+If you are not yet ready to share your project publicly use:
 
 ```{r, eval=FALSE}
 usethis::use_github(private = TRUE)
 ```
 
-Now that you have created a project that is under version control we turn to dynamic document generation.
-Three aspects are important to understand a dynamic document:
+Now that you have created a project that is under version control, we turn to dynamic document generation.
+Three aspects are essential to understand a dynamic document:
 
 1. Text
 2. Code
@@ -387,7 +387,7 @@ To do list:
 * spend time with family
 ```
 
-Code is separated by three backtics and the programming language in curly braces like here:
+Code is separated by three backticks (and the programming language in curly braces) like here:
 
 ````markdown
 This is normal text, written in Markdown.
@@ -398,9 +398,9 @@ This is normal text, written in Markdown.
 ```
 ````
 
-Now that you know how to write text and R code in an RMarkdown the only thing you need to know about is metadata, like the title or the output format.
+Now that you know how to write text and R code in an RMarkdown, you need to know about metadata, like the title or the output format.
 
-Metadata are placed at the beginning of the document and are seperated by three dashes; the following example is a full markdown document where the header is in lines 1-6.
+Metadata are placed at the beginning of the document and are separated by three dashes; the following example is a full markdown document where the header is in lines 1-6.
 
 ````markdown
 ---
@@ -425,8 +425,8 @@ t.test(extra ~ group, data = sleep)
 ```
 ````
 
-Most of the metadata fields are self explanatory (like the author field) but any package may use the metadata for their purposes.
-Often, for example, does a specific output format require more metadata i.e. the `rticles`-package for authoring scientific manuscripts.
+Most metadata fields are self-explanatory (like the author field), but any package may use the metadata for their purposes.
+Often, for example, does a specific output format require more metadata, i.e. the `rticles`-package for authoring scientific manuscripts.
 RMarkdown was extended to hundreds of document formats which are often highly configurable by their metadata.
 The `repro` package uses the metadata, not to change the output, but to make the document more reproducible, simply by listing resources, i.e., scripts, data, and packages, your document depends on.
 
