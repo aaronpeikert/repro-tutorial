@@ -329,7 +329,8 @@ We start by creating such project folder with RStudio:
 
 This creates a project containing an example analysis, but you may use any other template or existing R Project.
 
-You can prevent Git from accidentally committing files that you do not want to track with the `.gitignore`, for example:
+You can prevent Git from accidentally committing files that you do not want to track with the `.gitignore` file.
+You can add something to the `.gitignore` file directly or with this command:
 
 ```{r, eval=FALSE}
 usethis::use_git_ignore("private.md")
@@ -355,7 +356,7 @@ To back up and share the files, you can publicly upload those changes to GitHub 
 usethis::use_github()
 ```
 
-Depending on your computer configuration, this may ask to set up a secure connection to GitHub.
+Depending on your computer configuration, this may ask to set up a secure connection to GitHub. In this case first follow its suggestions.
 
 If you are not yet ready to share your project publicly use:
 
@@ -398,9 +399,7 @@ This is normal text, written in Markdown.
 ```
 ````
 
-Now that you know how to write text and R code in an RMarkdown, you need to know about metadata, like the title or the output format.
-
-Metadata are placed at the beginning of the document and are separated by three dashes; the following example is a full markdown document where the header is in lines 1-6.
+Now that you know how to write text and R code in an RMarkdown, you need to know about metadata, like the title or the output format. Metadata are placed at the beginning of the document and are separated by three dashes; the following example is a full markdown document where the header is in lines 1-6.
 
 ````markdown
 ---
@@ -428,7 +427,7 @@ t.test(extra ~ group, data = sleep)
 Most metadata fields are self-explanatory (like the author field), but any package may use the metadata for their purposes.
 Often, for example, does a specific output format require more metadata, i.e. the `rticles`-package for authoring scientific manuscripts.
 RMarkdown was extended to hundreds of document formats which are often highly configurable by their metadata.
-The `repro` package uses the metadata, not to change the output, but to make the document more reproducible, simply by listing resources, i.e., scripts, data, and packages, your document depends on.
+The `repro` package uses the metadata, not to change the output, but to make the document more reproducible, simply by listing resources, i.e., scripts, data, and packages, your document depends on, in the following format:
 
 ```markdown
 ---
@@ -453,7 +452,7 @@ This information makes internal dependencies to other files in the project and e
 In day-to-day work the simplest solution is to use the function `repro::automate()` which both infers a Makefile and a Dockerfile from all RMarkdown  (all files with the ending `.Rmd`) and there respective repro metadata.
 Every time you change the `repro`-metadata, change the output format, or add a new RMarkdown, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
 The function `repro::automate()` does not overwrite manual changes, and there is no harm in running it too often.
-Besides, the Makefile and the Dockerfile repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git.
+Besides the main Makefile and the Dockerfile repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git.
 
 When you or people who received your project from GitHub want to reproduce the project, they can ask repro to explain how this should be done:
 
@@ -469,14 +468,18 @@ As explained above, repro is merely a simplified interface.
 These simplifications are possible because of two restrictions.
 First, the project can only rely on R packages for the Dockerfile and second, it can have no multilayered preprocessing for the Makefile.
 Lifting these restrictions requires the user to interact more directly with Make or Docker.
-Hence, it is necessary to understand what these commands do to satisfy more complicated requirements because then you need to understand how repro structures its interaction with Make and Docker.
+To satisfy more complicated requirements users need to understand how repro utilizes Make and Docker internally.
 
-Let us dissect the command for reproducing a repro project: `make docker && make -B DOCKER=TRUE`.
+Let us dissect the command for reproducing a repro project: `make docker && make -B DOCKER=TRUE`; it consists of two steps.
+First it virtually recreates the software environment and then it executes computational recipes in the virtual software environment.
+The first step is represented by the command `make docker`.
 The command `make docker` will trigger Make to build the target `docker`.
 The recipe for this target builds an image from your Dockerfile.
-The `&&` combines two commands in one line.
-The call `make` without any explicit target will build the Make target `all`, where the flag `-B` means that Make will consider all prerequisites as outdated and hence will rebuild everything.
-repro constructs Make targets so that if you supply `DOCKER=TRUE` they are executed within the Docker image of the project.
+The `&&` only runs the second command if the first was successful.
+The second step is again a call to Make in the form of `make -B DOCKER=TRUE` with three noteworthy properties.
+First, a call to `make` without any explicit target will build the Make target `all`.
+Second, the flag `-B` means that Make will consider all prerequisites as outdated and hence will rebuild everything.
+Third, repro constructs Make targets so that if you supply `DOCKER=TRUE` they are executed within the Docker image of the project.
 
 # Preregistration as Code 
 
