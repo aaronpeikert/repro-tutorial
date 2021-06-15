@@ -448,11 +448,35 @@ repro:
 ---
 ```
 
-These information make internal dependencies to other files in the project and external dependencies to R packages explicit.
-`repro` can use these information to infer a Makefile for the dependencies on other files and a Dockerfile that includes all required packages.
-In day-to-day work the simplest solution is to use the function `repro::automate()` which both infers a Makefile and a Dockerfile from all RMarkdown files (all files with the ending `.Rmd`).
-Everytime you changed the `repro`-metadata, change the output format, or add a new RMarkdown, the Makefile and Dockerfile are potentially outdated and you should run `repro::automate()` to keep them up to date.
-The function `repro::automate()` does not overwrite manual changes and there is no harm in running it too often.
+This information makes internal dependencies to other files in the project and external dependencies to R packages explicit.
+`repro` can use this information to infer a Makefile for the dependencies on other files and a Dockerfile that includes all required packages.
+In day-to-day work the simplest solution is to use the function `repro::automate()` which both infers a Makefile and a Dockerfile from all RMarkdown  (all files with the ending `.Rmd`) and there respective repro metadata.
+Every time you change the `repro`-metadata, change the output format, or add a new RMarkdown, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
+The function `repro::automate()` does not overwrite manual changes, and there is no harm in running it too often.
+Besides, the Makefile and the Dockerfile repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git.
+
+When you or people who received your project from GitHub want to reproduce the project, they can ask repro to explain how this should be done:
+
+```{r}
+repro::rerun()
+```
+
+However, users do not have to have repro installed, in fact, they do not even need R installed. 
+The two Make commands `make docker` and `make -B DOCKER=TRUE` together with an installation of Make and Docker are sufficient.
+They can be pasted into a terminal and will reproduce the project in many cases.
+Some projects, however, are not as easy to make reproducible.
+As explained above, repro is merely a simplified interface.
+These simplifications are possible because of two restrictions.
+First, the project can only rely on R packages for the Dockerfile and second, it can have no multilayered preprocessing for the Makefile.
+Lifting these restrictions requires the user to interact more directly with Make or Docker.
+Hence, it is necessary to understand what these commands do to satisfy more complicated requirements because then you need to understand how repro structures its interaction with Make and Docker.
+
+Let us dissect the command for reproducing a repro project: `make docker && make -B DOCKER=TRUE`.
+The command `make docker` will trigger Make to build the target `docker`.
+The recipe for this target builds an image from your Dockerfile.
+The `&&` combines two commands in one line.
+The call `make` without any explicit target will build the Make target `all`, where the flag `-B` means that Make will consider all prerequisites as outdated and hence will rebuild everything.
+repro constructs Make targets so that if you supply `DOCKER=TRUE` they are executed within the Docker image of the project.
 
 # Preregistration as Code 
 
