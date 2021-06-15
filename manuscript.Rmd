@@ -108,7 +108,7 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 # Introduction
 
 Increasingly, scientists openly share their data, materials, and analysis code.
-Sharing these digital artefacts increases scientific efficiency by enabling researchers to learn from each other, reuse materials, or review published research results.
+Sharing these digital artefacts increases scientific efficiency by enabling researchers to learn from each other, reuse materials, or review published research results, but only if these artifacts are reproducible.
 However, making a research project reproducible comes with a variety of challenges, and there is a dire need for reproducibility standards.
 
 This paper has two aims.
@@ -117,7 +117,7 @@ The research community has long accepted reproducibility as integral to "good sc
 Often, however, projects can not be reproduced by other research teams, despite the best efforts by the creators.
 We present four common threats to reproducibility and explain how we can address these with a combination of four solutions from the software engineering community.
 Specifically, we demonstrate how the R package `repro` supports researchers in implementing this solution.
-The second objective is to present an alternative preregistration scheme that builds upon a reproducible workflow, the so-called preregistration as code (PAC), where the researchers write the bulk of the manuscript, including the sections Introduction, Methods, and Results---initially based on simulated data, before they gather data.
+The second objective is to present an alternative preregistration scheme that builds upon a reproducible workflow, the so-called preregistration as code (PAC), where the researchers write the complete analysis as code and the bulk of the manuscript, including the sections Introduction, Methods, and Results---initially based on simulated data, before they gather data.
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalised to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
@@ -129,8 +129,9 @@ For 13 articles, at least one outcome could not be reproduced—--even with the 
 @obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available.
 The authors could execute only 31 of the scripts without error and reproduce the results of only 21 articles (within a reasonable time).
 
-Even though transparency has increased across scholarly disciplines (that is, data and methods are increasingly openly shared), most of these open repositories do not provide sufficient information to reproduce relevant computational and statistical results.
 These failed attempts to reproduce highlight the need for widely accepted reproducibility standards.
+These open repositories do not routinely provide sufficient to reproduce relevant computational and statistical results.
+We argue that the research community could benefit more from the increased transparency across scholarly disciplines (that is, data and methods are increasingly openly shared), if more projects could be reproduced.
 To increase the proportion of reproducible projects, such reproducibility standard has to balance the trade-off between being rigorous and being easy to use.
 A rigorous standard increases the likelihood of any individual project to be actually reproducible.
 An easy to use standard, on the other hand, is more likely to be employed across many research projects.
@@ -144,7 +145,7 @@ We explicitly encourage readers to try out all R commands for themselves.
 Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R (tested with version `r with(R.version, paste0(major, ".", minor))`).
 To guide the reader through all steps of a research project, we will use an exemplary research question:
 
-> "Is there a mean difference in the personality trait 'Machiavellism' between genders?"
+> "Is there a mean difference in the personality trait 'Machiavellism' between self identified females and males?"
 
 This example serves only didactic purposes and not to derive substantive claims.
 Nevertheless, everything else is kept as close to a real research question as possible.
@@ -209,7 +210,7 @@ However, while version control and dynamic document generation are becoming more
 In practice, dependencies between project files (e.g. the raw data was preprocessed) or on external software (such as system libraries or components of the programming language) are frequently unmentioned.
 
 To automatically resolve dependencies between project files, we rely on **dependency tracking**.
-In essence, developers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and, in the end, a final product.
+In essence, researchers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and, in the end, a final product.
 Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipes_).
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, analysis results).
 
@@ -272,7 +273,7 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 # Tutorial
 
 A significant hurdle for adopting the before-mentioned tools for researchers is that they are typically used through a command-line interface (CLI).
-The CLI is vastly more user friendly than its predecessor, the punch card, but many users (including the authors) prefer a graphical user interface (GUI) over text-based interactions for most tasks.
+The CLI predates and coexists with graphical user interfaces (GUIs) which many users (including the authors) prefer over the text-based interactions of a CLI for most tasks.
 A GUI has the apparent disadvantages for reproducibility that it requires a user who clicks on the correct buttons in the correct order.
 Depending on the number of steps, this is not only much effort but also error-prone.
 This tutorial seeks a compromise.
