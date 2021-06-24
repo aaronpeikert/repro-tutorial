@@ -116,16 +116,17 @@ In contemporary research, reproducibility can be defined as the ability of anyon
 Unfortunately, despite increasing commitment to open science practices, many projects can not yet be reproduced by other research teams.
 This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges, and there is a dire need for reproducibility standards.
 
-This paper has two aims.
-First, we want to introduce the reader to a workflow that ensures reproducibility [see @Peikert2019 for details]. 
-<!--Second? This is really a different point than introducing the workflow-->We present four common threats to reproducibility and explain how we can address these with a combination of four solutions from the software engineering community.
-<!-- Third? -->Specifically, we demonstrate how the R package `repro` supports researchers in implementing this solution.
-<!-- Not sure if this belongs in the present paper. If it does, then I wouldn't introduce it as a separate goal. Instead, I would say something like: The present paper introduces the reader to a workflow that ensures reproducibility by building on several technical solutions originating in the software engineering community. We show how these solutions address several common threats to reproducibility, and enable novel solutions further enhancing the open science workflow, such as 'preregistration as code'.  -->The second objective is to present an alternative preregistration scheme that builds upon a reproducible workflow, the so-called preregistration as code (PAC), where the researchers write the complete analysis as code and the bulk of the manuscript, including the sections Introduction, Methods, and Results---initially based on simulated data, before they gather data.
-This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project, and are willing to make relevant code, data, and materials available; whether publicly or on request.
+This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
+We pursue two aims.
+First, the present paper introduces the reader to a workflow that ensures reproducibility by building on several technical solutions originating in the software engineering community that eliminate four common threats to reproducibility [see @Peikert2019 for details].
+Specifically, we demonstrate how the R package `repro` supports researchers in implementing these solutions.
+The second objective is to discuss opportunities of such workflow to improve not only how research outputs are created and recreated but also how research itself is conducted.
+One such opportunity is an alternative preregistration scheme that builds upon a reproducible workflow, the so-called preregistration as code (PAC), where the researchers write the complete analysis as code and the bulk of the manuscript as dynamic document, including the sections Introduction, Methods, and Results---initially based on simulated data, before they gather data.
+This dynamic document which closely resembles an actual journal article but with "fake" results and without discussion of results, then serves as preregistration.
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalised to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
-While the willingness to share materials is required for reproducing a project, it is not sufficient.<!-- This sounds like the start of a new paragraph-->
+While the willingness to share materials is required for reproducing a project, it is not sufficient.
 For example, @hardwicke2018 attempted to reproduce results from open materials in the journal Cognition. 
 Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
 For 13 articles, at least one outcome could not be reproduced—--even with the original authors' assistance.
@@ -142,7 +143,6 @@ The remainder of this paper is structured along these lines.
 The first part introduces theoretical concepts and software solutions that together form a rigorous reproducibility standard.
 The second part is a tutorial that shows how these software solutions can be easily employed by researchers with the help of the R package `repro`.
 
-After introducing the conceptual building blocks, this tutorial guides the reader through each step of an open research project, <!--What does this mean? Isn't the whole paper about reproducibility?-->emphasising guaranteeing reproducibility from the very first step on.
 We have structured the tutorial with a _learning by doing_ approach in mind, such that readers can follow along at their own computers.
 We explicitly encourage readers to try out all R commands for themselves.
 Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R (tested with version `r with(R.version, paste0(major, ".", minor))`).
