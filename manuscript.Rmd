@@ -109,8 +109,8 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 # Introduction
 
 Increasingly, scientists openly share their data, materials, and analysis code.
-Sharing these digital artefacts <!-- consider using the term 'research output' instead, as digital artefacts might be unnecessarily technical-->increases scientific efficiency by enabling researchers to learn from each other, reuse materials, or review published research results, but only if these artifacts are reproducible<!--Does this last statement apply to data and materials? Reproducible materials?-->.
-<!-- Suggest adding sentence: The technology is now available to make all artefacts related to a research project available in such a way that the project can be reproduced with minimal effort. --> 
+Sharing the digital research output increases scientific efficiency by enabling researchers to learn from each other, reuse materials, or review published research results, but only if these artifacts are reproducible.
+The technology is now available to make all artefacts related to a research project available so that the project can be reproduced with minimal effort.
 Reproducibility has long been considered integral to empirical research, whose credibility hinges on its objectivity, meaning "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper]
 In contemporary research, reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
 Unfortunately, despite increasing commitment to open science practices, many projects can not yet be reproduced by other research teams.
