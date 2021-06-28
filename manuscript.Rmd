@@ -500,7 +500,7 @@ Second, the plan should be effective, meaning that the researchers can reasonabl
 Third, the plan should be efficient; therefore, it only employs the necessary amount of resources.
 
 To ensure a comprehensive plan, we suggest that researchers borrow from widely employed standards for writing an empirical manuscript [e.g. @apa7].
-The introduction and theoretical background provide the basis for the studies design and can be written before gathering data.
+The introduction and theoretical background provide the basis for the studies' design and can be written before gathering data.
 We argue that researchers can plan more effectively if they formulate the planned analysis as a method section that again follows best practices for describing empirical research.
 To ensure that the analysis is technically feasible, they can translate their method section into executable computer code for the data analysis using simulated data.
 The researchers can include a "faked" results section based on the simulated data, employing dynamic document generation.
@@ -518,12 +518,18 @@ Preregistration increases the credibility of empirical results in three ways [pr
 
 > First, preregistration of analysis plans makes clear which analyses were planned a priori and which were conducted post hoc. This improves calibration of uncertainty for unplanned analyses, and diagnosticity of statistical inferences for planned analyses. [...] Doing so has the benefit of strengthening statistical inferences as compared with unplanned analyses. [...] Second, preregistration enables detection of questionable research practices such as selective outcome reporting (John et al. 2012) or Hypothesizing After the Results are Known (HARKing; Kerr, 1998). Third, preregistration of studies can reduce the impact of publication bias—particularly the prioritization of publishing positive over negative results—by making all planned studies discoverable whether or not they are ultimately published.
 
-A preregistration as code offers four advantages over classical preregistration.
+A PAC offers four advantages over classical preregistration.
 First, a PAC removes any ambiguity regarding the translation of an analysis plan into code.
 Second, despite being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis over the other, i.e. if distributional assumptions are not met, employ robust methods or automated variable selection mechanisms.
-Third, deviations from the preregistration are more explicit because they are reflected in changes to the codes a property facilitated by version control.
+Third, deviations from the preregistration are more explicit because they are reflected in changes to the code a property facilitated by version control.
 Fourth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
+
+Why are PAC and reproducibility related?
+A reproducible script is supposed to work on the same data at a later point in time.
+PAC requires a script to work on different data at a later point in time, a property we call "reusability".
+This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] so it is build-for-reuse [@al-badareenReusableSoftwareComponents2010].
+Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
 
 # References
 
