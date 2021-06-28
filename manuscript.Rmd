@@ -504,8 +504,14 @@ The introduction and theoretical background provide the basis for the studies de
 We argue that researchers can plan more effectively if they formulate the planned analysis as a method section that again follows best practices for describing empirical research.
 To ensure that the analysis is technically feasible, they can translate their method section into executable computer code for the data analysis using simulated data.
 The researchers can include a "faked" results section based on the simulated data, employing dynamic document generation.
+
 Repeated simulation with varying parameters, a so-called Monte Carlo simulation, can then be employed to plan resources to assure efficiency.
 For example, researchers can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study.
+While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
+First, you have to address and could plan for data analytic problems on a conceptual level before you made the considerable effort to acquire data [@axelrodAdvancingArtSimulation1997].
+Second, if you only simulate a single dataset, you can perform a simple technical check, that is the analysis software outputs parameter estimates [@braiekTestingMachineLearning2020], e.g. when the simulated data contains missings.
+Third, if you perform a Monte Carlo simulation, you may evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
+Fourth, you can plan your resources efficiently, e.g. determine required sample size to achieve certain precision or power [@brandmaier2018precision].
 
 Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [https://www.pnas.org/content/115/11/2600].
 Preregistration increases the credibility of empirical results in three ways [preregistration is hard and worthwhile, Nosek].
