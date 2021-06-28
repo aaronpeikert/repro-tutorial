@@ -499,11 +499,11 @@ First, the plan should be comprehensive, e.g. state the research question and de
 Second, the plan should be effective, meaning that the researchers can reasonably expect it to answer the research question at hand.
 Third, the plan should be efficient; therefore, it only employs the necessary amount of resources.
 
-To ensure a comprehensive plan, we suggest that researchers borrow from widely employed standards for writing an empirical manuscript.
+To ensure a comprehensive plan, we suggest that researchers borrow from widely employed standards for writing an empirical manuscript [e.g. @apa7].
 The introduction and theoretical background provide the basis for the studies design and can be written before gathering data.
 We argue that researchers can plan more effectively if they formulate the planned analysis as a method section that again follows best practices for describing empirical research.
 To ensure that the analysis is technically feasible, they can translate their method section into executable computer code for the data analysis using simulated data.
-The researchers can include a "faked " results section based on the simulated data, employing dynamic document generation.
+The researchers can include a "faked" results section based on the simulated data, employing dynamic document generation.
 Repeated simulation with varying parameters, a so-called Monte Carlo simulation, can then be employed to plan resources to assure efficiency.
 For example, researchers can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study.
 
