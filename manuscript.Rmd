@@ -465,6 +465,7 @@ repro::rerun()
 However, users do not have to have repro installed, in fact, they do not even need R installed. 
 The two Make commands `make docker` and `make -B DOCKER=TRUE` together with an installation of Make and Docker are sufficient.
 They can be pasted into a terminal and will reproduce the project in many cases.
+
 Some projects, however, are not as easy to make reproducible.
 As explained above, repro is merely a simplified interface.
 These simplifications are possible because of two restrictions.
@@ -486,7 +487,12 @@ Third, repro constructs Make targets so that if you supply `DOCKER=TRUE` they ar
 # Preregistration as Code 
 
 We argue that a preregistration as code (PAC) is an excellent planning tool that offers several benefits over traditional preregistration.
-For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results before they gather data using simulated data.
+For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results before they gather data, were the results are initially based on simulated data.
+
+The idea of submitting code as part of a preregistration is not new.
+A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods and in an informal literature research (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
+
+We discuss PAC as an example of how a robust reproducibility standard has the potential to benefit research projects throughout the whole research process, starting at the beginning, with planning a study.
 
 We consider three criteria when planning a study.
 First, the plan should be comprehensive, e.g. state the research question and describe the study design and analysis.
