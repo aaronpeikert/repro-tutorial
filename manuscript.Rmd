@@ -525,10 +525,16 @@ Third, deviations from the preregistration are more explicit because they are re
 Fourth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
 
 Why are PAC and reproducibility related?
+One the one hand, preregistrations are plagued by nonreproducibility like any other research outcome.
+@bakkerRecommendationsPreregistrationsInternal2020 found from the 210 preregistrations they investigated 174 (67%) included a formal power analysis but from these only 34 (20%) provided enough information to theoretically reproduce the power analysis.
+Even researcher who have gone to great length in submitting a script in their preregistration sometimes inexplicably fail to reproduce their own results.
+@steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
+
+On the other hand have PACs greater requirements for reproducibility than a simple analysis script.
 A reproducible script is supposed to work on the same data at a later point in time.
 PAC requires a script to work on different data at a later point in time, a property we call "reusability".
 This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] so it is build-for-reuse [@al-badareenReusableSoftwareComponents2010].
-Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
+Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
 
 # References
 
