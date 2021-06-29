@@ -488,11 +488,10 @@ Third, repro constructs Make targets so that if you supply `DOCKER=TRUE` they ar
 
 We argue that a preregistration as code (PAC) is an excellent planning tool that offers several benefits over traditional preregistration.
 For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results before they gather data, were the results are initially based on simulated data.
+We discuss PAC as an example of how a robust reproducibility standard has the potential to benefit research projects throughout the whole research process, starting at the beginning, with planning a study.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods and in an informal literature research (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
-
-We discuss PAC as an example of how a robust reproducibility standard has the potential to benefit research projects throughout the whole research process, starting at the beginning, with planning a study.
 
 We consider three criteria when planning a study.
 First, the plan should be comprehensive, e.g. state the research question and describe the study design and analysis.
