@@ -516,6 +516,11 @@ This snipped installs python:
 RUN apt-get update && apt-get install -y python3
 ```
 
+The the last Docker, `.repro/Dockerfile_packages`, should not be manually changed.
+`repro::automate()` gathers all packages from all `.Rmd` files and figures out if they should be installed from CRAN or GitHub.
+`repro::automate()` also simply combines the three Dockerfiles and saves the result into the main `Dockerfile` at the top level of the project.
+The seperation into several Dockerfiles is only to provide a clear seperation between automatically generated parts and manually altered parts of the Dockerfile.
+However, Docker requires in the end the one Dockerfile that `repro::automate()` creates from them.
 
 # Preregistration as Code 
 
