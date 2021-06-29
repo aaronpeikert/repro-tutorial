@@ -480,10 +480,42 @@ The first step is represented by the command `make docker`.
 The command `make docker` will trigger Make to build the target `docker`.
 The recipe for this target builds an image from your Dockerfile.
 The `&&` only runs the second command if the first was successful.
-The second step is again a call to Make in the form of `make -B DOCKER=TRUE` with three noteworthy properties.
+Therefore, the computational steps are only executed, when the software environment is set up.
+The second step and actual reproduction is again a call to Make in the form of `make -B DOCKER=TRUE` with three noteworthy properties.
 First, a call to `make` without any explicit target will build the Make target `all`.
 Second, the flag `-B` means that Make will consider all prerequisites as outdated and hence will rebuild everything.
 Third, repro constructs Make targets so that if you supply `DOCKER=TRUE` they are executed within the Docker image of the project.
+
+This interplay between Docker and Make is so complicated because it resembles a chicken or egg problem.
+We have computational steps (Make) which depend on the software environment (Docker) for which we again have computational steps that create it.
+Users only require a deeper understanding when they either want to have more complex computational recipes than rendering an R Markdown or require other software than R packages.
+
+Users can have full control over the software installed within the image of the project.
+`repro` creates three Dockerfiles inside the `.repro` directory.
+The file `.repro/Dockerfile_base` contains information about the base image on which all the rest is build.
+By default we rely on the "verse" images provided by the Rocker project.
+These contain (among other) the packages `tidyverse`, `rmarkdown` and a Latex installation, which make them ideal for writing scientific manuscripts.
+Users can choose which R version they want by changing the version number in line 1 to the desired R version number.
+By default the R version corresponds to the version on which `repro::automate()` was called the first time.
+The build date is used to install packages in the version which was available on CRAN on this specific date and can also be changed, by default this date is set to the date on which `repro::automate()` was called the first time.
+
+```{r, results='asis', echo=FALSE}
+cat(
+  "```bash",
+  readLines(here::here(".repro", "Dockerfile_base"))[1:3],
+  "```",
+  sep = "\n"
+)
+```
+
+The file `.repro/Dockerfile_manual` is by default empty and is supposed to allow dependencies outside of R, like system libraries or external software.
+The most convinient way to install software on Ubuntu is through its package manager `apt`.
+This snipped installs python:
+
+```bash
+RUN apt-get update && apt-get install -y python3
+```
+
 
 # Preregistration as Code 
 
