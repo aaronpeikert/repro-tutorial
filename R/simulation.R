@@ -12,16 +12,16 @@ simulate_data <- function(n, df, d, i){
 }
 
 planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
-  x <- rowMeans(data["group" != names(data)])
-  y <- as.factor(data$group)
-  skew <- moments::skewness(x)
+  y <- rowMeans(data["group" != names(data)])
+  x <- as.factor(data$group)
+  skew <- moments::skewness(y)
   # skewness cutoff
   if(use_rank == "skew")use_rank <- abs(skew) > skew_cutoff
   if(use_rank){
-    x <- rank(x)
+    y <- rank(y)
   }
-  test <- t.test(x ~ y)
-  list(test = test, skew = skew, use_rank = use_rank, n = length(x))
+  test <- t.test(y ~ x)
+  list(test = test, skew = skew, use_rank = use_rank, n = length(y))
 }
 
 #t2d <- function(t, n1, n2)t * sqrt(((n1 + n2)/(n1 * n2)) * (n1 + n2)/(n1 + n2 -2))
