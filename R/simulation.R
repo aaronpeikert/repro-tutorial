@@ -1,6 +1,6 @@
 simulate_data <- function(n, df, d, i){
   stopifnot(n %% 2L == 0L)
-  group <- rep(c(0L, 1L), each = n/2)
+  group <- rep(c(1L, 0L), each = n/2)
   rand <-  matrix(rchisq(n * i, df/i), ncol = i) # sum of n chisq has df of n*df
   d_scaled <- d * sqrt(2*df)/i # scale d to express sd units (var(chisq) = 2df)
   #browser()
@@ -11,12 +11,12 @@ simulate_data <- function(n, df, d, i){
   return(effect)
 }
 
-planned_analysis <- function(data, use_rank = "skew"){
+planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
   x <- rowMeans(data["group" != names(data)])
   y <- as.factor(data$group)
   skew <- moments::skewness(x)
   # skewness cutoff
-  if(use_rank == "skew")use_rank <- abs(skew) > 1
+  if(use_rank == "skew")use_rank <- abs(skew) > skew_cutoff
   if(use_rank){
     x <- rank(x)
   }
@@ -24,48 +24,33 @@ planned_analysis <- function(data, use_rank = "skew"){
   list(test = test, skew = skew, use_rank = use_rank, n = length(x))
 }
 
-extract_results <- function(analysis){
-  list(p_value = analysis$test$p.value,
-       skew = analysis$skew)
+#t2d <- function(t, n1, n2)t * sqrt(((n1 + n2)/(n1 * n2)) * (n1 + n2)/(n1 + n2 -2))
+t2d <- function(test){
+  unname(2 * test$statistic/sqrt(test$parameter))
 }
-
-t2d <- function(t, n1, n2)t * sqrt(((n1 + n2)/(n1 * n2)) * (n1 + n2)/(n1 + n2 -2))
 parameter_recovery <- function(n, df, d, i, rank = FALSE){
   t2d(planned_analysis(simulate_data(n, df, d, i), rank)$test$statistic, n/2, n/2)
 }
 
-test <- simulate_data(1000000, 100, 0.1, 10)
-m1 <- filter(test, group == 1) %>% 
-  select(-group )%>% 
-  rowSums() %>% 
-  mean()
-m0 <- filter(test, group == 0) %>% 
-  select(-group )%>% 
-  rowSums() %>% 
-  mean()
-sd <- test %>% rowSums() %>% sd()
+extract_results <- function(analysis){
+  list(cohend = t2d(analysis$test),
+       p_value = analysis$test$p.value,
+       skew = analysis$skew)
+}
 
-(m1 - m0)/sd
+# test <- simulate_data(1000, 8, 0.1, 10) %>% 
+#   planned_analysis()
+# 
+# extract_results(test)
+# report::report(test$test)
 
-t2d(planned_analysis(test)$test$statistic, 1000000/2, 1000000/2)
-parameter_recovery(1000000, 100, 0.1, 10)
-
-simulation_study <- function(setup){
+simulation_study_ <- function(setup){
   all_steps <- purrr::compose(extract_results, planned_analysis, simulate_data)
-  out <- dplyr::mutate(setup, results = purrr::pmap(setup, all_steps))
+  out <- dplyr::mutate(setup, results = furrr::future_pmap(setup, all_steps, .options = furrr::furrr_options(seed = TRUE)))
   #tidyr::unnest(out, results)
   out
 }
 
-setup <- tidyr::expand_grid(
-  n = seq(10, 1000, 10),
-  df = 8, # skew = sqrt(8/df)
-  d = seq(0, .5, 0.1),
-  i = 10)
-
-res <- simulation_study(setup)
-
-test <- res %>% 
-  group_by(across(-results)) %>% 
-  unnest_wider(results) %>% 
-  summarise(power = mean(p_value < 0.05), .groups = "drop")
+simulation_study <- function(setup, k, seed = NULL){
+  future_map_dfr(seq_len(k), function(irrelevant)simulation_study_(setup), .options = furrr_options(seed = seed))
+}
