@@ -20,9 +20,11 @@ RUN install2.r --error --skipinstalled \
   here \ 
   knitr \ 
   lavaan \ 
+  moments \ 
   pander \ 
   patchwork \ 
   renv \ 
+  report \ 
   rticles \ 
   slider \ 
   targets \ 

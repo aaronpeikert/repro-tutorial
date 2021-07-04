@@ -23,6 +23,8 @@ repro:
     - furrr
     - future.batchtools
     - rticles
+    - moments
+    - report
   scripts:
     - R/simulation.R
     - R/simulation_funs.R
