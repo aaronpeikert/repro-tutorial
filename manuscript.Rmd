@@ -181,6 +181,41 @@ Researchers can, for example, formulate conditions under which they prefer one a
 Third, deviations from the preregistration are more explicit because they are reflected in changes to the code a property facilitated by version control.
 Fourth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
 
+# Preregistration as Code --- an example
+
+At the heart of a PAC lies the planned analysis.
+We suggest writing a function that captures the full process of testing a research question beginning from the dataset.
+This is a simple example:
+
+```{r planned_analysis}
+```
+
+All variables of the dataset except the grouping variable are averaged.
+Depending on how skewed the dataset is we apply a rank transformation to the average and then we calculate a t-test with Welch correction in the hope of creating a more robust analysis for non-normal data.
+At last the function returns an object with all relevant information.
+
+To use this function one needs a compatible dataset.
+At the time of preregistration there is of course no actual data availible.
+We therefore simulate a dataset.
+
+```{r simulate_data}
+```
+
+We decided to draw non-normal data to test how well our procedure performed under non-optimal situations.
+Specifically, we draw from a $\Chi^2$-distribution, where in one group we add difference that conforms to a standardized effect size.
+This simulated dataset fits perfectly into our planned analysis:
+
+```{r}
+set.seed(112358) # fix state of RNG
+simulate_data(n = 400, # n/2 per group
+              df = 8, # Chisq with skewness == 1
+              d = .2, # Cohen's D
+              i = 10) %>% # number of items (should not effect outcome)
+  planned_analysis() %>% # `%>%` = output of 1. function becomes argument 2.
+  .$test %>% # extract the t.test object
+  report::report_text() # use the `report`-package
+```
+
 # References
 
 ```{r, include=FALSE}
