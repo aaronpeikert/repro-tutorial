@@ -1,56 +1,36 @@
-simulate_data <- function(n, df, d, i){
-  stopifnot(n %% 2L == 0L)
-  group <- rep(c(1L, 0L), each = n/2)
-  rand <-  matrix(rchisq(n * i, df/i), ncol = i) # sum of n chisq has df of n*df
-  d_scaled <- d * sqrt(2*df)/i # scale d to express sd units (var(chisq) = 2df)
-  #browser()
-  effect <- rand + d_scaled * group
-  colnames(effect) <- paste0("x", seq_len(i))
-  effect <- as.data.frame(effect)
-  effect$group <- group
-  return(effect)
-}
+library(tidyverse)
+source(here::here("R", "simulation_funs.R"))
+# if you have access to a hpc envir specify this in R/hpc.R
+# see https://github.com/aaronpeikert/repro-tutorial/blob/hpc/R/hpc.R
+# or `git checkout hpc R/hpc.R`
+# if no hpc is availible we use local multicore with all available cores
+# to speed up consider reduce nsim; increase nstep ↓↓↓
 
-planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
-  y <- rowMeans(data["group" != names(data)])
-  x <- as.factor(data$group)
-  skew <- moments::skewness(y)
-  # skewness cutoff
-  if(use_rank == "skew")use_rank <- abs(skew) > skew_cutoff
-  if(use_rank){
-    y <- rank(y)
-  }
-  test <- t.test(y ~ x)
-  list(test = test, skew = skew, use_rank = use_rank, n = length(y))
+hpc_config <- here::here("R", "hpc.R")
+if(fs::file_exists(hpc_config)){
+  source(hpc_config)
+} else {
+  plan(list(transparent,
+            tweak(multisession)))
 }
+trans_seq <- function(min, max, length, trans = function(x)x^2){
+  stopifnot(is.function(trans))
+  lin <- seq(min, max, length.out = length)
+  transformed <- trans(lin)
+  scaled <- (transformed - min(transformed) + min)/max(transformed)*max
+  scaled
+}
+setup <- tidyr::expand_grid(
+  n = c(10, seq(100, 1000, 100)),
+  df = 8, # skew = sqrt(8/df)
+  d = seq(0, .5, 0.05),
+  i = 10)
+res_raw %<-% simulation_study(setup, 10000, 1235)
+res <- res_raw %>% 
+  group_by(across(-results)) %>% 
+  unnest_wider(results)
 
-#t2d <- function(t, n1, n2)t * sqrt(((n1 + n2)/(n1 * n2)) * (n1 + n2)/(n1 + n2 -2))
-t2d <- function(test){
-  unname(2 * test$statistic/sqrt(test$parameter))
-}
-parameter_recovery <- function(n, df, d, i, rank = FALSE){
-  t2d(planned_analysis(simulate_data(n, df, d, i), rank)$test$statistic, n/2, n/2)
-}
-
-extract_results <- function(analysis){
-  list(cohend = t2d(analysis$test),
-       p_value = analysis$test$p.value,
-       skew = analysis$skew)
-}
-
-# test <- simulate_data(1000, 8, 0.1, 10) %>% 
-#   planned_analysis()
-# 
-# extract_results(test)
-# report::report(test$test)
-
-simulation_study_ <- function(setup){
-  all_steps <- purrr::compose(extract_results, planned_analysis, simulate_data)
-  out <- dplyr::mutate(setup, results = furrr::future_pmap(setup, all_steps, .options = furrr::furrr_options(seed = TRUE)))
-  #tidyr::unnest(out, results)
-  out
-}
-
-simulation_study <- function(setup, k, seed = NULL){
-  future_map_dfr(seq_len(k), function(irrelevant)simulation_study_(setup), .options = furrr_options(seed = seed))
-}
+res %>%
+  summarise(power = mean(p_value < 0.025)) %>% 
+  ggplot(aes(n, power, color = d, group = d)) +
+  geom_line()
