@@ -39,3 +39,8 @@ rebuild:
 save-docker: $(PROJECT).tar.gz
 $(PROJECT).tar.gz:
 	docker save $(PROJECT):latest | gzip > $@
+
+singularity: $(PROJECT).sif
+
+$(PROJECT).sif: docker
+	singularity build $@ docker-daemon://$(PROJECT):latest
