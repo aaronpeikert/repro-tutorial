@@ -13,24 +13,26 @@ if(fs::file_exists(hpc_config)){
   plan(list(transparent,
             tweak(multisession)))
 }
-trans_seq <- function(min, max, length, trans = function(x)x^2){
-  stopifnot(is.function(trans))
-  lin <- seq(min, max, length.out = length)
-  transformed <- trans(lin)
-  scaled <- (transformed - min(transformed) + min)/max(transformed)*max
-  scaled
-}
+
 setup <- tidyr::expand_grid(
   n = c(10, seq(100, 1000, 100)),
   df = 8, # skew = sqrt(8/df)
   d = seq(0, .5, 0.05),
   i = 10)
-res_raw %<-% simulation_study(setup, 10000, 1235)
+res_raw %<-% simulation_study(setup, 100, 1235)
+
 res <- res_raw %>% 
   group_by(across(-results)) %>% 
-  unnest_wider(results)
+  unnest_wider(results) %>% 
+  summarise(power = mean(p_value < 0.025),
+            cohend = mean(cohend),
+            cohend_sd = sd(cohend),
+            .groups = "drop")
+fs::dir_create(here::here("data"))
 write_csv(res, here::here("data", "simulation_results.csv"))
-res %>%
-  summarise(power = mean(p_value < 0.025)) %>% 
+
+res %>% 
   ggplot(aes(n, power, color = d, group = d)) +
-  geom_line()
+  geom_line() + 
+  theme_minimal() +
+  NULL
