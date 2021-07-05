@@ -257,6 +257,7 @@ This recipe is a textual description of all commands that need to be executed to
 Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image.
 However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
+A more comprehensive overview over how to employ containarization in research projects is given by @wiebelsLeveragingContainersReproducible2021.
 
 To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), containerization (using Docker).
 While R Markdown and git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside studies of information technology, which represents a considerable hurdle in the acceptance and implementation of the workflow.
