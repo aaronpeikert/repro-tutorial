@@ -42,12 +42,9 @@ keywords: |
 acknowledgement: |
   The authors received no financial support for the research, authorship, and/or publication of this article.
 authorcontributions: |
-  For research articles with several authors, a short paragraph specifying their 
-  individual contributions must be provided. The following statements should be 
-  used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the 
-  experiments; X.X. and Y.Y. analyzed the data; W.W. contributed 
-  reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
-  limited to those who have contributed substantially to the work reported.
+  Aaron Peikert took the lead in writing and provided the initial draft of the manuscript.
+  Andreas Brandmaier and Caspar J. Van Lissa contributed further ideas, critical feedback, and revisions of the original manuscript.
+  Furthermore, we would like to thank Maximilian Stefan Ernst (not an author) for his contributions to the code for the simulation study.
 conflictsofinterest: |
   The authors declare no conflict of interest.
 abbreviations:
