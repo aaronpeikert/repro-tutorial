@@ -45,6 +45,7 @@ authorcontributions: |
   Aaron Peikert wrote the initial draft of the introduction, the tutorial and the preregistration of code.
   Andreas Brandmaier wrote the summary of the workflow and provided extensive feedback.
   Caspar J. Van Lissa proposed a more accessible structure of the paper, contributed ideas and, provided critical feedback.
+  Furthermore, we would like to thank Maximilian Stefan Ernst (not an author) for his contributions to the code for the simulation study.
 conflictsofinterest: |
   The authors declare no conflict of interest.
 abbreviations:
