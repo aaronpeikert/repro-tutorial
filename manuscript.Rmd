@@ -581,13 +581,16 @@ This simulated dataset fits perfectly into our planned analysis:
 
 ```{r}
 set.seed(112358) # fix state of RNG
-simulate_data(n = 400, # n/2 per group
-              df = 8, # Chisq with skewness == 1
-              d = .2, # Cohen's D
-              i = 10) %>% # number of items (should not effect outcome)
-  planned_analysis() %>% # `%>%` = output of 1. function becomes argument 2.
-  .$test %>% # extract the t.test object
-  report::report_text() # use the `report`-package
+report::report_text(
+  planned_analysis(
+    simulate_data(
+      n = 400,# Sample size
+      df = 8, # Chisq with DF = 8 has skewness = 1
+      d = .2, # Cohen's D
+      i = 10  # Number of items (should not effect anything)
+    )
+  )$test
+)
 ```
 
 # References
