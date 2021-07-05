@@ -19,13 +19,13 @@ setup <- tidyr::expand_grid(
   df = 8, # skew = sqrt(8/df)
   d = seq(0, .5, 0.05),
   i = 10)
-res_raw %<-% simulation_study(setup, 100, 1235)
+res_raw %<-% simulation_study(setup, 10000, 1235)
 
 res <- res_raw %>% 
   group_by(across(-results)) %>% 
   unnest_wider(results) %>% 
   summarise(power = mean(p_value < 0.025),
-            cohend = mean(cohend),
+            cohend_mean = mean(cohend),
             cohend_sd = sd(cohend),
             .groups = "drop")
 fs::dir_create(here::here("data"))
