@@ -29,7 +29,7 @@ res_raw %<-% simulation_study(setup, 10000, 1235)
 res <- res_raw %>% 
   group_by(across(-results)) %>% 
   unnest_wider(results)
-
+write_csv(res, here::here("data", "simulation_results.csv"))
 res %>%
   summarise(power = mean(p_value < 0.025)) %>% 
   ggplot(aes(n, power, color = d, group = d)) +
