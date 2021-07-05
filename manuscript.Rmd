@@ -608,7 +608,7 @@ minn <- filter(res, d == choosen_d, power > choosen_power) %>%
 To determine a minimal sample size for this study we repeat this simulation across several combination of effect sizes and sample sizes.
 One standard recomendations for choosing a sample size is to have an expected power of 80% based on the expected effect size.
 @Jones2013 found in three studies gender differences of .24, .29, and .35 for their machiavilism subscale.
-If we want to detect an effect of size .2 with an 80% probability, our simulation shows that we require at least `r minn$n` participants.
+If we want to detect an effect of size `r choosen_d` with an `r choosen_power*100`% probability, our simulation shows that we require at least `r minn$n` participants.
 
 ```{r, echo=FALSE}
 res %>%
