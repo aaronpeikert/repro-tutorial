@@ -535,8 +535,8 @@ The researchers can include a "faked " results section based on the simulated da
 Repeated simulation with varying parameters, a so-called Monte Carlo simulation, can then be employed to plan resources to assure efficiency.
 For example, researchers can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study.
 
-Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [https://www.pnas.org/content/115/11/2600].
-Preregistration increases the credibility of empirical results in three ways [preregistration is hard and worthwhile, Nosek].
+Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
+Preregistration increases the credibility of empirical results in three ways @nosekPreregistrationHardWorthwhile2019:
 
 > First, preregistration of analysis plans makes clear which analyses were planned a priori and which were conducted post hoc. This improves calibration of uncertainty for unplanned analyses, and diagnosticity of statistical inferences for planned analyses. [...] Doing so has the benefit of strengthening statistical inferences as compared with unplanned analyses. [...] Second, preregistration enables detection of questionable research practices such as selective outcome reporting (John et al. 2012) or Hypothesizing After the Results are Known (HARKing; Kerr, 1998). Third, preregistration of studies can reduce the impact of publication bias—particularly the prioritization of publishing positive over negative results—by making all planned studies discoverable whether or not they are ultimately published.
 
