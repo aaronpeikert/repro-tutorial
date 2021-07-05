@@ -40,10 +40,7 @@ keywords: |
   keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
   to the article, yet reasonably common within the subject discipline.).
 acknowledgement: |
-  All sources of funding of the study should be disclosed. Please clearly 
-  indicate grants that you have received in support of your research work. 
-  Clearly state if you received funds for covering the costs to publish in open 
-  access.
+  The authors received no financial support for the research, authorship, and/or publication of this article.
 authorcontributions: |
   For research articles with several authors, a short paragraph specifying their 
   individual contributions must be provided. The following statements should be 
