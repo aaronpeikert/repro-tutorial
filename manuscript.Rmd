@@ -602,11 +602,9 @@ This simulated dataset fits perfectly into our planned analysis:
 
 ***
 
-These results are based on simulated data.
-
 ```{r, results='asis'}
 set.seed(112358) # fix state of RNG
-report::report_text(
+results <- 
   planned_analysis(
     simulate_data(
       n = 400,# Sample size
@@ -614,8 +612,13 @@ report::report_text(
       d = .2, # Cohen's D
       i = 10  # Number of items (should not effect anything)
     )
-  )$test
-)
+  )
+```
+
+These results are based on simulated data:
+
+```{r}
+report::report(results)
 ```
 
 ***

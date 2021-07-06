@@ -4,7 +4,6 @@ simulate_data <- function(n, df, d, i){
   group <- rep(c(1L, 0L), each = n/2)
   rand <-  matrix(rchisq(n * i, df/i), ncol = i) # sum of n chisq has df of n*df
   d_scaled <- d * sqrt(2*df)/i # scale d to express sd units (var(chisq) = 2df)
-  #browser()
   effect <- rand + d_scaled * group
   colnames(effect) <- paste0("x", seq_len(i))
   effect <- as.data.frame(effect)
