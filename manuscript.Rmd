@@ -32,7 +32,6 @@ journal: psych
 type: tutorial
 status: submit
 bibliography: temp.bib
-appendix: appendix.tex
 simplesummary: |
   A Simple summary goes here.
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
