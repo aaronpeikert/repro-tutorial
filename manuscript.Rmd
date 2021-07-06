@@ -130,8 +130,7 @@ Out of 35 published articles, results of 22 articles could be reproduced but in 
 For 13 articles, at least one outcome could not be reproduced—--even with the original authors' assistance.
 @obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available.
 The authors could execute only 31 of the scripts without error and reproduce the results of only 21 articles (within a reasonable time).
-These failed attempts to reproduce highlight the need for widely accepted reproducibility standards.
-The results further illustrate that open repositories do not routinely provide sufficient information to reproduce relevant computational and statistical results.
+These failed attempts to reproduce highlight the need for widely accepted reproducibility standards, because open repositories do not routinely provide sufficient information to reproduce relevant computational and statistical results.
 
 We argue that the benefits associated with transparency increase if research can additionally be reproduced.
 This paper tutorial demonstrates how to make research projects reproducible, while striking a balance between rigor and ease-of-use.
@@ -251,13 +250,13 @@ Users can then install whatever they need in addition to what is provided by the
 Our image includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like the tidyverse [@tidyverse], amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.
 Second, instead of saving a binary image of the software, one can also save a container recipe, a so-called  `Dockerfile`.
 This recipe is a textual description of all commands that need to be executed to recreate the image.
-Such files are tiny (the `r link("https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile", "Dockerfile")` for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an unambiguous description of how to recreate a given container image.
+Such files are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile) for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an sufficently describe how to recreate a given container image.
 However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
 For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
 A more comprehensive overview over how to employ containarization in research projects is given by @wiebelsLeveragingContainersReproducible2021.
 
 To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), containerization (using Docker).
-While R Markdown and git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside studies of information technology, which represents a considerable hurdle in the acceptance and implementation of the workflow.
+While R Markdown and Git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside studies of information technology, which represents a considerable hurdle in the acceptance and implementation of the workflow.
 To remove this hurdle, we have developed a new R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 In the remainder, we will walk you through a complete research project, from sketching the very first idea over preregistration, data analysis, and submission of a preprint while focusing on how the `repro`-package enables users to maintain reproducibility of all steps.
 
@@ -396,7 +395,7 @@ This is normal text, written in Markdown.
 ```
 ````
 
-Now that you know how to write text and R code in an RMarkdown, you need to know about metadata, like the title or the output format. Metadata are placed at the beginning of the document and are separated by three dashes; the following example is a full markdown document where the header is in lines 1-6.
+Now that you know how to write text and R code in an R Markdown, you need to know about metadata, like the title or the output format. Metadata are placed at the beginning of the document and are separated by three dashes; the following example is a full markdown document where the header is in lines 1-6.
 
 ````markdown
 ---
@@ -423,7 +422,7 @@ t.test(extra ~ group, data = sleep)
 
 Most metadata fields are self-explanatory (like the author field), but any package may use the metadata for their purposes.
 Often, for example, does a specific output format require more metadata, i.e. the `rticles`-package for authoring scientific manuscripts.
-RMarkdown was extended to hundreds of document formats which are often highly configurable by their metadata.
+R Markdown was extended to hundreds of document formats which are often highly configurable by their metadata.
 The `repro` package uses the metadata, not to change the output, but to make the document more reproducible, simply by listing resources, i.e., scripts, data, and packages, your document depends on, in the following format:
 
 ```markdown
@@ -446,8 +445,8 @@ repro:
 
 This information makes internal dependencies to other files in the project and external dependencies to R packages explicit.
 `repro` can use this information to infer a Makefile for the dependencies on other files and a Dockerfile that includes all required packages.
-In day-to-day work the simplest solution is to use the function `repro::automate()` which both infers a Makefile and a Dockerfile from all RMarkdown  (all files with the ending `.Rmd`) and there respective repro metadata.
-Every time you change the `repro`-metadata, change the output format, or add a new RMarkdown, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
+In day-to-day work the simplest solution is to use the function `repro::automate()` which both infers a Makefile and a Dockerfile from all R Markdown  (all files with the ending `.Rmd`) and there respective repro metadata.
+Every time you change the `repro`-metadata, change the output format, or add a new R Markdown, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
 The function `repro::automate()` does not overwrite manual changes, and there is no harm in running it too often.
 Besides the main Makefile and the Dockerfile repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git.
 
@@ -522,11 +521,10 @@ However, Docker requires in the end the one Dockerfile that `repro::automate()` 
 
 We argue that a preregistration as code (PAC) is an excellent planning tool that offers several benefits over traditional preregistration.
 For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results before they gather data, were the results are initially based on simulated data.
+We discuss PAC as an example of how a robust reproducibility standard has the potential to benefit research projects throughout the whole research process, starting at the beginning, with planning a study.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods and in an informal literature research (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
-
-We discuss PAC as an example of how a robust reproducibility standard has the potential to benefit research projects throughout the whole research process, starting at the beginning, with planning a study.
 
 We consider three criteria when planning a study.
 First, the plan should be comprehensive, e.g. state the research question and describe the study design and analysis.
@@ -548,7 +546,7 @@ Third, if you perform a Monte Carlo simulation, you may evaluate how the data an
 Fourth, you can plan your resources efficiently, e.g. determine required sample size to achieve certain precision or power [@brandmaier2018precision].
 
 Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
-Preregistration increases the credibility of empirical results in three ways @nosekPreregistrationHardWorthwhile2019:
+Preregistration increases the credibility of empirical results in three ways, @nosekPreregistrationHardWorthwhile2019:
 
 > First, preregistration of analysis plans makes clear which analyses were planned a priori and which were conducted post hoc. This improves calibration of uncertainty for unplanned analyses, and diagnosticity of statistical inferences for planned analyses. [...] Doing so has the benefit of strengthening statistical inferences as compared with unplanned analyses. [...] Second, preregistration enables detection of questionable research practices such as selective outcome reporting (John et al. 2012) or Hypothesizing After the Results are Known (HARKing; Kerr, 1998). Third, preregistration of studies can reduce the impact of publication bias—particularly the prioritization of publishing positive over negative results—by making all planned studies discoverable whether or not they are ultimately published.
 
@@ -560,10 +558,16 @@ Third, deviations from the preregistration are more explicit because they are re
 Fourth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
 
 Why are PAC and reproducibility related?
+One the one hand, preregistrations are plagued by nonreproducibility like any other research outcome.
+@bakkerRecommendationsPreregistrationsInternal2020 found from the 210 preregistrations they investigated 174 (67%) included a formal power analysis but from these only 34 (20%) provided enough information to theoretically reproduce the power analysis.
+Even researcher who have gone to great length in submitting a script in their preregistration sometimes inexplicably fail to reproduce their own results.
+@steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
+
+On the other hand have PACs greater requirements for reproducibility than a simple analysis script.
 A reproducible script is supposed to work on the same data at a later point in time.
 PAC requires a script to work on different data at a later point in time, a property we call "reusability".
 This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] so it is build-for-reuse [@al-badareenReusableSoftwareComponents2010].
-Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
+Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
 
 # Preregistration as Code --- an example
 
