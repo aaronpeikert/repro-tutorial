@@ -619,7 +619,7 @@ results <-
 These results are based on simulated data:
 
 ```{r}
-report::report(results)
+report::report(results$test)
 ```
 
 ***
