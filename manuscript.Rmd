@@ -559,6 +559,7 @@ Even researcher who have gone to great length in submitting a script in their pr
 
 We believe that pairing PAC with the here presented workflow offers four advantages over classical preregistration.
 First, a PAC removes any ambiguity regarding the translation of an analysis plan into code.
+Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis the results vary considerably [@silberzahnManyAnalystsOne2018].
 Second, despite being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis over the other, i.e. if distributional assumptions are not met, employ robust methods or automated variable selection mechanisms.
 Third, deviations from the preregistration are more explicit because they are reflected in changes to the code, a property facilitated by version control.
