@@ -523,9 +523,6 @@ We argue that a preregistration as code (PAC) is an excellent planning tool that
 For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results before they gather data, were the results are initially based on simulated data.
 We discuss PAC as an example of how a robust reproducibility standard has the potential to benefit research projects throughout the whole research process, starting at the beginning, with planning a study.
 
-The idea of submitting code as part of a preregistration is not new.
-A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods and in an informal literature research (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
-
 We consider three criteria when planning a study.
 First, the plan should be comprehensive, e.g. state the research question and describe the study design and analysis.
 Second, the plan should be effective, meaning that the researchers can reasonably expect it to answer the research question at hand.
@@ -551,24 +548,29 @@ Preregistration increases the credibility of empirical results in three ways, @n
 
 > First, preregistration of analysis plans makes clear which analyses were planned a priori and which were conducted post hoc. This improves calibration of uncertainty for unplanned analyses, and diagnosticity of statistical inferences for planned analyses. [...] Doing so has the benefit of strengthening statistical inferences as compared with unplanned analyses. [...] Second, preregistration enables detection of questionable research practices such as selective outcome reporting (John et al. 2012) or Hypothesizing After the Results are Known (HARKing; Kerr, 1998). Third, preregistration of studies can reduce the impact of publication bias—particularly the prioritization of publishing positive over negative results—by making all planned studies discoverable whether or not they are ultimately published.
 
-A PAC offers four advantages over classical preregistration.
+The idea of submitting code as part of a preregistration is not new.
+A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods and in an informal literature research (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
+
+Why are PAC and reproducibility related?
+Preregistrations are plagued by nonreproducibility like any other research outcome.
+@bakkerRecommendationsPreregistrationsInternal2020 found from the 210 preregistrations they investigated 174 (67%) included a formal power analysis but from these only 34 (20%) provided enough information to theoretically reproduce the power analysis.
+Even researcher who have gone to great length in submitting a script in their preregistration sometimes inexplicably fail to reproduce their own results.
+@steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
+
+We believe that pairing PAC with the here presented workflow offers four advantages over classical preregistration.
 First, a PAC removes any ambiguity regarding the translation of an analysis plan into code.
 Second, despite being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis over the other, i.e. if distributional assumptions are not met, employ robust methods or automated variable selection mechanisms.
 Third, deviations from the preregistration are more explicit because they are reflected in changes to the code, a property facilitated by version control.
 Fourth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
 
-Why are PAC and reproducibility related?
-One the one hand, preregistrations are plagued by nonreproducibility like any other research outcome.
-@bakkerRecommendationsPreregistrationsInternal2020 found from the 210 preregistrations they investigated 174 (67%) included a formal power analysis but from these only 34 (20%) provided enough information to theoretically reproduce the power analysis.
-Even researcher who have gone to great length in submitting a script in their preregistration sometimes inexplicably fail to reproduce their own results.
-@steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
-
-On the other hand have PACs greater requirements for reproducibility than a simple analysis script.
-A reproducible script is supposed to work on the same data at a later point in time.
-PAC requires a script to work on different data at a later point in time, a property we call "reusability".
+At the same time require PACs more than "just" reproducibility.
+In contrast to a reproducible script, that should work on the same data, a PAC must function on different data.
+We call this property "reusability".
 This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] so it is build-for-reuse [@al-badareenReusableSoftwareComponents2010].
 Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
+Reusability is naturally desirable in multi lab studies (studies with more than one research site).
+PAC could offers additional 
 
 # Preregistration as Code --- an example
 
