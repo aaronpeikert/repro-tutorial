@@ -501,8 +501,6 @@ cat(
 )
 ```
 
-# Preregistration as Code 
-
 The file `.repro/Dockerfile_manual` is by default empty and is supposed to allow dependencies outside of R, like system libraries or external software.
 The most convinient way to install software on Ubuntu is through its package manager `apt`.
 This snipped installs python:
