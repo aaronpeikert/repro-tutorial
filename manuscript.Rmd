@@ -486,7 +486,7 @@ Users only require a deeper understanding when they either want to have more com
 Users can have full control over the software installed within the image of the project.
 `repro` creates three Dockerfiles inside the `.repro` directory.
 The file `.repro/Dockerfile_base` contains information about the base image on which all the rest is build.
-By default we rely on the "verse" images provided by the Rocker project.
+By default we rely on the "verse" images provided by the Rocker project [@boettigerIntroductionRockerDocker2017].
 These contain (among other) the packages `tidyverse`, `rmarkdown` and a Latex installation, which make them ideal for writing scientific manuscripts.
 Users can choose which R version they want by changing the version number in line 1 to the desired R version number.
 By default the R version corresponds to the version on which `repro::automate()` was called the first time.
