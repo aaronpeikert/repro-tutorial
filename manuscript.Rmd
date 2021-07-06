@@ -570,7 +570,9 @@ Fiveth, the preregistration is merely a development stage of the final manuscrip
 PACs come with a challange though, in contrast to a reproducible script, that should work on the same data, a PAC must function on different data.
 We call this property "reusability".
 This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] so it is build-for-reuse [@al-badareenReusableSoftwareComponents2010].
-Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
+The reproducible workflow we present here is heavily automated and hence promotes reusibility.
+Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019] and therefore this workflow fits well together with other innovations employ automation, like machine readible hypothethis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
+Automated and reusable research projects promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
 
 # Preregistration as Code --- an example
 
