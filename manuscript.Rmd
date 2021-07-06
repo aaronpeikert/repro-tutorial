@@ -555,21 +555,21 @@ Preregistrations are plagued by nonreproducibility like any other research outco
 Even researcher who have gone to great length in submitting a script in their preregistration sometimes inexplicably fail to reproduce their own results.
 @steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
 
-We believe that pairing PAC with the here presented workflow offers four advantages over classical preregistration.
+We believe that pairing PAC with the here presented workflow offers five advantages over classical preregistration.
 First, a PAC removes any ambiguity regarding the translation of an analysis plan into code.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis the results vary considerably [@silberzahnManyAnalystsOne2018].
 Second, despite being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis over the other, i.e. if distributional assumptions are not met, employ robust methods or automated variable selection mechanisms.
-Third, deviations from the preregistration are more explicit because they are reflected in changes to the code, a property facilitated by version control.
-Fourth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
+Third, a PAC more comprehensive is by design because e.g. missing steps are obvious when the code is tested on simulated data.
+A due to its high structure PAC can therefore more effectively minimize researchers degrees of freedom than a standard preregistration [@bakkerEnsuringQualitySpecificity2020].
+Forth, deviations from the preregistration are more explicit because they are reflected in changes to the code, a property facilitated by version control.
+Fiveth, the preregistration is merely a development stage of the final manuscript, thus saving the researchers from writing and the reviewer from evaluating two separate documents.
 
 At the same time require PACs more than "just" reproducibility.
 In contrast to a reproducible script, that should work on the same data, a PAC must function on different data.
 We call this property "reusability".
 This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] so it is build-for-reuse [@al-badareenReusableSoftwareComponents2010].
 Reusability promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
-Reusability is naturally desirable in multi lab studies (studies with more than one research site).
-PAC could offers additional 
 
 # Preregistration as Code --- an example
 
