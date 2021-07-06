@@ -277,10 +277,9 @@ At several points, we rely on or have self-developed a CLI that wraps a more com
 These wrappers use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in layman's terms and are accessible from within R.
 We hope this makes reproducibility tools more accessible by enabling untrained users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
 These alternative tools are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
-Please install the package [`gert`](https://github.com/r-lib/gert)[@R-gert] which wraps Git commands and [`repro`](https://github.com/aaronpeikert)[@R-repro] so they can act as assistance systems while you follow the tutorial:
+Please install the package [`repro`](https://github.com/aaronpeikert)[@R-repro] so it can act as assistance systems while you follow the tutorial:
 
 ```{r, eval=FALSE}
-install.packages("gert")
 # repro is not on CRAN yet
 install.packages('repro', repos = 'https://aaronpeikert.r-universe.dev')
 ```
@@ -456,7 +455,7 @@ When you or people who received your project from GitHub want to reproduce the p
 repro::rerun()
 ```
 
-However, users do not have to have repro installed, in fact, they do not even need R installed. 
+However, users do not have to have repro installed to reproduce a project, in fact, they do not even need R installed. 
 The two Make commands `make docker` and `make -B DOCKER=TRUE` together with an installation of Make and Docker are sufficient.
 They can be pasted into a terminal and will reproduce the project in many cases.
 
@@ -657,7 +656,6 @@ res %>%
        color = "Cohen's D") +
   NULL
 ```
-
 
 # References
 
