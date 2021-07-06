@@ -383,6 +383,11 @@ To do list:
 * spend time with family
 ```
 
+This type of markup for formatting, instead of the more visual approach of e.g. Microsoft Word ©, is compatible with many output formats and is more easily version controlled.
+However, researchers might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor with still creates an R Markdown and has all of its benefits.
+The Visual Editor has the additional benefit of promoting best practices, e.g. each sentence on a newline for better version control or automated citations, cross references and more.
+
+Now that you are familiar with writing text we turn our attention to including code into the text.
 Code is separated by three backticks (and the programming language in curly braces) like here:
 
 ````markdown
