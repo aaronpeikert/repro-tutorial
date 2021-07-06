@@ -604,7 +604,7 @@ This simulated dataset fits perfectly into our planned analysis:
 
 ***
 
-```{r, results='asis'}
+```{r}
 set.seed(112358) # fix state of RNG
 results <- 
   planned_analysis(
@@ -619,7 +619,7 @@ results <-
 
 These results are based on simulated data:
 
-```{r}
+```{r, results='asis'}
 report::report(results$test)
 ```
 
