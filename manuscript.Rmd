@@ -544,6 +544,7 @@ First, you have to address and could plan for data analytic problems on a concep
 Second, if you only simulate a single dataset, you can perform a simple technical check, that is the analysis software outputs parameter estimates [@braiekTestingMachineLearning2020], e.g. when the simulated data contains missings.
 Third, if you perform a Monte Carlo simulation, you may evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 Fourth, you can plan your resources efficiently, e.g. determine required sample size to achieve certain precision or power [@brandmaier2018precision].
+@bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size.
 
 Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results in three ways, @nosekPreregistrationHardWorthwhile2019:
