@@ -207,7 +207,7 @@ Upon rendering the document, the code blocks are executed, and their output is d
 This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
 
 One would hope that sharing a literate statistical analysis would allow others (including one own's future self) to simply download and run (ie., reproduce) a given analysis.
-However, while version control and dynamic document generation are becoming more common @, this approach fails to guarantee reproducibility in most instances.
+However, while version control and dynamic document generation are becoming more common, this approach fails to guarantee reproducibility in most instances [@Peikert2019].
 In practice, dependencies between project files (e.g. the raw data was preprocessed) or on external software (such as system libraries or components of the programming language) are frequently unmentioned.
 
 To automatically resolve dependencies between project files, we rely on **dependency tracking**.
