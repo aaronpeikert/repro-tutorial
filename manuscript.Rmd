@@ -187,6 +187,8 @@ Each commit "knows" its ancestor, and they form a timeline together.
 The conglomerate of commits (i.e. the version-controlled project) is called a repository.
 In Git, specific snapshots of a repository can be tagged, such that one can clearly label a given project status as the one that created a given preregistration, a given preprint, or the final authors' version accepted at a journal.
 Git has additional features beyond basic version control, such as branches to facilitate collaboration.
+@vuorreCuratingResearchAssets2018 provide a more extensive treatment how Git functions and how to use Git.
+@bryanExcuseMeYou2018 provides additional information on how to track R Markdown documents.
 To collaborate via Git,<!--dangling modify, cant help it--> the repository has to be uploaded somewhere.
 We recommend GitHub to host Git repositories because of its popularity among R users.
 GitHub has many tools that ease project management and collaboration, and these tools provide much value in our everyday work, but they are not central to archiving reproducibility.
