@@ -9,6 +9,9 @@ manuscript.pdf: manuscript.tex images/nutshell.pdf apa7.csl references.bib
 data/simulation_results.csv: R/simulation.R R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
 
+simulated_data.csv: R/simulate.R
+	$(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN2)
+
 data/sd3.csv: R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<"); set.seed(1235); readr::write_csv(generate_data(500), "data/sd3.csv")' $(RUN2)
 

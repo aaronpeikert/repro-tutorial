@@ -93,7 +93,6 @@ header-includes:
    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}, numbers=left}
 ---
 
-
 ```{r setup, include=FALSE}
 library(repro)
 automate_load_packages()
@@ -222,10 +221,10 @@ To make this more concrete, consider the following hypothetical example, in whic
 A Makefile could then look like this:
 
 ```{bash, eval=FALSE}
-manuscript.pdf: manuscript.Rmd simulation_results.csv 
+manuscript.pdf: manuscript.Rmd simulated_data.csv
   Rscript -e 'rmarkdown::render("manuscript.Rmd")'
 
-simulation_results.csv: simulate.R
+simulated_data.csv: simulate.R
   Rscript -e 'source("simulate.R")'
 ```
 
@@ -235,20 +234,21 @@ If a requirement is newer than the target, the recipe will be executed to rebuil
 If a requirement does not exist, Make uses a recipe to build the requirement first before building the target.
 Here, if one were to build the final `manuscript.pdf` by rendering the R Markdown with the command shown in l.2, Make would make sure that the file `simulation_results.csv` exists; if not, it would find that this is also a target and issue the command in l.5 to run the simulation first before rendering the manuscript.
 This way, we ensure that the simulation is always run before the manuscript is built and that the manuscript is rebuilt if the simulation code was changed.
-
-A version controlled dynamic document with dependency tracking still relies on external software.
-Troubleshooting issues specific to a particular programming language or dependent tool typically requires considerable expertise and hinder reproducibility.
+Make therefore offers a standardized process to reproduce projects, regardless of the complexity or configuration of the project.
 
 ```{r, include=FALSE}
 container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 ```
 
+A version controlled dynamic document with dependency tracking still relies on external software.
+Troubleshooting issues specific to a particular programming language or dependent tool typically requires considerable expertise and hinder reproducibility.
 One solution to the problem of external software dependencies is to provide not only the analysis script but all dependent software packages and system libraries via **software management**.
 One comprehensive approach to software management is containerization.
 "By packaging the key elements of the computational  environment  needed  to  run  the  desired  software, [...] they  make the software much easier to use, and the results easier to reproduce [@silverSoftwareSimplified2017].
 Instead of leaving it to the user which software should be installed how on their computer, **Docker** provides all software used in an analysis, including the operating system itself.
 The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
 Docker does this without interfering with the already installed software by using a virtual software environment independent of the host software environment.
+Researchers therefore have the opportunity to use the exact same software that was used by the original authors.
 Such a snapshot of the software stack is called an "image".
 Packaging all needed software in such an image requires considerable amounts of storage space.
 Two major strategies are helping to keep the storage requirements reasonable.
@@ -259,15 +259,15 @@ Users can then install whatever they need in addition to what is provided by the
 Our image includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like the tidyverse [@tidyverse], amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` packages.
 Second, instead of saving a binary image of the software, one can also save a container recipe, a so-called  `Dockerfile`.
 This recipe is a textual description of all commands that need to be executed to recreate the image.
-Such files are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile) for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and are an sufficently describe how to recreate a given container image.
+Such files are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile) for this project is `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb big) and sufficiently describe how to recreate a given container image.
 However, they rely on the assumption that all software repositories will remain accessible and will continue to make available historic software versions.
-For archiving, we therefore recommend that a full image is always kept (see Section on [Archiving Docker]).
+For archiving, we therefore recommend that a full image is always kept.
 A more comprehensive overview over how to employ containarization in research projects is given by @wiebelsLeveragingContainersReproducible2021.
 
 To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), containerization (using Docker).
 While R Markdown and Git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside studies of information technology, which represents a considerable hurdle in the acceptance and implementation of the workflow.
 To remove this hurdle, we have developed a new R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
-In the remainder, we will walk you through a complete research project, from sketching the very first idea over preregistration, data analysis, and submission of a preprint while focusing on how the `repro`-package enables users to maintain reproducibility of all steps.
+In the remainder, we will walk you through a the creation of a reproducible research project aided by the package `repro`.
 
 ```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (Git), dependency tracking (Make), software management (Docker), and dynamic document generation (R Markdown). Git tracks changes to the project over time. Make manages dependencies among the files. Docker provides a container in which the final report is built using dynamic document generation in R Markdown. Reproduced from @Peikert2019.  "}
 # file gets downloaded in Makefile
@@ -304,7 +304,7 @@ repro::check_docker()
 ```
 
 They detect the users' system state and explain what this means to the user.
-Sometimes they ask the user to do something, e.g. the following happens if you were a windows user who does not have installed Git:
+Sometimes they ask the user to do something, e.g. the following happens if you were a Windows user who does not have installed Git:
 
 ```{r, include=FALSE}
 opts <- options()
@@ -393,7 +393,7 @@ To do list:
 ```
 
 This type of markup for formatting, instead of the more visual approach of e.g. Microsoft Word ©, is compatible with many output formats and is more easily version controlled.
-However, researchers might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor with still creates an R Markdown and has all of its benefits.
+However, researchers might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown and has all of its benefits.
 The Visual Editor has the additional benefit of promoting best practices, e.g. each sentence on a newline for better version control or automated citations, cross references and more.
 
 Now that you are familiar with writing text we turn our attention to including code into the text.
@@ -519,17 +519,75 @@ Remember, the software environment of the Docker image is completely separate fr
 This separation is excellent for reproducibility, but requires you to install software on an operating system that may not be familiar to you.
 The images supplied by [@boettigerIntroductionRockerDocker2017] are based on Ubuntu, and hence software has to be installed in a way that is compatible with Ubuntu.
 The most convenient way to install software on Ubuntu is through its package manager `apt`.
-This snipped installs python, added to `.repro/Dockerfile_manual` you get an image that has python available:
+The following snipped installs Python.
+If added to `.repro/Dockerfile_manual` the Docker image will have Python installed.
 
 ```bash
 RUN apt-get update && apt-get install -y python3
 ```
 
-The the last Docker, `.repro/Dockerfile_packages`, should not be manually changed.
+The last Dockerfile, `.repro/Dockerfile_packages`, should not be manually changed.
 `repro::automate()` gathers all packages from all `.Rmd` files and figures out if they should be installed from CRAN or GitHub.
-`repro::automate()` also simply combines the three Dockerfiles and saves the result into the main `Dockerfile` at the top level of the project.
+
 The seperation into several Dockerfiles is only to provide a clear seperation between automatically generated parts and manually altered parts of the Dockerfile.
-However, Docker requires in the end the one Dockerfile that `repro::automate()` creates from them.
+However, Docker requires single Dockerfile so `repro::automate()` simply combines the three Dockerfiles and saves the result into the main `Dockerfile` at the top level of the 
+
+Users of `repro` can not only build arbitrarily complex software environments they can also implement complex file dependencies.
+The standard `repro` metadata only makes sure that all dependencies are availible but does not allow you to specify a recipe for them in the metadata.
+If you can formulate the creation of dependencies in terms of computational steps you should include these in the Makefile.
+The Makefile that `repro` creates is only an template and you are free to change it.
+However, you want to make sure to not remove the following two lines:
+
+```bash
+include .repro/Makefile_Rmds
+include .repro/Makefile_Docker
+```
+
+The file `.repro/Makefile_Rmds` contains the automatically generated targets from `repro::automate()` for the R Markdown files.
+This file should not be altered manually.
+If you want to adept a target than simply provide an alternative target in the main `Makefile`.
+Targets in the main `Makefile` take precedent.
+
+The file `.repro/Makefile_Docker` does again contain a rather complicated template which you could but seldomly should alter.
+This Makefile coordinates the interplay between Make and Docker and contains targets for building (with `make docker`) and saving (with `make save-docker`) the Docker image.
+Additionally it provides facilities to execute commands within the container.
+If you write computational recipe for a target it will be by default evaluated using the locally installed software.
+To instead evaluate commends inside the Docker image you should wrap them in `$(RUN1) command $(RUN2)`, like in this example:
+
+```bash
+simulated_data.csv: R/simulate.R
+  $(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN1)
+```
+
+If users use
+
+```bash
+make simulated_data.csv
+```
+
+this is simply translated to:
+
+```{r, echo=FALSE, results='asis'}
+cat("```bash",
+  stringi::stri_wrap(system2("make", " --dry-run simulated_data.csv", stdout = TRUE)),
+  "```", sep = "\n")
+```
+
+But if users use
+
+
+```bash
+make DOCKER=TRUE simulated_data.csv
+```
+
+it is evaluated within the Docker container:
+
+```{r, echo=FALSE, results='asis'}
+cat("```bash",
+  stringi::stri_wrap(system2("make", " --dry-run DOCKER=TRUE simulated_data.csv", stdout = TRUE)),
+  "```", sep = "\n")
+```
+
 
 # Preregistration as Code 
 
@@ -585,8 +643,10 @@ PACs come with a challange though, in contrast to a reproducible script, that sh
 We call this property "reusability".
 This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] so it is build-for-reuse [@al-badareenReusableSoftwareComponents2010].
 The reproducible workflow we present here is heavily automated and hence promotes reusibility.
-Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019] and therefore this workflow fits well together with other innovations employ automation, like machine readible hypothethis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
+Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019] and therefore this workflow fits well together with other innovations that employ automation, like machine readible hypothethis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
 Automated and reusable research projects promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
+
+Therefore reproducibility facilitates traditional good scientific practices and provides the fundament for promising innovations.
 
 # Preregistration as Code --- an example
 
