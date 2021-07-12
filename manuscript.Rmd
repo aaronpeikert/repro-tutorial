@@ -282,7 +282,7 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 
 A major barrier to adoption of the above tools for researchers is that they are typically used via a command line interface (CLI).
 The CLI predates and coexists with graphical user interfaces (GUIs), which many users (including the authors) prefer over the text-based interactions of a CLI for most tasks.
-A GUI has the apparent disadvantage for reproducibility that it requires a user who clicks on the correct elements (such as buttons or menu items) in the correct order.<!--AB not sure about the entire paragraph about CLI vs GUI here -  can we shorten this?-->
+A GUI has the apparent disadvantage for reproducibility that it requires a user who clicks on the correct elements (such as buttons or menu items) in the correct order.<!--AB not sure about the entire paragraph about CLI vs GUI here -  can we shorten this entire paragraph?-->
 Depending on the number of steps taken, this is not only much effort but also error-prone.
 This tutorial seeks a compromise.
 We use simple GUI actions to create a reproducible workflow template, but the reproduction of such workflow does not rely on manual steps. <!--AB I modified this sentence - but I am not sure what we are saying here with the "manual steps"-->
@@ -501,30 +501,32 @@ First, the project can only rely on R packages for the Dockerfile and second, it
 Lifting these restrictions requires the user to interact more directly with Make or Docker.
 To satisfy more complicated requirements users need to understand how repro utilizes Make and Docker internally.
 
-Let us dissect the command for reproducing a repro project: `make docker && make -B DOCKER=TRUE`; it consists of two steps.
+Let us have a closer look at the command for reproducing a repro project: `make docker && make -B DOCKER=TRUE`; it consists of two processing steps.
 First it recreates the virtual software environment (Docker) and then it executes computational recipes in the virtual software environment (Make).
-The first step is represented by the command `make docker`.
-The command `make docker` will trigger Make to build the target `docker`.
-The recipe for this target builds an image from your Dockerfile.
-The `&&` only runs the second command if the first was successful.
+The first step is done by the command `make docker`.
+The command `make docker` will trigger Make to build the target called `docker`.
+The recipe for this target builds an image from the Dockerfile of the repository.
+The `&&` concatenates both commands and only runs the second command if the first was successful.
 Therefore, the computational steps are only executed when the software environment is set up.
-The second step and actual reproduction is again a call to Make in the form of `make -B DOCKER=TRUE` with three noteworthy parts.
+The second step executes the actual reproduction and is again a call to Make in the form of `make -B DOCKER=TRUE` with three noteworthy parts.
 First, a call to `make` without any explicit target will build the Make target `all`.
 Second, the flag `-B` means that Make will consider all dependencies as outdated and hence will rebuild everything.
 Third, repro constructs Make targets so that if you supply `DOCKER=TRUE` they are executed within the Docker image of the project.
 
 This interplay between Docker and Make is relatively complicated because it resembles a chicken or egg problem.
 We have computational steps (Make) which depend on the software environment (Docker) for which we again have computational steps that create it.
-Users only require a deeper understanding when they either want to have more complex computational recipes than rendering an R Markdown or require other software than R packages.
+Users only require a deeper understanding of this interdependence when they either want to have more complex computational recipes than rendering an R Markdown or require other software than R packages.
 
 Users can have full control over the software installed within the image of the project.
 `repro` creates three Dockerfiles inside the `.repro` directory.
-The file `.repro/Dockerfile_base` contains information about the base image on which all the rest is build.
+The file `.repro/Dockerfile_base` contains information about the base image on which all the remaining software is installed.
 By default we rely on the "verse" images provided by the Rocker project [@boettigerIntroductionRockerDocker2017].
-These contain (among other) the packages `tidyverse`, `rmarkdown` and a Latex installation, which make them ideal for writing scientific manuscripts.
-Users can choose which R version they want by changing the version number in line 1 to the desired R version number.
-By default the R version corresponds to the version on which `repro::automate()` was called the first time.
-The build date is used to install packages in the version which was available on CRAN on this specific date and can also be changed, by default this date is set to the date on which `repro::automate()` was called the first time.
+These contain (among other things) the packages `tidyverse`, `rmarkdown` and a complete LaTeX installation, which makes these images ideal for the creation of scientific manuscripts.
+Users can choose which R version they want to have inside the container by changing the version number in line 1 to the desired R version number.
+By default the R version corresponds to the locally installed <!--AB: please check - did I get this correctly? It is the local version?-->version on which `repro::automate()` was called the first time.
+The build date is used to install packages in the version which was available on CRAN on this specific date and can also be changed, by default this date is set to the date on which `repro::automate()` was called the first time. 
+This way, the call to the automate function virtually freezes the R environment to the state it was called the first time inside the container. 
+Below, you see the Docker base file we used to create this manuscript:
 
 ```{r, results='asis', echo=FALSE}
 cat(
@@ -535,7 +537,7 @@ cat(
 )
 ```
 
-The file `.repro/Dockerfile_manual` is by default empty and is supposed to allow dependencies outside of R, like system libraries or external software.
+The file `.repro/Dockerfile_manual` is empty by default and can be used to add further dependencies outside of R, like system libraries or external software. 
 Remember, the software environment of the Docker image is completely separate from software installed on your computer.
 This separation is excellent for reproducibility, but requires you to install software on an operating system that may not be familiar to you.
 The images supplied by [@boettigerIntroductionRockerDocker2017] are based on Ubuntu, and hence software has to be installed in a way that is compatible with Ubuntu.
@@ -547,17 +549,17 @@ If added to `.repro/Dockerfile_manual` the Docker image will have Python install
 RUN apt-get update && apt-get install -y python3
 ```
 
-The last Dockerfile, `.repro/Dockerfile_packages`, should not be manually changed.
-`repro::automate()` gathers all packages from all `.Rmd` files and figures out if they should be installed from CRAN or GitHub.
+The last Dockerfile, `.repro/Dockerfile_packages`, is automatically generated from the metadata provided and must not be manually changed.
+Whenever `repro::automate()` is called, repro gathers all R packages from all `.Rmd` files and figures out whether they should be installed from CRAN or GitHub. <!-- does this also figure out the specific version? If so, please say so-->
 
-The seperation into several Dockerfiles is only to provide a clear seperation between automatically generated parts and manually altered parts of the Dockerfile.
-However, Docker requires single Dockerfile so `repro::automate()` simply combines the three Dockerfiles and saves the result into the main `Dockerfile` at the top level of the 
+The separation into several Dockerfiles is a design choice to provide a clear separation between automatically generated parts based on metadata provided and manually altered parts of the Dockerfile.
+Docker eventually requires a single Dockerfile to run, so `repro::automate()` simply concatenates the three Dockerfiles and saves the result into the main `Dockerfile` at the top level of the R project.
 
-Users of `repro` can not only build arbitrarily complex software environments they can also implement complex file dependencies.
-The standard `repro` metadata only makes sure that all dependencies are availible but does not allow you to specify a recipe for them in the metadata.
-If you can formulate the creation of dependencies in terms of computational steps you should include these in the Makefile.
+With this approach, users of `repro` can not only build complex software environments but they can also implement complex file dependencies.
+The standard `repro` metadata only makes sure that all dependencies are available but does not allow you to specify custom recipes for them in the metadata.
+If you can formulate the creation of dependencies in terms of computational steps you should include these in the Makefile.<!--AB I do not understand this sentence-->
 The Makefile that `repro` creates is only an template and you are free to change it.
-However, you want to make sure to not remove the following two lines:
+However, make sure to never remove the following two lines:
 
 ```bash
 include .repro/Makefile_Rmds
@@ -566,21 +568,21 @@ include .repro/Makefile_Docker
 
 The file `.repro/Makefile_Rmds` contains the automatically generated targets from `repro::automate()` for the R Markdown files.
 This file should not be altered manually.
-If you want to adept a target than simply provide an alternative target in the main `Makefile`.
+If you want to adept<!--AB strange word?! change--> a target than simply provide an alternative target in the main `Makefile`.
 Targets in the main `Makefile` take precedent.
 
-The file `.repro/Makefile_Docker` does again contain a rather complicated template which you could but seldomly should alter.
+The file `.repro/Makefile_Docker` does again contain a rather complicated template which you could but usually should not modify.
 This Makefile coordinates the interplay between Make and Docker and contains targets for building (with `make docker`) and saving (with `make save-docker`) the Docker image.
-Additionally it provides facilities to execute commands within the container.
+Additionally, it provides facilities to execute commands within the container.
 If you write computational recipe for a target it will be by default evaluated using the locally installed software.
-To instead evaluate commends inside the Docker image you should wrap them in `$(RUN1) command $(RUN2)`, like in this example:
+To instead evaluate commands inside the Docker image, you should wrap them in `$(RUN1) command $(RUN2)`, like in this example:<!--AB please explain this hypothetical example in more detail, so that we can follow along-->
 
 ```bash
 simulated_data.csv: R/simulate.R
   $(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN1)
 ```
 
-If users use
+If users execute this in the terminal
 
 ```bash
 make simulated_data.csv
@@ -608,8 +610,8 @@ cat("```bash",
   "```", sep = "\n")
 ```
 
-To summarise, `repro` provides untrained researchers with an easy to use solution for dependency tracking (in form of Make) and software management (using Docker).
-Users with more advanced requirements can manually change all aspects while still profiting from can mix `repro`'s automations.
+To summarise, `repro` provides researchers with an easy to use solution for dependency tracking (in form of Make) and software management (using Docker) without the necessity to learn both languages.
+Users with more advanced requirements can manually change all aspects of both programs while still profiting from `repro`'s automations.
 
 # Introducing Preregistration as Code 
 
