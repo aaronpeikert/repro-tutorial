@@ -278,7 +278,7 @@ In the remainder, we will walk you through the creation of a reproducible resear
 knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 ```
 
-# Tutorial
+# Creating reproducible research projects
 
 A major barrier to adoption of the above tools for researchers is that they are typically used via a command line interface (CLI).
 The CLI predates and coexists with graphical user interfaces (GUIs), which many users (including the authors) prefer over the text-based interactions of a CLI for most tasks.
@@ -470,6 +470,10 @@ repro:
 
 This information makes internal dependencies to other files in the project and external dependencies to R packages explicit.
 `repro` can use this information to infer a Makefile for the dependencies on other files and a Dockerfile that includes all required packages.
+These two files together form the basis for consistency within a research project and consistency across different systems.
+At this point, we would like to emphasize that a preqrequisite for reproducibility is that every step taken in an analysis can be automatically reproduced.
+This means there must be no manual processing such as copy and pasting, manual modification of data files (e.g., manually removing observations or manually recoding variables). 
+Ideally, all data preprocessing is well-documented and gathered in a separate R file, which is then called before a Markdown report is generated (that is, the preprocessing script is added in the metadata header under _scripts:_).
 In everyday work, the simplest solution is to now call the function `repro::automate()` which both creates a Makefile and a Dockerfile from all R Markdown files in the project (all files with the ending `.Rmd`) based on the respective repro metadata entries.
 Every time you change the `repro`-metadata, change the output format, or add a new R Markdown file to the project, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
 The function `repro::automate()` does not overwrite manual changes, and there is no harm in running it too often.
