@@ -336,7 +336,7 @@ We start by creating such a project folder with RStudio by clicking the menu ite
 
 > File → New Project... → New Directory → Example Repro Template
 
-This creates a project containing an example analysis, but you may use any other template or existing R Project.
+This creates a project containing an example analysis, but you may use any other template or existing R Project to turn into a reproducible research project using the functionality of `repro`.
 
 You can prevent Git from accidentally committing files that you do not want to track with the `.gitignore` file.
 You can add something to the `.gitignore` file directly or with this command:
@@ -347,13 +347,13 @@ usethis::use_git_ignore("private.md")
 
 Now the file `private.md` will not be committed to Git and will not be made public.
 
-After you have ignored sensitive files (like not yet anonymized data), you can activate Git with:
+After you have excluded sensitive files (like not yet anonymized data files), you can activate Git with:
 
 ```{r, eval=FALSE}
 usethis::use_git()
 ```
 
-If you made changes to a file, you have to stage and then commit these changes (this is the basic save action for a project snapshot).
+Whenever you made changes to a given file, you have to stage and then commit these changes (this is the basic save action for a project snapshot).
 The easiest way to do this is to use the RStudio Git pane.
 Click on the empty box next to the file you want to stage, and when a tick appears, which means that the file is staged.
 After you have staged all files you want, click on the commit button, explain in the commit message why you made those changes, and then click on commit.
@@ -374,35 +374,38 @@ If you are not yet ready to share your project publicly but you want to synchron
 usethis::use_github(private = TRUE)
 ```
 
-Now that you have created a project that is under version control, we turn to dynamic document generation.
-Three aspects are essential to understand a dynamic document:
+Now that you have created a project that is under version control, we continue with adding dynamic document generation.
+Adynamic document has three elements:
 
-1. Text
-2. Code
+1. Text in a natural language
+2. Executable code 
 3. Metadata
 
-The text of an R Markdown is written in Markdown.
-The following example shows how to signify a header, a bold word and a list in Markdown:
+The text of an R Markdown is written in Markdown. <!--AB citation needed for further information-->
+The following Markdown example serves to illustrate the Markdown syntax. 
+It shows how to create a heading, a word in bold font, and a list of several items in Markdown:
 
 ```markdown
 <!--this is a Markdown file -->
-# Header
+# Heading (level 1)
 
 Normal text.
 Important **word** in bold.
+
+## Subheading (level 2)
 
 To do list:
 
 * do research
 * do more research
-* spend time with family
+* spend time with family and friends
 ```
 
-This type of markup for formatting, instead of the more visual approach of e.g. Microsoft Word ©, is compatible with many output formats and is more easily version controlled.
-However, researchers might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown and has all of its benefits.
-The Visual Editor has the additional benefit of promoting best practices, e.g. each sentence on a newline for better version control or automated citations, cross references and more.
+This type of markup for formatting, instead of the more visual approach of e.g. Microsoft Word, is compatible with many output formats and is easier to put under version control.
+Some users might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown underneath with all of its flexibility.
+The visual editor has the additional benefit of promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions). Among other features, it eases the generation of citations and cross references.
 
-Now that you are familiar with writing text we turn our attention to including code into the text.
+Now that you are familiar with the basics of writing text in Markdown, we turn our attention to including code into the text.
 Code is separated by three backticks (and the programming language in curly braces) like here:
 
 ````markdown
@@ -414,13 +417,13 @@ This is normal text, written in Markdown.
 ```
 ````
 
-Now that you know how to write text and R code in an R Markdown, you need to know about metadata, like the title or the output format. Metadata are placed at the beginning of the document and are separated by three dashes; the following example is a full markdown document where the header is in lines 1-6.
+Now that you know how to write text and R code in an R Markdown, you need to know about metadata, like the title or the output format. Metadata are placed at the beginning of the document and are separated by three dashes from the document body; the following example is a full markdown document where the header is in lines 1--6.
 
 ````markdown
 ---
 title: A Hitchhiker's Guide to Reproducible Research in R
 author: Aaron Peikert, Caspar J. Van Lissa and Andreas M. Brandmaier
-abstract: A paper about recalculating the same thing more than once.
+abstract: A tutorial about doing the same thing more than once.
 output: html_document
 ---
 
@@ -439,10 +442,13 @@ t.test(extra ~ group, data = sleep)
 ```
 ````
 
-Most metadata fields are self-explanatory (like the author field), but any package may use the metadata for their purposes.
-Often, for example, does a specific output format require more metadata, i.e. the `rticles`-package for authoring scientific manuscripts.
-R Markdown was extended to hundreds of document formats which are often highly configurable by their metadata.
-The `repro` package uses the metadata, not to change the output, but to make the document more reproducible, simply by listing resources, i.e., scripts, data, and packages, your document depends on, in the following format:
+Most metadata fields are self-explanatory (like the author field). 
+Sometimes, R package may extend the metadata fields for their own purposes.
+Certain output formats may require specific  metadata. 
+For example, the `rticles`-package that offers templates for authoring scientific manuscripts comes with extra fields that are described in the package documentation and offer extra options for flexible formatting of documents.
+R Markdown has been extended to hundreds of document formats which are often highly configurable by their metadata.
+The `repro` package uses the metadata for hints to make the research project reproducible.
+Researchers should list all dependent resources of their research project in the metadata, that is, R scripts, data files, and external packages in the following format (see everything below the line *repro:*):
 
 ```markdown
 ---
@@ -464,43 +470,46 @@ repro:
 
 This information makes internal dependencies to other files in the project and external dependencies to R packages explicit.
 `repro` can use this information to infer a Makefile for the dependencies on other files and a Dockerfile that includes all required packages.
-In day-to-day work the simplest solution is to use the function `repro::automate()` which both infers a Makefile and a Dockerfile from all R Markdown  (all files with the ending `.Rmd`) and there respective repro metadata.
-Every time you change the `repro`-metadata, change the output format, or add a new R Markdown, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
+In everyday work, the simplest solution is to now call the function `repro::automate()` which both creates a Makefile and a Dockerfile from all R Markdown files in the project (all files with the ending `.Rmd`) based on the respective repro metadata entries.
+Every time you change the `repro`-metadata, change the output format, or add a new R Markdown file to the project, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
 The function `repro::automate()` does not overwrite manual changes, and there is no harm in running it too often.
-Besides the main Makefile and the Dockerfile repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git.
+Other than the Makefile and the Dockerfile, which are created in the document root path, repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git. <!--AB: why is this addition not automated? Feels strange given that this is our recommended best practice?!-->
 
-When you or people who received your project from GitHub want to reproduce the project, they can ask repro to explain how this should be done:
+When you or someone else who received your project want to reproduce it, they can ask repro to explain how this should be done:
 
 ```{r}
 repro::rerun()
 ```
-
-However, users do not have to have repro installed to reproduce a project, in fact, they do not even need R installed. 
+<!--AB: I still think this should be repro::reproduce() please change!-->
+Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.
+These projects will remain reproducible irrespective of whether `repro` will be maintained and remain accessible in future.
+Users do not have to have repro installed to reproduce a project, in fact, they do not even need to have R installed because the entire project can be rebuilt inside of a container that has R installed. 
 The two Make commands `make docker` and `make -B DOCKER=TRUE` together with an installation of Make and Docker are sufficient.
-They can be pasted into a terminal and will reproduce the project in many cases.
+The commands can be pasted into a terminal and will reproduce the project in many cases.
+<!--AB: I said this before. I think it really should be possible to execute this command from within R. Never underestimate the troubles people can have with the terminal. I think we discussed this before. Please add a function repro::rerun(execute=TRUE) or -- if we rename it -- repro::reproduce(execute=TRUE). -->
 
-# Advanced Tutorial
+# Advanced Features
 
 Some projects, however, are not as easy to make reproducible.
-As explained above, repro is merely a simplified interface.
+As explained above, repro is merely a simplified interface that guarantuees a high level of reproducibility for simple projects.
 These simplifications are possible because of two restrictions.
-First, the project can only rely on R packages for the Dockerfile and second, it can have no multilayered preprocessing for the Makefile.
+First, the project can only rely on R packages for the Dockerfile and second, it can have no multilayered preprocessing for the Makefile.<!--AB: please explain both points in more detail-->
 Lifting these restrictions requires the user to interact more directly with Make or Docker.
 To satisfy more complicated requirements users need to understand how repro utilizes Make and Docker internally.
 
 Let us dissect the command for reproducing a repro project: `make docker && make -B DOCKER=TRUE`; it consists of two steps.
-First it virtually recreates the software environment and then it executes computational recipes in the virtual software environment.
+First it recreates the virtual software environment (Docker) and then it executes computational recipes in the virtual software environment (Make).
 The first step is represented by the command `make docker`.
 The command `make docker` will trigger Make to build the target `docker`.
 The recipe for this target builds an image from your Dockerfile.
 The `&&` only runs the second command if the first was successful.
-Therefore, the computational steps are only executed, when the software environment is set up.
-The second step and actual reproduction is again a call to Make in the form of `make -B DOCKER=TRUE` with three noteworthy properties.
+Therefore, the computational steps are only executed when the software environment is set up.
+The second step and actual reproduction is again a call to Make in the form of `make -B DOCKER=TRUE` with three noteworthy parts.
 First, a call to `make` without any explicit target will build the Make target `all`.
-Second, the flag `-B` means that Make will consider all prerequisites as outdated and hence will rebuild everything.
+Second, the flag `-B` means that Make will consider all dependencies as outdated and hence will rebuild everything.
 Third, repro constructs Make targets so that if you supply `DOCKER=TRUE` they are executed within the Docker image of the project.
 
-This interplay between Docker and Make is so complicated because it resembles a chicken or egg problem.
+This interplay between Docker and Make is relatively complicated because it resembles a chicken or egg problem.
 We have computational steps (Make) which depend on the software environment (Docker) for which we again have computational steps that create it.
 Users only require a deeper understanding when they either want to have more complex computational recipes than rendering an R Markdown or require other software than R packages.
 
