@@ -583,20 +583,19 @@ The file `.repro/Makefile_Docker` does again contain a rather complicated templa
 This Makefile coordinates the interplay between Make and Docker and contains targets for building (with `make docker`) and saving (with `make save-docker`) the Docker image.
 Additionally, it provides facilities to execute commands within the container.
 If you write computational recipe for a target it will be by default evaluated using the locally installed software.
-To instead evaluate commands inside the Docker image, you should wrap them in `$(RUN1) command $(RUN2)`, like in this example:<!--AB please explain this hypothetical example in more detail, so that we can follow along-->
-
+To instead evaluate commands inside the Docker image, you should wrap them in `$(RUN1) command $(RUN2)`, like in this example, which is identical to the first Make example we gave above except for the addition of `$(RUN1)` and `$(RUN2)` in l. 2:
 ```bash
 simulated_data.csv: R/simulate.R
   $(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN1)
 ```
 
-If users execute this in the terminal
+If users execute this in the terminal:
 
 ```bash
 make simulated_data.csv
 ```
-
-this is simply translated to:
+It behaves exactly as the in the first Make example, the script `R/simulate.R` is run using the locally installed R.
+Because this translates simply to:
 
 ```{r, echo=FALSE, results='asis'}
 cat("```bash",
@@ -610,7 +609,7 @@ But if users use
 make DOCKER=TRUE simulated_data.csv
 ```
 
-it is evaluated within the Docker container:
+it is evaluated within the Docker container using the software within it and not the locally installed R version:
 
 ```{r, echo=FALSE, results='asis'}
 cat("```bash",
