@@ -53,10 +53,6 @@ abbreviations:
     long: Gigabyte
   - short: Kb
     long: Kilobyte
-  - short: GUI
-    long: Graphical User Interface
-  - short: CLI
-    long: Comand Line Interface
   - short: CRAN
     long: Comprehensive R Archive Network
 repro:
@@ -202,7 +198,7 @@ In a word processor, the researcher writes the text, and in another software, th
 Typically, results are manually copyied and pasted from one software to the other, a process that often produces inconsistencies [@nuijtenPrevalenceStatisticalReporting2016].
 
 Dynamic document generation integrates both steps.
-This paradigm can be traced back to @knuthCWEBSystemStructured who suggested that a computer prorgram should be interspersed with explanations of its logic in a natural language. <!--AB I removed the quotation because it is not really clear to me how it matches what we say about R Markdown - I am not sure whether my changes make things better, though-->
+Through dynamic document generation, code becomes an integral, although usually hidden, part of the manuscript, complementing the verbal description and allows interested readers deeper understanding [@knuthCWEBSystemStructured; @claerboutElectronicDocumentsGive1992].
 **R Markdown** uses Markdown for writing the text and R (or other programming languages) for the analysis.
 Markdown is a lightweight text format in plain text with a minimal set of reserved symbols for formatting instructions.
 This way, Markdown does not need any specialized software for editing.
@@ -211,6 +207,7 @@ We suggest using Markdown for all sorts of documents that are created in the aca
 R Markdown extends regular Markdown by allowing users to include R code chunks [in fact, arbitrary computer code @riedererChapter15Other] into a Markdown document.
 Upon rendering the document, the code blocks are executed, and their output is dynamically inserted into the document.
 This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
+@xieMarkdownCookbook2020 provides an extensive yet practical introduction to most features of R Markdown.
 
 One would hope that sharing a literate statistical analysis would allow others (including one own's future self) to simply download and run (ie., reproduce) a given analysis.
 However, while version control and dynamic document generation are becoming more common, this approach fails to guarantee reproducibility in most instances [@Peikert2019].
@@ -281,14 +278,9 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 
 # Creating reproducible research projects
 
-A major barrier to adoption of the above tools for researchers is that they are typically used via a command line interface (CLI).
-The CLI predates and coexists with graphical user interfaces (GUIs), which many users (including the authors) prefer over the text-based interactions of a CLI for most tasks.
-A GUI has the apparent disadvantage for reproducibility that it requires a user who clicks on the correct elements (such as buttons or menu items) in the correct order.<!--AB not sure about the entire paragraph about CLI vs GUI here -  can we shorten this entire paragraph?-->
-Depending on the number of steps taken, this is not only much effort but also error-prone.
-This tutorial seeks a compromise.
-We use simple GUI actions to create a reproducible workflow template, but the reproduction of such workflow does not rely on manual steps. <!--AB I modified this sentence - but I am not sure what we are saying here with the "manual steps"-->
-At several points, we rely on or have developed a CLI that wraps a more complicated (and powerful) CLI.
-These wrappers use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in layman's terms and are accessible from within R.
+The above mentioned tools require much expertise that is beyond the traditional curriculum of researchers.
+To aid researcher adopting these tools we rely on or have developed helpers that wrap more complicated (and powerful) tools.
+These wrappers use standard tools but provide feedback for the user about what the computer does and what the user should do in layman's terms and are accessible from within R.
 We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
 These alternative tools are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
 
@@ -384,7 +376,7 @@ Adynamic document has three elements:
 2. Executable code 
 3. Metadata
 
-The text of an R Markdown is written in Markdown. <!--AB citation needed for further information-->
+The text of an R Markdown is written in Markdown (see @xieMarkdownDefinitiveGuide2019 for technical details and @xieMarkdownCookbook2020 for practical guidance).
 The following example serves to illustrate the Markdown syntax. 
 It shows how to create a heading, a word in bold font, and a list of several items in Markdown:
 
@@ -499,9 +491,22 @@ The commands can be pasted into a terminal and will reproduce the project in man
 # Advanced Features
 
 Some projects, however, are not as easy to make reproducible.
-As explained above, repro is merely a simplified interface that guarantuees a high level of reproducibility for simple projects.
+As explained above, `repro` is merely a simplified interface that guarantees a high level of reproducibility for simple projects.
 These simplifications are possible because of two restrictions.
-First, the project can only rely on R packages for the Dockerfile and second, it can have no multilayered preprocessing for the Makefile.<!--AB: please explain both points in more detail-->
+Users who ask themselves either "How can I install software that is not an R package in the Docker image?" or "How can I express complex dependencies between files, e.g. raw data turned into preprocessed data required by analysis?" need to be aware of these restriction and require a deeper understanding of the inner workings of `repro`.
+All other users may safely skip this section and may return to it if they become limited by restriction.
+
+The metadata the `repro::automate()` function relies on can only express dependencies R packages for the Dockerfile and only trivial dependencies (in the form of "file must exist") for the Makefile. 
+The first limitation means that users must rely on software that is either already provided by the base Dockerimage "rocker/verse" or the R packages they list in the metadata.
+Other software that users might need like other programming languages, not already installed latex packages etc. have to be added manually.
+We plan to add support for commonly used ways to install software beyond R packages via the metadata and `repro::automate()` e.g. for system libraries (via `apt` the Ubuntu package manager), Latex packages (via `tlmgr` the Tex Live package manager), python packages (via `pip` the python package manager).
+The second limitation is about dependencies.
+Make can represent complex dependencies like in this example: A depends on B, which in turn depends on C and D.
+If B is missing in this example, Make would know how to recreate it from C and D.
+These dependencies and especially how these dependencies should be resolved are difficult to represent in the metadata.
+Users therefore have to either "flatten" the dependency structure, by simply stating that A depends on B, C and D therefore leaving out important information or express the dependencies directly within the Makefile.
+
+The following section explains how to overcome these limitation while still relying on the automatons afforded by `repro`.
 Lifting these restrictions requires the user to interact more directly with Make or Docker.
 To satisfy more complicated requirements users need to understand how repro utilizes Make and Docker internally.
 
@@ -561,7 +566,7 @@ Docker eventually requires a single Dockerfile to run, so `repro::automate()` si
 
 With this approach, users of `repro` can not only build complex software environments but they can also implement complex file dependencies.
 The standard `repro` metadata only makes sure that all dependencies are available but does not allow you to specify custom recipes for them in the metadata.
-If you can formulate the creation of dependencies in terms of computational steps you should include these in the Makefile.<!--AB I do not understand this sentence-->
+If you can formulate the creation of dependencies in terms of computational steps, e.g. the file `data/clean.csv` is created from `data/raw.csv` by script `R/preprocess.R`, you should include these in the Makefile.
 The Makefile that `repro` creates is only an template and you are free to change it.
 However, make sure to never remove the following two lines:
 
@@ -579,20 +584,19 @@ The file `.repro/Makefile_Docker` does again contain a rather complicated templa
 This Makefile coordinates the interplay between Make and Docker and contains targets for building (with `make docker`) and saving (with `make save-docker`) the Docker image.
 Additionally, it provides facilities to execute commands within the container.
 If you write computational recipe for a target it will be by default evaluated using the locally installed software.
-To instead evaluate commands inside the Docker image, you should wrap them in `$(RUN1) command $(RUN2)`, like in this example:<!--AB please explain this hypothetical example in more detail, so that we can follow along-->
-
+To instead evaluate commands inside the Docker image, you should wrap them in `$(RUN1) command $(RUN2)`, like in this example, which is identical to the first Make example we gave above except for the addition of `$(RUN1)` and `$(RUN2)` in l. 2:
 ```bash
 simulated_data.csv: R/simulate.R
   $(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN1)
 ```
 
-If users execute this in the terminal
+If users execute this in the terminal:
 
 ```bash
 make simulated_data.csv
 ```
-
-this is simply translated to:
+It behaves exactly as the in the first Make example, the script `R/simulate.R` is run using the locally installed R.
+Because this translates simply to:
 
 ```{r, echo=FALSE, results='asis'}
 cat("```bash",
@@ -606,7 +610,7 @@ But if users use
 make DOCKER=TRUE simulated_data.csv
 ```
 
-it is evaluated within the Docker container:
+it is evaluated within the Docker container using the software within it and not the locally installed R version:
 
 ```{r, echo=FALSE, results='asis'}
 cat("```bash",
