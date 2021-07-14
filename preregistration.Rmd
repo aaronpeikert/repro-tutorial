@@ -1,0 +1,116 @@
+---
+title: "A Preregistered Comparison of Male and Female Machiavellianism"
+date: "7/10/2021"
+author:
+  - name: Aaron Peikert
+    affil: 1, *
+    orcid: 0000-0001-7813-818X
+  - name: Caspar J. Van Lissa
+    affil: 2, 3
+    orcid: 0000-0002-0808-5024
+  - name: Andreas M. Brandmaier
+    affil: 1, 4
+    orcid: 0000-0001-8765-6982
+affiliation:
+  - num: 1
+    address: |
+      Center for Lifespan Psychology---Max Planck Institute for Human Development
+      Lentzeallee 94, 14195 Berlin, Germany
+  - num: 2
+    address: |
+      Department of Methodology & Statistics---Utrecht University faculty of Social and Behavioral Sciences, Utrecht, Netherlands
+  - num: 3
+    address: |
+      Open Science Community Utrecht, Utrecht, Netherlands
+  - num: 4
+    address: |
+      Max Planck UCL Centre for Computational Psychiatry and Ageing Research
+      Berlin, Germany and London, UK
+# firstnote to eighthnote
+correspondence: |
+  peikert@mpib-berlin.mpg.de
+journal: psych
+type: tutorial
+status: submit
+bibliography: preregistration.bib
+abstract: |
+  We test for group differences in machiavellism between self identified males and females in the MACH-IV in a well powered preregistered study.
+output:
+  bookdown::markdown_document2:
+    base_format: rticles::mdpi_article
+header-includes:
+  -   \def\baselinestretch{0.98}
+---
+
+\setlength{\bibsep}{0cm}
+\titlespacing{\section}{.1cm}{.1cm}{.1cm}
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(report)
+source(here::here("R", "simulation_funs.R"))
+```
+
+Theoretical Background
+======================
+
+There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self identified males and females. @muris2017 note that studies focusing on gender differences in machiavellianism are sparse. We therefore want to add to this body of literature.
+
+Method
+======
+
+```{r, echo=FALSE}
+res <-
+  readr::read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddddd")
+choosen_power <- .8
+choosen_d <- .2
+minn <- filter(res, d == choosen_d, power > choosen_power) %>% 
+  filter(n == min(n))
+```
+
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study [@simmons2012]. We use data available from [openpsychometrics.org](https://openpsychometrics.org/_rawdata/) from the online version of the MACH-IV [@christie1970]and included participants that have responded to at least one machiavellianism item and reported their gender as either "male" or "female". We conduct a t-test on the average of machiavellianism items, if the skew of this avarage is below 1.0, else we conduct a Mann--Whitney--Wilcoxon test between the gender groups. A simulation we conducted indicated that with a sample size of `r minn$n` for an alpha of .05 (two-sided) we archive at least `r choosen_power*100`% power assuming an effect size of `r choosen_d`.
+
+Results
+=======
+
+```{r, echo=FALSE, results='asis'}
+real_data <- here::here("data", "data.csv")
+simulated <- !fs::file_exists(real_data)
+if(simulated){
+  cat("\\textcolor{red}{This document and the results presented herein are based on simulated data and should not be interpreted.}")
+  set.seed(1234)
+  mach <- simulate_data(900, 8, 0.3, 10)
+} else {
+  mach <- readr::read_csv(real_data)
+}
+```
+
+```{r, echo=FALSE, results='asis'}
+analysis <- planned_analysis(mach)
+report <- function(analysis) {
+  params <- report::report_parameters(analysis$test)
+  table <- attributes(params)$table
+  model <- report::report_model(analysis$test, table = table)
+  if (analysis$use_rank)
+    model <-
+    str_replace(model,
+                fixed("Welch Two Sample t-test"),
+                "Mann--Whitney--Wilcoxon test")
+  cat("The ", model, " suggests that the effect is ", params, sep = "")
+}
+```
+
+```{r, echo=FALSE, results='asis'}
+```
+
+Discussion
+==========
+
+```{r, echo=FALSE, results='asis'}
+if(simulated){
+  cat("\\textcolor{red}{This document was created before we have gathered any data, we therefore have nothing to discuss.}")
+}
+```
+
+References
+==========
