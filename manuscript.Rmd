@@ -802,8 +802,6 @@ res %>%
   NULL
 ```
 
-<!--AB: add some text explaining what to once the final data is available. What parts have to be replaced in the code and in the project structure; also recommend tagging the different versions with releases. Do we have functions in repro to do this? Can we have something like repro::release("preprint") or repro::release("preregistration") -- that would be nice! -->
-
 # Discussion
 
 <!--AB: TODO add a quick summary -->
