@@ -53,10 +53,6 @@ abbreviations:
     long: Gigabyte
   - short: Kb
     long: Kilobyte
-  - short: GUI
-    long: Graphical User Interface
-  - short: CLI
-    long: Comand Line Interface
   - short: CRAN
     long: Comprehensive R Archive Network
 repro:
@@ -281,14 +277,9 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 
 # Creating reproducible research projects
 
-A major barrier to adoption of the above tools for researchers is that they are typically used via a command line interface (CLI).
-The CLI predates and coexists with graphical user interfaces (GUIs), which many users (including the authors) prefer over the text-based interactions of a CLI for most tasks.
-A GUI has the apparent disadvantage for reproducibility that it requires a user who clicks on the correct elements (such as buttons or menu items) in the correct order.<!--AB not sure about the entire paragraph about CLI vs GUI here -  can we shorten this entire paragraph?-->
-Depending on the number of steps taken, this is not only much effort but also error-prone.
-This tutorial seeks a compromise.
-We use simple GUI actions to create a reproducible workflow template, but the reproduction of such workflow does not rely on manual steps. <!--AB I modified this sentence - but I am not sure what we are saying here with the "manual steps"-->
-At several points, we rely on or have developed a CLI that wraps a more complicated (and powerful) CLI.
-These wrappers use standard CLI tools but provide feedback for the user about what the computer does and what the user should do in layman's terms and are accessible from within R.
+The above mentioned tools require much expertise that is beyond the traditional curriculum of researchers.
+To aid researcher adopting these tools we rely on or have developed helpers that wrap more complicated (and powerful) tools.
+These wrappers use standard tools but provide feedback for the user about what the computer does and what the user should do in layman's terms and are accessible from within R.
 We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
 These alternative tools are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
 
