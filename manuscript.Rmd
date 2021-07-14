@@ -705,30 +705,33 @@ As an example of a data-dependent decision, we included a rank transformation if
 
 [^caution-mww]: The Mann–Whitney–Wilcoxon is in fact **not** more robust than the Welch corrected t-test for reasonably large sample sizes. The interested reader can use the provided code for the simulation to verify that the t-test provides unbiased effect sizes but the Mann–Whitney–Wilcoxon overestimates effect size with increasing sample size and skewness.
 
-This function is one possible translation of the verbal descriptions:
+This function is one possible translation of the verbal description above:
 
 ```{r planned_analysis}
 ```
 
-One point of note about the analytical strategy and the function implementing it is that there are several translations into code that would fit the descriptions but would produce different results.
+Importantly, natural language descriptions do not map unambiguously onto computer code implementations. 
+The same textual descriptions may be implemented differently by different persons depending on their statistical and programming knowledge but also based on their own expectations and beliefs.
 One example would be using the function `wilcox.test` instead of the combinations of `rank` and `t.test`.
-Both are valid implementation of Mann–Whitney–Wilcoxon test but the first assumes equal variance while the second applies Welch's correction and hence is robust even with unequal variances [@zimmermanRankTransformationsPower1993].
-Mentioning every such minute implementation detail is would result in overly verbose preregistrations but does change the outcome.
+Both are valid implementation of the Mann–Whitney–Wilcoxon test but the first assumes equal variance whereas the second applies Welch's correction and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
+Mentioning every such minute implementation detail is almost impossible and would result in overly verbose preregistrations.
+Still, these details can make a difference and provide unwanted researcher degrees-of-freedom.
 
-We also want to caution researchers to not use the here shown procedure.
-We merely choose it for didactic purposes because it may be familiar to many researchers because the t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
-This analytical strategie is suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]); 
+Please note that the procedure of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for adressing your research question.
+The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
+The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). <!--AB can we move this to a different place? Maybe this would actually better fit to the discussion/limitation section!--> 
 
-To use this function one needs a compatible dataset.
+To use this function one needs a compatible dataset. <!--AB what is "this" function? What does "compatible" mean?-->
 At the time of preregistration there is of course no actual data available.
-We therefore simulate a dataset.
+We therefore simulate a dataset first that resembles the expected structure of the empirical data that we will use for the final analysis.
 
 ```{r simulate_data}
 ```
+<!--AB it is odd that the return variable is called effect because it is a dataset-->
 
-We decided to draw non-normal data to test how well our procedure performed under non-optimal situations.
-Specifically, we draw from a $\chi^2$-distribution, where in one group we add difference that conforms to a standardized effect size.
-This simulated dataset fits perfectly into our planned analysis:
+Here, we decided to randomly draw non-normal data to test how well our procedure performed under non-optimal situations.
+Specifically, we draw from a $\chi^2$-distribution, where in one group we add difference that conforms to a given standardized effect size (a Cohen's d of .2).
+This simulated dataset fits perfectly into our planned analysis with a sample size of 400 and 10 items: <!--AB in what way? please explain-->
 
 ***
 
@@ -745,12 +748,18 @@ results <-
   )
 ```
 
-These results are based on simulated data:
+Using the `report` package, we can obtain a preview of how our reporting will look like based on simulated data:
 
-```{r, results='asis'}
+```{r, results='asis', eval=FALSE}
 report::report(results$test)
 ```
 
+This call to the `report()` function will yield the following automatically generated output:
+
+```{r, results='asis', echo=FALSE}
+report::report(results$test)
+```
+<!--AB it is difficult to discern the automatically generated text and out manuscript text even though there is the horizontal line. Not sure how to improve this.-->
 ***
 
 ```{r, echo=FALSE}
@@ -766,6 +775,8 @@ To determine a minimal sample size for this study we repeat this simulation acro
 One standard recomendations for choosing a sample size is to have an expected power of 80% based on the expected effect size.
 @Jones2013 found in three studies gender differences of .24, .29, and .35 for their machiavilism subscale.
 If we want to detect an effect of size `r choosen_d` with an `r choosen_power*100`% probability, our simulation shows that we require at least `r minn$n` participants.
+
+<!--AB please add a figure number and a proper citation to the figure. Also, tell people where they can find the code to run the power analysis themselves-->
 
 ```{r, echo=FALSE}
 res %>%
@@ -785,6 +796,20 @@ res %>%
        color = "Cohen's D") +
   NULL
 ```
+
+<!--AB: add some text explaining what to once the final data is available-->
+
+# Discussion
+
+<!--AB: TODO add a quick summary -->
+
+# Limitations
+
+<!--AB: add limitations; move the t-test discussion on non-optimality here TODO-->
+
+# Outlook
+
+<!--AB: two lines of what the future of the package, of such standards, and prereigstration is. Maybe say something that preregistration is not always possible or wanted but that reproducibility is almost always a good idea?-->
 
 # References
 
