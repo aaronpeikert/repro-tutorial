@@ -207,6 +207,7 @@ We suggest using Markdown for all sorts of documents that are created in the aca
 R Markdown extends regular Markdown by allowing users to include R code chunks [in fact, arbitrary computer code @riedererChapter15Other] into a Markdown document.
 Upon rendering the document, the code blocks are executed, and their output is dynamically inserted into the document.
 This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
+@xieMarkdownCookbook2020 provides an extensive yet practical introduction to most features of R Markdown.
 
 One would hope that sharing a literate statistical analysis would allow others (including one own's future self) to simply download and run (ie., reproduce) a given analysis.
 However, while version control and dynamic document generation are becoming more common, this approach fails to guarantee reproducibility in most instances [@Peikert2019].
@@ -375,7 +376,7 @@ Adynamic document has three elements:
 2. Executable code 
 3. Metadata
 
-The text of an R Markdown is written in Markdown. <!--AB citation needed for further information-->
+The text of an R Markdown is written in Markdown (see @xieMarkdownDefinitiveGuide2019 for technical details and @xieMarkdownCookbook2020 for practical guidance).
 The following example serves to illustrate the Markdown syntax. 
 It shows how to create a heading, a word in bold font, and a list of several items in Markdown:
 
