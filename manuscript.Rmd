@@ -490,9 +490,22 @@ The commands can be pasted into a terminal and will reproduce the project in man
 # Advanced Features
 
 Some projects, however, are not as easy to make reproducible.
-As explained above, repro is merely a simplified interface that guarantuees a high level of reproducibility for simple projects.
+As explained above, `repro` is merely a simplified interface that guarantees a high level of reproducibility for simple projects.
 These simplifications are possible because of two restrictions.
-First, the project can only rely on R packages for the Dockerfile and second, it can have no multilayered preprocessing for the Makefile.<!--AB: please explain both points in more detail-->
+Users who ask themselves either "How can I install software that is not an R package in the Docker image?" or "How can I express complex dependencies between files, e.g. raw data turned into preprocessed data required by analysis?" need to be aware of these restriction and require a deeper understanding of the inner workings of `repro`.
+All other users may safely skip this section and may return to it if they become limited by restriction.
+
+The metadata the `repro::automate()` function relies on can only express dependencies R packages for the Dockerfile and only trivial dependencies (in the form of "file must exist") for the Makefile. 
+The first limitation means that users must rely on software that is either already provided by the base Dockerimage "rocker/verse" or the R packages they list in the metadata.
+Other software that users might need like other programming languages, not already installed latex packages etc. have to be added manually.
+We plan to add support for commonly used ways to install software beyond R packages via the metadata and `repro::automate()` e.g. for system libraries (via `apt` the Ubuntu package manager), Latex packages (via `tlmgr` the Tex Live package manager), python packages (via `pip` the python package manager).
+The second limitation is about dependencies.
+Make can represent complex dependencies like in this example: A depends on B, which in turn depends on C and D.
+If B is missing in this example, Make would know how to recreate it from C and D.
+These dependencies and especially how these dependencies should be resolved are difficult to represent in the metadata.
+Users therefore have to either "flatten" the dependency structure, by simply stating that A depends on B, C and D therefore leaving out important information or express the dependencies directly within the Makefile.
+
+The following section explains how to overcome these limitation while still relying on the automatons afforded by `repro`.
 Lifting these restrictions requires the user to interact more directly with Make or Docker.
 To satisfy more complicated requirements users need to understand how repro utilizes Make and Docker internally.
 
@@ -552,7 +565,7 @@ Docker eventually requires a single Dockerfile to run, so `repro::automate()` si
 
 With this approach, users of `repro` can not only build complex software environments but they can also implement complex file dependencies.
 The standard `repro` metadata only makes sure that all dependencies are available but does not allow you to specify custom recipes for them in the metadata.
-If you can formulate the creation of dependencies in terms of computational steps you should include these in the Makefile.<!--AB I do not understand this sentence-->
+If you can formulate the creation of dependencies in terms of computational steps, e.g. the file `data/clean.csv` is created from `data/raw.csv` by script `R/preprocess.R`, you should include these in the Makefile.
 The Makefile that `repro` creates is only an template and you are free to change it.
 However, make sure to never remove the following two lines:
 
