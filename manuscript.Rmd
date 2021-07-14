@@ -198,7 +198,7 @@ In a word processor, the researcher writes the text, and in another software, th
 Typically, results are manually copyied and pasted from one software to the other, a process that often produces inconsistencies [@nuijtenPrevalenceStatisticalReporting2016].
 
 Dynamic document generation integrates both steps.
-This paradigm can be traced back to @knuthCWEBSystemStructured who suggested that a computer prorgram should be interspersed with explanations of its logic in a natural language. <!--AB I removed the quotation because it is not really clear to me how it matches what we say about R Markdown - I am not sure whether my changes make things better, though-->
+Through dynamic document generation, code becomes an integral, although usually hidden, part of the manuscript, complementing the verbal description and allows interested readers deeper understanding [@knuthCWEBSystemStructured; @claerboutElectronicDocumentsGive1992].
 **R Markdown** uses Markdown for writing the text and R (or other programming languages) for the analysis.
 Markdown is a lightweight text format in plain text with a minimal set of reserved symbols for formatting instructions.
 This way, Markdown does not need any specialized software for editing.
