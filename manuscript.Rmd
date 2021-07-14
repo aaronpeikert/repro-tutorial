@@ -717,13 +717,12 @@ Both are valid implementation of the Mann–Whitney–Wilcoxon test but the firs
 Mentioning every such minute implementation detail is almost impossible and would result in overly verbose preregistrations.
 Still, these details can make a difference and provide unwanted researcher degrees-of-freedom.
 
-Please note that the procedure of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for adressing your research question.
-The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
-The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). <!--AB can we move this to a different place? Maybe this would actually better fit to the discussion/limitation section!--> 
-
+<!--AB here is kind of a break in the text-->
 To use this function one needs a compatible dataset. <!--AB what is "this" function? What does "compatible" mean?-->
 At the time of preregistration there is of course no actual data available.
 We therefore simulate a dataset first that resembles the expected structure of the empirical data that we will use for the final analysis.
+Using the simulated dataset as placeholder, we can now write a scientific report including all analysis code blocks and the presentation of results, which can serve as PAC.
+The following code simulates a dataset with one observed variable in two groups.
 
 ```{r simulate_data}
 ```
@@ -748,7 +747,9 @@ results <-
   )
 ```
 
-Using the `report` package, we can obtain a preview of how our reporting will look like based on simulated data:
+Next, we add dynamic code blocks to our Markdown report that implement the planned reporting of the final results.
+A variety of packages automatically generate well formatted outputs of statistical reports or even entire tables of estimates or figures. <!--AB add citations to some of the packages papaja? stargazer? and more...-->
+Here we use the `report` package to create a preview of how our reporting will look like based on simulated data:<!--AB add citation to the report package-->
 
 ```{r, results='asis', eval=FALSE}
 report::report(results$test)
@@ -806,6 +807,9 @@ res %>%
 # Limitations
 
 <!--AB: add limitations; move the t-test discussion on non-optimality here TODO-->
+Please note that the procedure of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for adressing your research question.
+The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
+The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). <!--AB can we move this to a different place? Maybe this would actually better fit to the discussion/limitation section!--> 
 
 # Outlook
 
