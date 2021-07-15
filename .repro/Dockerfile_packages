@@ -16,5 +16,5 @@ RUN install2.r --error --skipinstalled \
   tidyverse \ 
   usethis
 RUN installGithub.r \ 
-  aaronpeikert/repro@368b897d \ 
+  aaronpeikert/repro@c3cae1f \ 
   rstudio/webshot2@f62e743

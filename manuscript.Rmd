@@ -60,7 +60,7 @@ repro:
     - tidyverse
     - usethis
     - gert
-    - aaronpeikert/repro@368b897d
+    - aaronpeikert/repro@c3cae1f
     - here
     - rstudio/webshot2@f62e743
     - targets
@@ -488,6 +488,12 @@ When you or someone else who received your project want to reproduce it, they ca
 
 ```{r}
 repro::reproduce()
+```
+
+If you uncomfortable with using the terminal directly, you can sent the command to the terminal from within R:
+
+```{r, eval=FALSE}
+system(reproduce())
 ```
 
 Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.
