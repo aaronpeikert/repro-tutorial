@@ -768,7 +768,9 @@ results <-
 ```
 
 Next, we add dynamic code blocks to our Markdown report that implement the planned reporting of the final results.
-A variety of packages automatically generate well formatted outputs of statistical reports or even entire tables of estimates or figures. <!--AB add citations to some of the packages papaja? stargazer? and more...-->
+A variety of packages automatically generate well formatted outputs of statistical reports or even entire tables of estimates or figures directly from R objects.
+Packages like [`pander`](https://github.com/Rapporter/pander) [@pander], [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) [@stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html) [@apaTables] and [`papaja`](http://frederikaust.com/papaja_man/) [@papaja] help you to create dynamically generated professional looking results.
+The package [`report`](https://github.com/easystats/report) [@report] is particularly noteworthy because it not only generates tables, but also a simple interpretation of the effects as actual prose (e.g it quantifies the size of an effect).
 Here we use the `report` package to create a preview of how our reporting will look like based on simulated data:<!--AB add citation to the report package-->
 
 ```{r, results='asis', eval=FALSE}
