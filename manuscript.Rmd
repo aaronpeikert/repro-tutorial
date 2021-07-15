@@ -656,7 +656,7 @@ We discuss PAC as an example of how a robust reproducibility standard has the po
 
 ## Benefits of PAC for study planning
 
-We consider three quality criteria to be important for juding a study plan.<!--AB: criteria for what?-->
+We consider three criteria when planning a study.
 First, the plan should be comprehensive, that is, researchers need to state the research question and describe the study design and analysis in detail.
 Second, the plan should be effective, meaning that the researchers can reasonably expect it to answer the research question at hand.
 Third, the plan should be efficient; the plan should only require the necessary amount of resources.
