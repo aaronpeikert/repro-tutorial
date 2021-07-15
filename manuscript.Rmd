@@ -60,7 +60,7 @@ repro:
     - tidyverse
     - usethis
     - gert
-    - aaronpeikert/repro@7bfaf98
+    - aaronpeikert/repro@ba1dda75
     - here
     - rstudio/webshot2@f62e743
     - targets
@@ -412,6 +412,15 @@ This is normal text, written in Markdown.
 1 + 1
 ```
 ````
+
+The results of your code are than dynamically inserted into the document.
+Dynamically means that whenever you turn the R Markdown into its output format the code is executed again and if you changed something the results are updated.
+The output document is than static, e.g. a pdf document, and can be shared wherever you like, e.g on a preprint server.
+This static document is somewhat decoupled from the R Markdown and the rest of the code that did create it.
+It is quite possible that several slightly different versions are therefore circulating.
+We therefore recomend to connect the static document to the version control system by dynamically including the identifier of the identifier of the Git commit, called hash, in the document.
+The `repro` package comes with the function `repro::current_hash()` for that purpose.
+This document was created from the commit with the hash ``r repro::current_hash()``.
 
 Now that you know how to write text and R code in an R Markdown, you need to know about metadata, like the title or the output format. Metadata are placed at the beginning of the document and are separated by three dashes from the document body; the following example is a full markdown document where the header is in lines 1--6.
 
