@@ -246,7 +246,8 @@ A version controlled dynamic document with dependency tracking may still rely on
 Troubleshooting issues specific to a particular programming language or dependent tool typically requires considerable expertise and pose a threat to reproducibility.
 One solution to avoid problems caused by missing or inconsistent external software dependencies is to provide not only the analysis script but all dependent software packages and system libraries via **software management**.
 One comprehensive approach to software management is containerization.
-"By packaging the key elements of the computational  environment  needed  to  run  the  desired  software, [...] they  make the software much easier to use, and the results easier to reproduce [@silverSoftwareSimplified2017]. <!--AB: direct quotes need a line number! See APA style guide-->
+"By packaging the key elements of the computational  environment  needed  to  run  the  desired  software, [...] they  make the software much easier to use, and the results easier to reproduce" [@silverSoftwareSimplified2017, p. 174]. <!--APA requires no line number, but pagenumber or section heading-->
+
 Instead of leaving it to the user which software should be installed how on their computer, **Docker** provides all software used in an analysis, including the operating system itself.
 The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
 Docker does this without interfering with the already installed software by using a virtual software environment independent of the host software environment.
@@ -641,10 +642,10 @@ Users with more advanced requirements can manually change all aspects of both pr
 <!--AB this is a too steep intro. please add two lines on what traditional preregistration is and why we would like to do it (including references to classic papers on pregistration and its benefits. What are the problems (ambiguity)? This should be said before we offer a solution. I moved some parts from below to here-->
 
 Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
-Preregistration increases the credibility of empirical results in three ways, @nosekPreregistrationHardWorthwhile2019:
+Preregistration increases the credibility of empirical results in three ways, @nosekPreregistrationHardWorthwhile2019, p. 2:
 
 > First, preregistration of analysis plans makes clear which analyses were planned a priori and which were conducted post hoc. This improves calibration of uncertainty for unplanned analyses, and diagnosticity of statistical inferences for planned analyses. [...] Doing so has the benefit of strengthening statistical inferences as compared with unplanned analyses. [...] Second, preregistration enables detection of questionable research practices such as selective outcome reporting (John et al. 2012) or Hypothesizing After the Results are Known (HARKing; Kerr, 1998). Third, preregistration of studies can reduce the impact of publication bias—particularly the prioritization of publishing positive over negative results—by making all planned studies discoverable whether or not they are ultimately published.
-<!--AB you need to add the line numbers to the citation-->
+<!--APA requires no line number, but pagenumber or section heading-->
 
 Here we propose to use reproducible research projects with the full analysis code written in advance to data collection as comprehensive and unambiguous form of preregistration.
 We term this approach _preregistration as code (PAC)_.
