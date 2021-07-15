@@ -202,7 +202,7 @@ Through dynamic document generation, code becomes an integral, although usually 
 **R Markdown** uses Markdown for writing the text and R (or other programming languages) for the analysis.
 Markdown is a lightweight text format in plain text with a minimal set of reserved symbols for formatting instructions.
 This way, Markdown does not need any specialized software for editing.
-It is highly fool-proof (unlike, for example, LaTeX <!--AB citation needed!-->), works well with version control systems, and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
+It is highly fool-proof [unlike, for example, LaTeX @lamportLATEXDocumentPreparation1994], works well with version control systems, and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
 We suggest using Markdown for all sorts of documents that are created in the academic context, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles], and presentations[@revealjs] or even your résumé [@vitae].
 R Markdown extends regular Markdown by allowing users to include R code chunks [in fact, arbitrary computer code @riedererChapter15Other] into a Markdown document.
 Upon rendering the document, the code blocks are executed, and their output is dynamically inserted into the document.
@@ -514,8 +514,8 @@ All other users may safely skip this section and may return to it if they become
 
 The metadata the `repro::automate()` function relies on can only express dependencies R packages for the Dockerfile and only trivial dependencies (in the form of "file must exist") for the Makefile. 
 The first limitation means that users must rely on software that is either already provided by the base Dockerimage "rocker/verse" or the R packages they list in the metadata.
-Other software that users might need like other programming languages, not already installed latex packages etc. have to be added manually.
-We plan to add support for commonly used ways to install software beyond R packages via the metadata and `repro::automate()` e.g. for system libraries (via `apt` the Ubuntu package manager), Latex packages (via `tlmgr` the Tex Live package manager), python packages (via `pip` the python package manager).
+Other software that users might need like other programming languages, not already installed LaTeX packages etc. have to be added manually.
+We plan to add support for commonly used ways to install software beyond R packages via the metadata and `repro::automate()` e.g. for system libraries (via `apt` the Ubuntu package manager), LaTeX packages (via `tlmgr` the Tex Live package manager), python packages (via `pip` the python package manager).
 The second limitation is about dependencies.
 Make can represent complex dependencies like in this example: A depends on B, which in turn depends on C and D.
 If B is missing in this example, Make would know how to recreate it from C and D.
