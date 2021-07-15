@@ -60,7 +60,7 @@ repro:
     - tidyverse
     - usethis
     - gert
-    - aaronpeikert/repro@ba1dda75
+    - aaronpeikert/repro@368b897d
     - here
     - rstudio/webshot2@f62e743
     - targets
@@ -487,9 +487,9 @@ Other than the Makefile and the Dockerfile, which are created in the document ro
 When you or someone else who received your project want to reproduce it, they can ask repro to explain how this should be done:
 
 ```{r}
-repro::rerun()
+repro::reproduce()
 ```
-<!--AB: I still think this should be repro::reproduce() please change!-->
+
 Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.
 These projects will remain reproducible irrespective of whether `repro` will be maintained and remain accessible in future.
 Users do not have to have repro installed to reproduce a project, in fact, they do not even need to have R installed because the entire project can be rebuilt inside of a container that has R installed. 
