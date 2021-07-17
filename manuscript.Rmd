@@ -674,7 +674,7 @@ For a PAC, researchers write a reproducible, dynamically generated manuscript in
 In this document, the results are initially based on simulated data that mimics the expected output.
 
 Writing a preregistration in form of a research article has the advantage that researchers already have great expertise in how to write a scientific manuscript.
-It follows that for preregistration they should stick to widely accepted standards of scientific writing [e.g. @apa7].
+It follows that for preregistrations they should stick to widely accepted standards of scientific writing [e.g. @apa7].
 We have already explained the need for reproducibility standards in the process of writing such manuscript and it is therefore only natural to extend these arguments to preregistration.
 
 ## Advantages of PAC over traditional preregistration
