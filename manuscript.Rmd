@@ -641,17 +641,17 @@ Users with more advanced requirements can manually change all aspects of both pr
 
 Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results by separating a priori planned analyses from those conducted unplanned and post hoc.
-For an a priori planned analysis, preregistration should reduce "researcher degrees of freedom" therefore the number of decisions researcher can make that could unduly influence the results.
+For a priori planned analysis, preregistration should reduce "researcher degrees of freedom" therefore the number of decisions researcher can make that could unduly influence the results.
 Preregistrations, however, have a problem.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis the results vary considerably [@silberzahnManyAnalystsOne2018].
-The current best practice to ensure that the preregistration are comprehensive and specific enough is to use preregistration templates, like the ones supplied by [The Open Science Framework](https://osf.io/).
+The current best practice to ensure that the preregistration are comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
 The structure these templates provides can more effectively reduce researchers degrees of freedom than an unstructured approach [@bakkerEnsuringQualitySpecificity2020].
 But these templates can not remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the simplest analysis.
 
 Our proposed solution is simple:
 Instead of describing the analysis, you write the code to conduct the analysis before you gather data.
 We term this approach of writing and publishing code before data collection *preregistration as code (PAC)*.
-PAC has the potential to all but eliminate researchers degrees of freedom that standard preregistration afford.
+PAC has the potential to all but eliminate researchers degrees of freedom that standard preregistration despite the best efforts afford.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
@@ -669,11 +669,11 @@ For example, @steegenMeasuringCrowdAgain2014 realized after publication that par
 Second, although it has been almost a decade since @steegenMeasuringCrowdAgain2014 have preregistered their code, the idea of publishing code before analyzing data has gained not much traction.
 This could change when combining the here proposed workflow and PAC.
 We want to extend PAC from preregistering code to preregistering *the whole manuscript as a dynamic document*.
-The idea is as follows.
+The idea is as follows:
 For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results (or similar) _before_ they gather empirical data.
 In this document, the results are initially based on simulated data that mimics the expected output.
 
-Writing a preregistration in form of a research article has the advantage that researchers already have great expertise in how to write a scientific manuscript.
+Writing a preregistration in form of a research article has the advantage that researchers already have great expertise in writing a scientific manuscript.
 It follows that for preregistrations they should stick to widely accepted standards of scientific writing [e.g. @apa7].
 We have already explained the need for reproducibility standards in the process of writing such manuscript and it is therefore only natural to extend these arguments to preregistration.
 
@@ -704,28 +704,30 @@ Third, the plan should be efficient; the plan should only require the necessary 
 
 ### Comprehensiveness
 
-### Efficiency
+Describing the preregistration in form of a journal article requires authors to follow the same standards that also ensure that research articles are comprehensive enough to replicate the described study.
+One particular advantage is the strong foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
+Nevertheless it can be fruitful to consult preregistration templates, because of there strong focus on formulating a comprehensive methods section.
+
+Another factor that ensures a comprehensive plan is writing the analysis based on simulated data.
+While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
+Simulating data forces the researcher to think about and address data analytic problems on a conceptual level before they make the effort to acquire data [@axelrodAdvancingArtSimulation1997].
+It also affords researchers with a simple technical check whether the analysis code runs without failure [@braiekTestingMachineLearning2020] (for example, does the code work with missing values, extreme outliers, etc.).
+Writing incomplete code is technically impossible or at least researchers would notice if they e.g. forgot to aggregate the data etc.
+For this technical check researcher do not necessarily have to simulated data, they could also rely on synthetic data.
+Synthetic data means that they apply measures to obfuscate true relations in the data, e.g. shuffle the main dependent variable etc.
 
 ### Effectiveness
 
-The introduction and theoretical background provide the basis for the studies' design.
-We argue that researchers can plan more effectively if they formulate the planned analysis as a method section that again follows best practices for describing empirical research.
-To ensure that the analysis is technically feasible, they can translate their method section into executable computer code for the data analysis using simulated data.
-The researchers can include a temporary "faked" results section based on the simulated data, employing dynamic document generation.
-This allows for an initial check whether the analysis actually runs without failure and helps to see whether the planned reporting (e.g., the selected statistics, figures, and tables) provides sufficient detail.
+With simulated data researchers can check if the analysis is technically complete and can also recover the true parameters of the simulation.
+When an analysis fails to recover the correct values in idealized conditions with big samples researchers should not expect this analysis to work under realistic conditions.
+Because the simulation captures the researchers expectations about the real world conditions it is the best way to assess the effectiveness of the analysis without actually gathering the data.
 
-To ensure a comprehensive plan, we suggest that researchers borrow from widely employed standards for writing an empirical manuscript [e.g. @apa7].
-The introduction and theoretical background provide the basis for the studies' design and can be written before gathering data.
-We argue that researchers can plan more effectively if they formulate the planned analysis as a method section that again follows best practices for describing empirical research.
-To ensure that the analysis is technically feasible, they can translate their method section into executable computer code for the data analysis using simulated data.
-The researchers can include a temporary "faked" results section based on the simulated data, employing dynamic document generation.
-This allows for an initial check whether the analysis actually runs without failure and helps to see whether the planned reporting (e.g., the selected statistics, figures, and tables) provides sufficient detail.
+### Efficiency
 
-While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
-First, you have to think about and address data analytic problems on a conceptual level before you make the effort to acquire data [@axelrodAdvancingArtSimulation1997].
-Second, with simulated data you can perform a simple technical check of whether the analysis code runs without failure [@braiekTestingMachineLearning2020] (for example, does the code work with missing values, extreme outliers, etc.).
-Third, repeated simulation with varying parameters, a so-called Monte Carlo simulation, can then be employed to plan resources to ensure efficiency. For example, researchers can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision]. @bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size. You may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
-
+A single simulated or synthesized dataset already helps to ensure that the plan is viable under certain cirumstances.
+However, repeated simulation with varying parameters, a so-called Monte Carlo simulation, lets researchers play through several scenarios.
+Monte Carlo simulation lets researcher navigate several trade offs regarding their resources.
+In the simplest case they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision]. @bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size. You may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
 # Preregistration as Code --- a Tutorial
 
