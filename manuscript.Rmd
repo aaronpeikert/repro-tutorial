@@ -646,17 +646,18 @@ Preregistrations, however, have a problem.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis the results vary considerably [@silberzahnManyAnalystsOne2018].
 The current best practice to ensure that the preregistration are comprehensive and specific enough is to use preregistration templates, like the ones supplied by [The Open Science Framework](https://osf.io/).
 The structure these templates provides can more effectively reduce researchers degrees of freedom than an unstructured approach [@bakkerEnsuringQualitySpecificity2020].
-But these templates can not remove researchers degrees of freedoms completely, because it is impossible to describe every detail of an analysis for all but the simplest analysis with natural language. # Hier vielleicht schon ein Beispiel?
+But these templates can not remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the simplest analysis.
 
-Our proposed solution is simple: Instead of describing the analysis, you write the code to conduct the analysis before you gather data.
+Our proposed solution is simple:
+Instead of describing the analysis, you write the code to conduct the analysis before you gather data.
 We term this approach of writing and publishing code before data collection *preregistration as code (PAC)*.
-PAC has the potential to all but eliminate researchers degrees of freedom. # Den Satz verstehe ich nicht
+PAC has the potential to all but eliminate researchers degrees of freedom that standard preregistration afford.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
 In an informal literature search (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
 
-We believe, however, that combining ideas from reproducibility and preregistration can turn this "neat" idea into a tool with tangible benefits for the research community. # Sehr gut
+We believe, however, that combining ideas from reproducibility and preregistration can turn this "neat" idea into a tool with tangible benefits for the research community.
 
 ## Why are PAC and reproducibility related? 
 
@@ -679,8 +680,8 @@ We have already explained the need for reproducibility standards in the process 
 ## Advantages of PAC over traditional preregistration
 
 We believe that pairing PAC with the here presented workflow offers five advantages over classical preregistration.
-First, a PAC removes any ambiguity regarding the translation of an analysis plan into code. # I would remove the term "natural language" everywhere
-Second, while being rigorous, it offers the flexibility to incorporate data-dependent decisions, formulated as code. # Every data-depended decision that can be preregistered can be formulated as code
+First, a PAC removes any ambiguity regarding the translation of an verbal analysis plan into code.
+Second, while being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis type over the other.
 For example, if distributional assumptions are not met, the code may branch out to employ robust methods; or, an analysis may perform automated variable selection mechanisms before running the final model.
 Third, a PAC is more comprehensive by design because its completeness can be empirically checked with simulated data.
@@ -692,7 +693,9 @@ Fifth, the preregistration is merely a development stage of the final manuscript
 ## Benefits of PAC for study planning
 
 Leaving meta-scientific benefits aside, a preregistration is a tool for planning a study.
-To use PAC for study planing, we suggest that researchers write a dynamically generated manuscript including the sections Introduction, Methods, and Results (or similar) _before_ they gather empirical data. To that end, they should borrow from widely employed standards for writing an empirical manuscript [e.g. @apa7]. Then they should translate their method section into executable computer code and simulate data that has the same structure as the data they expect to obtain from their experiments.
+To use PAC for study planing, we suggest that researchers write a dynamically generated manuscript including the sections Introduction, Methods, and Results (or similar) _before_ they gather empirical data.
+To that end, they should borrow from widely employed standards for writing an empirical manuscript [e.g. @apa7].
+Then they should translate their method section into executable computer code and simulate data that has the same structure as the data they expect to obtain from their experiments.
 
 We consider three domains where this procedure can help planning a study.
 First, the plan should be comprehensive, that is, researchers need to state the research question and describe the study design and analysis in detail.
@@ -705,7 +708,6 @@ Third, the plan should be efficient; the plan should only require the necessary 
 
 ### Effectiveness
 
-# everything that is written here should be sorted under the specific point
 The introduction and theoretical background provide the basis for the studies' design.
 We argue that researchers can plan more effectively if they formulate the planned analysis as a method section that again follows best practices for describing empirical research.
 To ensure that the analysis is technically feasible, they can translate their method section into executable computer code for the data analysis using simulated data.
