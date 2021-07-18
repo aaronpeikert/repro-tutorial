@@ -722,16 +722,64 @@ Because the simulation captures the researchers expectations about the real worl
 
 ### Efficiency
 
-A single simulated or synthesized dataset already helps to ensure that the plan is viable under certain cirumstances.
+A single simulated or synthesized dataset already helps to ensure that the plan is viable under certain circumstances.
 However, repeated simulation with varying parameters, a so-called Monte Carlo simulation, lets researchers play through several scenarios.
 Monte Carlo simulation lets researcher navigate several trade offs regarding their resources.
 In the simplest case they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision]. @bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size. You may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
-# Preregistration as Code --- a Tutorial
+## What you need to know before writing a PAC
 
-To guide the reader through a preregistration as code (PAC), we will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration:
+To write a PAC researchers should start by drafting a manuscript in form of an R Markdown.
+When they have completed the method section, they should begin writing code.
+We suggest writing three functions for each hypothesis, one for the planned analysis, one for the simulating the data and one for reporting the results.
+At the heart of a PAC lies the planned analysis so researchers should first draft a function called `planned_analysis()` that captures the description in the method section.
+This function should receive the data and derive relevant results from it.
 
-> "Is there a mean difference in the personality trait 'Machiavellism' between self identified females and males?"
+```{r}
+planned_analyis <- function(data){
+  # 1. preprocess e.g. with `rowMeans(data)`
+  # 2. conduct analysis e.g. with `t.test()`
+  # 3. `return(results)`
+}
+```
+
+Because it is difficult to draft such function without interactively test it, researcher should than proceed to write a function for simulating data.
+
+```{r}
+simulate_data <- function(n, effect_size){
+  # 1. warn users that the results are "fake"
+  # 2. draw `n` samples with `effect_size`
+  # 3. format and return in expected data format
+}
+```
+
+As soon as they have written `planned_anaylsis()` and `simulate_data()` they can iteratively improve both functions, e.g. till `planned_analysis()` runs without error and recovers the correct parameters from `simulate_data()`.
+The goal is that the output of `simulate_data()` works as input to the function `planned_analysis()`.
+
+This process can be tedious and complicated.
+If it proofs infeasible to simulate data, researcher can delay their preregistration till they have gathered data and repurpose the actual data.
+Of course researcher must not analyze the data before they write the preregistration but they can obfuscate the real data by shuffling the dependent variable or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
+
+When the researchers are satisfied with the function `planned_analysis()` they can think about how they would like to report the results of the analysis, via tables, plots and text.
+The implementation of this reporting should be in the function `report_analysis()`.
+
+```{r}
+report_results <- function(results){
+  # 1. create markdown tables from results
+  # 2. conditionally interpret results e.g. if(p < .025)"Result is significant."
+  # (optional) visualize results
+  # 3. return results section formatted in markdown
+}
+```
+
+These function again should be accept the output of `planned_analysis()` as input.
+Ideally, these three functions can be composed to create a "fake" results section, e.g. when composed to `report_analysis(planned_analysis(simulate_data()))` or `simulate_data() %>% planned_analysis() %>% report_analysis()` outputs a results section formatted in Markdown.
+
+# Preregistration as Code --- a Tutorial 
+
+To guide the reader through a preregistration as code (PAC), we will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration: 
+
+> "Is there a mean difference in the personality trait 'Machiavellism' between self identified females and males?" 
 
 This example serves only didactic purposes and not to derive substantive claims.
 Nevertheless, everything else is kept as close to a real research question as possible.
