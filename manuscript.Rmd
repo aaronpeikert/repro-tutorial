@@ -713,8 +713,6 @@ While rather uncommon for an empirical research project, we argue that simulatin
 Simulating data forces the researcher to think about and address data analytic problems on a conceptual level before they make the effort to acquire data [@axelrodAdvancingArtSimulation1997].
 It also affords researchers with a simple technical check whether the analysis code runs without failure [@braiekTestingMachineLearning2020] (for example, does the code work with missing values, extreme outliers, etc.).
 Writing incomplete code is technically impossible or at least researchers would notice if they e.g. forgot to aggregate the data etc.
-For this technical check researcher do not necessarily have to simulated data, they could also rely on synthetic data.
-Synthetic data means that they apply measures to obfuscate true relations in the data, e.g. shuffle the main dependent variable etc.
 
 ### Effectiveness
 
