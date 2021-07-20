@@ -28,7 +28,7 @@ planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
 }
 
 #----report_analysis----
-report_analysis <- function(analysis) {
+report_analysis <- function(analysis, cat = TRUE) {
   params <- report::report_parameters(analysis$test)
   table <- attributes(params)$table
   model <- report::report_model(analysis$test, table = table)
@@ -37,7 +37,13 @@ report_analysis <- function(analysis) {
     stringr::str_replace(model,
                 fixed("Welch Two Sample t-test"),
                 "Mann--Whitney--Wilcoxon test")
-  stringr::str_c("The ", model, " suggests that the effect is ", params, sep = "")
+  out <- stringr::str_c("The ", model, " suggests that the effect is ", params, sep = "")
+  if(cat){
+    cat(out)
+    return(invisible(out))
+  } else {
+    return(out)
+  }
 }
 
 #----extract_funs----
