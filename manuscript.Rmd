@@ -108,42 +108,46 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 
 # Introduction
 
-Increasingly, scientists make their data, materials, and analysis code openly available.
-Sharing all these types of digital research output increases scientific efficiency by enabling researchers to learn from each other, reuse materials, or review published research results, but only if these artifacts are reproducible.
-We now have the technology to make all artefacts related to a research project available so that a research project can be reproduced with minimal effort.
-Reproducibility has long been considered integral to empirical research, whose credibility hinges on its objectivity, meaning "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper]
+Scientists increasingly strive to make research data, materials, and analysis code openly available.
+Sharing these types of digital research artifacts has the potential to increase scientific efficiency by enabling researchers to learn from each other and reuse materials, and to increase scientific reliability by facilitating the review and replication of published research results.
+To some extent these potential benefits are contingent on whether these digital research artifacts are reproducible. 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
+Reproducibility has long been considered integral to empirical research, whose credibility hinges on its objectivity, meaning "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper]
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
 This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges, and there is a dire need for reproducibility standards.
+We now have the technology to make all artefacts related to a research project available so that a research project can be reproduced with minimal effort.
 
 This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
 We pursue two aims.
-First, the present paper introduces the reader to a workflow that ensures reproducibility by building on several technical solutions originating in the software engineering community that eliminate four common threats to reproducibility [see @Peikert2019 for details].
-Specifically, we demonstrate how the R package `repro` supports researchers in implementing these solutions.
-The second objective is to discuss opportunities of such workflows to improve not only how research outputs are created and recreated but also how research itself is conducted.
-One such opportunity is an alternative preregistration [@NosekRevolution2018] scheme that builds upon a reproducible workflow, the so-called *preregistration as code* (PAC), where the researchers write the complete analysis as code and the bulk of the manuscript as dynamic document, including the sections Introduction, Methods, and Results before they gather empirical data.
-This dynamic document closely resembles an actual journal article but with "fake" results from simulated data that serve to generate placeholders for figures, tables, and statistics. 
-This document serves as unambiguous preregistration of the planned analysis and how the results are going to be reported.
-The only parts that are missing from this first draft are the discussion of results, which the authors add after they gathered empirical data.
+First, the present paper introduces the reader to a workflow that maximizes the potential reproducibility of a research project.
+This workflow builds on several technical solutions originating in the software engineering community. 
+We discuss how these solution address four common threats to reproducibility [see @Peikert2019 for details] and form a coherent workflow.
+We further demonstrate how the R package `repro` supports researchers in adopting this workflow.
+The second objective is to discuss opportunities of reproducible workflows to improve not only how research outputs are created and recreated, but also how research itself is conducted.
+One such opportunity is a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon a reproducible workflow, the so-called *preregistration as code* (PAC).
+PAC involves preregistering the intended analysis code and the bulk of the manuscript as dynamic document, including the Introduction, Methods, and Results sections.
+The resulting dynamic document closely resembles the final manuscript, but uses preliminary ("mock") results, based on the analysis of simulated data, as a placeholder for figures, tables, and statistics. 
+After the empirical data are analyzed, the Results are updated, and the Discussion is written.
 
-[^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalised to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
+[^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalized to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
-While the willingness to share materials is required for reproducing a project, it is not sufficient to achieve it.
-For example, @hardwicke2018 attempted to reproduce results from open materials in the journal Cognition. 
-Out of 35 published articles, results of 22 articles could be reproduced but in 11 of these cases, assistance from the original authors was required.
+Scientific organizations and funding bodies increasingly demand transparent sharing of research artifacts, and researchers are increasingly willing to do so.
+However, although the sharing of such artifacts is a necessary condition for reproducibility, it is not a sufficient one.
+This was illustrated by an attempt to reproduce results from open materials in the journal *Cognition* [@hardwicke2018]. 
+Out of 35 published articles with open research artifacts, results of 22 articles could be reproduced but in 11 of these cases, further assistance from the original authors was required.
 For 13 articles, at least one outcome could not be reproduced—--even with the original authors' assistance.
-@obels2020 showed that in 62 Registered Reports, 41 had data available, and 37 had analysis scripts available.
+Another study of 62 Registered Reports found that only 41 had data available, and 37 had analysis scripts available [@obels2020].
 The authors could execute only 31 of the scripts without error and reproduce the results of only 21 articles (within a reasonable time).
 These failed attempts to reproduce highlight the need for widely accepted reproducibility standards, because open repositories do not routinely provide sufficient information to reproduce relevant computational and statistical results.
+If research artifacts are available but not reproducible, their added value is limited.
 
-We argue that the benefits of open science increase if research is not only transparent but reproducible.
-To this end, this tutorial demonstrates how to make R-based research projects reproducible, while striking a balance between rigor and ease-of-use.
-A rigorous standard increases the likelihood of any individual project to be actually reproducible and remain reproducible as long as possible.
-An easy-to-use standard, on the other hand, is less error-prone, produces less overhead and is thus more likely to be adopted.
-To us, it makes sense to strive for a broad adoption of easy-to-use practices and then gradually move into more complex workflows as researchers become more proficient with the tools involved.
-The remainder of this paper is structured along these lines.
-The first part introduces theoretical concepts and software solutions that together form a rigorous reproducibility standard.
-The second part is a tutorial that shows how these software solutions can be easily employed by researchers with the help of the R package `repro`.
+This tutorial therefore demonstrates how to make R-based research projects reproducible, while striking a balance between rigor and ease-of-use.
+A rigorous standard increases the likelihood that a project will remain reproducible as long as possible.
+An easy-to-use standard, on the other hand, is more likely to be adopted.
+Our approach is to promote broad adoption of easy-to-use practices, i.e., a "low threshold", and ensure that these practices are compatible with more complex rigorous solutions, i.e., a "high ceiling".
+As researchers become more proficient with the tools involved, they can thus improve the reproducibility of their work.
+The first part of this tutorial outlines a reproducibility standard, and introduces the underlying theoretical concepts and software solutions.
+The second part is a tutorial that demonstrates how this standard can be easily adopted with the help of the R package `repro`.
 
 We have structured the tutorial with a *learning by doing* approach in mind, such that readers can follow along on their own computers.
 We explicitly encourage readers to try out all R commands for themselves.
