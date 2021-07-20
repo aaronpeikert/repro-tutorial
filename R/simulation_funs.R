@@ -10,9 +10,12 @@ simulate_data <- function(n, df, d, i){
   effect$group <- group
   return(effect)
 }
+
 #----planned_analysis----
 planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
-  y <- rowMeans(data["group" != names(data)])
+  y <- rowMeans(data["group" != names(data)], na.rm = TRUE)
+  data <- data[!is.na(y),]
+  y <- y[!is.na(y)]
   x <- as.factor(data$group)
   skew <- moments::skewness(y)
   # skewness cutoff
@@ -23,6 +26,7 @@ planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
   test <- t.test(y ~ x)
   list(test = test, skew = skew, use_rank = use_rank, n = length(y))
 }
+
 #----extract_funs----
 #t2d <- function(t, n1, n2)t * sqrt(((n1 + n2)/(n1 * n2)) * (n1 + n2)/(n1 + n2 -2))
 t2d <- function(test){
