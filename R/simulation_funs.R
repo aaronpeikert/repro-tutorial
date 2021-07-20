@@ -27,6 +27,19 @@ planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
   list(test = test, skew = skew, use_rank = use_rank, n = length(y))
 }
 
+#----report_analysis----
+report_analysis <- function(analysis) {
+  params <- report::report_parameters(analysis$test)
+  table <- attributes(params)$table
+  model <- report::report_model(analysis$test, table = table)
+  if (analysis$use_rank)
+    model <-
+    stringr::str_replace(model,
+                fixed("Welch Two Sample t-test"),
+                "Mann--Whitney--Wilcoxon test")
+  stringr::str_c("The ", model, " suggests that the effect is ", params, sep = "")
+}
+
 #----extract_funs----
 #t2d <- function(t, n1, n2)t * sqrt(((n1 + n2)/(n1 * n2)) * (n1 + n2)/(n1 + n2 -2))
 t2d <- function(test){
