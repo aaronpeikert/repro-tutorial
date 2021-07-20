@@ -94,6 +94,7 @@ library(repro)
 automate_load_packages()
 automate_load_scripts()
 source(here::here("R", "link.R"))
+source(here::here("R", "simulation_funs.R"))
 ```
 
 ```{r echo=FALSE}
@@ -652,11 +653,11 @@ Users with more advanced requirements can manually change all aspects of both pr
 
 Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results by separating a priori planned analyses from those conducted unplanned and post hoc.
-For a priori planned analysis, preregistration should reduce "researcher degrees of freedom" therefore the number of decisions researcher can make that could unduly influence the results.
+For a priori planned analyses, preregistration should reduce "researcher degrees of freedom" therefore the number of decisions researcher can make that could unduly influence the results.
 Preregistrations, however, have a problem.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis the results vary considerably [@silberzahnManyAnalystsOne2018].
 The current best practice to ensure that the preregistration are comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
-The structure these templates provides can more effectively reduce researchers degrees of freedom than an unstructured approach [@bakkerEnsuringQualitySpecificity2020].
+The structure these templates provide can more effectively reduce researchers degrees of freedom than an unstructured approach [@bakkerEnsuringQualitySpecificity2020].
 But these templates can not remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the simplest analysis.
 
 Our proposed solution is simple:
@@ -691,7 +692,7 @@ We have already explained the need for reproducibility standards in the process 
 ## Advantages of PAC over traditional preregistration
 
 We believe that pairing PAC with the here presented workflow offers five advantages over classical preregistration.
-First, a PAC removes any ambiguity regarding the translation of an verbal analysis plan into code.
+First, a PAC removes any ambiguity regarding the translation of a verbal analysis plan into code.
 Second, while being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis type over the other.
 For example, if distributional assumptions are not met, the code may branch out to employ robust methods; or, an analysis may perform automated variable selection mechanisms before running the final model.
@@ -699,7 +700,7 @@ Third, a PAC is more comprehensive by design because its completeness can be emp
 We believe it is easier with PAC to detect missing steps or ambiguous decisions.
 Because of its strict structure, PAC can therefore more effectively minimize researchers degrees of freedom than a standard preregistration [@bakkerEnsuringQualitySpecificity2020].
 Fourth, deviations from the preregistration are visible because they are reflected in changes to the code, which are managed and tracked with version control.
-Fifth, the preregistration is merely a development stage of the final manuscript, thus sparing authors from writing and editors and reviewers from evaluating two separate documents.
+Fifth, the preregistration is merely a development stage of the final manuscript, thus sparing authors from writing, and editors and reviewers from evaluating two separate documents.
 
 ## Benefits of PAC for study planning
 
@@ -727,26 +728,28 @@ Writing incomplete code is technically impossible or at least researchers would 
 
 ### Effectiveness
 
-With simulated data researchers can check if the analysis is technically complete and can also recover the true parameters of the simulation.
-When an analysis fails to recover the correct values in idealized conditions with big samples researchers should not expect this analysis to work under realistic conditions.
-Because the simulation captures the researchers expectations about the real world conditions it is the best way to assess the effectiveness of the analysis without actually gathering the data.
+With simulated data researchers can check if the analysis recover the known parameters of the simulation.
+When an analysis fails to recover the correct values in idealized conditions with big samples researchers should not expect this analysis to be effective under realistic conditions.
+Because the simulation captures the researchers expectations about the real world it is the best way to assess the effectiveness of the analysis without actually gathering the data.
 
 ### Efficiency
 
-A single simulated or synthesized dataset already helps to ensure that the plan is viable under certain circumstances.
+A single simulated dataset already helps to ensure that the plan is viable under certain circumstances.
 However, repeated simulation with varying parameters, a so-called Monte Carlo simulation, lets researchers play through several scenarios.
 Monte Carlo simulation lets researcher navigate several trade offs regarding their resources.
-In the simplest case they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision]. @bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size. You may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
+In the simplest case they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision].
+@bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size.
+Researchers may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
 ## What you need to know before writing a PAC
 
 To write a PAC researchers should start by drafting a manuscript in form of an R Markdown.
 When they have completed the method section, they should begin writing code.
 We suggest writing three functions for each hypothesis, one for the planned analysis, one for the simulating the data and one for reporting the results.
-At the heart of a PAC lies the planned analysis so researchers should first draft a function called `planned_analysis()` that captures the description in the method section.
+At the heart of a PAC lies the planned analysis so researchers should first draft a function called `planned_analysis()` that fits the description in their method section.
 This function should receive the data and derive relevant results from it.
 
-```{r}
+```{r, eval=FALSE}
 planned_analyis <- function(data){
   # 1. preprocess e.g. with `rowMeans(data)`
   # 2. conduct analysis e.g. with `t.test()`
@@ -756,7 +759,7 @@ planned_analyis <- function(data){
 
 Because it is difficult to draft such function without interactively test it, researcher should than proceed to write a function for simulating data.
 
-```{r}
+```{r, eval=FALSE}
 simulate_data <- function(n, effect_size){
   # 1. warn users that the results are "fake"
   # 2. draw `n` samples with `effect_size`
@@ -764,7 +767,7 @@ simulate_data <- function(n, effect_size){
 }
 ```
 
-As soon as they have written `planned_anaylsis()` and `simulate_data()` they can iteratively improve both functions, e.g. till `planned_analysis()` runs without error and recovers the correct parameters from `simulate_data()`.
+As soon as they have written a first draft of `planned_anaylsis()` and `simulate_data()` they can interactively improve both functions, e.g. till `planned_analysis()` runs without error and recovers the correct parameters from `simulate_data()`.
 The goal is that the output of `simulate_data()` works as input to the function `planned_analysis()`.
 
 This process can be tedious and complicated.
@@ -774,7 +777,7 @@ Of course researcher must not analyze the data before they write the preregistra
 When the researchers are satisfied with the function `planned_analysis()` they can think about how they would like to report the results of the analysis, via tables, plots and text.
 The implementation of this reporting should be in the function `report_analysis()`.
 
-```{r}
+```{r, eval=FALSE}
 report_results <- function(results){
   # 1. create markdown tables from results
   # 2. conditionally interpret results e.g. if(p < .025)"Result is significant."
@@ -783,93 +786,111 @@ report_results <- function(results){
 }
 ```
 
-These function again should be accept the output of `planned_analysis()` as input.
+This function should again accept the output of `planned_analysis()` as input.
 The output of this function should be formatted in Markdown.
-A variety of packages automatically generate well formatted outputs of statistical reports or even entire tables of estimates or figures directly from R objects.
+A variety of packages automatically generate well formatted Markdown outputs of statistical reports or even entire tables of estimates or figures directly from R objects.
 Packages like [`pander`](https://github.com/Rapporter/pander) [@pander], [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) [@stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html) [@apaTables] and [`papaja`](http://frederikaust.com/papaja_man/) [@papaja] help you to create dynamically generated professional looking results.
 The package [`report`](https://github.com/easystats/report) [@report] is particularly noteworthy because it not only generates tables, but also a simple interpretation of the effects as actual prose (e.g it quantifies the size of an effect).
 
-Ideally, these three functions can be composed to create a "fake" results section, e.g. when composed to `report_analysis(planned_analysis(simulate_data()))` or `simulate_data() %>% planned_analysis() %>% report_analysis()` outputs a results section.
+Ideally, these three functions can be composed to create a "fake" results section, e.g. when composed to `report_analysis(planned_analysis(simulate_data()))` or `simulate_data() %>% planned_analysis() %>% report_analysis()` they output a full results section.
 
-To summarize researchers write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as preregistration.
-After they gathered the actual data, they replace the simulated data, run `planned_analysis()` and write the discussion.
+To summarize, researchers write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as preregistration.
+After they gathered the actual data, they replace the simulated data, render the dynamic manuscript (therefore run `planned_analysis()`) and write the discussion.
 
-# Preregistration as Code --- a Tutorial 
+## An example of Preregistration as Code
 
-To guide the reader through a preregistration as code (PAC), we will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration: 
+We have made the argument that PAC has great advantages over classical preregistration and have outlined how to implement PAC, but can PAC actually work?
+To answer this question and to help researchers implementing PAC themselves, we have conducted a PAC that can serve as an example.
+We will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration:
 
-> "Is there a mean difference in the personality trait 'Machiavellism' between self identified females and males?" 
+> "Is there a mean difference in the personality trait 'Machiavellism' between self identified females and males?"
 
-This example serves only didactic purposes and not to derive substantive claims.
-Nevertheless, everything else is kept as close to a real research question as possible.
+Again, we propose a preregistration format that closely resembles a classical journal article but that utilizes simulated data and dynamic document generation to serve as preregistration and final manuscript.
+The full example is available in the (https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
+In this section we show excerpts of this example formatted in light grey and provide some commentary.
 
-At the heart of a PAC lies the planned analysis.
-We suggest writing a main analysis function that captures the full process of testing a research question.
-This function receives a dataset as input and performs all statistical processing. <!--AB say anything about its output? is the Markdown the output?-->
-For the hypothetical research question, we could for example plan to conduct a simple Student's t-test [@studentProbableErrorMean1908] with Welch's correction [@welchGeneralizationStudentProblem1947] an the average of machiavellism items of the Short Dard Triad [SD3, @Jones2013] between the binary-coded gender groups.
-As an example of a data-dependent decision, we included a rank transformation if the skewness was greater than 1, converting the t-test to a supposedly more robust Mann–Whitney–Wilcoxon test.[^caution-mww]
+```{r, echo=FALSE}
+show <- function(x, wrap = TRUE, cat = TRUE, fence = TRUE){
+  stopifnot(length(x) == 1L)
+  if(wrap)x <- str_c(str_wrap(str_split(x, "\\n\\n")[[1]]), collapse = "\n\n")
+  if(!isFALSE(fence)){
+    if(isTRUE(fence))fence <- "markdown"
+    fence <- str_c("````", fence)
+    x <-
+      str_c(fence,
+            x,
+            "````",
+            sep = "\n",
+            collapse = "\n")
+  }
+  if(cat){
+    cat(x)
+    return(invisible(x))
+  } else {
+    return(x)
+  }
+}
+show_prereg <-
+  function(section,
+           file = "preregistration.Rmd",
+           wrap = TRUE,
+           cat = TRUE,
+           fence = TRUE) {
+    prereg <- readr::read_lines(here::here(file))
+    start <- stringr::str_c("<!--begin-", section, "-->")
+    end <- stringr::str_c("<!--end-", section, "-->")
+    start_pos <- which(prereg == start)
+    end_pos <- which(prereg == end)
+    if (length(start_pos) != 1L || length(end_pos) != 1L)
+      stop("No section '", section, "' found.")
+    excerpt <-
+      str_c(prereg[(start_pos + 1):(end_pos - 1)], collapse = "\n")
+    show(excerpt, wrap = wrap, cat = cat, fence = fence)
+  }
+```
 
-[^caution-mww]: The Mann–Whitney–Wilcoxon is in fact **not** more robust than the Welch corrected t-test for reasonably large sample sizes. The interested reader can use the provided code for the simulation to verify that the t-test provides unbiased effect sizes but the Mann–Whitney–Wilcoxon overestimates effect size with increasing sample size and skewness.
+As usual researchers state why they are interested in their research question in the section "Introduction" and provide the necessary information and literature to understand the rest of the paper.
+This example is drastically shortened for illustration purposes:
 
-This function is one possible translation of the verbal description above:
+```{r, echo=FALSE, results='asis'}
+show_prereg("theory")
+```
+
+After researchers have provided the research question they proceed to explain how they want to study it.
+For simplicity, we will use already published data that we have not yet analyzed:
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("method")
+```
+
+We choose the following statistical procedure because many researchers may be familiar with it[^caution-mww]:
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("ttest")
+```
+
+[^caution-mww]: The Mann–Whitney–Wilcoxon is in fact **not** more robust than the Welch corrected t-test for reasonably large sample sizes. The interested reader can use the [provided code for the simulation](https://github.com/aaronpeikert/repro-tutorial/blob/main/simulation.R) to verify that the t-test provides unbiased effect sizes but the Mann–Whitney–Wilcoxon overestimates effect size with increasing sample size and skewness.
+
+We than translated this methods section into the following `planned_analysis()` function:
 
 ```{r planned_analysis}
 ```
 
-Importantly, natural language descriptions do not map unambiguously onto computer code implementations. 
+This function illustrates two advantage of PAC.
+First, a PAC can easily include data dependent decisions creating different branches of analysis under different conditions.
+Second, it highlights how difficult it is to precisely describe a statistical analysis verbally.
 The same textual descriptions may be implemented differently by different persons depending on their statistical and programming knowledge but also based on their own expectations and beliefs.
 One example would be using the function `wilcox.test` instead of the combinations of `rank` and `t.test`.
 Both are valid implementation of the Mann–Whitney–Wilcoxon test but the first assumes equal variance whereas the second applies Welch's correction and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
 Mentioning every such minute implementation detail is almost impossible and would result in overly verbose preregistrations.
 Still, these details can make a difference and provide unwanted researcher degrees-of-freedom.
 
-<!--AB here is kind of a break in the text-->
-To use this function one needs a compatible dataset. <!--AB what is "this" function? What does "compatible" mean?-->
-At the time of preregistration there is of course no actual data available.
-We therefore simulate a dataset first that resembles the expected structure of the empirical data that we will use for the final analysis.
-Using the simulated dataset as placeholder, we can now write a scientific report including all analysis code blocks and the presentation of results, which can serve as PAC.
-The following code simulates a dataset with one observed variable in two groups.
+The function `planned_analysis()` together with the function `simulate_data()` (not shown here) can be used to justify the planned sample size.
+To that end `simulate_data()` is repeatedly called with increased sample size and the proportion of significant results (power) is recorded.
+The results for such a Monte Carlo simulation for this example are visualized in figure \@ref(fig:power).
+The code for this power analysis can be found in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/simulation.R).
 
-```{r simulate_data}
-```
-<!--AB it is odd that the return variable is called effect because it is a dataset-->
-
-Here, we decided to randomly draw non-normal data to test how well our procedure performed under non-optimal situations.
-Specifically, we draw from a $\chi^2$-distribution, where in one group we add difference that conforms to a given standardized effect size (a Cohen's d of .2).
-This simulated dataset fits perfectly into our planned analysis with a sample size of 400 and 10 items: <!--AB in what way? please explain-->
-
-***
-
-```{r}
-set.seed(112358) # fix state of RNG
-results <- 
-  planned_analysis(
-    simulate_data(
-      n = 400,# Sample size
-      df = 8, # Chisq with DF = 8 has skewness = 1
-      d = .2, # Cohen's D
-      i = 10  # Number of items (should not effect anything)
-    )
-  )
-```
-
-Next, we add dynamic code blocks to our Markdown report that implement the planned reporting of the final results.
-A variety of packages automatically generate well formatted outputs of statistical reports or even entire tables of estimates or figures directly from R objects.
-Packages like [`pander`](https://github.com/Rapporter/pander) [@pander], [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) [@stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html) [@apaTables] and [`papaja`](http://frederikaust.com/papaja_man/) [@papaja] help you to create dynamically generated professional looking results.
-The package [`report`](https://github.com/easystats/report) [@report] is particularly noteworthy because it not only generates tables, but also a simple interpretation of the effects as actual prose (e.g it quantifies the size of an effect).
-Here we use the `report` package to create a preview of how our reporting will look like based on simulated data:<!--AB add citation to the report package-->
-
-```{r, results='asis', eval=FALSE}
-report::report(results$test)
-```
-
-This call to the `report()` function will yield the following automatically generated output:
-
-```{r, results='asis', echo=FALSE}
-report::report(results$test)
-```
-<!--AB it is difficult to discern the automatically generated text and out manuscript text even though there is the horizontal line. Not sure how to improve this.-->
-***
+Monte Carlo simulation are of course not only applicable for this analysis method and and also allow researchers to investigate other relevant properties of their analysis method beyond power [@brandmaier2018precision; @harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
 ```{r, echo=FALSE}
 res <-
@@ -880,14 +901,11 @@ minn <- filter(res, d == choosen_d, power > choosen_power) %>%
   filter(n == min(n))
 ```
 
-To determine a minimal sample size for this study we repeat this simulation across several combination of effect sizes and sample sizes.
-One standard recomendations for choosing a sample size is to have an expected power of 80% based on the expected effect size.
-@Jones2013 found in three studies gender differences of .24, .29, and .35 for their machiavilism subscale.
-If we want to detect an effect of size `r choosen_d` with an `r choosen_power*100`% probability, our simulation shows that we require at least `r minn$n` participants.
+```{r, include=FALSE}
+fig_caption <- str_c("Results of simulation for the power analysis. The cross indicates the sample size that archives ", choosen_power*100, "% assuming a Cohen's D of ", choosen_d, ".")
+```
 
-<!--AB please add a figure number and a proper citation to the figure. Also, tell people where they can find the code to run the power analysis themselves-->
-
-```{r, echo=FALSE}
+```{r power, echo=FALSE, fig.cap=fig_caption}
 res %>%
   ggplot(aes(n, power, color = d, group = d)) +
   geom_line() +
@@ -906,26 +924,60 @@ res %>%
   NULL
 ```
 
+```{r, echo=FALSE, results='asis'}
+show_prereg("power-code", wrap = FALSE)
+```
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("power")
+```
+
+For the results section we implemented a mechanism that only uses simulated data when the actual data is not yet available.
+This mechanism also warns readers if these results are based on simulated data.
+As soon as the actual data are available, the simulated data is no longer used and the results represent the actual empirical results of the study.
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("results", wrap = FALSE)
+```
+
+The last thing we need to do is to report our results with the combination of `planned_analysis()` and `report_analysis()`.
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("report", wrap = FALSE)
+```
+
+This is an example of how the results could be reported (based on simulated data):
+
+```{r, echo=FALSE, results='asis'}
+set.seed(1234)
+show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FALSE), fence = "")
+```
+
+The interested reader can find the example rendered with actual data in the [online supplementary material](this link does not work) and can view the changes we made since preregistering it on this [GitHub page](this link does not work).
+
 # Discussion
 
 <!--AB: TODO add a quick summary -->
 
 # Limitations
 
-PACs come with a challenge though.
+PACs come with a challenge.
 In contrast to a reproducible script, which should work on the same data, a PAC must work on different data.
 We call the property of code that can run on different inputs from a similar context and produce valid outputs "reusability".
 This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] such that it is _build-for-reuse_ [@al-badareenReusableSoftwareComponents2010].
 The reproducible workflow we present here is heavily automated and hence promotes reusability.
 Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019] and therefore this workflow fits well together with other innovations that employ automation, like machine readable hypothesis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
-Automated and reusable research projects promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].<!--AB very nice!!-->
+Automated and reusable research projects promises a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
 
 Therefore reproducibility facilitates traditional good scientific practices and provides the foundation for promising innovations.
 
-<!--AB: add limitations; move the t-test discussion on non-optimality here TODO-->
-Please note that the procedure of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for adressing your research question.
+Please note that the statistical procedure in the example of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for addressing your research question.
 The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
-The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). <!--AB can we move this to a different place? Maybe this would actually better fit to the discussion/limitation section!--> 
+The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]).
+
+We also suggest that version control with Git and GitHub fulfills the criteria of a preregistration as long as you state your research plan comprehensively.
+This view is not shared by everyone [@szollosi_is_2020] because with some effort and malice intend the record of Git/GitHub can be altered.
+This concern can be addressed by using zenodo.org to give a digital object identifier (DOI) to your preregistration (see [this guide](https://guides.github.com/activities/citable-code/)) because zenondo.org saves an unchangeable copy of your repository.
 
 # Outlook
 
