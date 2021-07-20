@@ -220,7 +220,7 @@ This allows the creation of (conditionally) formatted text, statistical results,
 @xieMarkdownCookbook2020 provides an extensive yet practical introduction to most features of R Markdown.
 
 One would hope that sharing a dynamic document would allow individuals (including one's future self) to simply download and reproduce a given analysis.
-However, while version control and dynamic document generation are becoming more common, this approach fails to guarantee reproducibility in most instances [@Peikert2019].<!--CJ This is a very strong claim. Consider rephrasing-->
+However, while version control and dynamic document generation are becoming more common, this approach fails to guarantee reproducibility in many instances [@Peikert2019].
 In practice, dependencies between project files (for example, the information what script uses which data file and what script needs to be run first) or on external software (such as system libraries or components of the programming language, such as other R packages) are frequently unmentioned or not exhaustively and unambigously documented.
 
 To automatically resolve dependencies between project files, we rely on **dependency tracking**.
