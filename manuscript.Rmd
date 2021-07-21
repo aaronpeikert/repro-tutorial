@@ -653,29 +653,29 @@ Users with more advanced requirements can manually change all aspects of both pr
 
 Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results by separating a priori planned analyses from those conducted unplanned and post hoc.
-For a priori planned analyses, preregistration should reduce "researcher degrees of freedom" therefore the number of decisions researcher can make that could unduly influence the results.
+For a priori planned analyses, preregistration should reduce "researcher degrees of freedom" therefore, the number of decisions researcher can make that could unduly influence the results.
 Preregistrations, however, have a problem.
-Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis the results vary considerably [@silberzahnManyAnalystsOne2018].
-The current best practice to ensure that the preregistration are comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
+Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis, the results vary considerably [@silberzahnManyAnalystsOne2018].
+The current best practice to ensure that the preregistration is comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
 The structure these templates provide can more effectively reduce researchers degrees of freedom than an unstructured approach [@bakkerEnsuringQualitySpecificity2020].
-But these templates can not remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the simplest analysis.
+Nevertheless, these templates can not remove researchers' degrees of freedom because it is impossible to verbally describe every detail of an analysis for all but the most straightforward analysis.
 
 Our proposed solution is simple:
 Instead of describing the analysis, you write the code to conduct the analysis before you gather data.
-We term this approach of writing and publishing code before data collection *preregistration as code (PAC)*.
-PAC has the potential to all but eliminate researchers degrees of freedom that standard preregistration despite the best efforts afford.
+We term this writing and publishing code before data collection *preregistration as code (PAC)*.
+PAC has the potential to all but eliminates researchers degrees of freedom that standard preregistration despite the best efforts afford.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
-In an informal literature search (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
+In an informal literature search (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`), we found close to a dozen published articles that included some form of script as part of their preregistration.
 
 We believe, however, that combining ideas from reproducibility and preregistration can turn this "neat" idea into a tool with tangible benefits for the research community.
 
 ## Why are PAC and reproducibility related? 
 
 First, preregistrations are plagued by non-reproducibility like any other research outcome.
-@bakkerRecommendationsPreregistrationsInternal2020 found that, among the 210 preregistrations they investigated, 174 (67%) included a formal power analysis but from these only 34 (20%) provided enough information to reproduce the power analysis.
-Even researcher who have gone to great length in submitting a script in their preregistration sometimes inexplicably fail to reproduce their own results.
+@bakkerRecommendationsPreregistrationsInternal2020 found that, among the 210 preregistrations they investigated, 174 (67%) included a formal power analysis, but from these, only 34 (20%) provided enough information to reproduce the power analysis.
+Even researchers who have gone to great lengths in submitting a script in their preregistration sometimes inexplicably fail to reproduce their results.
 For example, @steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
 
 Second, although it has been almost a decade since @steegenMeasuringCrowdAgain2014 have preregistered their code, the idea of publishing code before analyzing data has gained not much traction.
@@ -704,8 +704,8 @@ Fifth, the preregistration is merely a development stage of the final manuscript
 
 ## Benefits of PAC for study planning
 
-Leaving meta-scientific benefits aside, a preregistration is a tool for planning a study.
-To use PAC for study planing, we suggest that researchers write a dynamically generated manuscript including the sections Introduction, Methods, and Results (or similar) _before_ they gather empirical data.
+When leaving meta-scientific benefits aside, a preregistration is a tool for planning a study.
+To use PAC for study planning, we suggest that researchers write a dynamically generated manuscript including the sections Introduction, Methods, and Results (or similar) _before_ they gather empirical data.
 To that end, they should borrow from widely employed standards for writing an empirical manuscript [e.g. @apa7].
 Then they should translate their method section into executable computer code and simulate data that has the same structure as the data they expect to obtain from their experiments.
 
@@ -717,36 +717,36 @@ Third, the plan should be efficient; the plan should only require the necessary 
 ### Comprehensiveness
 
 Describing the preregistration in form of a journal article requires authors to follow the same standards that also ensure that research articles are comprehensive enough to replicate the described study.
-One particular advantage is the strong foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
-Nevertheless it can be fruitful to consult preregistration templates, because of there strong focus on formulating a comprehensive methods section.
+One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
+Nevertheless, it can be fruitful to consult preregistration templates because of their strong focus on formulating a comprehensive methods section.
 
 Another factor that ensures a comprehensive plan is writing the analysis based on simulated data.
-While rather uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
-Simulating data forces the researcher to think about and address data analytic problems on a conceptual level before they make the effort to acquire data [@axelrodAdvancingArtSimulation1997].
+While relatively uncommon for an empirical research project, we argue that simulating data offers various benefits in the planning phase of a study.
+When simulating data, researchers have to think about and address data-analytic problems on a conceptual level before making an effort to acquire data [@axelrodAdvancingArtSimulation1997].
 It also affords researchers with a simple technical check whether the analysis code runs without failure [@braiekTestingMachineLearning2020] (for example, does the code work with missing values, extreme outliers, etc.).
-Writing incomplete code is technically impossible or at least researchers would notice if they e.g. forgot to aggregate the data etc.
+Writing incomplete code is technically impossible, or at least researchers would notice if they, e.g. forgot to aggregate the data, and so forth.
 
 ### Effectiveness
 
-With simulated data researchers can check if the analysis recover the known parameters of the simulation.
-When an analysis fails to recover the correct values in idealized conditions with big samples researchers should not expect this analysis to be effective under realistic conditions.
-Because the simulation captures the researchers expectations about the real world it is the best way to assess the effectiveness of the analysis without actually gathering the data.
+With simulated data, researchers can check if the analysis recovers the known parameters of the simulation.
+When an analysis fails to recover the correct values in idealized conditions with big samples, researchers should not expect this analysis to be effective under realistic conditions.
+Because the simulation captures the researchers' expectations about the real world, it is the best way to assess the effectiveness of the analysis without actually gathering the data.
 
 ### Efficiency
 
 A single simulated dataset already helps to ensure that the plan is viable under certain circumstances.
 However, repeated simulation with varying parameters, a so-called Monte Carlo simulation, lets researchers play through several scenarios.
-Monte Carlo simulation lets researcher navigate several trade offs regarding their resources.
-In the simplest case they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision].
+Monte Carlo simulation lets researchers navigate several trade-offs regarding their resources.
+In the simplest case, they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision].
 @bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size.
 Researchers may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
 ## What you need to know before writing a PAC
 
-To write a PAC researchers should start by drafting a manuscript in form of an R Markdown.
+To write a PAC, researchers should start by drafting a manuscript in the form of an R Markdown.
 When they have completed the method section, they should begin writing code.
-We suggest writing three functions for each hypothesis, one for the planned analysis, one for the simulating the data and one for reporting the results.
-At the heart of a PAC lies the planned analysis so researchers should first draft a function called `planned_analysis()` that fits the description in their method section.
+We suggest writing three functions for each hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
+At the heart of a PAC lies the planned analysis, so researchers should first draft a function called `planned_analysis()` that fits the description in their method section.
 This function should receive the data and derive relevant results from it.
 
 ```{r, eval=FALSE}
@@ -757,11 +757,11 @@ planned_analyis <- function(data){
 }
 ```
 
-Because it is difficult to draft such function without interactively test it, researcher should than proceed to write a function for simulating data.
+Because it is difficult to draft such a function without interactively testing it, the researcher should then write a function for simulating data.
 
 ```{r, eval=FALSE}
 simulate_data <- function(n, effect_size){
-  # 1. warn users that the results are "fake"
+  # 1. warn users that the results are mocked
   # 2. draw `n` samples with `effect_size`
   # 3. format and return in expected data format
 }
@@ -771,10 +771,11 @@ As soon as they have written a first draft of `planned_anaylsis()` and `simulate
 The goal is that the output of `simulate_data()` works as input to the function `planned_analysis()`.
 
 This process can be tedious and complicated.
-If it proofs infeasible to simulate data, researcher can delay their preregistration till they have gathered data and repurpose the actual data.
-Of course researcher must not analyze the data before they write the preregistration but they can obfuscate the real data by shuffling the dependent variable or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
+If it proves infeasible to simulate data, researcher can delay their preregistration till they have gathered data and repurpose the actual data.
+Of course, researchers must not analyze the data before they write the preregistration.
+However, they can obfuscate the real data by shuffling the dependent variable or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
 
-When the researchers are satisfied with the function `planned_analysis()` they can think about how they would like to report the results of the analysis, via tables, plots and text.
+When the researchers are satisfied with the function `planned_analysis()`, they can think about how they would like to report the analysis results via tables, plots, and text.
 The implementation of this reporting should be in the function `report_analysis()`.
 
 ```{r, eval=FALSE}
@@ -788,26 +789,26 @@ report_results <- function(results){
 
 This function should again accept the output of `planned_analysis()` as input.
 The output of this function should be formatted in Markdown.
-A variety of packages automatically generate well formatted Markdown outputs of statistical reports or even entire tables of estimates or figures directly from R objects.
+Various packages automatically generate well-formatted Markdown outputs of statistical reports or even entire tables of estimates or figures directly from R objects.
 Packages like [`pander`](https://github.com/Rapporter/pander) [@pander], [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) [@stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html) [@apaTables] and [`papaja`](http://frederikaust.com/papaja_man/) [@papaja] help you to create dynamically generated professional looking results.
-The package [`report`](https://github.com/easystats/report) [@report] is particularly noteworthy because it not only generates tables, but also a simple interpretation of the effects as actual prose (e.g it quantifies the size of an effect).
+The package [`report`](https://github.com/easystats/report) [@report] is particularly noteworthy because it generates not only tables but also a straightforward interpretation of the effects as actual prose (e.g. it quantifies the size of an effect).
 
-Ideally, these three functions can be composed to create a "fake" results section, e.g. when composed to `report_analysis(planned_analysis(simulate_data()))` or `simulate_data() %>% planned_analysis() %>% report_analysis()` they output a full results section.
+Ideally, these three functions can be composed to create a mock results section, e.g. when composed to `report_analysis(planned_analysis(simulate_data()))` or `simulate_data() %>% planned_analysis() %>% report_analysis()` they output a full results section.
 
 To summarize, researchers write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as preregistration.
 After they gathered the actual data, they replace the simulated data, render the dynamic manuscript (therefore run `planned_analysis()`) and write the discussion.
 
 ## An example of Preregistration as Code
 
-We have made the argument that PAC has great advantages over classical preregistration and have outlined how to implement PAC, but can PAC actually work?
-To answer this question and to help researchers implementing PAC themselves, we have conducted a PAC that can serve as an example.
+We have made the argument that PAC has significant advantages over classical preregistration and have outlined how to implement PAC, but can PAC work in practice?
+To answer this question and help researchers implementing PAC themselves, we have conducted a PAC that can serve as an example.
 We will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration:
 
-> "Is there a mean difference in the personality trait 'Machiavellism' between self identified females and males?"
+> "Is there a mean difference in the personality trait 'Machiavellism' between self-identified females and males?"
 
-Again, we propose a preregistration format that closely resembles a classical journal article but that utilizes simulated data and dynamic document generation to serve as preregistration and final manuscript.
-The full example is available in the (https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
-In this section we show excerpts of this example formatted in light grey and provide some commentary.
+Again, we propose a preregistration format that closely resembles a classical journal article, but that utilizes simulated data and dynamic document generation to serve simultaneously as preregistration and final manuscript.
+The complete example is available in the (https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
+In this section, we show excerpts of this example formatted in light grey and provide some commentary.
 
 ```{r, echo=FALSE}
 show <- function(x, wrap = TRUE, cat = TRUE, fence = TRUE){
@@ -849,14 +850,14 @@ show_prereg <-
   }
 ```
 
-As usual researchers state why they are interested in their research question in the section "Introduction" and provide the necessary information and literature to understand the rest of the paper.
+As usual, researchers state why they are interested in their research question in the section "Introduction" and provide the necessary information and literature to understand the rest of the paper.
 This example is drastically shortened for illustration purposes:
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("theory")
 ```
 
-After researchers have provided the research question they proceed to explain how they want to study it.
+After researchers have provided the research question, they proceed to explain how they want to study it.
 For simplicity, we will use already published data that we have not yet analyzed:
 
 ```{r, echo=FALSE, results='asis'}
@@ -871,26 +872,27 @@ show_prereg("ttest")
 
 [^caution-mww]: The Mann–Whitney–Wilcoxon is in fact **not** more robust than the Welch corrected t-test for reasonably large sample sizes. The interested reader can use the [provided code for the simulation](https://github.com/aaronpeikert/repro-tutorial/blob/main/simulation.R) to verify that the t-test provides unbiased effect sizes but the Mann–Whitney–Wilcoxon overestimates effect size with increasing sample size and skewness.
 
-We than translated this methods section into the following `planned_analysis()` function:
+We then translated this methods section into the following `planned_analysis()` function:
 
 ```{r planned_analysis}
 ```
 
-This function illustrates two advantage of PAC.
-First, a PAC can easily include data dependent decisions creating different branches of analysis under different conditions.
-Second, it highlights how difficult it is to precisely describe a statistical analysis verbally.
-The same textual descriptions may be implemented differently by different persons depending on their statistical and programming knowledge but also based on their own expectations and beliefs.
+This function illustrates two advantages of PAC.
+First, a PAC can easily include data-dependent decisions creating different branches of analysis under different conditions.
+Second, it highlights how difficult it is to describe a statistical analysis precisely.
+The same verbal descriptions may be implemented differently by different persons depending on their statistical and programming knowledge and their expectations and beliefs.
 One example would be using the function `wilcox.test` instead of the combinations of `rank` and `t.test`.
-Both are valid implementation of the Mann–Whitney–Wilcoxon test but the first assumes equal variance whereas the second applies Welch's correction and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
+Both are valid implementations of the Mann–Whitney–Wilcoxon test, but the first assumes equal variance.
+In contrast, the second applies Welch's correction and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
 Mentioning every such minute implementation detail is almost impossible and would result in overly verbose preregistrations.
-Still, these details can make a difference and provide unwanted researcher degrees-of-freedom.
+Still, these details can make a difference and provide unwanted researchers' degrees of freedom.
 
 The function `planned_analysis()` together with the function `simulate_data()` (not shown here) can be used to justify the planned sample size.
-To that end `simulate_data()` is repeatedly called with increased sample size and the proportion of significant results (power) is recorded.
+To that end, `simulate_data()` is repeatedly called with increased sample size and the proportion of significant results (power) is recorded.
 The results for such a Monte Carlo simulation for this example are visualized in figure \@ref(fig:power).
 The code for this power analysis can be found in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/simulation.R).
 
-Monte Carlo simulation are of course not only applicable for this analysis method and and also allow researchers to investigate other relevant properties of their analysis method beyond power [@brandmaier2018precision; @harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
+Monte Carlo simulations are, of course, not only applicable for this analysis method and also allow researchers to investigate other relevant properties of their analysis method beyond power [@brandmaier2018precision; @harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
 ```{r, echo=FALSE}
 res <-
@@ -932,9 +934,9 @@ show_prereg("power-code", wrap = FALSE)
 show_prereg("power")
 ```
 
-For the results section we implemented a mechanism that only uses simulated data when the actual data is not yet available.
+We implemented a mechanism that only uses simulated data when the actual data is not yet available for the results section.
 This mechanism also warns readers if these results are based on simulated data.
-As soon as the actual data are available, the simulated data is no longer used and the results represent the actual empirical results of the study.
+As soon as the actual data are available, the simulated data is no longer used, and the results represent the actual empirical results of the study.
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("results", wrap = FALSE)
