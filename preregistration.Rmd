@@ -54,7 +54,7 @@ source(here::here("R", "simulation_funs.R"))
 <!--begin-theory-->
 # Theoretical Background
 
-There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self identified males and females.
+There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self-identified males and females.
 @muris2017 note that studies focusing on gender differences in machiavellianism are sparse.
 We therefore want to add to this body of literature.
 <!--end-theory-->
@@ -71,7 +71,7 @@ We report how we determined our sample size, all data exclusions (if any), all m
 <!--end-method-->
 
 <!--begin-ttest-->
-We conduct a Student's t-test [@studentProbableErrorMean1908] with Welch's correction [@welchGeneralizationStudentProblem1947] an the average of machiavellism items between the binary-coded gender groups.
+We conduct a Student's t-test [@studentProbableErrorMean1908] with Welch's correction [@welchGeneralizationStudentProblem1947] of the average of machiavellism items between the binary-coded gender groups.
 If the skew of this average is greater than 1.0 we conduct a supposedly more robust Mann--Whitney--Wilcoxon test [@Wilcoxon1945] instead.
 <!--end-ttest-->
 <!--begin-power-code-->
@@ -113,7 +113,7 @@ report_analysis(planned_analysis(mach))
 
 # Discussion
 
-\textcolor{red}{This document was created before we have gathered any data, we therefore have nothing to discuss.}
+\textcolor{red}{This document was created before we have gathered any data, we, therefore, have nothing to discuss.}
 
 \newpage
 # References
