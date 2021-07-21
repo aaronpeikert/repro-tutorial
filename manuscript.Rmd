@@ -271,14 +271,14 @@ One strategy is to rely on pre-made images, which are maintained by a community 
 For example, there are pre-made images that only include what is necessary for R, based on Ubuntu (a Linux operating system) containers [@boettigerIntroductionRockerDocker2017].
 Users can then install whatever they need in addition to what is provided by these pre-compiled images.
 `r ifelse(is.na(container_size), "", glue::glue("The image that was used for this article uses {round(container_size, 2)}Gb of disk space."))`
-The image for this project includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like the tidyverse <!--CJ Yuck-->[@tidyverse] and all their dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
+The image for this project includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like the tidyverse [@tidyverse] and all their dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
 A second strategy is to save a container recipe; a so-called  `Dockerfile` containing a textual description of all commands that need to be executed to recreate the software environment, instead of the software environment itself.
 Dockerfiles are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile) for this project has a size of only `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb).
 However, they rely on the assumption that all software repositories that provide the dependent operating systems, pieces of software, and R packages will remain accessible in future and will continue to make available historic software versions.
 For proper archival, we therefore recommend to store a complete image of the software environment, in addition to the Dockerfile.
 A more comprehensive overview of the use of containarization in research projects is given by @wiebelsLeveragingContainersReproducible2021.
 
-To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).<!-- CJ: Please briefly mention the similarity / differences from worcs. Perhaps here would be a good place. "This approach is similar to ..., and enhances it by ..."-->
+To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).    
 While R Markdown and Git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside the field of information technology, which can represent a considerable hurdle in the acceptance and implementation of the workflow.
 To remove this hurdle, we have developed the R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 In the remainder, we will walk you through the creation of a reproducible research project with the package `repro`.
