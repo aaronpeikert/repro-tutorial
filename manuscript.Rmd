@@ -908,9 +908,22 @@ res %>%
 
 # Discussion
 
-<!--AB: TODO add a quick summary -->
+We have presented a workflow that rests on four software solutions, version control, dynamic document generation, dependency tracking and software management to ensure reproducibility.
+This workflow is straightforward to implement with the `repro`-package, which provides a low threshold for adoption without limiting the users' ability to implement complex projects and is, therefore, a "high ceiling" solution.
+The `repro`-package builds upon and extends established best practices, i.e. R Markdown and Git, in two critical ways.
+First, it provides the required software for reproduction by automatically generating Dockerfiles.
+Second, by generating Makefiles the `repro`-package establishes a unified mechanism for reproducing research projects.
+
+We than proceeded to show one example of how such rigorous and automated reproducibility workflow may enable other innovations, e.g. preregistration as code.
+Complementing a preregistration with code is not unheard of but writing a manuscript with code as an integral dynamic element with mock results based on simulated data offers several advantages over classical preregistration.
+PAC lets consumers of a research document (e.g. editors, reviewers, readers) clearly distinguish how analyses were planned and how they were conducted via version control.
+On the researchers' side, PAC assures that the analysis can effectively answer the research question, i.e. that the analysis can recover the parameters of interest in simulation and lets them employ their resources efficiently by supporting study design decisions.
 
 # Limitations
+
+`repro`'s main goal is to increase the user friendliness of reproducibility tools for researchers.
+While we have invested much effort to ensure this goal, the package is still in early development and undoubtedly has rough edges and even bugs that went undetected.
+We hope that despite the early development stage `repro` can support researchers to work more reproducible.
 
 PACs come with a challenge though.
 In contrast to a reproducible script, which should work on the same data, a PAC must work on different data.
@@ -922,10 +935,9 @@ Automated and reusable research projects promises a wide range of applications, 
 
 Therefore reproducibility facilitates traditional good scientific practices and provides the foundation for promising innovations.
 
-<!--AB: add limitations; move the t-test discussion on non-optimality here TODO-->
 Please note that the procedure of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for adressing your research question.
 The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
-The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). <!--AB can we move this to a different place? Maybe this would actually better fit to the discussion/limitation section!--> 
+The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). 
 
 # Outlook
 
