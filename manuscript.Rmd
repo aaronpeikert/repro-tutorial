@@ -973,7 +973,7 @@ Automated and reusable research projects promises a wide range of applications, 
 
 Therefore reproducibility facilitates traditional good scientific practices and provides the foundation for promising innovations.
 
-Please note that the statistical procedure in the example of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for addressing your research question.
+Please note that the statistical procedure in the PAC example of running different test procedures based on a fixed skewness threshold was created for didactic purposes and it is not necessarily optimal for addressing your research question.
 The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
 The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]).
 
