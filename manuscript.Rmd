@@ -290,31 +290,57 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 
 # Creating reproducible research projects
 
-The above mentioned tools require much expertise that is beyond the traditional curriculum of researchers.
-To aid researcher adopting these tools we rely on or have developed helpers that wrap more complicated (and powerful) tools.
-These wrappers use standard tools but provide feedback for the user about what the computer does and what the user should do in layman's terms and are accessible from within R.
-We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
-These alternative tools are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
+One impediment to the widespread adoption of a standard for reproducible research is that learning to use the required tools can be time-intensive.
+To lower the threshold to adoption, the R-package `repro` introduces helper functions that wrap more complicated (and powerful) tools.
+These so-called wrappers guide end-users in the use of reproducibility <!--CJ Can't say "standard tools" after just saying that these tools are not yet widely adopted -->tools, provide feedback about what the computer does, and suggest what the user should do in layman's terms.
+We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their system's state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
+These alternative tools<!-- CJ: Are they wrappers, or alternative tools--> are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
 
-Before we can start creating reproducible research projects, we need a computer with a working R Studio installation. 
-Start R Studio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro] so that it can act as an assistance systems while you follow the tutorial:
+This tutorial assumes that the user is working predominantly in R, with the help of RStudio.
+It describes basic steps that we expect to apply to all users. Your specific situation might involve additional, more specialized steps. After completing the tutorial, you should be able to customize your workflow accordingly.<!--CJ: Cut/pasted from below; the purpose of the tutorial should be explained beforehand, not in the middle--> 
+The first step is to install the required software.
+Start R Studio<!--CJ I am concerned that new users may not install R if you only mention RStudio.--> and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
+It will assist you while you follow the tutorial.
 
 ```{r, eval=FALSE}
 # repro is not on CRAN yet
 install.packages('repro', repos = 'https://aaronpeikert.r-universe.dev')
 ```
+<!--
+This command fails for me:
+> install.packages('repro', repos = 'https://aaronpeikert.r-universe.dev')
+Installing package into ‘C:/Git_Repositories/veni_forest/renv/library/R-4.1/x86_64-w64-mingw32’
+(as ‘lib’ is unspecified)
+Warning: dependencies ‘usethis’, ‘fs’, ‘gh’ are not available
+trying URL 'https://aaronpeikert.r-universe.dev/src/contrib/repro_0.1.0.zip'
+Error in download.file(url, destfile, method, mode = "wb", ...) : 
+  cannot open URL 'https://aaronpeikert.r-universe.dev/src/contrib/repro_0.1.0.zip'
+In addition: Warning message:
+In download.file(url, destfile, method, mode = "wb", ...) :
+  cannot open URL 'https://aaronpeikert.r-universe.dev/src/contrib/repro_0.1.0.zip': HTTP status was '404 Not Found'
+Warning in download.packages(pkgs, destdir = tmpd, available = available,  :
+  download of package ‘repro’ failed
+
+But this one succeeds; it is what is suggested by R-universe:
+> options(repos = c(
++     aaronpeikert = 'https://aaronpeikert.r-universe.dev',
++     CRAN = 'https://cloud.r-project.org'))
+> 
+> # Install some packages
+> install.packages('repro')
+-->
 
 An example of the assistance that `repro` provides are the check functions.
-They verify that you indeed have installed and setup the required pieces of software for this workflow (here, we use the double-colon operator to access functions from the `repro` namespace; we chose to do so to make clear which functions are native `repro` functions) :
+These verify that you indeed have installed and setup the required pieces of software for this workflow (here, we use the double-colon operator to access functions from the `repro` namespace; we chose to do so to make clear which functions are native `repro` functions) :
 
 ```{r}
 # `package::function()` → use function from package without `library(package)`
 repro::check_git()
-repro::check_make()
-repro::check_docker()
+  repro::check_make()
+  repro::check_docker()
 ```
-
-They detect the users' system state and explain if further action is needed.
+<!-- CJ Be mindful of small spelling mistakes in the status messages, e.g., infos instead of info. Also: Not clear what different icons mean before the status messages. Also: Do you want to use informal language? E.g.: V Git is installed, don't worry! or: V Git is installed.--> 
+These functions check whether specific dependencies are available on the users' system, and if not, explain what further action is needed to obtain it. <!-- CJ: This is so flipping important!!! We also need something like this for the summer school, to check if users have Mplus and if it can communicate with RStudio. I would emphasize this simple / valuable feature earlier, in the abstract and intro.-->
 Sometimes they ask the user to do something, for example, the following happens if you were a Windows user who does not have Git installed:
 
 ```{r, include=FALSE}
@@ -331,12 +357,19 @@ check_git()
 options(opts)
 ```
 
-The messages emitted by `repro` and other packages we present try to take the user by the hand to help them solve problems.
-This tutorial describes steps that we expect to apply to all users; the messages from the packages are adjusted to your specific situation (that is, operating system and the specific problem of missing software) and complement the tutorial in this way.
-Before you continue, we ask you to run the above commands to check Git, Make, and Docker.
-If necessary, follow the instructions of repro to install them until the check functions are all fine.
+The messages emitted by `repro` and other packages we present <!-- CJ: This either needs more elaboration, or remove it entirely. It is currently confusing; what is the difference between "emitting" and "presenting"? I understand that you introduce some new functions, and import some existing ones. I would remove that distinction and just cite some of the packages you rely on.-->try to take the user by the hand to help them solve problems.
+These messages are adjusted to your specific operating system and installed dependencies.
+Before you continue, we ask you to run the above commands to check Git, Make, and Docker - both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
+If necessary, follow any instructions presented until all checks pass.
+A shortcut to test whether you are ready to continue is:
 
-The first concept we want to introduce is version control with Git.
+```{r}
+check_tutorial()
+```
+
+## Implementing version control
+
+Now that your system is set up for this tutorial, we will introduce you to version control with Git.
 Git tracks files within one project folder.
 We start by creating such a project folder with RStudio by clicking the menu item:
 
@@ -344,30 +377,34 @@ We start by creating such a project folder with RStudio by clicking the menu ite
 
 This creates a project containing an example analysis, but you may use any other template or existing R Project to turn into a reproducible research project using the functionality of `repro`.
 
-You can prevent Git from accidentally committing files that you do not want to track with the `.gitignore` file.
+Git tracks any files that you manually add to the repository.
+To make sure you do not accidentally add files that you do not wish to share (e.g., privacy sensitive data),
+you can list specific files that you do not want to track in the `.gitignore` file.
 You can add something to the `.gitignore` file directly or with this command:
 
 ```{r, eval=FALSE}
 usethis::use_git_ignore("private.md")
 ```
-
+<!--CJ: Also worcs::git_ignore()-->
 Now the file `private.md` will not be committed to Git and will not be made public.
 
-After you have excluded sensitive files (like not yet anonymized data files), you can activate Git with:
+Especially for new users, it is recommended to follow this procedure and exclude sensitive files before proceeding.
+When you are ready, you can begin tracking your files using Git by running:
 
 ```{r, eval=FALSE}
 usethis::use_git()
 ```
 
 For Git to recognize changes to a given file, you have to stage and then commit these changes (this is the basic save action for a project snapshot).
-The easiest way to do this is to use the RStudio Git pane.
-Click on the empty box next to the file you want to stage, and when a tick appears, which means that the file is staged.
+One way to do this is through the visual user interface in the RStudio Git pane.
+Click on the empty box next to the file you want to stage. A check mark appears to indicate that the file is staged.
 After you have staged all files you want, click on the commit button, explain in the commit message why you made those changes, and then click on commit.
+This stores a snapshot of the current state of the project.
 
 The files you created and the changes you made still have not left your computer.
 All snapshots are stored in a local repository in your project folder.
-To back up and share the files, you can publicly upload those changes to a public repository.
-To synchronize your local repository with a remote repository from the GitHub service, issue the following command:
+To back up and/or share the files online, you can push your local repository to a remote repository.
+Specifically, to synchronize your local repository with a remote repository on GitHub, issue the following command:
 
 ```{r, eval=FALSE}
 usethis::use_github()
@@ -375,20 +412,33 @@ usethis::use_github()
 
 Depending on your computer configuration, this may ask to set up a secure connection to GitHub. In this case first follow the suggestions shown on the R console.
 
-If you are not yet ready to share your project publicly but you want to synchronize your local repository to a remote repository (for example, as a simple backup service), use:
+If you are not yet ready to share your project publicly<!--CJ: Note that you are conflating "online" with "public". People can push their repo to a private remote repository. Consider discussing this distinction first before showing the two commands.--> but you want to synchronize your local repository to a remote repository (for example, as a simple backup service), use:
 
 ```{r, eval=FALSE}
 usethis::use_github(private = TRUE)
 ```
 
-Now that you have created a project that is under version control, we continue with adding dynamic document generation.
-Adynamic document has three elements:
+Once the connection with GitHub (or another remote repository, like GitLab or BitBucket) is set up, you can continue staging changes, committing them, and pushing your commits to the remote repository.
+One convenience function that does all this in a single step is:
 
-1. Text in a natural language
-2. Executable code 
-3. Metadata
+```{r}
+worcs::git_update("Your commit message")
+```
 
-The text of an R Markdown is written in Markdown (see @xieMarkdownDefinitiveGuide2019 for technical details and @xieMarkdownCookbook2020 for practical guidance).
+This is essentially a 'quick save' function that stages all changes to files not listed in `.gitIgnore`, commits them, and pushes the commit.
+
+## Dynamic document generation
+
+Now that you have created a version controlled project, we will proceed with dynamic document generation.
+A dynamic document has three elements:
+
+1. Text in natural language (prose; e.g., a scientific paper or presentation)
+2. Executable code (e.g., analyses)
+3. Metadata (?)
+
+R Markdown is a type of dynamic document well-suited to the RStudio user interface.
+The natural language text in an R Markdown file can be formatted using Markdown (see @xieMarkdownDefinitiveGuide2019 for technical details and @xieMarkdownCookbook2020 for practical guidance).
+The code mostly consists of R-code (although other programming languages are supported, like Python, C++, Fortran, etc).
 The following example serves to illustrate the Markdown syntax. 
 It shows how to create a heading, a word in bold font, and a list of several items in Markdown:
 
@@ -408,7 +458,7 @@ To do list:
 * spend time with family and friends
 ```
 
-This type of markup for formatting, instead of the more visual approach of e.g. Microsoft Word, is compatible with many output formats and is easier to put under version control.
+Using markup for formatting, instead of the visual approach used in, e.g., Microsoft Word, is compatible with many output formats and is easier to put under version control.
 Some users might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown underneath with all of its flexibility.
 The visual editor has the additional benefit of promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions).
 Among other features, it eases the generation of citations and cross references.
