@@ -59,7 +59,7 @@ source(here::here("R", "simulation_funs.R"))
 # Theoretical Background
 
 There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self-identified males and females [@muris2017], but studies focusing solely on machiavialism are sparse.
-Machiavellianism describes a personality dimension characterized by a cynical disregard of morals in the pursuit of one's own interest, e.g. through manipulation.
+Machiavellianism describes a personality dimension characterized by a cynical disregard of morals in the pursuit of one's own interest, e.g. through manipulation [@christie1970].
 We aim to replicate the finding that males tend to have higher machiavellianism scores [@muris2017].
 <!--end-theory-->
 This research question serves as a testbed for a preregistration scheme we call preregistration as code (PAC) to test if PAC is feasible under realistic conditions.
