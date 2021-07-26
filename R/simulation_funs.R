@@ -1,30 +1,30 @@
 #----simulate_data----
 simulate_data <- function(n, df, d, i){
   stopifnot(n %% 2L == 0L)
-  group <- rep(c(1L, 0L), each = n/2)
+  gender <- rep(c(0L, 1L), each = n/2)
   rand <-  matrix(rchisq(n * i, df/i), ncol = i) # sum of n chisq has df of n*df
   d_scaled <- d * sqrt(2*df)/i # scale d to express sd units (var(chisq) = 2df)
-  effect <- rand + d_scaled * group
-  colnames(effect) <- paste0("x", seq_len(i))
+  effect <- rand + d_scaled * gender
+  colnames(effect) <- paste0("mach", seq_len(i))
   effect <- as.data.frame(effect)
-  effect$group <- group
+  effect$gender <- factor(gender, levels = c(1L, 0L), labels = c("male", "female"))
   return(effect)
 }
 
 #----planned_analysis----
 planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
-  y <- rowMeans(data["group" != names(data)], na.rm = TRUE)
-  data <- data[!is.na(y),]
-  y <- y[!is.na(y)]
-  x <- as.factor(data$group)
-  skew <- moments::skewness(y)
+  machiavellianism <- rowMeans(data["gender" != names(data)], na.rm = TRUE)
+  data <- data[!is.na(machiavellianism),]
+  machiavellianism <- machiavellianism[!is.na(machiavellianism)]
+  gender <- as.factor(data$gender)
+  skew <- moments::skewness(machiavellianism)
   # skewness cutoff
   if(use_rank == "skew")use_rank <- abs(skew) > skew_cutoff
   if(use_rank){
-    y <- rank(y)
+    machiavellianism <- rank(machiavellianism)
   }
-  test <- t.test(y ~ x)
-  list(test = test, skew = skew, use_rank = use_rank, n = length(y))
+  test <- t.test(machiavellianism ~ gender)
+  list(test = test, skew = skew, use_rank = use_rank, n = length(gender))
 }
 
 #----report_analysis----
