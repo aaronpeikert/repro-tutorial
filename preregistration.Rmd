@@ -1,5 +1,5 @@
 ---
-title: "A Preregistered Comparison of Male and Female Machiavellianism"
+title: "Preregistered as Code: A Comparison of Male and Female Machiavellianism"
 date: "7/10/2021"
 author:
   - name: Aaron Peikert
@@ -34,16 +34,20 @@ type: tutorial
 status: submit
 bibliography: preregistration.bib
 abstract: |
-  We test for group differences in machiavellism between self identified males and females in the MACH-IV in a well powered preregistered study.
+  We test for group differences in machiavellism between self-identified males and females in the MACH-IV in a well powered preregistered study.
+keywords: |
+  preregistration as code, power simulation, machiavellism, gender
 output:
   bookdown::markdown_document2:
     base_format: rticles::mdpi_article
 header-includes:
-  -   \def\baselinestretch{0.98}
+  - \def\baselinestretch{0.98}
+  - \usepackage{draftwatermark}
 ---
 
 \setlength{\bibsep}{0cm}
 \titlespacing{\section}{.1cm}{.1cm}{.1cm}
+\SetWatermarkText{PAC}
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -54,10 +58,11 @@ source(here::here("R", "simulation_funs.R"))
 <!--begin-theory-->
 # Theoretical Background
 
-There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self-identified males and females.
-@muris2017 note that studies focusing on gender differences in machiavellianism are sparse.
-We therefore want to add to this body of literature.
+There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self-identified males and females [@muris2017], but studies focusing solely on machiavialism are sparse.
+Machiavellianism describes a personality dimension characterized by a cynical disregard of morals in the pursuit of one's own interest, e.g. through manipulation.
+We aim to replicate the finding that males tend to have higher machiavellianism scores [@muris2017].
 <!--end-theory-->
+This research question serves as a testbed for a preregistration scheme we call preregistration as code (PAC) to test if PAC is feasible under realistic conditions.
 
 ```{r, echo=FALSE}
 simulation_results <-
@@ -75,7 +80,7 @@ We conduct a Student's t-test [@studentProbableErrorMean1908] with Welch's corre
 If the skew of this average is greater than 1.0 we conduct a supposedly more robust Mann--Whitney--Wilcoxon test [@Wilcoxon1945] instead.
 <!--end-ttest-->
 <!--begin-power-code-->
-```{r}
+```{r, echo=FALSE}
 choosen_power <- .8
 choosen_d <- .2
 minn <-
@@ -85,7 +90,7 @@ minn <-
 <!--end-power-code-->
 <!--begin-power-->
 A simulation we conducted indicated that with a sample size of
-`r minn` for an alpha of .05 (two-sided) we archive at least `r choosen_power*100`% power assuming an effect size of `r choosen_d`.
+`r minn` for an alpha of .05 (two-sided) we achieve at least `r choosen_power*100`% power assuming a standardized effect size of d=`r choosen_d`.
 <!--end-power-->
 
 <!--begin-results-->
