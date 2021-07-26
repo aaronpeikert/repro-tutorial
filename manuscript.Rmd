@@ -941,7 +941,10 @@ The analytical strategy presented here is in fact suboptimal with regard to seve
 
 # Outlook
 
-<!--AB: two lines of what the future of the package, of such standards, and prereigstration is. Maybe say something that preregistration is not always possible or wanted but that reproducibility is almost always a good idea?-->
+Open science practices are a continually evolving field were technical innovations foster changes in research practice.
+Open data is much more widespread use thanks to online storage facilities, preregistration are possible because there are preregistration platforms and so forth.
+We hope that similarly, fully automatic reproduction increases scientific rigor and efficiency.
+
 
 # References
 
