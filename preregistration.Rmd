@@ -34,9 +34,9 @@ type: tutorial
 status: submit
 bibliography: preregistration.bib
 abstract: |
-  We test for group differences in machiavellism between self-identified males and females in the MACH-IV in a well powered preregistered study.
+  We test for group differences in machiavellianism between self-identified males and females in the MACH-IV in a well powered preregistered study.
 keywords: |
-  preregistration as code, power simulation, machiavellism, gender
+  preregistration as code, power simulation, machiavellianism, gender
 output:
   bookdown::markdown_document2:
     base_format: rticles::mdpi_article
@@ -58,11 +58,12 @@ source(here::here("R", "simulation_funs.R"))
 <!--begin-theory-->
 # Theoretical Background
 
-There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self-identified males and females [@muris2017], but studies focusing solely on machiavialism are sparse.
 Machiavellianism describes a personality dimension characterized by a cynical disregard of morals in the pursuit of one's own interest, e.g. through manipulation [@christie1970].
+There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self-identified males and females [@muris2017] but only few studies focus solely on machiavellianism
 We aim to replicate the finding that males tend to have higher machiavellianism scores [@muris2017].
 <!--end-theory-->
-This research question serves as a testbed for a preregistration scheme we call preregistration as code (PAC) to test if PAC is feasible under realistic conditions.
+This research question serves as a testbed for preregistration as code (PAC) to examine if PAC is feasible under realistic conditions.
+In the PAC paradigm, all analysis code is written before real data are gathered or accessed the first time.
 
 ```{r, echo=FALSE}
 simulation_results <-
@@ -76,7 +77,7 @@ We report how we determined our sample size, all data exclusions (if any), all m
 <!--end-method-->
 
 <!--begin-ttest-->
-We conduct a Student's t-test [@studentProbableErrorMean1908] with Welch's correction [@welchGeneralizationStudentProblem1947] of the average of machiavellism items between the binary-coded gender groups.
+We conduct a Student's t-test [@studentProbableErrorMean1908] with Welch's correction [@welchGeneralizationStudentProblem1947] of the average of machiavellianism items between the binary-coded gender groups.
 If the skew of this average is greater than 1.0 we conduct a supposedly more robust Mann--Whitney--Wilcoxon test [@Wilcoxon1945] instead.
 <!--end-ttest-->
 <!--begin-power-code-->
@@ -100,8 +101,7 @@ A simulation we conducted indicated that with a sample size of
 real_data <- here::here("data", "data.csv")
 simulated <- !fs::file_exists(real_data)
 if(simulated){
-  cat("\\textcolor{red}{This document and the results presented herein are based
-      on simulated data and should not be interpreted.}")
+  cat("\\textcolor{red}{The results are based on simulated data and must not be interpreted. They only serve to illustrate the result of the preregistered code.}")
   set.seed(1234)
   mach <- simulate_data(900, 8, 0.3, 10)
 } else {
@@ -118,7 +118,7 @@ report_analysis(planned_analysis(mach))
 
 # Discussion
 
-\textcolor{red}{This document was created before we have gathered any data, we, therefore, have nothing to discuss.}
+\textcolor{red}{This document was created before we have gathered gathered data. The discussion will only be added to the final report.}
 
 \newpage
 # References
