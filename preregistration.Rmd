@@ -1,5 +1,5 @@
 ---
-title: "Preregistered as Code: A Comparison of Male and Female Machiavellianism"
+title: "Preregistered as Code: Gender differences in Machiavellianism"
 date: "7/10/2021"
 author:
   - name: Aaron Peikert
