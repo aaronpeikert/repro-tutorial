@@ -933,7 +933,8 @@ We hope that despite the early development stage, `repro` can support researcher
 We realize that PACs are challenging.
 Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove unwieldy for a PAC.
 Therefore, PAC should not be seen as an attempt to invalidate classical preregistration or not preregistered research but as a compliment.
-We are convinced that many reasons justify changing the preregistered code, but we are equally convinced that readers should judge themselves if they find these deviations from the preregistration meaningful.
+Some may see the rigidness of PAC as to much of a good thing.
+However, we are convinced that many reasons justify changing the preregistered code, but we are equally convinced that readers should judge themselves if they find these deviations from the preregistration meaningful.
 
 Another challenge is that PAC requires more programming expertise than a usual analysis.
 In contrast to a reproducible script, which should work on the same data, a PAC must work on different data.
@@ -962,10 +963,10 @@ Yet others may find that they require other programming languages or scale their
 `repro` was designed modularly to meet such demands.
 At the moment, `repro` only supports the combination of RMarkdown, Git, Make, and Docker.
 However, there are alternatives for each of these elements that may fit better into an individual research project.
-RMarkdown could be complemented or replaced by a dynamic Microsoft Word document with the help of `officer` or `officedown` to accommodate a wider arrange of journal submission standards.
+RMarkdown could be complemented or replaced by a dynamic Microsoft Word document with the help of `officer`[@officer] or `officedown`[@officedown] to accommodate a wider arrange of journal submission standards.
 Instead of using formal version control with Git, `repro` could automatically save snapshots for increasing user-friendliness.
 Make could be replaced by the more R-centred alternative `targets` for more convenience.
-Docker could be combined with `renv` to control the package versions precisely (our approach fixes the date, `renv` the exact package version).
+Docker could be combined with `renv` [@R-renv] to control the package versions precisely (our approach fixes the date, `renv` the exact package version).
 Alternatively, Docker could be replaced by the more lightweight `renv` if no dependencies outside of R are considered crucial.
 Docker does not satisfy the requirements of many HPC environments, but Singularity was designed to avoid this limitation while still being compatible with Docker images.
 
