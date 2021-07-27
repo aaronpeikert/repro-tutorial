@@ -807,8 +807,8 @@ We will use an exemplary research question that was based on openly available da
 > "Is there a mean difference in the personality trait 'Machiavellism' between self-identified females and males?"
 
 Again, we propose a preregistration format that closely resembles a classical journal article, but that utilizes simulated data and dynamic document generation to serve simultaneously as preregistration and final manuscript.
-The complete example is available in the (https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
-In this section, we show excerpts of this example formatted in light grey and provide some commentary.
+The complete example is available in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
+In this section, we show excerpts of this example formatted in monospace and provide some commentary.
 
 ```{r, echo=FALSE}
 show <- function(x, wrap = TRUE, cat = TRUE, fence = TRUE){
