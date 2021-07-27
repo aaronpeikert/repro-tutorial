@@ -113,26 +113,32 @@ Scientists increasingly strive to make research data, materials, and analysis co
 Sharing these types of digital research artifacts has the potential to increase scientific efficiency by enabling researchers to learn from each other and reuse materials, and to increase scientific reliability by facilitating the review and replication of published research results.
 To some extent these potential benefits are contingent on whether these digital research artifacts are reproducible. 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
-Reproducibility has long been considered integral to empirical research, whose credibility hinges on its objectivity, meaning "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper]
+The credibility of empirical research hinges on its objectivity. Objectivity in this context means "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper]. Therefore, reproducibility has long been considered integral to empirical research.
+<!---
+You tend to use quite long sentences with many subclauses. While this has a long tradition in the german language, it is considered bad style in english. Also it often leads to minor mistakes like dangling modifiers.
+-->
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
 This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges, and there is a dire need for reproducibility standards.
 We now have the technology to make all artefacts related to a research project available so that a research project can be reproduced with minimal effort.
 
 This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
 We pursue two aims.
-First, the present paper introduces the reader to a workflow that maximizes the potential reproducibility of a research project.
+First, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project.
 This workflow builds on several technical solutions originating in the software engineering community. 
 We discuss how these solution address four common threats to reproducibility [see @Peikert2019 for details] and form a coherent workflow.
 We further demonstrate how the R package `repro` supports researchers in adopting this workflow.
-The second objective is to discuss opportunities of reproducible workflows to improve not only how research outputs are created and recreated, but also how research itself is conducted.
+Second, we discuss opportunities of reproducible workflows to improve not only how research outputs are created and recreated, but also how research itself is conducted.
 One such opportunity is a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon a reproducible workflow, the so-called *preregistration as code* (PAC).
-PAC involves preregistering the intended analysis code and the bulk of the manuscript as dynamic document, including the Introduction, Methods, and Results sections.
-The resulting dynamic document closely resembles the final manuscript, but uses preliminary ("mock") results, based on the analysis of simulated data, as a placeholder for figures, tables, and statistics. 
-After the empirical data are analyzed, the Results are updated, and the Discussion is written.
+PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including the Introduction, Methods, and Results sections.
+The resulting dynamic document closely resembles the final manuscript, but uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
+Once the empirical data are analyzed, the Results are updated, and the Discussion is written.
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalized to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
 Scientific organizations and funding bodies increasingly demand transparent sharing of research artifacts, and researchers are increasingly willing to do so.
+<!---
+I am not shure about the word artifact in general. Is it common terminology?
+-->
 However, although the sharing of such artifacts is a necessary condition for reproducibility, it is not a sufficient one.
 This was illustrated by an attempt to reproduce results from open materials in the journal *Cognition* [@hardwicke2018]. 
 Out of 35 published articles with open research artifacts, results of 22 articles could be reproduced but in 11 of these cases, further assistance from the original authors was required.
@@ -145,7 +151,7 @@ If research artifacts are available but not reproducible, their added value is l
 This tutorial therefore demonstrates how to make R-based research projects reproducible, while striking a balance between rigor and ease-of-use.
 A rigorous standard increases the likelihood that a project will remain reproducible as long as possible.
 An easy-to-use standard, on the other hand, is more likely to be adopted.
-Our approach is to promote broad adoption of easy-to-use practices, i.e., a "low threshold", and ensure that these practices are compatible with more complex rigorous solutions, i.e., a "high ceiling".
+Our approach is to promote broad adoption of easy-to-use practices (a "low threshold"), and ensure that these practices are compatible with more complex rigorous solutions (a "high ceiling").
 As researchers become more proficient with the tools involved, they can thus improve the reproducibility of their work.
 The first part of this tutorial outlines a reproducibility standard, and introduces the underlying theoretical concepts and software solutions.
 The second part is a tutorial that demonstrates how this standard can be easily adopted with the help of the R package `repro`.
@@ -161,14 +167,17 @@ Unless stated otherwise, all code blocks are meant to be run in the statistical 
 
 From our own experience with various research projects, we identified the following common threats to reproducibility: <!-- CJ This still requires attention! How did you identify these causes? Is this exhaustive?-->
 
-1.	**Multiple inconsistent versions of code, data, or both**; for example, the data set could have changed over time because outliers were removed at a later stage or an item was later recoded; or the analysis code could have been modified during writing of a paper because a bug was removed at some point in time; it may then be unclear, which version of code and data was used to produce some reported set of results.
+1.	**Multiple inconsistent versions of code, data, or both**; for example
+  - the data set could have changed over time because outliers were removed at a later stage or an item was later recoded
+  - the analysis code could have been modified during writing of a paper because a bug was removed at some point in time
+It may then be unclear which version of code and data was used to produce some reported set of results.
 2.	**Copy-and-paste errors**; for example, often, results are manually copied from a statistical computing language into a text processor; if a given analysis is re-run and results are manually updated in the text processor, this may inadvertently lead to inconsistencies between the reported result and the reproduced result;
 3.	**Undocumented or ambiguous order of code execution**; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;  or, some of the computational steps are documented (e.g., final analysis), but other steps were conducted manually and not documented (e.g., running a scripts/commands by hand; copy-pasting results from one program to another)
 4.	**Ambiguous dependencies**; for example, a given analysis may depend on a specific version of a specific software package, or rely on software that might not be available on a different computer or no longer exist at all; or, a different version of the same software may produce different results.
 <!-- CJ 5. Missing steps: Some of the steps are documented (e.g., final analysis), but other steps were conducted manually and not documented (e.g., copy-pasting results from one program to another; reverse coding items on the fly).-->
 <!--AB Caspar's 5th point is important. In my mind, this best fits to point #3, which adressed an insufficient level of coding/automation/documentation of the necessary steps taken. Can we merge this into one new point #3? I will commit a suggested change of point #3 here (see above);.-->
 
-We have developed a workflow that leverages established tools and practices from software engineering to achieve long-term and cross-platform computational reproducibility of scientific data analyses resting on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]: <!-- CJ In fact, this is the central message of your paper: "We have developed this new workflow, based on four pillars." I would suggest mentioning this very clearly in the opening paragraph. The opening paragraph should at least:
+We have developed a workflow that achieves long-term and cross-platform computational reproducibility of scientific data analyses. It leverages established tools and practices from software engineering and rests on four pillars that address the aforementioned causes of non-reproducibility: [@Peikert2019]: <!-- CJ In fact, this is the central message of your paper: "We have developed this new workflow, based on four pillars." I would suggest mentioning this very clearly in the opening paragraph. The opening paragraph should at least:
 1) Introduce the topic area
 2) Introduce the problem/knowledge gap
 3) Introduce how you will fill this knowledge gap-->
@@ -201,12 +210,12 @@ Git has additional features beyond basic version control, such as branches to fa
 @bryanExcuseMeYou2018 provides additional information on how to track R Markdown documents.
 Collaborating via Git requires the repository to be uploaded somewhere.
 We recommend GitHub to host Git repositories because of its popularity among R users.
-GitHub has many tools that ease project management and collaboration, and these tools provide much value in our everyday work, but they are not central to achieving reproducibility.
+GitHub has many tools that ease project management and collaboration, and these tools are valuable in scientists everyday work, but they are not central to achieving reproducibility.
 
 Second, we rely on **dynamic document generation**.
 The traditional way of writing a scientific report based on a statistical data analysis uses two separate steps conducted in two different programs.
 In a word processor, the researcher writes the text, and in another software, they conduct the analysis.
-Typically, results are manually copyied and pasted from one software to the other, a process that often produces inconsistencies [@nuijtenPrevalenceStatisticalReporting2016].
+Typically, results are manually copied and pasted from one software another, a process that often produces inconsistencies [@nuijtenPrevalenceStatisticalReporting2016].
 
 Dynamic document generation integrates both steps.
 Through dynamic document generation, code becomes an integral, although usually hidden, part of the manuscript, complementing the verbal description and allows interested readers deeper understanding [@knuthCWEBSystemStructured; @claerboutElectronicDocumentsGive1992].
@@ -214,23 +223,23 @@ Through dynamic document generation, code becomes an integral, although usually 
 Markdown is a lightweight text format in plain text with a minimal set of reserved symbols for formatting instructions.
 This way, Markdown does not need any specialized software for editing.
 It is highly fool-proof [unlike, for example, LaTeX @lamportLATEXDocumentPreparation1994], works well with version control systems, and can be ported to various document formats, such as HTML Websites, a Microsoft Word document, a typeset PDF file (for example, via LaTeX journal templates), or a Powerpoint presentation.
-We suggest using Markdown for all sorts of documents that are created in the academic context, starting from simple sketches of your ideas to your scientific manuscripts[@R-rticles], and presentations[@revealjs] or even your résumé [@vitae].
+We suggest using Markdown for all sorts of documents that are created in the academic context, starting from simple sketches of your ideas, to your scientific manuscripts [@R-rticles] and presentations [@revealjs], or even your résumé [@vitae].
 R Markdown extends regular Markdown by allowing users to include R code chunks [in fact, arbitrary computer code @riedererChapter15Other] into a Markdown document.
 Upon rendering the document, the code blocks are executed, and their output is dynamically inserted into the document.
-This allows the creation of (conditionally) formatted text, statistical results, or figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
+This allows the creation of formatted text, statistical results, and figures that are guaranteed to be up-to-date because they are created every time anew as the document is rendered to its output format (e.g., presentation slides or a journal article).
 @xieMarkdownCookbook2020 provides an extensive yet practical introduction to most features of R Markdown.
 
 One would hope that sharing a dynamic document would allow individuals (including one's future self) to simply download and reproduce a given analysis.
 However, while version control and dynamic document generation are becoming more common, this approach fails to guarantee reproducibility in many instances [@Peikert2019].
-In practice, dependencies between project files (for example, the information what script uses which data file and what script needs to be run first) or on external software (such as system libraries or components of the programming language, such as other R packages) are frequently unmentioned or not exhaustively and unambigously documented.
+In practice, dependencies between project files (for example, the information what script uses which data file and what script needs to be run first) or on external software (such as system libraries or components of the programming language, such as other R packages) are frequently unmentioned or not exhaustively and unambiguously documented.
 
 To automatically resolve dependencies between project files, we rely on **dependency tracking**.
-In essence, researchers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and, in the end, a final product.
+In essence, researchers provide a collection of computational instructions (_recipes_) that describe how ingredients are processed to create intermediate products and, in the end, a final product.
 Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipes_).
-In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, analysis results).
+In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, and analysis results).
 
 We recommend using **Make** for dependency tracking because it is language independent.
-The following hypothesical example illustrates the utility of Make.
+The following hypothetical example illustrates the utility of Make.
 Consider a research project that contains a script to simulate data (`simulate.R`) and a scientific report of the simulation results written in R Markdown (`manuscript.Rmd`).
 A Makefile for this project could look like this:
 
@@ -256,13 +265,13 @@ container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
 
 A version controlled dynamic document with dependency tracking may still rely on external software.
 Troubleshooting issues specific to a particular programming language or dependent tool typically requires considerable expertise and pose a threat to reproducibility.
-One solution to avoid problems caused by missing or inconsistent external software dependencies is to provide not only the analysis script but all dependent software packages and system libraries via **software management**.
+One solution to avoid problems caused by missing or inconsistent external software dependencies is to provide all dependent software packages and system libraries via **software management**.
 One comprehensive approach to software management is containerization.
 "packaging the key elements of the computational  environment  needed  to  run  the  desired  software [makes] the software much easier to use, and the results easier to reproduce" [@silverSoftwareSimplified2017, p. 174].
 
 **Docker** is an example of containerization.
 It provides all software used in an analysis, including the operating system itself.
-The operating system level is important because some functionality may be passed to software layers beneath the programming language, such as calls to random number generators, linear algebra libraries and such.
+(The operating system level is important because some functionality may be passed to software layers beneath the programming language, for example random number generators and linear algebra libraries.)
 Docker does this without interfering with the already installed software by using a virtual software environment independent of the host software environment.
 Researchers therefore have the opportunity to use the exact same software setup that was used by the original authors.
 Such a snapshot of the software stack is called an "image".
@@ -273,13 +282,13 @@ For example, there are pre-made images that only include what is necessary for R
 Users can then install whatever they need in addition to what is provided by these pre-compiled images.
 `r ifelse(is.na(container_size), "", glue::glue("The image that was used for this article uses {round(container_size, 2)}Gb of disk space."))`
 The image for this project includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like the tidyverse [@tidyverse] and all their dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
-A second strategy is to save a container recipe; a so-called  `Dockerfile` containing a textual description of all commands that need to be executed to recreate the software environment, instead of the software environment itself.
+A second strategy is to save a container recipe, a so-called  `Dockerfile` containing a textual description of all commands that need to be executed to recreate the software environment, instead of the software environment itself.
 Dockerfiles are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile) for this project has a size of only `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb).
 However, they rely on the assumption that all software repositories that provide the dependent operating systems, pieces of software, and R packages will remain accessible in future and will continue to make available historic software versions.
-For proper archival, we therefore recommend to store a complete image of the software environment, in addition to the Dockerfile.
+For proper archival, we therefore recommend storing a complete image of the software environment besides the Dockerfile.
 A more comprehensive overview of the use of containarization in research projects is given by @wiebelsLeveragingContainersReproducible2021.
 
-To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).    
+To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)); dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).    
 While R Markdown and Git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside the field of information technology, which can represent a considerable hurdle in the acceptance and implementation of the workflow.
 To remove this hurdle, we have developed the R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 In the remainder, we will walk you through the creation of a reproducible research project with the package `repro`.
