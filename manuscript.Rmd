@@ -297,22 +297,31 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 
 # Creating reproducible research projects
 
-The above mentioned tools require expertise that is beyond the traditional curriculum of researchers.
-To aid researchers adopting these tools we rely on and have developed helpers that wrap more complicated (and powerful) tools.
-These helpers wrap standard tools but provide feedback about what the computer does and what the user should do in layman's terms and are accessible from within R.
-We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their systems state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
-These alternative tools are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
+One impediment to the widespread adoption of a standard for reproducible research is that learning to use the required tools can be time-intensive.
+To lower the threshold to adoption, the R-package `repro` introduces helper functions that wrap more complicated (and powerful) tools.
+These so-called wrappers guide end-users in the use of reproducibility tools, provide feedback about what the computer does, and suggest what the user should do in layman's terms.
+We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their system's state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
+These wrappers are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
 
-Before we can start creating reproducible research projects, we need a computer with a working R Studio installation. 
-Start R Studio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro] so it can assist you following the tutorial:
+This tutorial assumes that the user is working predominantly in R, with the help of RStudio.
+It describes basic steps that we expect to apply to all users. Your specific situation might involve additional, more specialized steps. After completing the tutorial, you should be able to customize your workflow accordingly.
+The first step is to install the required software.
+Start R Studio<!--CJ I am concerned that new users may not install R if you only mention RStudio.--> and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
+It will assist you while you follow the tutorial.
+>>>>>>> main
 
 ```{r, eval=FALSE}
 # repro is not on CRAN yet
-install.packages('repro', repos = 'https://aaronpeikert.r-universe.dev')
+options(
+  repos = c(aaronpeikert = 'https://aaronpeikert.r-universe.dev',
+            CRAN = 'https://cloud.r-project.org')
+)
+install.packages('repro')
 ```
 
 An example of the assistance that `repro` provides are the check functions.
-They verify that you indeed have installed and setup the required pieces of software for this workflow (we use the double-colon operator to access functions from the `repro` namespace to make clear which functions are native `repro` functions):
+
+These verify that you indeed have installed and setup the required pieces of software for this workflow (here, we use the double-colon operator to access functions from the `repro` namespace; we chose to do so to make clear which functions are native `repro` functions) :
 
 ```{r}
 # `package::function()` → use function from package without `library(package)`
@@ -321,7 +330,7 @@ repro::check_make()
 repro::check_docker()
 ```
 
-They detect the users' system state and explain if further action is needed.
+These functions check whether specific dependencies are available on the users' system, and if not, explain what further action is needed to obtain it.
 Sometimes they ask the user to do something, for example, the following happens if you were a Windows user who does not have Git installed:
 
 ```{r, include=FALSE}
@@ -338,12 +347,15 @@ check_git()
 options(opts)
 ```
 
-The messages emitted by `repro` and other packages we present try to take the user by the hand to help them solve problems.
-This tutorial describes steps that we expect to apply to all users; the messages from the packages are adjusted to your specific situation (that is, operating system and the specific problem of missing software) and complement the tutorial in this way.
-Before you continue, we ask you to run the above commands to check Git, Make, and Docker.
-If necessary, follow the instructions of repro to install them until the check functions are all fine.
+The messages from `repro` try to take the user by the hand to help them solve problems.
+These messages are adjusted to your specific operating system and installed dependencies.
+Before you continue, we ask you to run the above commands to check Git, Make, and Docker - both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
+If necessary, follow any instructions presented until all checks pass.
 
-The first concept we want to introduce is version control with Git.
+
+## Implementing version control
+
+Now that your system is set up for this tutorial, we will introduce you to version control with Git.
 Git tracks files within one project folder.
 We start by creating such a project folder with RStudio by clicking the menu item:
 
@@ -351,8 +363,10 @@ We start by creating such a project folder with RStudio by clicking the menu ite
 
 This creates a project containing an example analysis, but you may use any other template or existing R Project to turn into a reproducible research project using the functionality of `repro`.
 
-You can prevent Git from accidentally committing files that you do not want to track with the `.gitignore` file.
-You can edit the `.gitignore` file directly or with this command:
+Git tracks any files that you manually add to the repository.
+To make sure you do not accidentally add files that you do not wish to share (e.g., privacy sensitive data),
+you can list specific files that you do not want to track in the `.gitignore` file.
+You can add something to the `.gitignore` file directly or with this command:
 
 ```{r, eval=FALSE}
 usethis::use_git_ignore("private.md")
@@ -360,43 +374,56 @@ usethis::use_git_ignore("private.md")
 
 Now the file `private.md` will not be committed to Git and will not be made public.
 
-After you have excluded sensitive files (like not yet anonymized data files), you can activate Git with:
+Especially for new users, it is recommended to follow this procedure and exclude sensitive files before proceeding.
+When you are ready, you can begin tracking your files using Git by running:
 
 ```{r, eval=FALSE}
 usethis::use_git()
 ```
 
 For Git to recognize changes to a given file, you have to stage and then commit these changes (this is the basic save action for a project snapshot).
-The easiest way to do this is to use the RStudio Git pane.
-Click on the empty box next to the file you want to stage, and when a tick appears, which means that the file is staged.
-After you have staged all files you would like to, click on the commit button, explain in the commit message why you made those changes, and then click on commit.
+
+One way to do this is through the visual user interface in the RStudio Git pane.
+Click on the empty box next to the file you want to stage.
+A check mark appears which indicates that the file is staged.
+After you have staged all files you want, click on the commit button, explain in the commit message why you made those changes, and then click on commit.
+This stores a snapshot of the current state of the project.
+
 
 The files you created and the changes you made still have not left your computer.
 All snapshots are stored in a local repository in your project folder.
-To back up and share the files, you can publicly upload those changes to a public repository.
-To synchronize your local repository with a remote repository from the GitHub service, issue the following command:
+To back up and/or share the files online, you can push your local repository to a remote repository.
+While you can choose any Git service (like GitLab or BitBucket), we will use GitHub in this tutorial.
+Before you upload your project to Git, you need to decide if you would like the project publically accessable (viewable by anyone, editable by selected collaborators) or if you want to keep it private (only viewable and editable by selected collaborators).
+To upload the project publically to GitHub use:
 
 ```{r, eval=FALSE}
 usethis::use_github()
 ```
 
-Depending on your computer configuration, this may ask to set up a secure connection to GitHub. In this case first follow the suggestions shown on the R console.
-
-If you are not yet ready to share your project publicly but you want to synchronize your local repository to a remote repository (for example, as a simple backup service), use:
+To upload it privately:
 
 ```{r, eval=FALSE}
 usethis::use_github(private = TRUE)
 ```
 
-Now that you have created a project that is under version control, we continue with adding dynamic document generation.
+Depending on your computer configuration, this may ask to set up a secure connection to GitHub.
+In this case first follow the suggestions shown on the R console.
+
+## Dynamic document generation
+
+Now that you have created a version controlled project, we will proceed with dynamic document generation.
 A dynamic document has three elements:
 
-1. Text
-2. Executable code
-3. Metadata
+1. Text (prose; e.g., a scientific paper or presentation)
+2. Executable code (e.g., analyses)
+3. Metadata (e.g. title, authors, document format)
 
+R Markdown is a type of dynamic document well-suited to the RStudio user interface.
 The text of an R Markdown is formatted by Markdown (see @xieMarkdownDefinitiveGuide2019 for technical details and @xieMarkdownCookbook2020 for practical guidance).
-The following example serves to illustrate the Markdown syntax.
+The code mostly consists of R-code (although other programming languages are supported, like Python, C++, Fortran, etc).
+The following example serves to illustrate the Markdown syntax. 
+
 It shows how to create a heading, a word in bold font, and a list of several items in Markdown:
 
 ```markdown
@@ -415,13 +442,14 @@ To do list:
 * spend time with family and friends
 ```
 
-This type of markup for formatting, instead of the more visual approach of e.g. Microsoft Word, is compatible with many output formats and is easier to put under version control.
+One advantage of this type of markup for formatting is that it can be rendered to many different output formats - both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
+Another advantage is that, because R Markdown files are in plain text, they are more suitable for version control using Git.
 Some users might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown underneath with all of its flexibility.
-The visual editor has the additional benefit of promoting best practices (for example, each sentence should be written on a new line, which eases tracking changes across versions).
-Among other features, it eases the generation of citations and cross references.
+The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions)
+and easing the generation of citations and references to Tables and Figures.
 
-Now that you are familiar with the basics of writing text in Markdown, we turn our attention to including code into the text.
-Code is separated by three backticks (and the programming language in curly braces):
+Now that you are familiar with the basics of Markdown formatting, we turn our attention to including code into the text.
+Code is separated by three backticks (and the programming language in curly braces) like here:
 
 ````markdown
 This is normal text, written in Markdown.
@@ -432,22 +460,27 @@ This is normal text, written in Markdown.
 ```
 ````
 
-The results of your code are dynamically inserted into the document.
-Dynamically means that whenever you turn the R Markdown into its output format the code is executed again and if you changed something the results are updated.
-The output document is then static, e.g. a pdf document, and can be shared wherever you like, e.g on a preprint server.
-This static document is somewhat decoupled from the R Markdown and the rest of the code that did create it.
-It is quite possible that several slightly different versions are therefore circulating.
-We therefore recommend to connect the static document to the version control system by dynamically including the identifier of the Git commit, called hash, in the document.
-The `repro` package comes with the function `repro::current_hash()` for that purpose.
+The hotkey [Control]+[Alt]+[i] inserts a block of code in the file.
+The results of code enclosed in such backticks will be dynamically inserted into the document (depending on specific settings).
+This means that, whenever you render the R Markdown to its intended output format, the code will be executed and the results updated.
+The resulting output document will be static, e.g. a pdf document, and can be shared wherever you like, e.g on a preprint server.
+
+Once the R Markdown file has been rendered to a static document, the resulting file is decoupled from the R Markdown and the code that created it.
+This introduces a risk that multiple versions of the static document are disseminated, each with slightly different results.
+To avoid ambiguity, we therefore recommend referencing the identifier of the Git commit at the time of rendering in the static document.
+Simply put, a static document should link to the version of the code that was used to create it.
+The `repro` package comes with the function `repro::current_hash()` for this purpose.
 This document was created from the commit with the hash ``r repro::current_hash()``.
 
-Now that you know how to write text and R code in an R Markdown, you need to know about metadata, like the title or the output format. Metadata are placed at the beginning of the document and are separated by three dashes from the document body.
-The following example is a full markdown document where the the metadata (the "header") is in lines 1--6.
+Now that you know how to write text and R code in an R Markdown, you need to know about metadata (also called: YAML front matter).
+These metadate contain information about the document, like the title and the output format.
+Metadata are placed at the beginning of the document and are separated by three dashes from the document body.
+The following example is a full markdown document where the metadata (the "YAML front matter") is in lines 1--6.
 
 ````markdown
 ---
 title: A Hitchhiker's Guide to Reproducible Research in R
-author: Aaron Peikert, Caspar J. Van Lissa and Andreas M. Brandmaier
+author: Aaron Peikert, Caspar J. van Lissa and Andreas M. Brandmaier
 abstract: A tutorial about doing the same thing more than once.
 output: html_document
 ---
@@ -467,13 +500,14 @@ t.test(extra ~ group, data = sleep)
 ```
 ````
 
-Most metadata fields are self-explanatory (like the author field). 
-Sometimes, R packages may extend the metadata fields for their own purposes.
-Certain output formats may require specific  metadata. 
-For example, the `rticles`-package, which offers templates for authoring scientific manuscripts, comes with extra fields that are described in the package documentation and offer extra options for flexible formatting of documents.
-R Markdown has been extended to hundreds of document formats which are often highly configurable by their metadata.
-The `repro` package uses the metadata for hints to make the research project reproducible.
-Researchers should list all dependent resources of their research project in the metadata, that is, R scripts, data files, and external packages, in the following format (see everything below the line *repro:*):
+Some metadata fields are self-explanatory (like the author field), and exist across all output formats (like the title field).
+However, R Markdown has been extended to hundreds of document formats which are often highly configurable by their metadata.
+Some R packages add additional metadata fields.
+The `repro` package adds fields to the metadata to help make the research project reproducible.
+These fields are used to list all dependencies of the research project.
+This includes R scripts, data files, and external packages.
+The format is as follows (see everything below the line *repro:*):
+
 
 ```markdown
 ---
@@ -493,19 +527,25 @@ repro:
 ---
 ```
 
-This information makes internal dependencies to other files in the project and external dependencies to R packages explicit.
-`repro` can use this information to infer a Makefile for the dependencies on other files and a Dockerfile that includes all required packages.
-These two files together form the basis for consistency within a research project and consistency across different systems.
-At this point, we would like to emphasize that a prerequisite for reproducibility is that every step taken in an analysis can be **automatically** reproduced.
+This information makes explicitly declares the project's dependencies on files and R packages.
+`repro` uses this information to infer a Makefile for the dependencies on other files and a Dockerfile that includes all required packages.
+These two files together form the basis for consistency within a research project and consistency across different systems.<!--CJ Consider explaining this in the theoretical intro-->
+At this point, we would like to emphasize that a preqrequisite for reproducibility is that every step taken in an analysis can be automatically reproduced.<!--CJ This comes way to late. Shouldbe in the opening paragraph or something.-->
 This means there must be no manual processing such as copy and pasting, manual modification of data files (e.g., manually removing observations or manually recoding variables). 
-Ideally, all data preprocessing is well-documented and gathered in a separate R file, which is then called before a Markdown report is generated (that is, the preprocessing script is added in the metadata header under _scripts:_).
+Ideally, all data preprocessing is well-documented and gathered in a separate R file, which is then called before a Markdown report is generated (that is, the preprocessing script is added in the metadata header under _scripts:_).<!--CJ These points describe the formal definition of reproducibility used in this paper, and the goal of the workflow. That needs to be explained in the introduction. If you only find out what you are working toward halfway through the tutorial - that's too late!-->
 
-In everyday work, the simplest solution is to now call the function `repro::automate()` which creates a Makefile and a Dockerfile from all R Markdown files in the project based on the respective repro metadata entries.
-Every time you change the `repro`-metadata, change the output format, or add a new R Markdown file to the project, the Makefile and Dockerfile are potentially outdated, and you should run `repro::automate()` to keep them up to date.
-The function `repro::automate()` does not overwrite manual changes, and there is no harm in running it too often.
-Other than the Makefile and the Dockerfile, which are created in the document root path, repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git. <!--AB: why is this addition not automated? Feels strange given that this is our recommended best practice?!-->
+The function `repro::automate()` converts the metadata from all R Markdown files in the project (all files with the ending `.Rmd`) to a Makefile and a Dockerfile.
+Together, these files allow users (including your future self) to reproduce every step in the analysis automatically.
+It is important to re-run `repro::automate()` whenever you change the `repro`-metadata, change the output format, or add a new R Markdown file to the project, to keep the Makefile and Dockerfile up to date.
+The function `repro::automate()` does not overwrite manual changes<!--CJ What does that mean?-->, and there is no harm in running it too often.<!-- CJ Can that not be automated? Or at least provide a suggestion when to run it?-->
+Other than the Makefile and the Dockerfile, which are created in the document root path, repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to Git. <!--AB: why is this addition not automated? Feels strange given that this is our recommended best practice?! CJ: Agreed.-->
 
-When you or someone else who received your project would like to reproduce it, they can ask repro to explain how this should be done:
+<!-- CJ What i'm missing here is something to wrap up the tutorial. Do users now have a project that could be reproduced? The tutorial should not end until that is the case.-->
+
+## Reproducing a project
+
+<!--CJ Suggestion: Instead of explaining reproduction right in the middle of the tutorial for setting up a project, add a later section called "reproducing a project", and provide an example project for users to reproduce.-->
+When you or someone else who received your project want to reproduce it, they can ask repro to explain how this should be done:
 
 ```{r}
 repro::reproduce()
@@ -517,20 +557,21 @@ If you feel uncomfortable using the terminal directly, you can sent the command 
 system(reproduce())
 ```
 
-Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.
+Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.<!--CJ This belongs in the intro, not the tutorial. It is part of explaining the benefits of repro.-->
 These projects will remain reproducible irrespective of whether `repro` will be maintained and remain accessible in future.
-Users do not have to have repro installed to reproduce a project, in fact, they do not even need to have R installed because the entire project can be rebuilt inside of a container that has R installed. 
-The two Make commands `make docker` and `make -B DOCKER=TRUE` together with an installation of Make and Docker are sufficient.
+Users do not have to have repro installed to reproduce a project, in fact, they do not even need to have R installed because the entire project can be rebuilt inside of a container that has R installed.
+The only required software for reproducing a project is Docker, assuming users know how to build a Docker image and run Make within the container.
+However, if they have installed Make additionally to Docker, they do not need to know how to use Docker and can simply rely on the two Make commands `make docker` and `make -B DOCKER=TRUE`.
 The commands can be pasted into a terminal and will reproduce the project in many cases.
-<!--AB: I said this before. I think it really should be possible to execute this command from within R. Never underestimate the troubles people can have with the terminal. I think we discussed this before. Please add a function repro::rerun(execute=TRUE) or -- if we rename it -- repro::reproduce(execute=TRUE). -->
 
 # Advanced Features
 
-Some projects, however, are not so easy to make reproducible.
-As explained above, `repro` is merely a simplified interface that guarantees a high level of reproducibility for simple projects.
-These simplifications are possible because of two restrictions.
-Users who ask themselves either "How can I install software that is not an R package in the Docker image?" or "How can I express complex dependencies between files, e.g. raw data turned into preprocessed data required by analysis?" need to be aware of these restriction and require a deeper understanding of the inner workings of `repro`.
-All other users may safely skip this section and return if they need to.
+This section is only for advanced users who want to overcome some limitations of `repro`.
+If you read this paper the first time you probably want to skip this section.
+As explained above, `repro` is merely a simplified interface that enables a high level of reproducibility for simple projects.
+The simplification of Docker and Make are possible because of two restrictions.
+Users who ask themselves either "How can I install software dependencies outside of R in the Docker image?" or "How can I express complex dependencies between files, e.g. hundreds of data files are preprocessed and combined?") need to be aware of these restriction and require a deeper understanding of the inner workings of `repro`.
+Other users may safely skip this section, or return to it if they encounter such challenges.
 
 The metadata the `repro::automate()` function relies on can only express R packages as dependencies for the Dockerfile and only trivial dependencies (in the form of "file must exist") for the Makefile. 
 The first limitation means that users must rely on software that is either already provided by the base Dockerimage "rocker/verse" or the R packages they list in the metadata.
@@ -1015,3 +1056,4 @@ knitr::write_bib(
 )
 cat(c(readLines(here::here("packages.bib")), "\n", readLines(here::here("references.bib"))), sep = "\n", file = "temp.bib")
 ```
+
