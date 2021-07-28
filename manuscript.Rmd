@@ -548,6 +548,8 @@ The commands can be pasted into a terminal and will reproduce the project in man
 
 # Advanced Features
 
+This section is only for advanced users who want to overcome some limitations of `repro`.
+If you read this paper the first time you probably want to skip this section.
 As explained above, `repro` is merely a simplified interface that enables a high level of reproducibility for simple projects.
 The simplification of Docker and Make are possible because of two restrictions.
 Users who ask themselves either "How can I install software dependencies outside of R in the Docker image?" or "How can I express complex dependencies between files, e.g. hundreds of data files are preprocessed and combined?") need to be aware of these restriction and require a deeper understanding of the inner workings of `repro`.
