@@ -1009,31 +1009,52 @@ The interested reader can find the example rendered as a pdf file with actual da
 
 # Discussion
 
-<!--AB: TODO add a quick summary -->
+## Summary
 
-# Limitations
+We demonstrated how the R package 'repro' supports researchers in creating reproducible repositories and reproducible manuscripts. These are important building blocks for transparent and cumulative science
+because they enable others to reproduce statistical and computational results and reports later in time and on different computers. This is made possible because the repro approach fully documents all software dependencies from the exact version of specific R packages down to the entire operating system layer. Using a virtualization approach, the entire software environment can be recreated on a different computer without interfering with locally installed software. 
+Building upon reproducible manuscripts, we suggest to use reproducible PAC as a means to create and publish unambiguous pre-registrations in the form of code. Ideally, a PAC contains all analysis code and a reproducible manuscript that already renders the entire reporting of statistical and computational results. These results are based on simulated data, such that there is no danger of peeking at the real data while writing the scripts. This way, all researcher's degrees of freedom are eliminated. Once real data is gathered, the reproducible manuscript is (re-)created with the real data. All deviations from the pre-registration can be documented with version control systems that produce accurate documentations of the differences in the analysis code.
 
-PAC comes with a challenge.
-In contrast to a reproducible script, which should work on the same data, a PAC must work on different data.
+## Limitations of reproducibility
+
+<!--AB: please add what possible problems are there that endanger reproducibility; what are the assumptions under which this all works... -->
+Reproducible repositories created with the proposed workflow will work as long as operating systems with support for Make, Docker, and git are available.
+If development of git should be stopped one day, we believe that there will be other version control systems that will offer similar features and that can be substituted for git.
+If Make is not available on a future system, the Makefile itself is written in a way that one can manually trace the dependencies and execute commands in the right order.
+If Docker is not available on a future system, reproducing the comoutational environment will be more difficult, but the Dockerfile will still serve as unambiguous documentation of how the original system was set up and may help future users to create a software environment as close as possible to this environment.
+<!--AB: please finalize; say something to the effect of Dockerfiles vs full containers (again)?-->
+<!--AB: are there any specific limitations of what the package can/cannot do?-->
+
+## Limitations of PAC
+
+PAC comes with challenges.
+In contrast to a reproducible script that needs to work on a single, given dataset, a PAC must work across different data sets that are yet unknown at the time the script is created.
 We call the property of code that can run on different inputs from a similar context and produce valid outputs "reusability".
-This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] such that it is _build-for-reuse_ [@al-badareenReusableSoftwareComponents2010].
-The reproducible workflow we present here is heavily automated and hence promotes reusability.
+This property is based on reproducibility, but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] such that it is _built-for-reuse_ [@al-badareenReusableSoftwareComponents2010].
+The reproducible workflow we present here is heavily automated and hence promotes reusability; however, there is an increased demand on the researchers' side to write and maintain code that is flexible enough to work with different inputs. 
 Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019] and therefore this workflow fits well together with other innovations that employ automation, like machine readable hypothesis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
 Automated and reusable research projects promise a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
-
-Therefore reproducibility facilitates traditional good scientific practices and provides the foundation for promising innovations.
-
-Please note that the statistical procedure in the PAC example of running different test procedures based on a fixed skewness threshold was created for didactic purposes and is not necessarily optimal for addressing your research question.
-The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
-The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]).
+Another challenge are analyses that do not have linear execution but branch out. If such conditional analysis steps exist (such as those we demonstrated before with the test of mean differences), scholars using PAC need to write code that may be never executed.
+Typical examples of conditional analysis steps could be an exploratory factor analysis that is only executed if the theory-driven model does not fit well, or a group comparison is only executed if measurement invariance in a latent factor model is established.
+Writing code that may be never executed puts additional burden on the researcher.
+However, we hope that with the principle of reusability in mind, open and reproduce PAC elements may be reused by others and in turn save time to future developers.
 
 We also suggest that version control with Git and GitHub fulfills the criteria of a preregistration as long as you state your research plan comprehensively.
 This view is not shared by everyone [@szollosi_is_2020] because with some effort and malice intend the record of Git/GitHub can be altered.
 This concern can be addressed by using zenodo.org to give a digital object identifier (DOI) to your preregistration (see [this guide](https://guides.github.com/activities/citable-code/)) because zenondo.org saves an unchangeable copy of your repository.
 
-# Outlook
 
-<!--AB: two lines of what the future of the package, of such standards, and prereigstration is. Maybe say something that preregistration is not always possible or wanted but that reproducibility is almost always a good idea?-->
+
+
+## Limitations of the test for mean differences
+
+Please note that the statistical procedure in the PAC example of running different test procedures based on a fixed skewness threshold was created for didactic purposes and is not necessarily optimal for addressing your research question.
+The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
+The analytical strategy presented here is in fact suboptimal with regard to several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]).
+
+## Outlook
+
+<!--AB: TODO for AP: two/three lines of what the future of the package, of such standards, and prereigstration is. Maybe say something that preregistration is not always possible or wanted but that reproducibility is almost always a good idea?-->
 
 # References
 
