@@ -34,19 +34,23 @@ status: submit
 bibliography: temp.bib
 appendix: appendix.tex
 simplesummary: |
-  People trust science because other experts can vet it.
-  For example, suppose another person than the author of an article can recreate the same results on another computer.
-  In that case, they can more easily trust that the results are correct.
-  If anyone can recreate an article, it is called "reproducible".
-  We explain common technical problems (e.g. making sure that: 1. nothing has changed, 2. there are no copy-and-paste errors, 3. all steps are in the correct order, and 4. that the necessary software is installed) of reproducibility and show technical solutions.
-  However, because these solutions are complicated to use, we have developed some helpers to make them more accessible.
-  We then discuss why reproducibility also helps researchers to be more productive and produce higher-quality research.
-  One example is that with reproducibility, researchers can plan studies and their analyses with great precision.
-  If they publish such a plan, this is called "preregistration".
-  We urge researchers to formulate their data analysis for a preregistration as computer code because computer code is more precise than describing it with words.
-  They then should write all other parts of the preregistration with the same standards as a scientific article.
-  We call this preregistration as code.
-  Such a precise plan is beneficial for science because researchers generally trust results more if they are not explained after the fact.
+  Reproducibility has long been considered integral to the scientific method.
+  Until recently, detailed descriptions of methods and analyses were the primary instrument for ensuring scientific reproducibility.
+  Technological advancements now enable scientists to achieve a much higher standard of reproducibility;
+  one in which any individual can be granted access to a digital research repository, and reproduce the analyses from raw data to final manuscript with a single command.
+  This method has far-reaching implications for scientific archiving,
+  reproducibility and replication,
+  scientific productivity,
+  and the credibility and reliability of scientific findings.
+  One obstacle preventing the widespread adoption of this method is that the underlying technological advancements
+  are complicated to use.
+  This paper introduces `repro`; an R-package that guides researchers in the installation and use of the tools required for computational reproducibility.
+  It includes a tutorial on how to make a research project reproducible with the aid of `repro`.
+  Finally, it introduces novel applications of reproducibility tools for scientific research;
+  including the preregistration of study plans as reproducible computer code.
+  This circumvents the shortcomings of ambiguous preregistrations that allow for researcher degrees of freedom,
+  because computer code describes study plans more precisely than prose.
+  <!-- CJ Add concluding sentence(s) -->
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
   keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
