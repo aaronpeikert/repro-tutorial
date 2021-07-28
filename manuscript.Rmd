@@ -36,7 +36,7 @@ appendix: appendix.tex
 simplesummary: |
   Reproducibility has long been considered integral to the scientific method.
   Until recently, detailed descriptions of methods and analyses were the primary instrument for ensuring scientific reproducibility.
-  Technological advancements now enable scientists to achieve a much higher standard of reproducibility;
+  Technological advancements now enable scientists to achieve a much higher standard;
   one in which any individual can be granted access to a digital research repository, and reproduce the analyses from raw data to final manuscript with a single command.
   This method has far-reaching implications for scientific archiving,
   reproducibility and replication,
