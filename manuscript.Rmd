@@ -699,10 +699,10 @@ Users with more advanced requirements can manually change all aspects of both pr
 
 # Preregistration as Code 
 
-Defining the research questions and planning data analysis before observing the research outcomes is called preregistration [@NosekRevolution2018].
-Preregistration increases the credibility of empirical results by separating a priori planned analyses from those conducted unplanned and post hoc.
-For a priori planned analyses, preregistration should reduce "researcher degrees of freedom" therefore, the number of decisions researcher can make that could unduly influence the results.
-Preregistrations, however, have a problem.
+Defining the research questions and planning data analysis before observing the research outcomes is referred to _preregistration_ [@NosekRevolution2018].
+Preregistration increases the credibility of empirical results by separating a-priori planned analyses from those conducted unplanned and post-hoc, that is, after having seen the data.
+For a priori planned analyses, preregistration is supposed to reduce so-called "researcher degrees of freedom", and therefore, the number of decisions researcher can make that could unduly influence the results.
+Preregistrations, however, often do not achieve the level of unambiguity that are required to effectively zero the researcher degrees of freedom.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis, the results vary considerably [@silberzahnManyAnalystsOne2018].
 The current best practice to ensure that the preregistration is comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
 The structure these templates provide can more effectively reduce researcher degrees of freedom than an unstructured approach [@bakkerEnsuringQualitySpecificity2020].
@@ -711,7 +711,7 @@ Nevertheless, these templates can not remove all researcher degrees of freedom b
 Our proposed solution is simple:
 Instead of describing the analysis, you write and publish the code to conduct the analysis before you gather data.
 We term this *preregistration as code (PAC)*.
-PAC has the potential to eliminate all researcher degrees of freedom, even those standard preregistration can not eliminate.
+A reproducible PAC has the potential to eliminate all researcher degrees of freedom, even those that standard preregistration can not eliminate.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
@@ -723,23 +723,24 @@ We believe, however, that combining ideas from reproducibility and preregistrati
 
 First, preregistrations are plagued by non-reproducibility like any other research outcome.
 @bakkerRecommendationsPreregistrationsInternal2020 found that, among the 210 preregistrations they investigated, 174 (67%) included a formal power analysis, but from these, only 34 (20%) provided enough information to reproduce the power analysis.
-Even researchers who have gone to great lengths in submitting a script in their preregistration sometimes inexplicably fail to reproduce their results.
+Even researchers who have gone to great lengths in submitting a script in their preregistration sometimes inexplicably fail to reproduce their own results.
 For example, @steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
 
 Second, although it has been almost a decade since @steegenMeasuringCrowdAgain2014 have preregistered their code, the idea of publishing code before analyzing data has gained not much traction.
 This could change when combining the here proposed workflow and PAC.
 We want to extend PAC from preregistering code to preregistering *the whole manuscript as a dynamic document*.
 The idea is as follows:
-For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results (or similar) _before_ they gather empirical data.
-In this document, the results are initially based on simulated data that mimics the expected output.
+For a PAC, researchers write a reproducible, dynamically generated manuscript including the sections Introduction, Methods, and Results (or similar) _before_ they gather or acquire empirical data.
+In this document, the results are initially based on simulated data that merely serves the purpose to mimic the expected output. 
+For example, this simulated data allows to write code that already produces figures or tables.
 
-Writing a preregistration in form of a research article has the advantage that researchers already have great expertise in writing a scientific manuscript.
-It follows that for preregistrations they should stick to widely accepted standards of scientific writing [e.g. @apa7].
+Writing a preregistration in form of a research article has the advantage that researchers already have great expertise in writing a scientific report, ie., researchers do not have to learn specifics of a given preregistration template.
+It follows that for preregistrations they should simply stick to widely accepted standards of scientific writing [e.g. @apa7].
 We have already explained the need for reproducibility standards in the process of writing such manuscripts and it is therefore only natural to extend these arguments to preregistration.
 
 ## Advantages of PAC over traditional preregistration
 
-We believe that pairing PAC with the here presented workflow offers five advantages over classical preregistration.
+We believe that pairing PAC with the workflow presented here offers five advantages over classical preregistration.
 First, a PAC removes any ambiguity regarding the translation of a verbal analysis plan into code.
 Second, while being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis type over the other.
@@ -749,7 +750,7 @@ Using simulated data makes it straightforward to detect missing steps or ambiguo
 Because of its strict structure, PAC can therefore more effectively minimize researchers degrees of freedom than a standard preregistration [@bakkerEnsuringQualitySpecificity2020].
 It can therefore more effectively minimize researchers degrees of freedom than a standard preregistration [@bakkerEnsuringQualitySpecificity2020].
 Fourth, deviations from the preregistration are visible because they are reflected in changes to the code, which are managed and tracked with version control.
-Fifth, the preregistration is merely a development stage of the final manuscript, thus sparing authors from writing, and editors and reviewers from evaluating two separate documents.
+Fifth, the preregistration is merely an intermediate stage of the final manuscript, thus sparing authors from writing, and editors and reviewers from evaluating two separate documents.
 
 ## Benefits of PAC for study planning
 
@@ -766,7 +767,6 @@ Third, the plan should be efficient; it should only require the necessary amount
 ### Comprehensiveness
 
 Describing the preregistration in form of a journal article requires authors to follow the same standards that also ensure that research articles are comprehensive enough to replicate the described study.
-<!-- I dont understand this sentence -->
 One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
 Nevertheless, it can be fruitful to consult preregistration templates because of their strong focus on formulating a comprehensive methods section.
 
@@ -795,7 +795,7 @@ Researchers may also evaluate how the data analysis copes with expected data com
 
 To write a PAC, researchers should start by drafting a manuscript in the form of an R Markdown.
 When they have completed the method section, they should begin writing code.
-We suggest writing three functions for each hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
+We suggest writing three functions for each planned hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
 At the heart of a PAC lies the planned analysis, so researchers should first draft a function called `planned_analysis()` that fits the description in their method section.
 This function should receive the data and derive relevant results from it.
 
@@ -808,6 +808,7 @@ planned_analyis <- function(data){
 ```
 
 Because it is difficult to draft such a function without interactively testing it, the researcher should then write a function for simulating data.
+The follow code illustrates the signature of a simple simulation function:
 
 ```{r, eval=FALSE}
 simulate_data <- function(n, effect_size){
@@ -817,16 +818,16 @@ simulate_data <- function(n, effect_size){
 }
 ```
 
-As soon as they have written a first draft of `planned_anaylsis()` and `simulate_data()` they can interactively improve both functions, e.g. till `planned_analysis()` runs without error and recovers the correct parameters from `simulate_data()`.
+As soon as they have written a first draft of `planned_anaylsis()` and `simulate_data()` they can interactively improve both functions, e.g. until `planned_analysis()` runs without error and recovers the correct parameters from `simulate_data()`.
 The goal is that the output of `simulate_data()` works as input to the function `planned_analysis()`.
 
-This process can be tedious and complicated.
-If it proves infeasible to simulate data, researcher can delay their preregistration till they have gathered data and repurpose the actual data.
-Of course, researchers must not analyze the data before they write the preregistration.
-However, they can obfuscate the real data by shuffling the dependent variable or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
+If it is infeasible to simulate realistic data, researcher can delay their preregistration until they have gathered a given percentage of the data.
+Of course, researchers must not analyze these data before they write the preregistration.
+However, they can obfuscate these data by shuffling the dependent variable or otherwise createing synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
 
 When the researchers are satisfied with the function `planned_analysis()`, they can think about how they would like to report the analysis results via tables, plots, and text.
 The implementation of this reporting should be in the function `report_analysis()`.
+<!--AB hier ist mir unklar, wie das genau geht. baue ich hier alle Figures und Tables und Textstücke und benutze die dann erst später? Bitte genauer-->
 
 ```{r, eval=FALSE}
 report_analysis <- function(results){
@@ -841,7 +842,7 @@ This function should again accept the output of `planned_analysis()` as input.
 The output of this function should be formatted in Markdown.
 Various packages automatically generate well-formatted Markdown outputs of statistical reports or even entire tables of estimates or figures directly from R objects.
 Packages like [`pander`](https://github.com/Rapporter/pander) [@pander], [`stargazer`](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) [@stargazer], [`apaTables`](https://dstanley4.github.io/apaTables/articles/apaTables.html) [@apaTables] and [`papaja`](http://frederikaust.com/papaja_man/) [@papaja] help you to create dynamically generated professional looking results.
-The package [`report`](https://github.com/easystats/report) [@report] is particularly noteworthy because it generates not only tables but also a straightforward interpretation of the effects as actual prose (e.g. it quantifies the size of an effect).
+The package [`report`](https://github.com/easystats/report) [@report] is particularly noteworthy because it generates not only tables but also a straightforward interpretation of the effects as actual prose (e.g. it verbally quantifies the size of an effect).
 
 Ideally, these three functions can be composed to create a mock results section, e.g. when composed to `report_analysis(planned_analysis(simulate_data()))` or `simulate_data() %>% planned_analysis() %>% report_analysis()` they output a full results section.
 
@@ -850,15 +851,15 @@ After they gathered the actual data, they replace the simulated data, render the
 
 ## An example of Preregistration as Code
 
-We have made the argument that PAC has significant advantages over classical preregistration and have outlined how to implement it, but some may be sceptical if it is feasible.
-To address this concern and help researchers implementing PAC themselves, we have conducted a PAC that can serve as an example.
+We argued that PAC has several advantages over classical preregistration and have outlined how to implement it.
+To illustrate how PAC works in practice and help researchers implementing PAC themselves, we have conducted a PAC that serves as a guiding example.
 We will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration:
 
 > "Is there a mean difference in the personality trait 'Machiavellism' between self-identified females and males?"
 
-Again, we propose a preregistration format that closely resembles a classical journal article, but utilizes simulated data and dynamic document generation to serve simultaneously as preregistration and final manuscript.
-The complete example is available in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
-In this section, we show excerpts of this example formatted in monospace and provide some commentary.
+Again, we propose a preregistration format that closely resembles a classical journal article, but uses simulated data and dynamic document generation to create a document that starts out as a preregistration and eventually becomes the final report.
+The complete preregistration source is available in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
+In this section, we show code excerpts of this preregistration (formatted in monospace) and explain the rationale behind them.
 
 ```{r, echo=FALSE}
 show <- function(x, wrap = TRUE, cat = TRUE, fence = TRUE){
@@ -900,21 +901,21 @@ show_prereg <-
   }
 ```
 
-As usual, researchers state why they are interested in their research question in the section "Introduction" and provide the necessary information and literature to understand the rest of the paper.
+As usual, researchers state why they are interested in their research question in the section "Introduction" and provide the necessary background information and literature to understand the context and purpose of the research question.
 This example is drastically shortened for illustration purposes:
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("theory")
 ```
 
-After researchers have provided the research question, they proceed to explain how they want to study it.
+After researchers have provided the research question, they typically proceed to explain how they want to study it.
 For simplicity, we will use already published data that we have not yet analyzed:
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("method")
 ```
 
-We choose the following statistical procedure because many researchers may be familiar with it[^caution-mww]:
+We choose the following statistical procedure because many researchers are familiar with it[^caution-mww]:
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("ttest")
@@ -931,9 +932,9 @@ This function illustrates two advantages of PAC.
 First, a PAC can easily include data-dependent decisions creating different analysis branches under different conditions.
 Second, it highlights how difficult it is to describe a statistical analysis precisely.
 The same verbal descriptions may be implemented differently by different persons depending on their statistical and programming knowledge and their expectations and beliefs.
-One example would be using the function `wilcox.test` instead of the combinations of `rank` and `t.test`.
-Both are valid implementations of the Mann–Whitney–Wilcoxon test, but the first assumes equal variance.
-In contrast, the second applies Welch's correction and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
+One example would be using the function `wilcox.test` instead of the combinations of the functions `rank` and `t.test`.
+Either of them are valid implementations of the Mann–Whitney–Wilcoxon test, but the first assumes equal variance.
+In contrast, the second applies Welch's correction by default and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
 Mentioning every such minute implementation detail is almost impossible and would result in overly verbose preregistrations.
 Still, these details can make a difference and provide unwanted researchers' degrees of freedom.
 
@@ -984,15 +985,16 @@ show_prereg("power-code", wrap = FALSE)
 show_prereg("power")
 ```
 
-We implemented a mechanism that only uses simulated data when the actual data is not yet available for the results section.
+We implemented a mechanism that only uses simulated data when the actual data is not yet available  (in this example if the file `data/data.csv` does not exist)for the results section.
 This mechanism also warns readers if these results are based on simulated data.
+The warning is colored red to avoid any confusion between mock and actual results.
 As soon as the actual data are available, the simulated data is no longer used, and the results represent the actual empirical results of the study.
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("results", wrap = FALSE)
 ```
 
-The last thing we need to do is to report our results with the combination of `planned_analysis()` and `report_analysis()`.
+The last thing we need to do is to report our results with the combination of the functions `planned_analysis()` and `report_analysis()`.
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("report", wrap = FALSE)
