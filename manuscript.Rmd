@@ -744,6 +744,9 @@ First, a PAC removes any ambiguity regarding the translation of an verbal analys
 Second, while being rigorous, it offers the flexibility to incorporate data-dependent decisions if they can be formulated as code.
 Researchers can, for example, formulate conditions under which they prefer one analysis type over the other.
 For example, if distributional assumptions are not met, the code may branch out to employ robust methods; or, an analysis may perform automated variable selection mechanisms before running the final model.
+Another example of data dependent decisions are more explorative analyses, i.e. explorative factor analysis or machine learning.
+With PAC researchers can precisely calibrate how much they want to explore.
+When communicating a finding as explorative, it may still make a difference if tens or hundreds of variables were considered.
 Third, a PAC is more comprehensive by design because its completeness can be empirically checked with simulated data.
 We believe it is easier with PAC to detect missing steps or ambiguous decisions.
 Because of its strict structure, PAC can therefore more effectively minimize researchers degrees of freedom than a standard preregistration [@bakkerEnsuringQualitySpecificity2020].
