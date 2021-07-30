@@ -99,7 +99,7 @@ repro:
   data:
     - data/simulation_results.csv
   images:
-    - images/nutshell.svg
+    - images/nutshell.pdf
   files:
     - references.bib
 output:
