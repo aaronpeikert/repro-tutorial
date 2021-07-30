@@ -315,7 +315,9 @@ These wrappers are merely an assistance system, and as users get more and more c
 This tutorial assumes that the user is working predominantly in R, with the help of RStudio.
 It describes basic steps that we expect to apply to all users. Your specific situation might involve additional, more specialized steps. After completing the tutorial, you should be able to customize your workflow accordingly.
 The first step is to install the required software.
-Start R Studio<!--CJ I am concerned that new users may not install R if you only mention RStudio.--> and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
+We assume that you have installed R and RStudio already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
+In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
+Start R Studio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
 
 ```{r, eval=FALSE}
