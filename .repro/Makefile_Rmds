@@ -1,7 +1,7 @@
 install.md: install.Rmd R/link.R
 	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
 
-manuscript.tex: manuscript.Rmd data/simulation_results.csv R/simulation.R R/simulation_funs.R R/link.R
+manuscript.pdf: manuscript.Rmd data/simulation_results.csv R/simulation.R R/simulation_funs.R R/link.R temp.bib images/nutshell.pdf references.bib
 	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
 
 README.md: README.Rmd

@@ -1,3 +1,4 @@
+library(furrr)
 library(tidyverse)
 source(here::here("R", "simulation_funs.R"))
 # if you have access to a hpc envir specify this in R/hpc.R

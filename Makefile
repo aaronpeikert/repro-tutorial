@@ -4,8 +4,6 @@ WORKDIR := $(CURDIR)
 # list below your targets and their recipies
 all: install.md README.md manuscript.pdf
 
-manuscript.pdf: manuscript.tex images/nutshell.pdf apa7.csl references.bib
-
 data/simulation_results.csv: R/simulation.R R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
 
@@ -24,6 +22,9 @@ images/nutshell.pdf:
 
 apa7.csl:
 	wget -O $@ https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+
+temp.bib: R/bibliography.R references.bib
+	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
 
 ### Wrap Commands ###
 # if a command is to be send to another process e.g. a container/scheduler use:
