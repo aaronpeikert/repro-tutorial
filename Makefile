@@ -4,8 +4,6 @@ WORKDIR := $(CURDIR)
 # list below your targets and their recipies
 all: install.md README.md manuscript.pdf
 
-manuscript.pdf: manuscript.tex images/nutshell.pdf apa7.csl references.bib
-
 data/simulation_results.csv: R/simulation.R R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
 
