@@ -35,6 +35,7 @@ bibliography: temp.bib
 appendix: appendix.tex
 simplesummary: |
   Reproducibility has long been considered integral to the scientific method.
+  Something is called reproducible when independend researcher arrive at the same results from the same data.
   Until recently, detailed descriptions of methods and analyses were the primary instrument for ensuring scientific reproducibility.
   Technological advancements now enable scientists to achieve a much higher standard;
   one in which any individual can be granted access to a digital research repository, and reproduce the analyses from raw data to final manuscript with a single command.
