@@ -126,13 +126,13 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 # Introduction
 
 Scientists increasingly strive to make research data, materials, and analysis code openly available.
-Sharing these types of digital research artifacts has the potential to increase scientific efficiency by enabling researchers to learn from each other and reuse materials, and to increase scientific reliability by facilitating the review and replication of published research results.
-To some extent these potential benefits are contingent on whether these digital research artifacts are reproducible. 
+Sharing these types of digital research products has the potential to increase scientific efficiency by enabling researchers to learn from each other and reuse materials, and to increase scientific reliability by facilitating the review and replication of published research results.
+To some extent these potential benefits are contingent on whether these digital research products are reproducible. 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
 Reproducibility has long been considered integral to empirical research, whose credibility hinges on its objectivity, meaning "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper]
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
 This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges, and there is a dire need for reproducibility standards.
-We now have the technology to make all artefacts related to a research project available so that a research project can be reproduced with minimal effort.
+We now have the technology to make all digital products related to a research project available so that a research project can be reproduced with minimal effort.
 
 This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
 We pursue two aims.
@@ -148,15 +148,15 @@ After the empirical data are analyzed, the Results are updated, and the Discussi
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalized to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
-Scientific organizations and funding bodies increasingly demand transparent sharing of research artifacts, and researchers are increasingly willing to do so.
-However, although the sharing of such artifacts is a necessary condition for reproducibility, it is not a sufficient one.
+Scientific organizations and funding bodies increasingly demand transparent sharing of digital research products, and researchers are increasingly willing to do so.
+However, although the sharing of such digital research products is a necessary condition for reproducibility, it is not a sufficient one.
 This was illustrated by an attempt to reproduce results from open materials in the journal *Cognition* [@hardwicke2018]. 
-Out of 35 published articles with open research artifacts, results of 22 articles could be reproduced but in 11 of these cases, further assistance from the original authors was required.
+Out of 35 published articles with open code and data, results of 22 articles could be reproduced but in 11 of these cases, further assistance from the original authors was required.
 For 13 articles, at least one outcome could not be reproduced—--even with the original authors' assistance.
 Another study of 62 Registered Reports found that only 41 had data available, and 37 had analysis scripts available [@obels2020].
 The authors could execute only 31 of the scripts without error and reproduce the results of only 21 articles (within a reasonable time).
 These failed attempts to reproduce highlight the need for widely accepted reproducibility standards, because open repositories do not routinely provide sufficient information to reproduce relevant computational and statistical results.
-If research artifacts are available but not reproducible, their added value is limited.
+If digital research products are available but not reproducible, their added value is limited.
 
 This tutorial therefore demonstrates how to make R-based research projects reproducible, while striking a balance between rigor and ease-of-use.
 A rigorous standard increases the likelihood that a project will remain reproducible as long as possible.
