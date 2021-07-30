@@ -985,7 +985,7 @@ At the moment, `repro` only supports the combination of RMarkdown, Git, Make, an
 However, there are alternatives for each of these elements that may fit better into an individual research project.
 RMarkdown could be complemented or replaced by a dynamic Microsoft Word document with the help of `officer`[@officer] or `officedown`[@officedown] to accommodate a wider arrange of journal submission standards.
 Instead of using formal version control with Git, `repro` could automatically save snapshots for increasing user-friendliness.
-Make could be replaced by the more R-centred alternative `targets` for more convenience.
+Make could be replaced by the more R-centered alternative `targets` for more convenience.
 Docker could be combined with `renv` [@R-renv] to control the package versions precisely (our approach fixes the date, `renv` the exact package version).
 Alternatively, Docker could be replaced by the more lightweight `renv` if no dependencies outside of R are considered crucial.
 Docker does not satisfy the requirements of many HPC environments, but Singularity was designed to avoid this limitation while still being compatible with Docker images.
