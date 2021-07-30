@@ -99,10 +99,8 @@ repro:
   data:
     - data/simulation_results.csv
 output:
-  bookdown::markdown_document2:
-    base_format: rticles::mdpi_article
+  rticles::mdpi_article
 header-includes:
-   - \usepackage[labelformat=empty]{caption}
    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}, numbers=left}
 ---
 
