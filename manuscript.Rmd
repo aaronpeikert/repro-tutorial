@@ -1050,24 +1050,3 @@ Docker does not satisfy the requirements of many HPC environments, but Singulari
 Depending on the demand by users, we will implement some of these alternative workflows in `repro`.
 
 # References
-
-```{r, include=FALSE}
-knitr::write_bib(
-  c(
-    .packages(),
-    "repro",
-    "here",
-    "rticles",
-    "gert",
-    "bookdown",
-    "lavaan",
-    "knitr",
-    "targets",
-    "renv",
-    "tidyverse"
-  ),
-  here("packages.bib")
-)
-cat(c(readLines(here::here("packages.bib")), "\n", readLines(here::here("references.bib"))), sep = "\n", file = "temp.bib")
-```
-
