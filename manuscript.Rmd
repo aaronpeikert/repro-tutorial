@@ -98,6 +98,10 @@ repro:
     - R/link.R
   data:
     - data/simulation_results.csv
+  images:
+    - images/nutshell.svg
+  files:
+    - references.bib
 output:
   rticles::mdpi_article
 header-includes:
