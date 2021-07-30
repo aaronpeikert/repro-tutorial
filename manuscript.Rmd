@@ -908,8 +908,6 @@ res %>%
 
 # Discussion
 
-# Discussion
-
 ## Summary
 
 We demonstrated how the R package `repro` supports researchers in creating reproducible repositories and reproducible manuscripts.
@@ -918,7 +916,7 @@ The workflow we present here rests on four software solutions, version control, 
 
 We then proceeded to show preregistration as code (PAC) as one example of how such rigorous and automated reproducibility workflow may enable other innovations.
 In a PAC researcher write all analysis code and a reproducible manuscript that already renders the entire reporting of statistical and computational results before they gather data.
-These results are based on simulated data, such that there is no danger of peeking at the real data while writing the scripts.
+These results are based on simulated data, so that there is no danger of peeking at the real data while writing the scripts.
 This way, all researcher's degrees of freedom are eliminated.
 Once real data is gathered, the reproducible manuscript is (re-)created with the real data.
 Because the same dynamic document serves as preregistration and final manuscript, researcher, reviewers and editors only have to revise one document.
@@ -936,25 +934,29 @@ The workflow we present here introduces several software solutions which in itse
 To profit from automatic and convenient reproduction researcher must install Git, Make, and Docker.
 However, Git and Make are itself included in the Docker image created by `repro`.
 Researchers can therefore employ the Docker image manually to download the Git repository and execute Make for full reproduction.
-In other words the only requirement for reproduction and therefore Achilles' heel for this workflow is Docker.
+In other words the only hard requirement for reproduction and therefore Achilles' heel for this workflow is Docker.
 The Docker approach has two vulnerabilities.
 First, and more important, the Docker image for the project has to remain available.
-The Dockerfile on the other hand is insufficient because it relies on to many service providers (e.g. Microsoft R Application Network, Ubuntu Package Archive).
+The Dockerfile (the plain text description to build a Docker image) on the other hand is insufficient because it relies on to many service providers (e.g. Microsoft R Application Network, Ubuntu Package Archive).
 The Docker image can be saved to disk and treated like any other file that requires careful archivation.
-If the existence of the Docker image is guaranteed, researchers still require software to run the image.
+However, if the existence of the Docker image is guaranteed, researchers still require software to run the image.
 To that end they can either rely on Docker itself or Docker-compatible alternatives (e.g. CoreOS rkt, Mesos Containerizer, Singularity).
 The only way to remove the reliance on such external software is to turn the Docker image into a full operating system that subsequently can be installed and run on almost any modern computer.
-This process is technically possible and would guarantee reproducibility for decades.
+This process is technically possible and would guarantee reproducibility for decades without any software dependency.
 However, this process requires much technical knowledge and is currently not supported by `repro`.
 In any case and without such precautions do the R Markdown, the Makefile and the Dockerfile provide information that allow researchers to manually trace the computational steps and recreate the computational environment.
+The Makefile, for example, is written in a way that researchers can manually trace the dependencies and execute commands in the right order, in case they are, for whatever reason, unable to run Make.
+Similarly, even when Docker does not work, the Dockerfile still serves as unambiguous documentation of how the original system was set up and may help future users to create a software environment that closely resembles the original.
 
 # Limitations
 
 We realize that PACs are challenging.
 Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove unwieldy for a PAC.
-Therefore, PAC should not be seen as an attempt to invalidate classical preregistration or not preregistered research but as a compliment.
-Some may see the rigidness of PAC as to much of a good thing.
-However, we are convinced that many reasons justify changing the preregistered code, but we are equally convinced that readers should judge themselves if they find these deviations from the preregistration meaningful.
+Therefore, PAC should not be seen as an attempt to invalidate classical preregistration or not preregistered research but as a complement.
+The rigidness of PAC is only than to much of a good thing, if one holds the view that researchers can for no reason deviate from their preregistration.
+However, we are convinced that many reasons justify changing the preregistered code, but are equally convinced that readers should judge themselves if they find these deviations from the preregistration meaningful.
+PAC enables just that.
+Researcher can change their plans and possibly defend their decision, e.g. in the discussion, while readers of the manuscript can clearly see what was changed through version control.
 
 Another challenge is that PAC requires more programming expertise than a usual analysis.
 In contrast to a reproducible script, which should work on the same data, a PAC must work on different data.
