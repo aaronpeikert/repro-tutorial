@@ -33,7 +33,24 @@ type: tutorial
 status: submit
 bibliography: temp.bib
 simplesummary: |
-  A Simple summary goes here.
+  Reproducibility has long been considered integral to the scientific method.
+  Something is called reproducible when independend researcher arrive at the same results from the same data.
+  Until recently, detailed descriptions of methods and analyses were the primary instrument for ensuring scientific reproducibility.
+  Technological advancements now enable scientists to achieve a much higher standard;
+  one in which any individual can be granted access to a digital research repository, and reproduce the analyses from raw data to final manuscript with a single command.
+  This method has far-reaching implications for scientific archiving,
+  reproducibility and replication,
+  scientific productivity,
+  and the credibility and reliability of scientific findings.
+  One obstacle preventing the widespread adoption of this method is that the underlying technological advancements
+  are complicated to use.
+  This paper introduces `repro`; an R-package that guides researchers in the installation and use of the tools required for computational reproducibility.
+  It includes a tutorial on how to make a research project reproducible with the aid of `repro`.
+  Finally, it introduces novel applications of reproducibility tools for scientific research;
+  including the preregistration of study plans as reproducible computer code.
+  This circumvents the shortcomings of ambiguous preregistrations that allow for researcher degrees of freedom,
+  because computer code describes study plans more precisely than prose.
+  Reproducibility made convenient with automation has hence a wide range of applications to accelerate scientific progress.
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
   keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
