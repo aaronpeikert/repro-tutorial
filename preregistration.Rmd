@@ -1,0 +1,126 @@
+---
+title: "Preregistered as Code: Gender differences in Machiavellianism"
+date: "7/10/2021"
+author:
+  - name: Aaron Peikert
+    affil: 1, *
+    orcid: 0000-0001-7813-818X
+  - name: Caspar J. Van Lissa
+    affil: 2, 3
+    orcid: 0000-0002-0808-5024
+  - name: Andreas M. Brandmaier
+    affil: 1, 4
+    orcid: 0000-0001-8765-6982
+affiliation:
+  - num: 1
+    address: |
+      Center for Lifespan Psychology---Max Planck Institute for Human Development
+      Lentzeallee 94, 14195 Berlin, Germany
+  - num: 2
+    address: |
+      Department of Methodology & Statistics---Utrecht University faculty of Social and Behavioral Sciences, Utrecht, Netherlands
+  - num: 3
+    address: |
+      Open Science Community Utrecht, Utrecht, Netherlands
+  - num: 4
+    address: |
+      Max Planck UCL Centre for Computational Psychiatry and Ageing Research
+      Berlin, Germany and London, UK
+# firstnote to eighthnote
+correspondence: |
+  peikert@mpib-berlin.mpg.de
+journal: psych
+type: tutorial
+status: submit
+bibliography: preregistration.bib
+abstract: |
+  We test for group differences in machiavellianism between self-identified males and females in the MACH-IV in a well powered preregistered study.
+keywords: |
+  preregistration as code, power simulation, machiavellianism, gender
+output:
+  bookdown::markdown_document2:
+    base_format: rticles::mdpi_article
+header-includes:
+  - \def\baselinestretch{0.98}
+  - \usepackage{draftwatermark}
+---
+
+\setlength{\bibsep}{0cm}
+\titlespacing{\section}{.1cm}{.1cm}{.1cm}
+\SetWatermarkText{PAC}
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(report)
+source(here::here("R", "simulation_funs.R"))
+```
+
+<!--begin-theory-->
+# Theoretical Background
+
+Machiavellianism describes a personality dimension characterized by a cynical disregard of morals in the pursuit of one's own interest, e.g. through manipulation [@christie1970].
+There is extensive literature reporting differences in the dark triad (narcissism, machiavellianism, and psychopathy) between self-identified males and females [@muris2017] but only few studies focus solely on machiavellianism.
+We aim to replicate the finding that males tend to have higher machiavellianism scores [@muris2017].
+<!--end-theory-->
+This research question serves as a testbed for preregistration as code (PAC) to examine if PAC is feasible under realistic conditions.
+In the PAC paradigm, all analysis code is written before real data are gathered or accessed the first time.
+
+```{r, echo=FALSE}
+simulation_results <-
+  readr::read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddddd")
+```
+
+<!--begin-method-->
+# Method
+
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study [@simmons2012]. We use data available from [openpsychometrics.org](https://openpsychometrics.org/_rawdata/) from the online version of the MACH-IV[@christie1970] and included participants that have responded to at least one machiavellianism item and reported their gender as either "male" or "female".
+<!--end-method-->
+
+<!--begin-ttest-->
+We conduct a Student's t-test [@studentProbableErrorMean1908] with Welch's correction [@welchGeneralizationStudentProblem1947] of the average of machiavellianism items between the binary-coded gender groups.
+If the skew of this average is greater than 1.0 we conduct a supposedly more robust Mann--Whitney--Wilcoxon test [@Wilcoxon1945] instead.
+<!--end-ttest-->
+<!--begin-power-code-->
+```{r, echo=FALSE}
+choosen_power <- .8
+choosen_d <- .2
+minn <-
+  filter(filter(simulation_results, d == choosen_d, power > choosen_power),
+         n == min(n))$n
+```
+<!--end-power-code-->
+<!--begin-power-->
+A simulation we conducted indicated that with a sample size of
+`r minn` for an alpha of .05 (two-sided) we achieve at least `r choosen_power*100`% power assuming a standardized effect size of d=`r choosen_d`.
+<!--end-power-->
+
+<!--begin-results-->
+# Results
+
+```{r, echo=FALSE, results='asis'}
+real_data <- here::here("data", "data.csv")
+simulated <- !fs::file_exists(real_data)
+if(simulated){
+  cat("\\textcolor{red}{The results are based on simulated data and must not be
+      interpreted. They only serve to illustrate the result of the preregistered
+      code.}")
+  set.seed(1234)
+  mach <- simulate_data(900, 8, 0.3, 10)
+} else {
+  mach <- readr::read_csv(real_data)
+}
+```
+<!--end-results-->
+
+<!--begin-report-->
+```{r, echo=FALSE, results='asis'}
+report_analysis(planned_analysis(mach))
+```
+<!--end-report-->
+
+# Discussion
+
+\textcolor{red}{This document was created before we have gathered gathered data. The discussion will only be added to the final report.}
+
+\newpage
+# References
