@@ -1,5 +1,5 @@
 ---
-title: A Hitchhiker's Guide to Reproducible Research in R
+title: "Reproducible Research: A Tutorial on how to do the same thing more than once"
 author:
   - name: Aaron Peikert
     affil: 1, *
@@ -191,10 +191,10 @@ We have developed a workflow that achieves long-term and cross-platform computat
 It leverages established tools and practices from software engineering and rests on four pillars that address the aforementioned causes of non-reproducibility: [@Peikert2019]:
 
 
-1. *Version control*
-2. *Dynamic document generation*
-3. *Dependency tracking*
-4. *Software management*
+1. **Version control**
+2. **Dynamic document generation**
+3. **Dependency tracking**
+4. **Software management**
 
 The remainder of this section briefly explains why each of these four building blocks is needed and their role in ensuring reproducibility.
 
@@ -499,9 +499,9 @@ The following example is a full markdown document where the metadata (the "YAML 
 
 ````markdown
 ---
-title: A Hitchhiker's Guide to Reproducible Research in R
+title: "Reproducible Research: A Tutorial on how to do the same thing more than once"
 author: Aaron Peikert, Caspar J. Van Lissa and Andreas M. Brandmaier
-abstract: A tutorial about doing the same thing more than once.
+abstract: A Hitchhiker's Guide to Reproducible Research in R
 output: html_document
 ---
 
@@ -530,9 +530,8 @@ The format is as follows (see everything below the line *repro:*):
 
 ```markdown
 ---
-title: A Hitchhiker's Guide to Reproducible Research in R
+title: "Reproducible Research: A Tutorial on how to do the same thing more than once"
 author: Aaron Peikert, Caspar J. Van Lissa and Andreas M. Brandmaier
-abstract: A tutorial about doing the same thing more than once.
 output: html_document
 repro:
   scripts:
@@ -713,7 +712,7 @@ Users with more advanced requirements can manually change all aspects of both pr
 
 Defining the research questions and planning data analysis before observing the research outcomes is referred to as *preregistration* [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results by separating a-priori planned and theory-driven analyses from those conducted unplanned and post-hoc, that is, after having seen the data.
-Preregistration seeks to reduce "researcher degrees of freedom" [@reference] in the execution of a planned study by limiting the number of decisions to be made after data has been collected, which could influence the results.
+Preregistration seeks to reduce "researcher degrees of freedom" [@NosekRevolution2018] in the execution of a planned study by limiting the number of decisions to be made after data has been collected, which could influence the results.
 Preregistrations, however, have several shortcomings.
 One shortcoming is that written study plans are often multi-interpretable and often do not achieve the level of unambiguity that are required to effectively zero the researcher degrees of freedom.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis, the results vary considerably [@silberzahnManyAnalystsOne2018].
@@ -834,7 +833,7 @@ We therefore simulate a dataset first that resembles the expected structure of t
 Using the simulated dataset as placeholder, we can now write a scientific report including all analysis code blocks and the presentation of results, which can serve as PAC.
 The following code simulates a dataset with one observed variable in two groups.
 
-```{r}
+```{r, eval=FALSE}
 simulate_data <- function(n, effect_size){
   # 1. warn users that the results are "fake"
   # 2. draw `n` samples with `effect_size`
