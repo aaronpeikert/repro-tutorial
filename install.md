@@ -46,13 +46,30 @@ Since you probably already have R and RStudio you may skip this step.
 
 ## 2.4 How to install Git, Make, and Docker with a package manager?
 
-Please note that Docker does not work on Windows 10 Home, you need
-Windows Pro or Education.
+Please note that Docker does may not work on Windows 10 Home, because
+Docker requires a feature called virtualization which you may have to
+enable. In that case follow this
+[guide](https://docs.docker.com/docker-for-windows/troubleshoot/#virtualization).
+This feature is usually enabled in Windows Pro or Education. On Windows
+Home, you also require the Windows Subsystem for Linux (WSL) as well as
+the WSL Ubuntu extension.
 
 1.  Open a new terminal (Press Windows key + X, click on “Windows
     Powershell (Admin)”).
 2.  Paste `choco install -y git make docker`
 3.  Press enter.
+
+On Windows Home and systems without Hyper V:
+
+1.  Open a new terminal (Press Windows key + X, click on “Windows
+    Powershell (Admin)”).
+2.  Paste `choco install -y git make docker wsl`
+3.  Press enter.
+4.  Restart.
+5.  Open a new terminal (Press Windows key + X, click on “Windows
+    Powershell (Admin)”).
+6.  Paste `choco install -y wsl-ubuntu-2004`
+7.  Press enter.
 
 # 3 Mac OS
 

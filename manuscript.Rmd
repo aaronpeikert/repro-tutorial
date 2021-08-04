@@ -282,7 +282,7 @@ One comprehensive approach to software management is containerization.
 **Docker** is a popular tool for containerization.
 It manages software dependencies by constructing a virtual software environment independent of the host software environment.
 These so-called "Docker images" function like a virtual computer  (i.e., a sort of "sand box").
-A Docker image should contain *all* software dependencies used in an analysis - not just R-packages, but also R and Rstudio, and even the computer's operating system.
+A Docker image should contain *all* software dependencies used in an analysis---not just R-packages, but also R and Rstudio, and even the computer's operating system.
 This is important because some of its functionality may impact the workings of higher-order software like R, such as calls to random number generators, linear algebra libraries and such within R.
 
 Note that the software environment of the Docker image is completely separate from software installed on your computer.
@@ -330,8 +330,9 @@ These wrappers are merely an assistance system, and as users get more and more c
 This tutorial assumes that the user is working predominantly in R, with the help of RStudio.
 It describes basic steps that we expect to apply to all users. Your specific situation might involve additional, more specialized steps. After completing the tutorial, you should be able to customize your workflow accordingly.
 The first step is to install the required software.
-We assume that you have installed R and RStudio already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
+We assume that you have installed R [@R-base, version `r with(R.version, paste0(major, ".", minor))`] and RStudio [@rstudio, version 1.4] already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
 In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
+The [installation advice]((https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)) may also help Windows users who have problems installing Docker.
 Start R Studio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
 
