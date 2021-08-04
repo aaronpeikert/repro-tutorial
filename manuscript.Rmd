@@ -270,6 +270,7 @@ If a requirement does not exist, Make uses a recipe to build the requirement fir
 Here, if one were to build the final `manuscript.pdf` by rendering the R Markdown with the command shown in l.2, Make would check whether the file `simulation_results.csv` exists; if not, it would issue the command in l.5 to run the simulation first before rendering the manuscript.
 This ensures that the simulation is always run before the manuscript is built, and that the manuscript is rebuilt if the simulation code was changed.
 Make therefore offers a standardized process to reproduce projects, regardless of the complexity or configuration of the project.
+Note that the Workflow for Open Reproducible Code in Science (WORCS) we presented elsewhere [@vanlissa2020worcs] does not contain this element of dependency tracking explicitly but its strict structure of only containing one definite R Markdown still makes dependencies between files unambiguous.
 
 ```{r, include=FALSE}
 container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
