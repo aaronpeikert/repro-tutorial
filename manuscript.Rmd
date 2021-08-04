@@ -307,8 +307,9 @@ Dockerfiles are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tut
 However, they rely on the assumption that all software repositories that provide the dependent operating systems, pieces of software, and R packages will remain accessible in future and will continue to make available historic software versions.
 For proper archival, we therefore recommend to store a complete image of the software environment, in addition to the Dockerfile.
 A more comprehensive overview of the use of containarization in research projects is given by @wiebelsLeveragingContainersReproducible2021.
+Note that the Workflow for Open Reproducible Code in Science (WORCS) we presented elsewhere [@vanlissa2020worcs] relies for software management on the R package `renv`[@R-renv] which is more lightweight and easier to use on the one hand, but not as comprehensive on the other hand because it only snapshots the R packages instead of all software used.
 
-To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).    
+To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).
 While R Markdown and Git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside the field of information technology, which can represent a considerable hurdle in the acceptance and implementation of the workflow.
 To remove this hurdle, we have developed the R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.
@@ -379,7 +380,6 @@ These messages are adjusted to your specific operating system and installed depe
 Before you continue, we ask you to run the above commands to check Git, Make, and Docker - both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
 If necessary, follow any instructions presented until all checks pass.
 
-
 ## Implementing version control
 
 Now that your system is set up for this tutorial, we will introduce you to version control with Git.
@@ -434,7 +434,7 @@ usethis::use_github(private = TRUE)
 Depending on your computer configuration, this may ask to set up a secure connection to GitHub.
 In this case first follow the suggestions shown on the R console.
 
-## Dynamic document generation
+## Dynamic document generation 
 
 Now that you have created a version controlled project, we will proceed with dynamic document generation.
 A dynamic document has three elements:
