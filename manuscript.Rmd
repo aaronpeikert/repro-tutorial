@@ -556,7 +556,15 @@ Other than the Makefile and the Dockerfile, which are created in the document ro
 
 ## Reproducing a project
 
-When you or someone else who received your project want to reproduce it, they can ask repro to explain how this should be done:
+When you or someone else who received your project want to reproduce it, they first have to install the required software, which is Make, and Docker.
+Remember, you can use the `check_*`-functions to test if these are installed:
+
+```{r}
+check_make()
+check_docker()
+```
+
+When they are setup, they can ask `repro` to explain how they should use Make and Docker to reproduce the project (or you could explain it to them):
 
 ```{r}
 repro::reproduce()
