@@ -744,7 +744,7 @@ For guidance on how to simulate data, see [@ref].
 Once the preregistration is submitted and real data have been collected or made available,
 the document can be reproduced with a single command, thus updating the Results to their final version.
 
-The idea of submitting code as part of a preregistration is not new.
+The idea of submitting code as part of a preregistration is not new and was suggested before in WORCS [@vanlissa2020worcs].
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
 In an informal literature search (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
 But although the notion of preregistering code has been around for a while [cf. @steegenMeasuringCrowdAgain2014],
