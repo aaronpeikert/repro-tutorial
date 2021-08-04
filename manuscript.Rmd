@@ -46,10 +46,8 @@ simplesummary: |
   are complicated to use.
   This paper introduces `repro`; an R-package that guides researchers in the installation and use of the tools required for computational reproducibility.
   It includes a tutorial on how to make a research project reproducible with the aid of `repro`.
-  Finally, it introduces novel applications of reproducibility tools for scientific research;
-  including the preregistration of study plans as reproducible computer code.
-  This circumvents the shortcomings of ambiguous preregistrations that allow for researcher degrees of freedom,
-  because computer code describes study plans more precisely than prose.
+  Finally, it introduces novel applications of reproducibility tools for scientific research, notably it includes the preregistration of study plans as reproducible computer code.
+  Since computer code describes study plans more precisely than prose, this circumvents the shortcomings of ambiguous preregistrations that give researchers undesired degrees of freedom.
   Reproducibility made convenient with automation has hence a wide range of applications to accelerate scientific progress.
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
@@ -128,15 +126,17 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 
 # Introduction
 
-Scientists increasingly strive to make research data, materials, and analysis code openly available.
+Scientists increasingly strive to make research data, materials, and analysis code openly available i.e. within the Open Science movement.
 Sharing these types of digital research products has the potential to increase scientific efficiency by enabling researchers to learn from each other and reuse materials, and to increase scientific reliability by facilitating the review and replication of published research results.
 To some extent these potential benefits are contingent on whether these digital research products are reproducible. 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
-The credibility of empirical research hinges on its objectivity. Objectivity in this context means "in principle it can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper].
+The credibility of empirical research results hingeson their objectivity.
+Objectivity in this context means "in principle it [the research finding] can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper].
+Only something reproducible can be tested and understood by anyone.
 Therefore, reproducibility has long been considered integral to empirical research.
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
-This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges, and there is a dire need for reproducibility standards.
-We now have the technology to make all digital products related to a research project available so that a research project can be reproduced with minimal effort.
+This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges (multiple versions of code and data, copy-and-paste errors, missing software, ambiguous computation), and there is a dire need for reproducibility standards.
+With the technological advancement, it is now possible to make all digital products related to a research project available so that a research project can be reproduced with minimal effort.
 
 This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
 We pursue two aims.
@@ -144,13 +144,13 @@ We pursue two aims.
 First, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project.
 
 This workflow builds on several technical solutions originating in the software engineering community. 
-We discuss how these solution address four common threats to reproducibility [see @Peikert2019 for details] and form a coherent workflow.
+We discuss how these solutions address four common threats to reproducibility [see @Peikert2019 for details] and how they form a coherent workflow.
 We further demonstrate how the R package `repro` supports researchers in adopting this workflow.
-Second, we discuss opportunities of reproducible workflows to improve not only how research outputs are created and recreated, but also how research itself is conducted.
-One such opportunity is a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon a reproducible workflow, the so-called *preregistration as code* (PAC).
+Second, we discuss opportunities that the reproducible workflow affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
+One such opportunity is a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
 PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including the Introduction, Methods, and Results sections.
-The resulting dynamic document closely resembles the final manuscript, but uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
-Once the empirical data are analyzed, the Results are updated, and the Discussion is written.
+The resulting dynamic document closely resembles the final manuscript, but temporarily uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
+Once the empirical data are analyzed, the Results are updated automatically, and the Discussion can be written.
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalized to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
@@ -170,7 +170,6 @@ An easy-to-use standard, on the other hand, is more likely to be adopted.
 Our approach is to promote broad adoption of easy-to-use practices, i.e., a "low threshold", and ensure that these practices are compatible with more complex rigorous solutions, i.e., a "high ceiling".
 As researchers become more proficient with the tools involved, they can thus improve the reproducibility of their work.
 The first part of this tutorial outlines threats to reproducibility and how the here presented reproducibility standard addresses these threats.
-The second part is a tutorial that demonstrates how this standard can be easily adopted with the help of the R package `repro`.
 
 We have structured the tutorial with a *learning by doing* approach in mind, such that readers can follow along on their own computers.
 We explicitly encourage readers to try out all R commands for themselves.
@@ -184,23 +183,24 @@ From our own experience with various research projects, we identified the follow
   - the data set could have changed over time because outliers were removed at a later stage or an item was later recoded
   - the analysis code could have been modified during writing of a paper because a bug was removed at some point in time
 It may then be unclear which version of code and data was used to produce some reported set of results.
-2.	**Copy-and-paste errors**; for example, often, results are manually copied from a statistical computing language into a text processor; if a given analysis is re-run and results are manually updated in the text processor, this may inadvertently lead to inconsistencies between the reported result and the reproduced result;
-3.	**Undocumented or ambiguous order of code execution**; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;  or, some of the computational steps are documented (e.g., final analysis), but other steps were conducted manually and not documented (e.g., running a scripts/commands by hand; copy-pasting results from one program to another)
+2.	**Copy-and-paste errors**; for example, results are often manually copied from a statistical computing language into a text processor; if a given analysis is re-run and results are manually updated in the text processor, this may inadvertently lead to inconsistencies between the reported result and the reproduced result;
+3.	**Undocumented or ambiguous order of code execution**; for example, with multiple data and code files, it may be unclear which scripts should be executed in what order;  or, some of the computational steps are documented (e.g., final analysis), but other steps were conducted manually without documentation (e.g., running a scripts/commands by hand; copy-pasting results from one program to another)
 4.	**Ambiguous dependencies**; for example, a given analysis may depend on a specific version of a specific software package, or rely on software that might not be available on a different computer or no longer exist at all; or, a different version of the same software may produce different results.
 
 We have developed a workflow that achieves long-term and cross-platform computational reproducibility of scientific data analyses.
 It leverages established tools and practices from software engineering and rests on four pillars that address the aforementioned causes of non-reproducibility: [@Peikert2019]:
 
 
-1. Version control
-2. Dynamic document generation
-3. Dependency tracking
-4. Software management
+1. *Version control*
+2. *Dynamic document generation*
+3. *Dependency tracking*
+4. *Software management*
 
 The remainder of this section briefly explains why each of these four building blocks is needed and their role in ensuring reproducibility.
 
 **Version control** prevents the ambiguity that arises when multiple versions of code and data are created in parallel during the development phase of a research project.
 Version control allows a clear link between which results were generated by which version of code and data.
+This is important for reproducibility because only if it is obvious which version of data and code produced which results they can be said to be reproducible.
 We recommend using **Git** for version control, because of its widespread adoption in the R community.
 
 Git tracks changes to all project-related files (e.g., materials, data, and code) over time.
@@ -298,7 +298,7 @@ One strategy is to rely on pre-made images, which are maintained by a community 
 For example, there are pre-made images that only include what is necessary for R, based on Ubuntu (a Linux operating system) containers [@boettigerIntroductionRockerDocker2017].
 Users can then install whatever they need in addition to what is provided by these pre-compiled images.
 `r ifelse(is.na(container_size), "", glue::glue("The image that was used for this article uses {round(container_size, 2)}Gb of disk space."))`
-The image for this project includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like the tidyverse [@tidyverse] and all their dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
+The image for this project includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like tidyverse [@tidyverse] and all its dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
 A second strategy is to save a container recipe; a so-called  `Dockerfile` containing a textual description of all commands that need to be executed to recreate the software environment, instead of the software environment itself.
 Dockerfiles are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile) for this project has a size of only `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb).
 However, they rely on the assumption that all software repositories that provide the dependent operating systems, pieces of software, and R packages will remain accessible in future and will continue to make available historic software versions.
