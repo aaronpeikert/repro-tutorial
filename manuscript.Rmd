@@ -63,13 +63,15 @@ conflictsofinterest: |
   The authors declare no conflict of interest.
 abbreviations:
   - short: PAC
-    long: Preregistration as 
+    long: Preregistration as Code
   - short: Gb
     long: Gigabyte
   - short: Kb
     long: Kilobyte
   - short: CRAN
     long: Comprehensive R Archive Network
+  - short: WORCS
+    long: Workflow for Open Reproducible Code in Science
 repro:
   packages:
     - tidyverse
