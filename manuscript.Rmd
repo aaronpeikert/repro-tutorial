@@ -580,6 +580,56 @@ The only software required for reproducing a project is Docker, assuming users k
 However, if they have installed Make additionally to Docker, they do not need to know how to use Docker and can simply rely on the two Make commands `make docker` and `make -B DOCKER=TRUE`.
 The commands can be pasted into a terminal and will reproduce the project in many cases.
 
+## Summary
+
+1. Install the `repro` package:
+
+```{r, eval=FALSE}
+options(
+  repos = c(aaronpeikert = 'https://aaronpeikert.r-universe.dev',
+            CRAN = 'https://cloud.r-project.org')
+)
+install.packages('repro')
+```
+
+2. Check the required software:
+
+```{r}
+repro::check_git()
+repro::check_make()
+repro::check_docker()
+```
+
+3. Create an R project or use an existing one. Do not forget to add `repro` metadata (i.e. packages, scripts, data).
+
+```yaml
+repro:
+  scripts:
+    - R/load.R
+  data:
+    - data/mtcars.csv
+  packages:
+    - tidyverse
+```
+
+The example `repro` project already has this metadata:
+
+```{r,eval=FALSE}
+repro::use_repro_template("/some/folder")
+```
+
+4. Let `repro` generate Docker- and Makfile:
+
+```{r, eval=FALSE}
+repro::automate()
+```
+
+5. Enjoy automated reproducibility:
+
+```{r}
+repro::reproduce()
+```
+
 # Advanced Features
 
 This section is only for advanced users who want to overcome some limitations of `repro`.
