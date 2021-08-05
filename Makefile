@@ -2,7 +2,7 @@ PROJECT := reprotutorial
 WORKDIR := $(CURDIR)
 
 # list below your targets and their recipies
-all: install.md README.md manuscript.pdf
+all: install.md README.md manuscript.pdf preregistration.pdf
 
 data/simulation_results.csv: R/simulation.R R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)

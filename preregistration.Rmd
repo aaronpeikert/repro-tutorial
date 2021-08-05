@@ -37,9 +37,7 @@ abstract: |
   We test for group differences in machiavellianism between self-identified males and females in the MACH-IV in a well powered preregistered study.
 keywords: |
   preregistration as code, power simulation, machiavellianism, gender
-output:
-  bookdown::markdown_document2:
-    base_format: rticles::mdpi_article
+output: rticles::mdpi_article
 header-includes:
   - \def\baselinestretch{0.98}
   - \usepackage{draftwatermark}
