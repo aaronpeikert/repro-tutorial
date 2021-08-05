@@ -1,5 +1,5 @@
 ---
-title: "Reproducible Research: A Tutorial on how to do the same thing more than once in R"
+title: "Reproducible Research in R: A tutorial on how to do the same thing more than once"
 author:
   - name: Aaron Peikert
     affil: 1, *
@@ -34,21 +34,21 @@ status: submit
 bibliography: temp.bib
 simplesummary: |
   Reproducibility has long been considered integral to the scientific method.
-  Something is called reproducible when independend researcher arrive at the same results from the same data.
+  Something is called reproducible when an independent person obtains the same results from the same data.
   Until recently, detailed descriptions of methods and analyses were the primary instrument for ensuring scientific reproducibility.
-  Technological advancements now enable scientists to achieve a much higher standard;
-  one in which any individual can be granted access to a digital research repository, and reproduce the analyses from raw data to final manuscript with a single command.
+  Technological advancements now enable scientists to achieve a more comprehensive standard;
+  one in which any individual can be granted access to a digital research repository, and reproduce the analyses from the raw data to the final report including all relevant statistical analyses with a single command.
   This method has far-reaching implications for scientific archiving,
   reproducibility and replication,
   scientific productivity,
   and the credibility and reliability of scientific findings.
   One obstacle preventing the widespread adoption of this method is that the underlying technological advancements
   are complicated to use.
-  This paper introduces `repro`; an R-package that guides researchers in the installation and use of the tools required for computational reproducibility.
-  It includes a tutorial on how to make a research project reproducible with the aid of `repro`.
-  Finally, it introduces novel applications of reproducibility tools for scientific research, notably it includes the preregistration of study plans as reproducible computer code.
-  Since computer code describes study plans more precisely than prose, this circumvents the shortcomings of ambiguous preregistrations that give researchers undesired degrees of freedom.
-  Reproducibility made convenient with automation has hence a wide range of applications to accelerate scientific progress.
+  This paper introduces `repro`, an R-package, which guides researchers in the installation and use of the tools required for making a research project reproducible.
+  Finally, we suggest the use of the proposed tools for the preregistration of study plans as reproducible computer code (preregistration as code; PAC).
+  Since computer code represents the planned analyses exactly as they will be executed, it is more precise than natural language descriptions of those analyses, which merely complement the PAC as a more readable summary. 
+  PAC circumvents the shortcomings of ambiguous preregistrations that may give researchers undesired degrees of freedom.
+  <Hence, reproducibility made convenient with automation has a wide range of applications to accelerate scientific progress.
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
   keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
@@ -126,31 +126,31 @@ registerS3method("knit_print", "data.frame", knit_print.data.frame)
 
 # Introduction
 
-Scientists increasingly strive to make research data, materials, and analysis code openly available i.e. within the Open Science movement.
+Scientists increasingly strive to make research data, materials, and analysis code openly available <!-- AB "i.e." does not work in this context. I just removed this because it's irrelevant whether this happens within the movement or not?!-->
 Sharing these types of digital research products has the potential to increase scientific efficiency by enabling researchers to learn from each other and reuse materials, and to increase scientific reliability by facilitating the review and replication of published research results.
 To some extent these potential benefits are contingent on whether these digital research products are reproducible. 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
-The credibility of empirical research results hingeson their objectivity.
+The credibility of empirical research results hinges on their objectivity.
 Objectivity in this context means "in principle it [the research finding] can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper].
 Only something reproducible can be tested and understood by anyone.
 Therefore, reproducibility has long been considered integral to empirical research.
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
-This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges (multiple versions of code and data, copy-and-paste errors, missing software, ambiguous computation), and there is a dire need for reproducibility standards.
+This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges (e.g., missing software or ambiguous documentation of all steps taken <!-- AB the previous list was difficult to understand without more context; these two points are hopefully better to understand--> ), and there is a dire need for reproducibility standards.
 With the technological advancement, it is now possible to make all digital products related to a research project available so that a research project can be reproduced with minimal effort.
 
 This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
-We pursue two aims.
+We pursue two aims. First, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project. Second, we introduce a computational preregistration scheme based on reproducible research projects.
+<!-- AB Absätze können nicht nur einen Satz haben! Außerdem fehlte das "Second"-->
 
-First, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project.
-
-This workflow builds on several technical solutions originating in the software engineering community. 
-We discuss how these solutions address four common threats to reproducibility [see @Peikert2019 for details] and how they form a coherent workflow.
+<!--AB "This" geht nicht am Absatzanfang--> The proposed workflow builds on several technical solutions originating from software engineering. 
+We discuss how these solutions address four common threats to reproducibility [see @Peikert2019 for details] and how they interact to form a coherent workflow.
 We further demonstrate how the R package `repro` supports researchers in adopting this workflow.
 Second, we discuss opportunities that the reproducible workflow affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
 One such opportunity is a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
-PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including the Introduction, Methods, and Results sections.
+PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including typical sections like Introduction, Methods, and Results.
 The resulting dynamic document closely resembles the final manuscript, but temporarily uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
-Once the empirical data are analyzed, the Results are updated automatically, and the Discussion can be written.
+With these placeholders, authors preregister the exact presentation of their results without having seen real data yet.
+Once the empirical data are analyzed, the Results are then updated automatically, and the Discussion can be written to finalize the report.
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalized to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
@@ -164,12 +164,12 @@ The authors could execute only 31 of the scripts without error and reproduce the
 These failed attempts to reproduce highlight the need for widely accepted reproducibility standards, because open repositories do not routinely provide sufficient information to reproduce relevant computational and statistical results.
 If digital research products are available but not reproducible, their added value is limited.
 
-This tutorial therefore demonstrates how to make R-based research projects reproducible, while striking a balance between rigor and ease-of-use.
+Therefore, this tutorial demonstrates how to make R-based research projects reproducible, while striking a balance between rigor and ease-of-use.
 A rigorous standard increases the likelihood that a project will remain reproducible as long as possible.
 An easy-to-use standard, on the other hand, is more likely to be adopted.
 Our approach is to promote broad adoption of easy-to-use practices, i.e., a "low threshold", and ensure that these practices are compatible with more complex rigorous solutions, i.e., a "high ceiling".
 As researchers become more proficient with the tools involved, they can thus improve the reproducibility of their work.
-The first part of this tutorial outlines threats to reproducibility and how the here presented reproducibility standard addresses these threats.
+<!--The first part... dieser Satz wirkte verloren. Habe ich gestrichen-->
 
 We have structured the tutorial with a *learning by doing* approach in mind, such that readers can follow along on their own computers.
 We explicitly encourage readers to try out all R commands for themselves.
