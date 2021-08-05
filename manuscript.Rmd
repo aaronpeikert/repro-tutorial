@@ -721,7 +721,7 @@ Users with more advanced requirements can manually change all aspects of both pr
 
 Defining the research questions and planning data analysis before observing the research outcomes is referred to as *preregistration* [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results by separating a-priori planned and theory-driven analyses from those conducted unplanned and post-hoc, that is, after having seen the data.
-Preregistration seeks to reduce "researcher degrees of freedom" [@NosekRevolution2018] in the execution of a planned study by limiting the number of decisions to be made after data has been collected, which could influence the results.
+Preregistration seeks to reduce "researcher degrees of freedom" [@NosekRevolution2018] in the execution of a planned study by limiting the number of decisions to be made after data has been collected, which could bias the reported results.
 Preregistrations, however, have several shortcomings.
 One shortcoming is that written study plans are often multi-interpretable and often do not achieve the level of unambiguity that are required to effectively zero the researcher degrees of freedom.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis, the results vary considerably [@silberzahnManyAnalystsOne2018].
@@ -734,17 +734,17 @@ Even when researchers have gone to great length in preregistering an analysis sc
 they sometimes inexplicably fail to reproduce their own results.
 For example, @steegenMeasuringCrowdAgain2014 realized after publication that part of their preregistered code results in different test statistic than they reported initially (see Footnote 7).
 A final limitation is that written plans may turn out to be unfeasible once data are obtained and analyzed.
-For example, a verbal description of a statistical model may be unidentified, e.g. if it includes reciprocal paths between variables, or more parameters than observed data.
+For example, a verbal description of a statistical model may be unidentified, e.g. if it includes reciprocal paths between variables, or more parameters than observed data. <!-- AB note though that we still cannot exclude the possibility of empirical underidentification with this approach. -->
 Conversely, a model may be mis-specified in a major way; for example by omitting direct effects when the research question is about mediation, thus leading to a model with unacceptable fit.
 Many researchers would only realize that such a model cannot be estimated once the data are obtained, thus necessitating a deviation from the preregistered plans.
 
-The workflow described in this paper facilitates a rigorous and innovative solution to this problem:
+The workflow described in this paper facilitates a rigorous solution to this problem: <!--AB is it really innovative? I guess since people have preregistered code before, it's not entirely new... even though the reproducibility aspect is innovative-->
 Instead of describing the analysis in prose, researchers include the code required to conduct the analysis in the preregistration.
 We term this approach of writing and publishing code at the preregistration stage *preregistration as code (PAC)*.
 PAC has the potential to eliminate researchers degrees of freedom to a much greater extent than, e.g., preregistration templates.
-Moreover, it removes the necessity to write two separate documents: A preregistration, and a manuscript.
+Moreover, it removes the necessity to write two separate documents: A preregistration _and_ a manuscript.
 For a PAC, researchers can write a reproducible, dynamically generated draft of their intended manuscript at the preregistration stage.
-This includes the Introduction, Methods, and Results sections.
+This already includes most typical sections, such as Introduction, Methods, and Results.
 These results are initially based on simulated data with the same structure as the data they expect to obtain from their experiments.
 For guidance on how to simulate data, see [@ref].
 Once the preregistration is submitted and real data have been collected or made available,
@@ -761,7 +761,7 @@ by encouraging researchers to preregister the whole manuscript as a dynamic docu
 ## Advantages of PAC over traditional preregistration
 
 We believe that pairing PAC with the here presented workflow offers five advantages over classical preregistration.
-First, in PAC, is merely an intermediate stage of the final manuscript, thus sparing authors from writing, and editors and reviewers from evaluating two separate documents.
+First, the PAC is merely an intermediate stage of the final manuscript, thus sparing authors from writing, and editors and reviewers from evaluating two separate documents.
 Relatedly, writing a preregistration in form of a research article has the advantage that researchers already have great expertise in writing a scientific manuscript.
 By contrast, filling out a preregistration template is a novel type of scientific writing for many.
 Second, the PAC is a tool for study planning.
@@ -771,7 +771,7 @@ A PAC is more comprehensive by design because its completeness can be empiricall
 Evaluating the intended analysis code on simulated data will help identify missing steps or ambiguous decisions.
 PAC therefore minimizes researchers degrees of freedom more effectively than a standard preregistration [@bakkerEnsuringQualitySpecificity2020].
 Fourth, despite its rigor, PAC does accommodate data-dependent decisions if these can be formulated as code.
-Researchers can, for example, formulate conditions (`if() {} else {}`) under which they prefer one analysis type over the other.
+Researchers can, for example, formulate conditions (e.g., in the form of if-else-blocks) under which they prefer one analysis type over the other.
 For example, if distributional assumptions are not met, the code may branch out to employ robust methods; or, an analysis may perform automated variable selection mechanisms before running the final model.
 Another example of data dependent decisions are more explorative analyses, i.e. explorative factor analysis or machine learning.
 With PAC researchers can precisely calibrate how much they want to explore.
@@ -793,7 +793,7 @@ Third, the plan should be efficient; the plan should only require the necessary 
 ### Comprehensiveness
 
 Describing the preregistration in form of a journal article requires authors to follow the same standards that also ensure that research articles are comprehensive enough to replicate the described study.
-One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
+One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the design of the study.
 Nevertheless, it can be fruitful to consult preregistration templates because of their strong focus on formulating a comprehensive methods section.
 
 Another factor that ensures a comprehensive plan is writing the analysis based on simulated data.
@@ -818,14 +818,14 @@ A single simulated dataset already helps to ensure that the plan is viable under
 However, repeated simulation with varying parameters, a so-called Monte Carlo simulation, lets researchers play through several scenarios.
 Monte Carlo simulation lets researchers navigate several trade-offs regarding their resources.
 In the simplest case, they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision].
-@bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size.
+@bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not necessarily increase the planned sample size. <!--AB I am not sure what you want to say here. Is this saying that researchers usually already have a good hunch and they should not be afraid? I think this needs more explanation -- or remove the sentence-->
 Researchers may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
 ### The writing process
 
 To write a PAC, researchers should start by drafting a manuscript in the form of an R Markdown.
 When they have completed the method section, they should begin writing code.
-We suggest writing three functions for each planned hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
+For basic research projects, we suggest writing three functions for each planned hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results. <!-- AB not sure what this means. Why do I have to write 3 functions for each planned hypothesis? Isn't it one for each hypothesis? Please check -->
 At the heart of a PAC lies the planned analysis, so researchers should first draft a function called `planned_analysis()` that fits the description in their method section.
 This function should receive the data and derive relevant results from it.
 
@@ -885,13 +885,13 @@ After they gathered the actual data, they replace the simulated data, render the
 
 # Preregistration as Code --- a Tutorial 
 
-We argued that PAC has several advantages over classical preregistration and have outlined how to implement it.
+We argued that PAC has several advantages over classic <!--AB please check different meanings of classic VS classical--> preregistration and have outlined how to implement it.
 To illustrate how PAC works in practice and help researchers implementing PAC themselves, we have conducted a PAC that serves as a guiding example.
 We will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration:
 
 > "Is there a mean difference in the personality trait 'Machiavellism' between self-identified females and males?"
 
-Again, we propose a preregistration format that closely resembles a classical journal article, but uses simulated data and dynamic document generation to create a document that starts out as a preregistration and eventually becomes the final report.
+Again, we propose a preregistration format that closely resembles a classic journal article, but uses simulated data and dynamic document generation to create a document that starts out as a preregistration and eventually becomes the final report.
 The complete preregistration source is available in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd).
 In this section, we show code excerpts of this preregistration (formatted in monospace) and explain the rationale behind them.
 
@@ -935,7 +935,7 @@ show_prereg <-
   }
 ```
 
-As usual, researchers state why they are interested in their research question in the section "Introduction" and provide the necessary background information and literature to understand the context and purpose of the research question.
+As usual, researchers state why they are interested in their research question in the section "Introduction" and provide the necessary background information and literature to understand the context and purpose of the research question. <!--AB do we explain anywhere that the [@XXX] are bibtex references? This may be not clear to everyone-->
 This example is drastically shortened for illustration purposes:
 
 ```{r, echo=FALSE, results='asis'}
@@ -957,6 +957,7 @@ show_prereg("ttest")
 
 [^caution-mww]: The Mann–Whitney–Wilcoxon is in fact **not** more robust than the Welch corrected t-test for reasonably large sample sizes. The interested reader can use the [provided code for the simulation](https://github.com/aaronpeikert/repro-tutorial/blob/main/simulation.R) to verify that the t-test provides unbiased effect sizes but the Mann–Whitney–Wilcoxon overestimates effect size with increasing sample size and skewness.
 
+<!-- AB I am not happy with the next sentence. Isn't it the other way round? I thought we basically write the analysis first and then translate the analysis into a method section?-->
 We then translated this methods section into the following `planned_analysis()` function:
 
 
@@ -980,6 +981,7 @@ The code for this power analysis can be found in the [online supplementary mater
 
 Monte Carlo simulations are, of course, not only applicable for this analysis method and also allow researchers to investigate other relevant properties of their analysis method beyond power [@brandmaier2018precision; @harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
+<!--AB this code will not be understood by most of the readers? Can we remove this? Instead keep the results text below but explain what the variables choosen_power and minn mean and that they were either set in the simulation or simulation results #necessary-->
 ```{r, echo=FALSE}
 res <-
   read_csv(here::here("data", "simulation_results.csv"), col_types = "ddddddd")
