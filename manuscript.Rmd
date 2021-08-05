@@ -51,7 +51,7 @@ simplesummary: |
   Reproducibility made convenient with automation has hence a wide range of applications to accelerate scientific progress.
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
-  open science; compuational reproducibility; preregistration; R; R Markdown; Make; GitHub; Docker; workflow
+  open science; compuational reproducibility; preregistration; R; R Markdown; Make; GitHub; Docker
 acknowledgement: |
   The authors received no financial support for the research, authorship, and/or publication of this article.
 authorcontributions: |
