@@ -296,7 +296,7 @@ One strategy is to rely on pre-made images, which are maintained by a community 
 For example, there are pre-made images that only include what is necessary for R, based on Ubuntu (a Linux operating system) containers [@boettigerIntroductionRockerDocker2017].
 Users can then install whatever they need in addition to what is provided by these pre-compiled images.
 `r ifelse(is.na(container_size), "", glue::glue("The image that was used for this article uses {round(container_size, 2)}Gb of disk space."))`
-The image for this project includes Ubuntu, R, R Studio, LaTeX as well as a variety of R packages like tidyverse [@tidyverse] and all its dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
+The image for this project includes Ubuntu, R, RStudio, LaTeX as well as a variety of R packages like tidyverse [@tidyverse] and all its dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
 A second strategy is to save a container recipe; a so-called  `Dockerfile` containing a textual description of all commands that need to be executed to recreate the software environment, instead of the software environment itself.
 Dockerfiles are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile) for this project has a size of only `r round(as.numeric(fs::file_size("Dockerfile"))/1024^1, 2)`Kb).
 However, they rely on the assumption that all software repositories that provide the dependent operating systems, pieces of software, and R packages will remain accessible in future and will continue to make available historic software versions.
@@ -305,7 +305,7 @@ A more comprehensive overview of the use of containarization in research project
 Note that the Workflow for Open Reproducible Code in Science (WORCS) we presented elsewhere [@vanlissa2020worcs] relies for software management on the R package `renv`[@R-renv] which is more lightweight and easier to use on the one hand, but not as comprehensive on the other hand because it only snapshots the R packages instead of all software used.
 
 To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).
-While R Markdown and Git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside the field of information technology, which can represent a considerable obstacle to the acceptance and implementation of the workflow.
+While R Markdown and Git are well integrated into the R environment through RStudio, Make and Docker require a level of expertise that is often beyond the training of scholars outside the field of information technology, which can represent a considerable obstacle to the acceptance and implementation of the workflow.
 To remove this obstacle, we have developed the R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.
 These projects will remain reproducible irrespective of whether `repro` remains accessible in future.
@@ -334,7 +334,7 @@ The first step is to install the required software.
 We assume that you have installed R [@R-base, version `r with(R.version, paste0(major, ".", minor))`] and RStudio [@rstudio, version 1.4] already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
 In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
 The [installation advice]((https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)) may also help Windows users who have problems installing Docker.
-Start R Studio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
+Start RStudio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
 
 ```{r, eval=FALSE}
@@ -465,7 +465,7 @@ To do list:
 
 One advantage of this type of markup for formatting is that it can be rendered to many different output formats - both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
 Another advantage is that, because R Markdown files are in plain text, they are more suitable for version control using Git.
-Some users might find it easier to activate the "Visual Editor" of R Studio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown underneath with all of its flexibility.
+Some users might find it easier to activate the "Visual Editor" of RStudio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown underneath with all of its flexibility.
 The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions)
 and easing the generation of citations and references to Tables and Figures.
 
