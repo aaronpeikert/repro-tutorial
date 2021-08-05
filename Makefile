@@ -14,14 +14,14 @@ data/sd3.csv: R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<"); set.seed(1235); readr::write_csv(generate_data(500), "data/sd3.csv")' $(RUN2)
 
 images/nutshell.svg:
-	mkdir -p images && \
-	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.svg
+	$(RUN1) mkdir -p images && \
+	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.svg $(RUN2)
 images/nutshell.pdf:
-	mkdir -p images && \
-	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.pdf
+	$(RUN1) mkdir -p images && \
+	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.pdf $(RUN2)
 
 apa7.csl:
-	wget -O $@ https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+	$(RUN1) wget -O $@ https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl $(RUN2)
 
 temp.bib: R/bibliography.R references.bib
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
