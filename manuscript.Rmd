@@ -62,13 +62,15 @@ conflictsofinterest: |
   The authors declare no conflict of interest.
 abbreviations:
   - short: PAC
-    long: Preregistration as 
+    long: Preregistration as Code
   - short: Gb
     long: Gigabyte
   - short: Kb
     long: Kilobyte
   - short: CRAN
     long: Comprehensive R Archive Network
+  - short: WORCS
+    long: Workflow for Open Reproducible Code in Science
 repro:
   packages:
     - tidyverse
@@ -234,8 +236,8 @@ This allows the creation of (conditionally) formatted text, statistical results,
 @xieMarkdownCookbook2020 provides an extensive yet practical introduction to most features of R Markdown.
 
 One would hope that sharing a dynamic document would allow individuals (including one's future self) to simply download and reproduce a given analysis.
-However, while version control and dynamic document generation are becoming more common, this approach fails to guarantee reproducibility in many instances [@Peikert2019].
-In practice, dependencies between project files (for example, the information what script uses which data file and what script needs to be run first) or dependencies on external software (such as system libraries or components of the programming language, such as other R packages) are frequently unmentioned or not exhaustively and unambiguously documented.
+While version control and dynamic document generation are becoming more common, we have argued that two more components are required and that each component alone is unlikely to guarantee reproducibility [@Peikert2019; @vanlissa2020worcs].
+In practice, dependencies between project files (for example, the information what script uses which data file and what script needs to be run first) or on external software (such as system libraries or components of the programming language, such as other R packages) are frequently unmentioned or not exhaustively and unambiguously documented.
 
 To automatically resolve dependencies between project files, we rely on **dependency tracking**.
 In essence, researchers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and, in the end, a final product.
@@ -262,6 +264,7 @@ If a requirement does not exist, Make uses a recipe to build the requirement fir
 Here, if one were to build the final `manuscript.pdf` by rendering the R Markdown with the command shown in l.2, Make would check whether the file `simulation_results.csv` exists; if not, it would issue the command in l.5 to run the simulation first before rendering the manuscript.
 This ensures that the simulated data are present before the manuscript is built, and that the simulation is rerun and the manuscript is rebuilt if the simulation code was changed.
 Make therefore offers a standardized process to reproduce projects, regardless of the complexity or configuration of the project.
+Note that the Workflow for Open Reproducible Code in Science (WORCS) we presented elsewhere [@vanlissa2020worcs] does not contain this element of dependency tracking explicitly but its strict structure of only containing one definite R Markdown still makes dependencies between files unambiguous.
 
 ```{r, include=FALSE}
 container_size <- as.numeric(fs::file_size("reprotutorial.sif"))/1024^3
@@ -298,8 +301,9 @@ Dockerfiles are tiny (the [Dockerfile](https://github.com/aaronpeikert/repro-tut
 However, they rely on the assumption that all software repositories that provide the dependent operating systems, pieces of software, and R packages will remain accessible in future and will continue to make available historic software versions.
 For proper archival, we therefore recommend to store a complete image of the software environment, in addition to the Dockerfile.
 A more comprehensive overview of the use of containarization in research projects is given by @wiebelsLeveragingContainersReproducible2021.
+Note that the Workflow for Open Reproducible Code in Science (WORCS) we presented elsewhere [@vanlissa2020worcs] relies for software management on the R package `renv`[@R-renv] which is more lightweight and easier to use on the one hand, but not as comprehensive on the other hand because it only snapshots the R packages instead of all software used.
 
-To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).    
+To summarize, the workflow by @Peikert2019 requires four components (see Figure \@ref(fig:schematic)), dynamic document generation (using R Markdown), version control (using Git), internal dependency management (using Make), and containerization (using Docker).
 While R Markdown and Git are well integrated into the R environment through R Studio, Make and Docker require a level of expertise that is often beyond the training of scholars outside the field of information technology, which can represent a considerable obstacle to the acceptance and implementation of the workflow.
 To remove this obstacle, we have developed the R package `repro` that supports scholars in setting up, maintaining, and reproducing research projects in R.
 Importantly, a reproducible research project created with `repro` does not have the `repro` package itself as a dependency.
@@ -372,7 +376,6 @@ The messages from `repro` try to take the user by the hand to help them solve pr
 These messages are adjusted to your specific operating system and installed dependencies.
 Before you continue, we ask you to run the above commands to check Git, Make, and Docker - both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
 If necessary, follow any instructions presented until all checks pass.
-
 
 ## Implementing version control
 
