@@ -1,5 +1,5 @@
 ---
-title: "Reproducible Research in R: A tutorial on how to do the same thing more than once"
+title: "A tutorial on how to do the same thing more than once"
 author:
   - name: Aaron Peikert
     affil: 1, *
@@ -499,7 +499,7 @@ The following example is a full markdown document where the metadata (the "YAML 
 
 ````markdown
 ---
-title: "Reproducible Research: A Tutorial on how to do the same thing more than once in R"
+title: "A Tutorial on how to do the same thing more than once"
 author: Aaron Peikert, Caspar J. Van Lissa and Andreas M. Brandmaier
 abstract: A Hitchhiker's Guide to Reproducible Research in R
 output: html_document
@@ -530,7 +530,7 @@ The format is as follows (see everything below the line *repro:*):
 
 ```markdown
 ---
-title: "Reproducible Research: A Tutorial on how to do the same thing more than once in R"
+title: "Reproducible Research: A Tutorial on how to do the same thing more than once"
 author: Aaron Peikert, Caspar J. Van Lissa and Andreas M. Brandmaier
 output: html_document
 repro:
