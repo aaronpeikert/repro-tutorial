@@ -102,7 +102,8 @@ repro:
   files:
     - references.bib
 output:
-  rticles::mdpi_article
+  bookdown::markdown_document2:
+    base_format: rticles::mdpi_article
 header-includes:
    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}, numbers=left}
 ---
