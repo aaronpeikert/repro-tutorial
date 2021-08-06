@@ -246,7 +246,7 @@ Similar to a collection of cooking recipes, we can have multiple products (_targ
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, and analysis results).
 
 We recommend using *Make* for dependency tracking because it is language independent.
-The following hypothetical example illustrates the utility of `Make`.
+The following hypothetical example illustrates the utility of `Make` and a suitable `Makefile`.
 Consider a research project that contains a script to simulate data (`simulate.R`) and a scientific report of the simulation results written in `R Markdown` (`manuscript.Rmd`).
 A `Makefile` for this project could look like this:
 
@@ -280,7 +280,7 @@ One comprehensive approach to software management is containerization.
 *`Docker`* is a popular tool for containerization.
 It manages software dependencies by constructing a virtual software environment independent of the host software environment.
 These so-called "`Docker` images" function like a virtual computer  (i.e., a sort of "sand box").
-A `Docker` image should contain *all* software dependencies used in an analysis---not just R-packages, but also R and Rstudio, and even the computer's operating system.
+A `Docker` image does contain *all* software dependencies used in an analysis---not just R-packages, but also R and Rstudio, and even the computer's operating system.
 This is important because some of its functionality may impact the workings of higher-order software like R, such as calls to random number generators or linear algebra libraries.
 
 Note that the software environment of the Docker image is completely separate from software installed on your computer.
@@ -289,6 +289,12 @@ For example, it is important to realize that software available on your local co
 Each dependency that you want to use within the `Docker` image must be explicitly added as a dependency.
 Furthermore, using `Docker` may require you to install software on an operating system that may not be familiar to you.
 The images supplied by [@boettigerIntroductionRockerDocker2017], for example, are based on the Ubuntu operating system.
+
+There are two ways to build a `Docker` image.
+First users can manually install whatever software they like from within the virtual environment.
+Such manually build environment can still be ported to all computers which support `Docker`.
+We, however, prefer the second way of building images automatically from a textual description called `Dockerfile`.
+This enables users to quickly change the software environment e.g. update to another R or package version without being "stuck" with a unmaintainable because manually build `Docker` image.
 
 Packaging all required software in such an image requires considerable amounts of storage space.
 Two major strategies help to keep the storage requirements reasonable.
