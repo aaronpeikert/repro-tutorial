@@ -855,9 +855,12 @@ Third, the plan should be efficient; the plan should only require the necessary 
 
 ### Comprehensiveness
 
-Describing the preregistration in form of a journal article requires authors to follow the same standards that also ensure that research articles are comprehensive enough to replicate the described study.
+Standards for scientific writing are designed to result in understandable and comprehensive research articles and can serve the same purpose for writing a preregistration.
+Standards for scientific writing [e.g. @apa7] require that research articles are described in such detail that any researcher that is familiar with the field is able to repeat a given study.
+They provide, hence, an excellent vehicle for planning a study.
 One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
 Nevertheless, it can be fruitful to consult preregistration templates because of their strong focus on formulating a comprehensive methods section.
+If the PAC is submitted as a registered report [an article format in which the preregistration is reviewed and the article accepted "in principle", @nosekRegisteredReports2014; @chambersWhatNextRegistered2019] a journal article might be more familiar to the reviewers that ensure a comprehensive study plan.
 
 Another factor that ensures a comprehensive plan is writing the analysis based on simulated data.
 Simulating data offers various benefits in the planning phase of a study.
