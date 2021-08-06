@@ -242,7 +242,9 @@ While version control and dynamic document generation are becoming more common, 
 In practice, dependencies between project files (for example, the information what script uses which data file and what script needs to be run first) or on external software (such as system libraries or components of the programming language, such as other R packages) are frequently unmentioned or not exhaustively and unambiguously documented.
 
 To automatically resolve dependencies between project files, we rely on *dependency tracking*.
-In essence, researchers provide a collection of computational recipes that describe how ingredients are processed to create intermediate products and, in the end, a final product.
+In essence, researchers provide a collection of *computational recipes*.
+A computational recipe describes how inputs are processed to create a specific output in a way that is automatically executable.
+The concept of computational recipes is central to our understanding of reproducibility because it enables a unified way to automatically reproduce a project.
 Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipes_).
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, and analysis results).
 
