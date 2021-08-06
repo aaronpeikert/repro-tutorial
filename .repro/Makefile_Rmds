@@ -7,6 +7,6 @@ manuscript.pdf: manuscript.Rmd data/simulation_results.csv R/simulation.R R/simu
 preregistration.pdf: preregistration.Rmd preregistration.bib
 	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
 
-README.md: README.Rmd
+README.md: README.Rmd images/nutshell.svg
 	$(RUN1) Rscript -e 'rmarkdown::render("$(WORKDIR)/$<", "all")' $(RUN2)
 
