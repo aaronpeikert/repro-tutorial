@@ -324,7 +324,7 @@ In the remainder, we will walk you through the creation of a reproducible resear
 
 ```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed boxes) central to the reproducible workflow: version control (`Git`), dependency tracking (`Make`), software management (`Docker`), and dynamic document generation (`R Markdown`). `Git` tracks changes to the project over time. `Make` manages dependencies among the files. `Docker` provides a container in which the final report is built using dynamic document generation in `R Markdown`. Reproduced from @Peikert2019 licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0).  "}
 # file gets downloaded in Makefile
-knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
+knitr::include_graphics(here::here("images/nutshell.pdf"))
 ```
 
 # Creating reproducible research projects
