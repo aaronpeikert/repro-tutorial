@@ -78,7 +78,6 @@ We report how we determined our sample size, all data exclusions (if any), all m
 We conduct a Student's t-test [@studentProbableErrorMean1908] with Welch's correction [@welchGeneralizationStudentProblem1947] of the average of machiavellianism items between the binary-coded gender groups.
 If the skew of this average is greater than 1.0 we conduct a supposedly more robust Mann--Whitney--Wilcoxon test [@Wilcoxon1945] instead.
 <!--end-ttest-->
-<!--begin-power-code-->
 ```{r, echo=FALSE}
 choosen_power <- .8
 choosen_d <- .2
@@ -86,7 +85,6 @@ minn <-
   filter(filter(simulation_results, d == choosen_d, power > choosen_power),
          n == min(n))$n
 ```
-<!--end-power-code-->
 <!--begin-power-->
 A simulation we conducted indicated that with a sample size of
 `r minn` for an alpha of .05 (two-sided) we achieve at least `r choosen_power*100`% power assuming a standardized effect size of d=`r choosen_d`.
