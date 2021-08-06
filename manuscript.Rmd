@@ -1,5 +1,5 @@
 ---
-title: "A tutorial on how to do the same thing more than once"
+title: "Reproducible Research in R: A tutorial on how to do the same thing more than once"
 author:
   - name: Aaron Peikert
     affil: 1, *
@@ -432,7 +432,7 @@ usethis::use_github(private = TRUE)
 Depending on your computer configuration, this may ask to set up a secure connection to GitHub.
 In this case first follow the suggestions shown on the R console.
 
-## Dynamic document generation
+## Using dynamic document generation
 
 Now that you have created a version controlled project, we will proceed with dynamic document generation.
 A dynamic document has three elements:
@@ -520,6 +520,8 @@ Important for reproducibility:
 t.test(extra ~ group, data = sleep)
 ```
 ````
+
+## Manage software and file dependencies
 
 Some metadata fields are self-explanatory (like the author field), and exist across all output formats (like the title field).
 However, `R Markdown` has been extended to hundreds of document formats which are often highly configurable by their metadata.
@@ -1147,13 +1149,6 @@ Therefore, PAC should not be seen as an attempt to invalidate classical preregis
 We are convinced that many reasons justify changing the preregistered code, but are equally convinced that readers should judge themselves if they find these deviations from the preregistration meaningful.
 PAC enables just that.
 Researcher can change their plans and possibly defend their decision, e.g. in the discussion, while readers of the manuscript can clearly see what was changed through version control.
-
-Another challenge is that PAC requires more programming expertise than a usual analysis.
-In contrast to a reproducible script, which should work on the same data, a PAC must work on different data of similar structure.
-We call the property of code that can run on different inputs from a similar context and produce valid outputs "reusability".
-This property is based on reproducibility but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] such that it is _build-for-reuse_ [@al-badareenReusableSoftwareComponents2010].
-The reproducible workflow we present here is heavily automated and hence promotes reusability.
-Furthermore, adhering to principles of reusability typically removes errors in the code and thus increases the likelihood that the statistical analysis is correct
 
 Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019], and therefore this workflow fits well together with other innovations that employ automation, like machine-readable hypothesis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
 Automated and reusable research projects promise a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
