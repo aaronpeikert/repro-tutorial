@@ -1074,7 +1074,7 @@ show_prereg("power")
 
 Monte Carlo simulations are, of course, not only applicable for this analysis method and also allow researchers to investigate other relevant properties of their analysis method beyond power [@brandmaier2018precision; @harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
-We implemented a mechanism that only uses simulated data when the actual data is not yet available  (in this example if the file `data/data.csv` does not exist)for the results section.
+We implemented a mechanism that only uses simulated data when the actual data is not yet available (in this example if the file `data/data.csv` does not exist) for the results section.
 This mechanism also warns readers if these results are based on simulated data.
 The warning is colored red to avoid any confusion between mock and actual results.
 As soon as the actual data are available, the simulated data is no longer used, and the results represent the actual empirical results of the study.
@@ -1098,7 +1098,24 @@ show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FAL
 
 The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](this link does not work) and can view the changes we made since preregistering it on this [GitHub page](this link does not work).
 
+We realize that PACs are challenging.
+Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
+Therefore, PAC should not be seen as an attempt to invalidate classical preregistration or not-preregistered research but as a complementary approach.
+We are convinced that many reasons justify changing the preregistered code, but are equally convinced that readers should judge themselves if they find these deviations from the preregistration meaningful.
+PAC enables just that.
+Researcher can change their plans and possibly defend their decision, e.g. in the discussion, while readers of the manuscript can clearly see what was changed through version control.
+
 # Discussion
+
+Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019], and therefore this workflow fits well together with other innovations that employ automation, like machine-readable hypothesis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
+Automated research projects promise a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
+
+Central to these innovations is a property we call "reusability" which we hope this workflow promotes.
+Reusable code can run on different inputs from a similar context and produce valid outputs.
+This property is based on reproducibility but requires the researcher to more carefully write the software [@lanerganSoftwareEngineeringReusable1989] such that it is _build-for-reuse_ [@al-badareenReusableSoftwareComponents2010].
+The reproducible workflow we present here is heavily automated and hence promotes reusability.
+Furthermore, adhering to principles of reusability typically removes errors in the code and thus increases the likelihood that the statistical analysis is correct.
+Therefore reproducibility facilitates traditional good scientific practices and provides the foundation for promising innovations.
 
 ## Summary
 
@@ -1119,7 +1136,7 @@ To editors, reviewers and readers it is obvious how the researchers deviated fro
 The likelihood of those deviations, while never unavoidable, is decreased by using simulated data to verify the suitability of the proposed analysis plan.
 This analysis plan may contain data-dependent decisions to increase flexibility of research plans.
 
-## Limitations of repro
+## Limitations
 
 `repro`'s primary goal is to increase the user-friendliness of reproducibility tools for researchers.
 Despite our efforts to ensure this goal, the package is still in development and undoubtedly has limitations.
@@ -1141,23 +1158,7 @@ In any case and without such precautions do the `R Markdown`, the `Makefile` and
 The `Makefile`, for example, is written in a way that researchers can manually trace the dependencies and execute commands in the right order, in case they are, for whatever reason, unable to run `Make`.
 Hypothetically, even if `Docker` were unavailable one day, the `Dockerfile` still serves as unambiguous documentation of how the original system was set up and may help future users to create a software environment that closely resembles the original.
 
-# Limitations
-
-We realize that PACs are challenging.
-Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
-Therefore, PAC should not be seen as an attempt to invalidate classical preregistration or not-preregistered research but as a complementary approach.
-We are convinced that many reasons justify changing the preregistered code, but are equally convinced that readers should judge themselves if they find these deviations from the preregistration meaningful.
-PAC enables just that.
-Researcher can change their plans and possibly defend their decision, e.g. in the discussion, while readers of the manuscript can clearly see what was changed through version control.
-
-Increased automation is more and more recognized as a means to improve the research process [@rouderMinimizingMistakesPsychological2019], and therefore this workflow fits well together with other innovations that employ automation, like machine-readable hypothesis tests [@lakensImprovingTransparencyFalsifiability2021] or automated data documentation [@arslanHowAutomaticallyDocument2019].
-Automated and reusable research projects promise a wide range of applications, among them PAC [possibly submitted as a registered report @nosekRegisteredReports2014; @chambersWhatNextRegistered2019], Direct Replication[@simonsValueDirectReplication2014], fully automated living metanalysis [@elliottLivingSystematicReviews2014], Executable Research Articles [@elifesciencespublicationsELifeLaunchesExecutable2020], and other innovations like the live analysis of born open data [@rouderWhatWhyHow2016; @kekecsRaisingValueResearch2019].
-
-Therefore reproducibility facilitates traditional good scientific practices and provides the foundation for promising innovations.
-
-Please note that the statistical procedure in the PAC example of running different test procedures based on a fixed skewness threshold was created for didactic purposes and is not necessarily optimal for addressing your research question.
-
-# Outlook
+## Outlook
 
 Open science practices are a continually evolving field where technical innovations foster changes in research practice.
 Open data is much more widespread thanks to online storage facilities; preregistration are possible because there are preregistration platforms and so forth.
