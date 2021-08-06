@@ -187,7 +187,7 @@ It may then be unclear which version of code and data was used to produce some r
 4.	*Ambiguous software dependencies*; for example, a given analysis may depend on a specific version of a specific software package, or rely on software that might not be available on a different computer or no longer exist at all; or, a different version of the same software may produce different results.
 
 We have developed a workflow that achieves long-term and cross-platform computational reproducibility of scientific data analyses.
-It leverages established tools and practices from software engineering and rests on four pillars that address the aforementioned causes of non-reproducibility: [@Peikert2019]:
+It leverages established tools and practices from software engineering and rests on four pillars that address the aforementioned causes of non-reproducibility [@Peikert2019]:
 
 1. Version control
 2. Dynamic document generation
