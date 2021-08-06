@@ -875,8 +875,8 @@ If an analysis fails to recover the correct values in idealized (simulated) cond
 it would be unreasonable to expect this analysis to work under realistic conditions.
 Because the simulation describes the researchers expectations about real world conditions,
 it is the best way to assess the effectiveness of the analysis without actually gathering the data.
-If a researcher experiences difficulty in specifying such expectations,
-that may be an indication that further literature research, or exploratory pilot studies, are required.
+A simulation of data requires the researchers to translate their expectations about the underlying process into concrete computational terms, e.g. assumptions about which distribution does the dependent variable follow, or how do the independent variables influence each other and the dependent variable.
+If a researcher experiences difficulty in specifying such expectations, that may be an indication that further literature research, or exploratory pilot studies, are required.
 
 ### Efficiency
 
