@@ -375,7 +375,7 @@ options(opts)
 
 The messages from `repro` try to take the user by the hand to help them solve problems.
 These messages are adjusted to your specific operating system and installed dependencies.
-Before you continue, we ask you to run the above commands to check Git, Make, and Docker - both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
+Before you continue, we ask you to run the above commands to check Git, Make, and Docker---both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
 If necessary, follow any instructions presented until all checks pass.
 
 ## Implementing version control
@@ -463,7 +463,7 @@ To do list:
 * spend time with family and friends
 ```
 
-One advantage of this type of markup for formatting is that it can be rendered to many different output formats - both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
+One advantage of this type of markup for formatting is that it can be rendered to many different output formats---both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
 Another advantage is that, because R Markdown files are in plain text, they are more suitable for version control using Git.
 Some users might find it easier to activate the "Visual Editor" of RStudio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the R Markdown document) which features more graphical elements like a traditional word processor but still creates an R Markdown underneath with all of its flexibility.
 The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions)
