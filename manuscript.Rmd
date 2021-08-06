@@ -491,7 +491,7 @@ This introduces a risk that multiple versions of the static document are dissemi
 To avoid ambiguity, we therefore recommend referencing the identifier of the Git commit at the time of rendering in the static document.
 Simply put, a static document should link to the version of the code that was used to create it.
 The `repro` package comes with the function `repro::current_hash()` for this purpose.
-This document was created from the commit with the hash ``r repro::current_hash()``.
+This document was created from the commit with the hash [``r repro::current_hash()``](`r stringr::str_c("https://github.com/aaronpeikert/repro-tutorial/tree/", repro::current_hash(40))`).
 
 Now that you know how to write text and R code in an R Markdown, you need to know about metadata (also called: YAML front matter).
 These metadate contain information about the document, like the title and the output format.
