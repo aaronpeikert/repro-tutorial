@@ -454,7 +454,7 @@ A dynamic document has three elements:
 The text of an `R Markdown` is formatted by `Markdown` (see @xieMarkdownDefinitiveGuide2019 for technical details and @xieMarkdownCookbook2020 for practical guidance).
 The code mostly consists of R-code (although other programming languages are supported, like Python, C++, Fortran, etc).
 The following example serves to illustrate the `Markdown` syntax. 
-It shows how to create a heading, a word in bold font, and a list of several items in `Markdown`:
+It shows how to create a heading, a word in bold font, a citation and a list of several items in `Markdown`:
 
 ```markdown
 <!--this is a Markdown file -->
@@ -462,6 +462,7 @@ It shows how to create a heading, a word in bold font, and a list of several ite
 
 Normal text.
 Important **word** in bold.
+A citation: @einstein1935 did important research on this topic.
 
 ## Subheading (level 2)
 
