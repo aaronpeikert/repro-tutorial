@@ -138,16 +138,17 @@ Only something reproducible can be tested and understood by anyone.
 Therefore, reproducibility has long been considered integral to empirical research.
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
 This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges (e.g., missing software or ambiguous documentation of all steps taken), and there is a dire need for reproducibility standards.
-With the technological advancement, it is now possible to make all digital products related to a research project available so that a research project can be reproduced with minimal effort.
+With the technological advancement, it is now possible to make all digital products related to a research project available so that a research project can be automatically reproduced with minimal effort.
 
-This tutorial is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
-We pursue two aims. First, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project. Second, we introduce a computational preregistration scheme based on reproducible research projects.
-
-The proposed workflow builds on several technical solutions originating from software engineering. 
+We pursue two aims.
+First, we want to introduce researchers to a notion of automated reproducibility that requires, apart from the setup of software, no manual steps.
+Second, we discuss opportunities such automated reproducibility affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
+With regard to the first goal, we present a tutorial that is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
+In this tutorial, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project.
+The proposed workflow builds on several technical solutions originating from software engineering to automate reproduction. 
 We discuss how these solutions address four common threats to reproducibility [see @Peikert2019 for details] and how they interact to form a coherent workflow.
-We further demonstrate how the R package `repro` supports researchers in adopting this workflow.
-Second, we discuss opportunities that the reproducible workflow affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
-One such opportunity is a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
+We further demonstrate how the R package `repro` supports researchers in setup the required software and in adopting this workflow.
+In pursuit of the second aim we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
 PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including typical sections like Introduction, Methods, and Results.
 The resulting dynamic document closely resembles the final manuscript, but temporarily uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
 With these placeholders, authors preregister the exact presentation of their results without having seen real data yet.
