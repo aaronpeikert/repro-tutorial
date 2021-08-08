@@ -7,7 +7,7 @@ all: install.md README.md manuscript.pdf preregistration.pdf
 data/simulation_results.csv: R/simulation.R R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
 
-simulated_data.csv: R/simulate.R
+simulated_data.csv: R/simulation.R
 	$(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN2)
 
 data/sd3.csv: R/simulation_funs.R

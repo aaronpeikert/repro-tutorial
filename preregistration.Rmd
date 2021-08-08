@@ -71,7 +71,7 @@ simulation_results <-
 <!--begin-method-->
 # Method
 
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study [@simmons2012]. We use data available from [openpsychometrics.org](https://openpsychometrics.org/_rawdata/) from the online version of the MACH-IV[@christie1970] and included participants that have responded to at least one machiavellianism item and reported their gender as either "male" or "female".
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study [cf. @simmons2012]. We use data available from [openpsychometrics.org](https://openpsychometrics.org/_rawdata/) from the online version of the MACH-IV[@christie1970] and included participants that have responded to at least one machiavellianism item and reported their gender as either "male" or "female".
 <!--end-method-->
 
 <!--begin-ttest-->
