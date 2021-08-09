@@ -1109,7 +1109,7 @@ set.seed(1234)
 show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FALSE), fence = "")
 ```
 
-The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](this link does not work) and can view the changes we made since preregistering it on this [GitHub page](this link does not work).
+The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/releases/tag/compav0.0.2.0-results).
 
 We realize that PACs are challenging.
 Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
