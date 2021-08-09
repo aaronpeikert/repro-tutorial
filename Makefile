@@ -6,8 +6,8 @@ all: install.md README.md manuscript.pdf preregistration.pdf
 
 manuscript.tex: manuscript.pdf
 
-submission.zip: manuscript.pdf manuscript.tex manuscript.Rmd journalnames.tex mdpi.bst mdpi.cls logo-updates.pdf journalnames.tex chicago2.bst
-	$(RUN1) zip $@ $^ $(RUN2)
+submission.zip: manuscript.pdf manuscript.tex manuscript.Rmd journalnames.tex mdpi.bst mdpi.cls logo-updates.pdf journalnames.tex chicago2.bst manuscript_files/
+	$(RUN1) zip -r $@ $^ $(RUN2)
 
 data/MACH_data.zip:
 	$(RUN1) curl https://openpsychometrics.org/_rawdata/MACH_data.zip -o $@ $(RUN2) 
