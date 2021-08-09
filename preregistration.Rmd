@@ -93,7 +93,7 @@ A simulation we conducted indicated that with a sample size of
 <!--begin-results-->
 # Results
 
-```{r, echo=FALSE, results='asis'}
+```{r, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
 real_data <- here::here("data", "data.csv")
 simulated <- !fs::file_exists(real_data)
 if(simulated){
@@ -103,7 +103,16 @@ if(simulated){
   set.seed(1234)
   mach <- simulate_data(900, 8, 0.3, 10)
 } else {
-  mach <- readr::read_csv(real_data)
+  mach <- readr::read_delim(real_data, delim = "\t")
+  # only keep MACH items + gender
+  mach <- dplyr::select(mach, dplyr::matches("^Q\\d+A$"), gender)
+  # code gender according to codebook (3 would be other)
+  mach <-
+    dplyr::mutate(mach, gender = factor(
+      gender,
+      levels = 1:2,
+      labels = c("male", "female")
+    ))
 }
 ```
 <!--end-results-->
@@ -116,7 +125,8 @@ report_analysis(planned_analysis(mach))
 
 # Discussion
 
-\textcolor{red}{This document was created before we have gathered gathered data. The discussion will only be added to the final report.}
+We created this document to illustrate Preregistration as Code.
+We therefore do not discuss the results.
 
 \newpage
 # References
