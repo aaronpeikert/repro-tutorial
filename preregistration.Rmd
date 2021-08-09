@@ -125,8 +125,10 @@ report_analysis(planned_analysis(mach))
 
 # Discussion
 
-We created this document to illustrate Preregistration as Code.
-We therefore do not discuss the results.
+This document only serves to illustrate Preregistration as Code.
+We, therefore, do not discuss the results.
+After we have acquired the data, we realized that we had to change the code for reading the data (see commit [6556a93](https://github.com/aaronpeikert/repro-tutorial/commit/6556a9395fcdd600b5b0c5358f92a2c6635ae360)).
+We do not believe that these changes influence the results substantively.
 
 \newpage
 # References
