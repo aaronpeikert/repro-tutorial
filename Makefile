@@ -9,6 +9,12 @@ manuscript.tex: manuscript.pdf
 submission.zip: manuscript.pdf manuscript.tex manuscript.Rmd journalnames.tex mdpi.bst mdpi.cls logo-updates.pdf journalnames.tex chicago2.bst
 	$(RUN1) zip $@ $^ $(RUN2)
 
+data/MACH_data.zip:
+	$(RUN1) curl https://openpsychometrics.org/_rawdata/MACH_data.zip -o $@ $(RUN2) 
+
+data/data.csv: data/MACH_data.zip
+	$(RUN1) unzip -p $< MACH_data/data.csv > $@ $(RUN2) 
+
 data/simulation_results.csv: R/simulation.R R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<")' $(RUN2)
 
