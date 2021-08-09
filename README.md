@@ -8,6 +8,13 @@
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+Preregistration as Code:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5170740.svg)](https://doi.org/10.5281/zenodo.5170740)
+
+Results after Preregistration:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5171678.svg)](https://doi.org/10.5281/zenodo.5171678)
+
 <!-- badges: end -->
 
 ## How to reproduce this manuscript
