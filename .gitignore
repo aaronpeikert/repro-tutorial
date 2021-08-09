@@ -20,3 +20,5 @@ apa7.csl
 *.tar.gz
 temp.bib
 *.log
+*.zip
+data/data.csv
