@@ -5,15 +5,54 @@
 
 <!-- badges: start -->
 
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+<script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
+
+<table>
+
+<tbody>
+
+<tr>
+
+<td>
+
+<div class="altmetric-embed" data-badge-popover="right" data-badge-type="1" data-doi="10.31234/osf.io/fwxs4" data-hide-no-mentions="true">
+
+</div>
+
+</td>
+
+<td>
 
 Preregistration as Code:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5170740.svg)](https://doi.org/10.5281/zenodo.5170740)
+<a href="https://doi.org/10.5281/zenodo.5170740" target="_blank" rel="noopener noreferrer">[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5170740.svg)](https://doi.org/10.5281/zenodo.5170740)</a>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<a href="https://www.repostatus.org/#active" target="_blank" rel="noopener noreferrer">[![Project
+Status: Active – The project has reached a stable, usable state and is
+being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)</a>
+
+</td>
+
+<td>
 
 Results after Preregistration:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5171678.svg)](https://doi.org/10.5281/zenodo.5171678)
+<a href="https://doi.org/10.5281/zenodo.5171678">[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5171678.svg)](https://doi.org/10.5281/zenodo.5171678)</a>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 <!-- badges: end -->
 
