@@ -24,6 +24,9 @@ repro:
 </tbody>
 </table>
 
+
+[📃Preprint📃](https://www.doi.org/10.31234/osf.io/fwxs4)
+
 <!-- badges: end -->
 
 ## How to reproduce this manuscript
