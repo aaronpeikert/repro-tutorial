@@ -4,12 +4,6 @@
 # A Hitchhiker’s Guide to Reproducible Research
 
 <!-- badges: start -->
-<script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
-
-<div
-class="altmetric-embed altmetric-doi-10.31234/osf.io/fwxs4 altmetric-badge-type-donut altmetric-badge-popover-left">
-
-</div>
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
