@@ -6,9 +6,8 @@
 <!-- badges: start -->
 <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
-<div class="altmetric-embed" data-badge-popover="right"
-data-badge-type="1" data-doi="10.31234/osf.io/fwxs4"
-data-hide-no-mentions="true">
+<div
+class="altmetric-embed altmetric-doi-10.31234/osf.io/fwxs4 altmetric-badge-type-donut altmetric-badge-popover-left">
 
 </div>
 
