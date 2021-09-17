@@ -792,7 +792,10 @@ Even when several researchers describe their analysis with the same terms, use t
 The current best practice to ensure that the preregistration are comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
 These templates seek to improve the specificity of study plans by imposing structure [@bakkerEnsuringQualitySpecificity2020].
 However, templates cannot remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the most straightforward analysis.
-A second limitation is that, just like primary research, preregistrations are susceptible to non-reproducibility.
+This ambiguity causes a second problem, that is comparing the preregistration and the resulting publication to decide if and how researcher deviated from the preregistration.
+This task is difficult because it impossible to decide without additional information if the analysis actually was carried out differently or just described differently.
+Even when the researcher was faithful in each aspect to the preregistration the reader may reach opposite conclusions, because the reader has to compare to different texts which may be worded differently or describe the same thing in varying level of detail.
+A third limitation is that, just like primary research, preregistrations are susceptible to non-reproducibility.
 To illustrate, a review of 210 preregistrations found that, even though 174 (67%) included a formal power analysis, only 34 (20%) of these could be reproduced [@bakkerRecommendationsPreregistrationsInternal2020].
 Even when researchers have gone to great length in preregistering an analysis script,
 they sometimes inexplicably fail to reproduce their own results.
@@ -844,9 +847,18 @@ When communicating a finding as explorative, it may still make a difference if t
 Fifth, deviations from the preregistration are clearly documented, because they are reflected in changes to the code which are managed and tracked with version control.
 One could even make a commit labeled "Necessary deviations from the preregistration after data collection",
 and reference it in the manuscript.
+The convenient comparison of preregistration and publication with PAC is particularly noteworthy.
+Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study.
+We, however, oppose this view.
+The problem is not deviating from the preregistration, it is not making these changes transparent.
+In fact, we expect that only a fraction of PACs will require no changes after actual data was collected.
+With PAC, researcher can reflect any deviations with ease and should summarize and justify the changes for their reader[^summarize-changes].
+The reader is also in a position to inspects the changes and can therefore make an informed judgment.
+
+[^summarize-changes]: In section [Preregistration as Code --- a Tutorial] we have conducted an actual PAC and summarize the changes we made to the preregistered code in the discussion.
 
 Note that preregistration, or PAC, does not preclude exploratory analyses.
-Such analyses should merely be explicitly declared as such in the manuscript.
+Again such analyses should merely be explicitly declared as such in the manuscript to allow appropriate judgment of the results.
 
 ## What you need to know before writing a PAC
 
@@ -1029,7 +1041,6 @@ The analytical strategy presented here is, in fact, suboptimal concerning severa
 
 The methods section is the translation of the following `planned_analysis()` function:
 
-
 ```{r planned_analysis}
 ```
 
@@ -1109,7 +1120,17 @@ set.seed(1234)
 show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FALSE), fence = "")
 ```
 
-The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/releases/tag/compav0.0.2.0-results).
+Of course it is likely that the preregistered code has to be adapted to the actual data.
+Changing the preregistration must be discussed.
+This is our summary of what we changed:
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("discuss-changes")
+```
+
+But readers can inspect and judge the changes for themselves on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
+
+The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
 
 We realize that PACs are challenging.
 Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
