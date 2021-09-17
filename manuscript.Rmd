@@ -855,6 +855,11 @@ In fact, we expect that only a fraction of PACs will require no changes after ac
 With PAC, researcher can reflect any deviations with ease and should summarize and justify the changes for their reader[^summarize-changes].
 The reader is also in a position to inspects the changes and can therefore make an informed judgment.
 
+Take the following example: A preregistration intended to include "working memory" and "fluid intelligence" as predictors for reaction time in an experiment but after gathering data both constructs exhibit high collinearity.
+The authors decide that for their purpose these variables are interchangable and remove one.
+For them this change simply does not effect the core of their theory but was an auxiliary assumption and they might be right.
+Another researcher, however, who e.g. hoped to incorporate their results into a theory about intelligence, might disagree about the importance of this assumption.
+
 [^summarize-changes]: In section [Preregistration as Code --- a Tutorial] we have conducted an actual PAC and summarize the changes we made to the preregistered code in the discussion.
 
 Note that preregistration, or PAC, does not preclude exploratory analyses.
