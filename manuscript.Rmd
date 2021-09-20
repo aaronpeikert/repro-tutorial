@@ -248,6 +248,8 @@ A computational recipe describes how inputs are processed to create a specific o
 The concept of computational recipes is central to our understanding of reproducibility because it enables a unified way to automatically reproduce a project.
 Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipes_).
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, and analysis results).
+One noteworthy property of computational recipes is that they require a textual representation and the ability of a program to make sense of this textual representation.
+A workflow that includes, e.g. renaming variable names by hand in a graphical spreadsheet application is therefore incompatible with automated reproducibility.
 
 We recommend using *Make* for dependency tracking because it is language independent.
 The following hypothetical example illustrates the utility of `Make` and a suitable `Makefile`.
