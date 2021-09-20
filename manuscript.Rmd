@@ -335,6 +335,8 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 One impediment to the widespread adoption of a standard for reproducible research is that learning to use the required tools can be quite time-intensive.
 To lower the threshold to adoption, the R-package `repro` introduces helper functions that wraps and hides the complexity of the necessary more complicated (and powerful) tools.
 The provided wrapper functions guide end-users in the use of reproducibility tools, provide feedback about what the computer does, and suggest what the user is supposed to do next.
+The `repro` package extends the [`usethis`](https://usethis.r-lib.org) [@usethis] package.
+While the `usethis` package aims to simplifies the development of R packages, `repro` contains reproducibility specific utilities.
 We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their system's state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
 These wrappers are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
 
