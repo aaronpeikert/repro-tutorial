@@ -359,11 +359,21 @@ install.packages('repro')
 An example of the assistance that `repro` provides are the check functions.
 These verify that you indeed have installed and setup the required pieces of software for this workflow (here, we use the double-colon operator to access functions from the `repro` namespace; we chose to do so to make clear which functions are native `repro` functions) :
 
+```{r, include=FALSE}
+opts <- options()
+options(repro.docker = TRUE,
+        repro.docker.running = FALSE)
+```
+
 ```{r}
 # `package::function()` → use function from package without `library(package)`
 repro::check_git()
 repro::check_make()
 repro::check_docker()
+```
+
+```{r, include=FALSE}
+options(opts)
 ```
 
 These functions check whether specific dependencies are available on the users' system, and if not, explain what further action is needed to obtain it.
