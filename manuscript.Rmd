@@ -844,26 +844,26 @@ For example, if distributional assumptions are not met, the code may branch out 
 Another example of data dependent decisions are more explorative analyses, i.e. explorative factor analysis or machine learning.
 With PAC researchers can precisely calibrate how much they want to explore.
 When communicating a finding as explorative, it may still make a difference if tens or hundreds of variables were considered.
-Fifth, deviations from the preregistration are clearly documented, because they are reflected in changes to the code which are managed and tracked with version control.
-One could even make a commit labeled "Necessary deviations from the preregistration after data collection",
+Fifth, deviations from the preregistration are clearly documented because they are reflected in changes to the code, which are managed and tracked with version control.
+One could even make a commit labelled "Necessary deviations from the preregistration after data collection",
 and reference it in the manuscript.
 The convenient comparison of preregistration and publication with PAC is particularly noteworthy.
 Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study.
 We, however, oppose this view.
-The problem is not deviating from the preregistration, it is not making these changes transparent.
-In fact, we expect that only a fraction of PACs will require no changes after actual data was collected.
-With PAC, researcher can reflect any deviations with ease and should summarize and justify the changes for their reader[^summarize-changes].
-The reader is also in a position to inspects the changes and can therefore make an informed judgment.
+The problem is not deviating from the preregistration; it is not making these changes transparent.
+In fact, we expect that most PACs will require changes after the researcher collects data.
+With PAC, the authors can reflect any deviations with ease and should summarize and justify the changes for their readers [^summarize-changes].
+The reader is also in a position to inspects the changes and can therefore make an informed judgment about weighing the evidence presented by the authors.
 
-Take the following example: A preregistration intended to include "working memory" and "fluid intelligence" as predictors for reaction time in an experiment but after gathering data both constructs exhibit high collinearity.
-The authors decide that for their purpose these variables are interchangable and remove one.
-For them this change simply does not effect the core of their theory but was an auxiliary assumption and they might be right.
-Another researcher, however, who e.g. hoped to incorporate their results into a theory about intelligence, might disagree about the importance of this assumption.
+Take the following example: A preregistration intended to include "working memory" and "fluid intelligence" as predictors for reaction time in an experiment. However, after fitting the model on the actual data both constructs exhibit high collinearity.
+The authors decide that for their purpose, these variables are interchangeable and remove one.
+For them, this change simply does not affect their theory's core but was an auxiliary assumption, and they might be right.
+Another researcher, however, who, e.g. hoped to incorporate their results into a theory about intelligence, might disagree about the importance of this assumption and would accordingly view the finding as more explorative because of the change to the preregistrations.
 
 [^summarize-changes]: In section [Preregistration as Code --- a Tutorial] we have conducted an actual PAC and summarize the changes we made to the preregistered code in the discussion.
 
-Note that preregistration, or PAC, does not preclude exploratory analyses.
-Again such analyses should merely be explicitly declared as such in the manuscript to allow appropriate judgment of the results.
+Similarly, preregistration, or PAC, does not preclude exploratory analyses but should demark confirmatory results.
+Again such exploratory results should merely be explicitly declared in the manuscript to allow appropriate judgment of the results.
 
 ## What you need to know before writing a PAC
 
