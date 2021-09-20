@@ -147,7 +147,7 @@ With regard to the first goal, we present a tutorial that is aimed at researcher
 In this tutorial, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project.
 The proposed workflow builds on several technical solutions originating from software engineering to automate reproduction. 
 We discuss how these solutions address four common threats to reproducibility [see @Peikert2019 for details] and how they interact to form a coherent workflow.
-We further demonstrate how the R package `repro` supports researchers in setup the required software and in adopting this workflow.
+We further demonstrate how the R package `repro` supports researchers in setting up the required software and in adopting this workflow.
 In pursuit of the second aim we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
 PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including typical sections like Introduction, Methods, and Results.
 The resulting dynamic document closely resembles the final manuscript, but temporarily uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
@@ -206,8 +206,7 @@ We recommend using *Git* for version control, because of its widespread adoption
 At any stage, individual files or the entire project can be compared to, or reverted to, an earlier version.
 A version-controlled project makes the loss of files unlikely and also supports remote collaboration.
 `Git` is built around snapshots that represent the project state at a given point in time.
-Those snapshots are called "commits" and work like a "save" action.
-Changes to files are collected in a _commit_.
+Those snapshots are called *commits* and work like a "save" action.
 Ideally, each commit has a message that succinctly describes these changes.
 It is good practice to make commits for concrete milestones (e.g., "Commented on Introduction", "Added SES as a covariate", "Address Reviewer 2's comment 3").
 This makes it easier to revert specific changes than when multiple milestones are joined in one commit, e.g., "Changes made on 19/07/2021".
@@ -281,7 +280,8 @@ A version controlled dynamic document with dependency tracking may still rely on
 Troubleshooting issues specific to a particular programming language or dependent tool typically requires considerable expertise and pose a threat to reproducibility.
 One solution to avoid problems caused by missing or inconsistent external software dependencies is to provide all dependent software packages and system libraries via *software management*.
 One comprehensive approach to software management is containerization.
-"packaging the key elements of the computational  environment  needed  to  run  the  desired  software [makes] the software much easier to use, and the results easier to reproduce" [@silverSoftwareSimplified2017, p. 174].
+The central idea is that by
+"packaging the key elements of the computational  environment  needed  to  run  the  desired  software the software much easier to use, and the results easier to reproduce" [@silverSoftwareSimplified2017, p. 174].
 
 *`Docker`* is a popular tool for containerization.
 It manages software dependencies by constructing a virtual software environment independent of the host software environment.
@@ -294,7 +294,7 @@ This separation is excellent for reproducibility, but takes some getting used to
 For example, it is important to realize that software available on your local computer will *not* be accessible within the confines of the `Docker` image.
 Each dependency that you want to use within the `Docker` image must be explicitly added as a dependency.
 Furthermore, using `Docker` may require you to install software on an operating system that may not be familiar to you.
-The images supplied by @boettigerIntroductionRockerDocker2017, for example, are based on the Ubuntu operating system.
+The images supplied by @boettigerIntroductionRockerDocker2017, for example, are based on Linux.
 
 There are two ways to build a `Docker` image.
 First users can manually install whatever software they like from within the virtual environment.
@@ -305,7 +305,7 @@ This enables users to quickly change the software environment e.g. update to ano
 Packaging all required software in such an image requires considerable amounts of storage space.
 Two major strategies help to keep the storage requirements reasonable.
 One strategy is to rely on pre-made images, which are maintained by a community for particular purposes.
-For example, there are pre-made images that only include what is necessary for R, based on Ubuntu (a Linux operating system) containers [@boettigerIntroductionRockerDocker2017].
+For example, there are pre-made images that only include what is necessary for R, based on Ubuntu containers [@boettigerIntroductionRockerDocker2017].
 Users can then install whatever they need in addition to what is provided by these pre-compiled images.
 `r ifelse(is.na(container_size), "", glue::glue("The image that was used for this article uses {round(container_size, 2)}Gb of disk space."))`
 The image for this project includes Ubuntu, R, RStudio, LaTeX as well as a variety of R packages like tidyverse [@tidyverse] and all its dependent packages, amounting to `r installed.packages() %>% as.data.frame() %>% filter(is.na(Priority)) %>% nrow()` R packages.
@@ -1039,7 +1039,7 @@ show_prereg("ttest")
 ```
 
 [^caution-mww]: The t-test and Mann–Whitney–Wilcoxon test are arguably the most often used hypothesis test [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005 reports that 26% of all studies employ a t-test and 27% employ a rank based alternative in the New England Journal of Medicine in 2005].
-The analytical strategy presented here is, in fact, suboptimal concerning several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in the presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). The interested reader can use the [provided code for the simulation](https://github.com/aaronpeikert/repro-tutorial/blob/main/simulation.R) to verify that the t-test provides unbiased effect sizes but the Mann–Whitney–Wilcoxon overestimates effect size with increasing sample size and skewness.
+The analytical strategy presented here is, in fact, suboptimal concerning several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in the presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). The interested reader can use the [provided code for the simulation](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R) to verify that the t-test provides unbiased effect sizes but the Mann–Whitney–Wilcoxon overestimates effect size with increasing sample size and skewness.
 
 The methods section is the translation of the following `planned_analysis()` function:
 
@@ -1060,7 +1060,7 @@ Still, these details can make a difference and provide unwanted researchers' deg
 The function `planned_analysis()` together with the function `simulate_data()` (not shown here) can be used to justify the planned sample size.
 To that end, `simulate_data()` is repeatedly called with increased sample size and the proportion of significant results (power) is recorded.
 The results for such a Monte Carlo simulation for this example are visualized in figure \@ref(fig:power).
-The code for this power analysis can be found in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/simulation.R).
+The code for this power analysis can be found in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R).
 The next snippet shows how we included the results dynamically into the preregistration (the origin of the R-variables `minn`, `choosen_power`, and `choosen_d` is not shown).
 
 ```{r, echo=FALSE}
