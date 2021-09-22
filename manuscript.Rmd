@@ -301,7 +301,7 @@ There are two ways to build a `Docker` image.
 First users can manually install whatever software they like from within the virtual environment.
 Such manually build environment can still be ported to all computers which support `Docker`.
 We, however, prefer the second way of building images automatically from a textual description called `Dockerfile`.
-This enables users to quickly change the software environment e.g. update to another R or package version without being "stuck" with a unmaintainable because manually build `Docker` image.
+Because the `Dockerfile` clearly describes which software is installed how, users can quickly change the software environment e.g. update to another R or package version without being "stuck" with an unmaintainable because manually build `Docker` image.
 
 Packaging all required software in such an image requires considerable amounts of storage space.
 Two major strategies help to keep the storage requirements reasonable.
