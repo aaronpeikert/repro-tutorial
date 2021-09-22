@@ -966,7 +966,7 @@ Ideally, these three functions can be composed to create a "fake" results sectio
 To summarize, researchers write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as a preregistration.
 After they gathered the actual data, they replace the simulated data, render the dynamic manuscript (therefore run `planned_analysis()` on the actual data) and write the discussion.
 
-# Preregistration as Code --- a Tutorial 
+# Preregistration as Code --- a Tutorial
 
 We argued that PAC has several advantages over classic preregistration and have outlined how to implement it.
 To illustrate how PAC works in practice and help researchers implementing PAC themselves, we have conducted a PAC that serves as a guiding example.
@@ -1125,6 +1125,25 @@ show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FAL
 
 The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/releases/tag/compav0.0.2.0-results).
 
+As a last step researcher should create an archived and unchangeable version of the project as the preregistration.
+zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides digital object identifiers (DOI) for these archives.
+While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
+Please note that you can only link public GitHub repositories to zenodo.
+You may log into zenodo.org through your GitHub account.
+
+> Log into zenodo.org → Account → GitHub[^zenodo-github]
+[^zenodo-github]: https://zenodo.org/account/settings/github/
+
+After you have linked a GitHub repository you trigger the archivation by creating a GitHub release.
+To create GitHub release, navigate to GitHub:
+
+```{r}
+browse_github()
+```
+
+And click on Releases → Draft a new release.
+Here you can add all relevant binary files but at least a rendered version of the manuscript and the docker image.
+
 We realize that PACs are challenging.
 Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
 Therefore, PAC should not be seen as an attempt to invalidate classical preregistration or not-preregistered research but as a complementary approach.
@@ -1167,16 +1186,17 @@ This analysis plan may contain data-dependent decisions to increase flexibility 
 
 `repro`'s primary goal is to increase the user-friendliness of reproducibility tools for researchers.
 Despite our efforts to ensure this goal, the package is still in development and undoubtedly has limitations.
-The workflow we present here introduces several software solutions, which in itself present a threat to fully automated reproducibility.
+The workflow we present here introduces several software solutions, which in itself present a threat to long-term reproducibility.
 To benefit from automatic and convenient reproduction, researcher must have `Git`, `Make`, and `Docker`.
 However, `Git` and `Make` are itself included in the `Docker` image created by `repro`.
 Researchers can therefore employ the `Docker` image manually to download the `Git` repository and execute `Make` for full reproduction.
 In other words the only hard requirement for reproduction and therefore the Achilles' heel for this workflow is `Docker`.
 The `Docker` approach has two vulnerabilities.
-First, and more important, the `Docker` image for the project has to remain available.
-The `Dockerfile` (the plain text description to build a `Docker` image) on the other hand is insufficient because it relies on to many service providers (e.g. Microsoft R Application Network, Ubuntu Package Archive).
-The `Docker` image can be saved to disk and treated like any other file that requires careful archival.
-However, even if the existence of the `Docker` image is guaranteed, future researchers still require software to run the image.
+First, and more important, the `Docker` image for the project and the `Git` repository have to remain available.
+The `Dockerfile` (the plain text description to build a `Docker` image) as opposed to the image is insufficient because it relies on too many service providers (e.g. Microsoft R Application Network, Ubuntu Package Archive).
+We recommend to archive the `Git` repository and the `Docker` image with zenodo.org, a non-profit long-term storage for scientific data.
+The necessary steps for archival on zenodo.org are described in at the end of section [Preregistration as Code --- a Tutorial].
+The second vulnerability is that even if the existence of the `Docker` image and `Git` repository is guaranteed, future researchers still require software to run the image.
 To that end they can either rely on `Docker` itself or `Docker`-compatible alternatives (e.g. CoreOS rkt, Mesos Containerizer, Singularity).
 The only way to remove the reliance on such external software is to turn the `Docker` image into a full operating system that subsequently can be installed and run on almost any modern computer.
 This process is technically possible and would guarantee reproducibility for decades without any software dependency, assuming hardware that conforms to the x86 instruction set architecture continues to be available.
