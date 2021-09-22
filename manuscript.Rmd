@@ -391,7 +391,7 @@ options(repro.os = "windows",
 ```
 
 ```{r}
-check_git()
+repro::check_git()
 ```
 
 ```{r, include=FALSE}
@@ -589,8 +589,8 @@ When you or someone else who received your project want to reproduce it, they fi
 Remember, you can use the `check_*`-functions to test if these are installed:
 
 ```{r}
-check_make()
-check_docker()
+repro::check_make()
+repro::check_docker()
 ```
 
 When they are setup, they can ask `repro` to explain how they should use `Make` and `Docker` to reproduce the project (or you could explain it to them):
@@ -602,7 +602,7 @@ repro::reproduce()
 If you feel uncomfortable using the terminal directly, you can sent the command to the terminal from within R:
 
 ```{r, eval=FALSE}
-system(reproduce())
+system(repro::reproduce())
 ```
 
 The only software required for reproducing a project is `Docker`, assuming users know how to build a `Docker` image and run `Make` within the container.
@@ -1139,7 +1139,7 @@ After you have linked a GitHub repository you trigger the archivation by creatin
 To create GitHub release, navigate to GitHub:
 
 ```{r}
-browse_github()
+usethis::browse_github()
 ```
 
 And click on Releases → Draft a new release.
