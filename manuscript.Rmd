@@ -287,6 +287,7 @@ The central idea is that by
 It manages software dependencies by constructing a virtual software environment independent of the host software environment.
 These so-called "`Docker` images" function like a virtual computer  (i.e., a sort of "sand box").
 A `Docker` image does contain *all* software dependencies used in an analysis---not just R-packages, but also R and Rstudio, and even the operating system.
+All differences in computational results that could be caused by software are hence eliminated.
 This is important because some of its functionality may impact the workings of higher-order software like R, such as calls to random number generators or linear algebra libraries.
 
 Note that the software environment of the Docker image is completely separate from software installed on your computer.
