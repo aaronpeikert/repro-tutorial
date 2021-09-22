@@ -520,7 +520,7 @@ The `repro` package comes with the function `repro::current_hash()` for this pur
 This document was created from the commit with the hash [``r repro::current_hash()`` (view on GitHub)](`r stringr::str_c("https://github.com/aaronpeikert/repro-tutorial/tree/", repro::current_hash(40))`).
 
 Now that you know how to write text and R code in an `R Markdown`, you need to know about metadata (also called: YAML front matter).
-These metadate contain information about the document, like the title and the output format.
+These metadata contain information about the document, like the title and the output format.
 Metadata are placed at the beginning of the document and are separated by three dashes from the document body.
 The following example is a full markdown document where the metadata (the "YAML front matter") is in lines 1--6.
 
