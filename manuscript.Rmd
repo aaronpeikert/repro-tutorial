@@ -678,7 +678,7 @@ If B is missing in this example, `Make` would know how to recreate it from C and
 These dependencies and especially how these dependencies should be resolved are difficult to represent in the metadata.
 Users therefore have to either "flatten" the dependency structure, by simply stating that A depends on B, C and D, therefore leaving out important information or express the dependencies directly within the `Makefile`.
 
-The following section explains how to overcome these limitation while still relying on the automations afforded by `repro`.
+The following section explains how to overcome these limitations while still relying on the automations afforded by `repro`.
 Lifting these restrictions requires the user to interact more directly with `Make` or `Docker`.
 To satisfy more complicated requirements users need to understand how repro utilizes `Make` and `Docker` internally.
 
@@ -730,7 +730,7 @@ Using `Docker` may require you to install software on an operating system that m
 The images supplied by [@boettigerIntroductionRockerDocker2017], for example, are based on the Ubuntu operating system.
 The most convenient way to install software on Ubuntu is through its package manager `apt`.
 
-If the following snipped is added to `.repro/Dockerfile_manual` the `Docker` image will have, for example, Python installed.
+If the following snippet is added to `.repro/Dockerfile_manual` the `Docker` image will have, for example, Python installed.
 Other software is installed identically only the software name is exchanged.
 
 ```bash
@@ -832,7 +832,7 @@ the document can be reproduced with a single command, thus updating the Results 
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
-In an informal literature search (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did included some form of script as part of their preregistration.
+In an informal literature search (we skimmed the first 300 results with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we have found close to a dozen published articles which did include some form of script as part of their preregistration.
 But although the notion of preregistering code has been around for a while [cf. @steegenMeasuringCrowdAgain2014],
 it has not gained much traction---perhaps because, until now, this has constituted an extra non-standard step in the research process.
 This tutorial integrates the preregistration of code into the reproducible research workflow
@@ -1178,7 +1178,7 @@ These results are based on simulated data, so that there is no danger of peeking
 The entire manuscript, including planned analyses, is preregistered.
 This way, all researcher's degrees of freedom are eliminated.
 Once real data is gathered, the reproducible manuscript is (re-)created with the real data.
-Because the same dynamic document serves as preregistration and final manuscript, researcher, reviewers and editors only have to revise one document.
+Because the same dynamic document serves as preregistration and final manuscript, researchers, reviewers, and editors only have to revise one document.
 To editors, reviewers and readers it is obvious how the researchers deviated from the preregistration because everything is under version control.
 The likelihood of those deviations, while never unavoidable, is decreased by using simulated data to verify the suitability of the proposed analysis plan.
 This analysis plan may contain data-dependent decisions to increase flexibility of research plans.
