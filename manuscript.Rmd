@@ -849,19 +849,19 @@ Fifth, deviations from the preregistration are clearly documented because they a
 ## Deviating from the preregistration and exploration
 
 The convenient comparison of preregistration and publication with PAC is particularly noteworthy.
-Because there is a single "source of truth", the dynamic document including code, under version control, changes can be inspected by reader and authors alike.
-To make the comparison easier, we highly recommend that the authors review all changes to summarize and justify them for their reader e.g. in the discussion [^summarize-changes].
+Because there is a single "source of truth", the dynamic document, including code, under version control, changes can be inspected by readers and authors alike.
+To make the comparison more accessible, we highly recommend that the authors review all changes to summarize and justify them for their reader, e.g. in the discussion [^summarize-changes].
 The reader is also in a position to inspects the changes and can therefore make an informed judgment about accepting or rejecting the justifications.
 
 Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study.
 We, however, oppose this view.
 The problem is not deviating from the preregistration; it is not making these changes transparent.
 In fact, we expect that most PACs will require changes after the researcher collects data.
-Often deviations provide opportunity to learn from the unexpected.
-Transparency is important in this regard because an empirical test of a theory can not test the theory alone but tests it in conjunction with auxiliary assumption [@meehlTheoreticalRisksTabular1978].
+Often deviations provide an opportunity to learn from the unexpected.
+Transparency is essential in this regard because an empirical test of a theory can not test the theory alone but tests it in conjunction with auxiliary assumption [@meehlTheoreticalRisksTabular1978].
 
 Take the following example: A preregistration intended to include "working memory" and "fluid intelligence" as predictors for reaction time in an experiment.
-However, after fitting the model on the actual data both constructs exhibit high collinearity.
+However, after fitting the model on the actual data, both constructs exhibit high collinearity.
 The authors decide that for their purpose, these variables are interchangeable and remove one.
 For them, this change simply does not affect their theory's core but was an auxiliary assumption, and they might be right.
 Another researcher, however, who, e.g. hopes to incorporate exactly this result into a theory about intelligence, might disagree about the importance of this assumption and would accordingly view the finding as more explorative because of the change to the preregistrations.
@@ -871,16 +871,18 @@ In other words, "one man's trash is another man's treasure".
 
 Transparency of deviations is also preferable to avoiding them by vagueness in the first place.
 A vague preregistration must have reduced diagnosticity for demarcating exploration and conformation.
-A reader may falsely conclude that a result is explorative because the publication is more specific than the preregistration, therefore commiting an alpha error (believing there is a deviation when in fact there is none).
+A reader may falsely conclude that a result is explorative because the publication is more specific than the preregistration, therefore committing an alpha error (believing there is a deviation when, in fact, there is none).
 At the same time, a researcher may overlook a deviation---the goal of intentional vagueness---therefore committing a beta error.
 At its most extreme, the preregistration "We will do something with some data." has lost all ability to differentiate between exploration and conformation, which was what we set out to do with preregistrations.
 
-Another common misunderstanding is that, preregistration, and therefore PAC, preclude exploratory analyses.
-We must differentiate here between two kinds of exploration.
-First, the traditional meaning of ad hoc statistical procedures and post hoc explanation of the results.
+Another common misunderstanding is that preregistration, and therefore PAC, preclude exploratory analyses.
+We must differentiate here between two kinds of exploration, and neither of them is inhibited.
+The first and more traditional meaning refers to ad hoc statistical procedures and post hoc explanations of the results.
 Such traditional exploratory results should merely be explicitly declared in the manuscript to allow appropriate judgment of the results.
-The second kind of exploration is that through procedural well defined exploration in the form of exploratory statistical models that are common in machine learning.
-Somewhat ironically, PAC enables preregistration of such procedures and offers the merit to communicate precisely how much exploration was done; an information that is crucial for assessing the uncertainty of such "preregisterable" but exploratory results.
+The second kind of exploration is through procedurally well-defined exploration with exploratory statistical models, which are standard in machine learning.
+These models, which are difficult to preregister traditionally, can be preregistered with PAC like any other model.
+We recommend PAC for exploratory statistical models without any irony.
+The merit of preregistration in such cases is to communicate precisely how much exploration was done, information that is crucial for assessing the uncertainty of such now "preregisterable" but still exploratory results.
 
 ## What you need to know before writing a PAC
 
