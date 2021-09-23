@@ -1,12 +1,17 @@
 #----simulate_data----
 simulate_data <- function(n, df, d, i){
+  # groups have same size
   stopifnot(n %% 2L == 0L)
   gender <- rep(c(0L, 1L), each = n/2)
+  # use Chi^2 distributed random data for some skew
   rand <-  matrix(rchisq(n * i, df/i), ncol = i) # sum of n chisq has df of n*df
   d_scaled <- d * sqrt(2*df)/i # scale d to express sd units (var(chisq) = 2df)
+  # add difference only to group coded with `1`
   effect <- rand + d_scaled * gender
+  # name items
   colnames(effect) <- paste0("mach", seq_len(i))
   effect <- as.data.frame(effect)
+  # recode gender from numeric to factor
   effect$gender <- factor(gender, levels = c(1L, 0L), labels = c("male", "female"))
   return(effect)
 }
