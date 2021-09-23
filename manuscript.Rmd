@@ -910,6 +910,8 @@ To write a PAC, researchers should start by drafting a manuscript in the form of
 When they have have outlined the studies design, they should begin writing code.
 We suggest writing three functions for each planned hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
 We capture these distinct tasks in the form of explicit R-functions but researcher may use any form (e.g. scripts) as long as it serves to simulate, analyze, and report.
+The functions shown here are empty (they do not contain executable code) and the interested reader may find function filled with some life in the [online supplementary materials](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R) that power the example below.
+
 The simulate and report function can of course be reused, if appropriate, across multiple hypotheses.
 At the heart of a PAC lies the planned analysis, so researchers should first draft a function called `planned_analysis()` from which they later derive the method section.
 This function should receive the data and compute all relevant results from it.
@@ -1130,6 +1132,12 @@ This is an example of how the results could be reported (based on simulated data
 set.seed(1234)
 show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FALSE), fence = "")
 ```
+
+This example preregistration covers a single study with a single hypothesis.
+To organize studies with multi hypotheses we suggest multiple (possibly numbered in accord with the hypotheses, e.g. 1.2, 2.3 etc.) `planned_analysis()` and `report_analysis()` functions.
+Steps that apply to multiple analyses should be extracted into their own function e.g. `discard_outliers()` or `extract_scores()`.
+Preregistrations that cover multiple distinct data sources may employ multiple `simulate_data()` functions.
+These are merely suggestions, researcher who are more comfortable with another programming style will surely find an appropriate system.
 
 The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/releases/tag/compav0.0.2.0-results).
 
