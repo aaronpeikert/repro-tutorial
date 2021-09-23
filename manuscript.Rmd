@@ -912,7 +912,6 @@ We suggest writing three functions for each planned hypothesis, one for the plan
 We capture these distinct tasks in the form of explicit R-functions but researcher may use any form (e.g. scripts) as long as it serves to simulate, analyze, and report.
 The functions shown here are empty (they do not contain executable code) and the interested reader may find function filled with some life in the [online supplementary materials](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R) that power the example below.
 
-The simulate and report function can of course be reused, if appropriate, across multiple hypotheses.
 At the heart of a PAC lies the planned analysis, so researchers should first draft a function called `planned_analysis()` from which they later derive the method section.
 This function should receive the data and compute all relevant results from it.
 
