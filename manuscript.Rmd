@@ -829,6 +829,8 @@ These results are initially based on simulated data with the same structure as t
 For guidance on how to simulate data, see @morrisUsingSimulationStudies2019, @paxtonMonteCarloExperiments2001 and @skrondalDesignAnalysisMonte2000.
 Once the preregistration is submitted and real data have been collected or made available,
 the document can be reproduced with a single command, thus updating the Results to their final version.
+Reproducibility is of utmost importance at this stage since the preregistration must produce valid results at two points in time.
+We can only recommend PAC when the dangers to reproducibility we described above are eliminated and a state of automated reproducibility is reached.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
