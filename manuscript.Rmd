@@ -807,7 +807,10 @@ Even when several researchers describe their analysis with the same terms, use t
 The current best practice to ensure that the preregistration are comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
 These templates seek to improve the specificity of study plans by imposing structure [@bakkerEnsuringQualitySpecificity2020].
 However, templates cannot remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the most straightforward analysis.
-A second limitation is that, just like primary research, preregistrations are susceptible to non-reproducibility.
+This ambiguity causes a second problem, that is comparing the preregistration and the resulting publication to decide if and how researcher deviated from the preregistration.
+This task is difficult because it impossible to decide without additional information if the analysis actually was carried out differently or just described differently.
+Even when the researcher was faithful in each aspect to the preregistration the reader may reach opposite conclusions, because the reader has to compare to different texts which may be worded differently or describe the same thing in varying level of detail.
+A third limitation is that, just like primary research, preregistrations are susceptible to non-reproducibility.
 To illustrate, a review of 210 preregistrations found that, even though 174 (67%) included a formal power analysis, only 34 (20%) of these could be reproduced [@bakkerRecommendationsPreregistrationsInternal2020].
 Even when researchers have gone to great length in preregistering an analysis script,
 they sometimes inexplicably fail to reproduce their own results.
@@ -856,14 +859,43 @@ Fourth, despite its rigor, PAC does accommodate data-dependent decisions if thes
 Researchers can, for example, formulate conditions (e.g., in the form of if-else-blocks) under which they prefer one analysis type over the other.
 For example, if distributional assumptions are not met, the code may branch out to employ robust methods; or, an analysis may perform automated variable selection mechanisms before running the final model.
 Another example of data dependent decisions are more explorative analyses, i.e. explorative factor analysis or machine learning.
+Decisions that do not lend themselves to formulation in code, e.g. visual inspection, must still be described verbally or be treated as noted in the section [Deviating from the preregistration and exploration].
 With PAC researchers can precisely calibrate how much they want to explore.
 When communicating a finding as explorative, it may still make a difference if tens or hundreds of variables were considered.
-Fifth, deviations from the preregistration are clearly documented, because they are reflected in changes to the code which are managed and tracked with version control.
-One could even make a commit labeled "Necessary deviations from the preregistration after data collection",
-and reference it in the manuscript.
+Fifth, deviations from the preregistration are clearly documented because they are reflected in changes to the code, which are managed and tracked with version control.
 
-Note that preregistration, or PAC, does not preclude exploratory analyses.
-Such analyses should merely be explicitly declared as such in the manuscript.
+## Deviating from the preregistration and exploration
+
+We would like to note that in the PAC paradigm, the direct comparison of the preregistration and the final publication is particularly easy to accomplish.
+Because there is a single unambiguous reference point, that is the dynamic document, including code, under version control, changes can be inspected by authors and readers alike.
+Authors should at least review all changes made to the preregistered plan to summarize and justify them for their reader, e.g. in the discussion of the final manuscript [^summarize-changes].
+Such retrospective summary already serves to put changes into context, however, a change log that is kept continually and where changes are explained when they are made, provides more immediate and detailed information.
+Each entry in the change log should contain the commit id to the respective changes.
+The reader is also in a position to inspects the changes one by one and can therefore make an informed judgment about their implications for the inferences drawn.
+
+Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study.
+However, we share the common view that a deviation from a preregistration is not a problem; it is a problem if these changes are not made transparent.
+In fact, we expect that most PACs will require changes after data have been collected.
+Often deviations provide an opportunity to learn from the unexpected.
+Transparency is essential in this regard because an empirical test of a theory can not test the theory alone but tests it in conjunction with auxiliary assumption [@meehlTheoreticalRisksTabular1978].
+
+Take the following example: A preregistration intended to include "working memory" and "fluid intelligence" as predictors for reaction time in an experiment.
+However, after fitting the model on the actual data, both constructs exhibit high collinearity.
+The authors decide that for their purpose, these variables are interchangeable and remove one.
+For them, this change simply does not affect the core of their theory but was an auxiliary assumption, and they might be right.
+Another researcher, however, who, e.g. hopes to incorporate exactly this result into a theory about intelligence, might disagree about the importance of this assumption and would accordingly view the finding as more explorative because of the change to the preregistrations.
+With transparent reporting, it is left to the reader to make up their own judgement.
+
+[^summarize-changes]: In section [Preregistration as Code --- a Tutorial] we have conducted an actual PAC and summarize the changes we made to the preregistered code in the discussion.
+
+Another common misunderstanding is that preregistration, and therefore PAC, preclude exploratory analyses.
+We must differentiate here between two kinds of exploration, and neither of them is limited by PAC.
+The first and more traditional meaning refers to ad hoc statistical procedures and post hoc explanations of the results.
+Such traditional exploratory results should merely be explicitly declared in the manuscript to allow appropriate judgment of the results. <!-- citation? The Nosek paper?-->
+The second kind of exploration is through procedurally well-defined exploration with exploratory statistical models, which are standard in machine learning. <!--citation? reproducibility in machine learning research? maybe cite the Brandmaier (in press) chapter, where I suggest to use PAC for these kinds of models? -->
+These highly-parameterized models, which are difficult to preregister traditionally, can be preregistered with PAC like any other model.
+We specifically recommend PAC for those exploratory statistical models.
+The merit of preregistration in such cases is to communicate precisely how much exploration was done, a piece of information that is crucial for assessing the uncertainty of such now "preregisterable" but still exploratory results.
 
 ## What you need to know before writing a PAC
 
@@ -1055,7 +1087,6 @@ The analytical strategy presented here is, in fact, suboptimal concerning severa
 
 The methods section is the translation of the following `planned_analysis()` function:
 
-
 ```{r planned_analysis}
 ```
 
@@ -1141,7 +1172,17 @@ Steps that apply to multiple analyses should be extracted into their own functio
 Preregistrations that cover multiple distinct data sources may employ multiple `simulate_data()` functions.
 These are merely suggestions, researcher who are more comfortable with another programming style will surely find an appropriate system.
 
-The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/releases/tag/compav0.0.2.0-results).
+Of course it is likely that the preregistered code has to be adapted to the actual data.
+Changing the preregistration must be discussed.
+This is our summary of what we changed:
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("discuss-changes")
+```
+
+But readers can inspect and judge the changes for themselves on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
+
+The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
 
 After the researcher is satisfied with their draft preregistration, they should create an archived and unchangeable version of the project that serves as the preregistration.
 zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides digital object identifiers (DOI) for these archives.
@@ -1195,8 +1236,9 @@ These results are based on simulated data, so that there is no danger of peeking
 The entire manuscript, including planned analyses, is preregistered.
 This way, all researcher's degrees of freedom are eliminated.
 Once real data is gathered, the reproducible manuscript is (re-)created with the real data.
-Because the same dynamic document serves as preregistration and final manuscript, researchers, reviewers, and editors only have to revise one document.
-To editors, reviewers and readers it is obvious how the researchers deviated from the preregistration because everything is under version control.
+Because the same dynamic document serves as preregistration and final manuscript, researcher, reviewers and editors only have to revise one document.
+To editors, reviewers and readers it is obvious how the researchers deviated from the preregistration because everything there is a single "source of truth"---dynamic manuscript including code---under version control.
+
 The likelihood of those deviations, while never unavoidable, is decreased by using simulated data to verify the suitability of the proposed analysis plan.
 This analysis plan may contain data-dependent decisions to increase flexibility of research plans.
 
