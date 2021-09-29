@@ -910,8 +910,8 @@ We would like to note that in the PAC paradigm, the direct comparison of the pre
 Because there is a single unambiguous reference point, that is the dynamic document, including code, under version control, changes can be inspected by authors and readers alike.
 Authors should at least review all changes made to the preregistered plan to summarize and justify them for their reader, e.g. in the discussion of the final manuscript [^summarize-changes].
 Such retrospective summary already serves to put changes into context, however, a change log that is kept continually and where changes are explained when they are made, provides more immediate and detailed information.
-Each entry in the change log should contain the commit id to the respective changes.
-The reader is also in a position to inspects the changes one by one and can therefore make an informed judgment about their implications for the inferences drawn.
+Each entry in the change log should explain the reasoning of the changes and link to the changes made by including the the commit id that applied the changes.
+The interested reader is also in a position to inspects the changes one by one and can therefore make an informed judgment about their implications for the inferences drawn.
 
 Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study.
 However, we share the common view that a deviation from a preregistration is not a problem; it is a problem if these changes are not made transparent.
