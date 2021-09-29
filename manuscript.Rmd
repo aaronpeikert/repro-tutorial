@@ -424,6 +424,7 @@ You can add something to the `.gitignore` file directly or with this command:
 ```{r, eval=FALSE}
 usethis::use_git_ignore("private.md")
 ```
+
 Now the file `private.md` will not be committed to `Git` and will not be made public.
 
 Especially for new users, it is recommended to follow this procedure and exclude sensitive files before proceeding.
@@ -582,6 +583,12 @@ This information makes explicit what dependencies (in form of files and R packag
 These two files together form the basis for consistency within a research project and consistency across different systems.
 The function `repro::automate()` converts the metadata from all `R Markdown` files in the project (all files with the ending `.Rmd`) to a `Makefile` and a `Dockerfile`.
 Together, these files allow users (including your future self) to reproduce every step in the analysis automatically.
+Please run `repro::automate()` in your project:
+
+```{r, eval=FALSE}
+repro::automate()
+```
+
 It is important to re-run `repro::automate()` whenever you change the `repro`-metadata, change the output format, or add a new `R Markdown` file to the project, to keep the `Makefile` and `Dockerfile` up to date.
 There is no harm in running it too often.
 Other than the `Makefile` and the `Dockerfile`, which are created in the document root path, repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to `Git`.
