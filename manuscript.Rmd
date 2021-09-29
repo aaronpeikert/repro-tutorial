@@ -914,13 +914,17 @@ Standards for scientific writing [e.g. @apa7] require that research articles are
 They provide, hence, an excellent vehicle for planning a study.
 One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
 Nevertheless, it can be fruitful to consult preregistration templates because of their strong focus on formulating a comprehensive methods section.
-If the PAC is submitted as a registered report [an article format in which the preregistration is reviewed and the article accepted "in principle", @nosekRegisteredReports2014; @chambersWhatNextRegistered2019] a journal article might be more familiar to the reviewers that ensure a comprehensive study plan.
+One factor that reduces comprehensiveness of such manuscript style but that is absent in standard preregistrations are strict word count limits that some journals impose.
+In such case we suggest using appendix materials to keep the manuscript concise, yet the preregistration comprehensive.
 
 Another factor that ensures a comprehensive plan is writing the analysis based on simulated data.
 Simulating data offers various benefits in the planning phase of a study.
 It forces the researcher to think about and address data analytic problems on a conceptual level before they make the effort to acquire data [@axelrodAdvancingArtSimulation1997].
 It also affords researchers with a simple technical check whether the analysis code runs without failure [@braiekTestingMachineLearning2020] (for example, does the code work with missing values, extreme outliers, etc.).
 Writing incomplete code is technically impossible, or at least researchers would notice if something is omitted (e.g. if they forgot to aggregate the data).
+
+Peer review of preregistration is a method that also can ensure comprehensiveness e.g. a registered report [an article format in which the preregistration is reviewed and the article accepted "in principle", @nosekRegisteredReports2014; @chambersWhatNextRegistered2019].
+In such registered report peer reviewing a manuscript styled PAC might be more familiar to the reviewers that ensure a comprehensive study plan.
 
 ### Effectiveness
 
