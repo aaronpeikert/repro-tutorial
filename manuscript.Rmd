@@ -143,11 +143,14 @@ With the technological advancement, it is now possible to make all digital produ
 We pursue two aims.
 First, we want to introduce researchers to a notion of automated reproducibility that requires, apart from the setup of software, no manual steps.
 Second, we discuss opportunities such automated reproducibility affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
-With regard to the first goal, we present a tutorial that is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
-In this tutorial, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project.
-The proposed workflow builds on several technical solutions originating from software engineering to automate reproduction. 
-We discuss how these solutions address four common threats to reproducibility [see @Peikert2019 for details] and how they interact to form a coherent workflow.
-We further demonstrate how the R package `repro` supports researchers in setting up the required software and in adopting this workflow.
+With regard to the first goal, we discuss how to combat four common threats to reproducibility with tools originating from software engineering [see @Peikert2019 for details].
+Then we present a tutorial on how to employ these tools to achieve automated reproducibility.
+This tutorial can not introduce the reader comprehensively into each tool but intents to help readers who have picked up bits and pieces to build a coherent workflow.
+This tutorial is aimed at researchers who regularly write code to analyze their data and who are willing to make relevant code, data, and materials available, either publicly or on request.
+Ideally, our reader already has created a dynamic document (e.g. with RMarkdown or Jupyter) and has tried their hand once at version control (e.g. with Git). 
+The R package `repro` supports researchers in setting up the required software and in adopting this workflow.
+We present the automated reproducibility as best practice, a goal that is not always archived because of limited resources, technical restrictions or practical considerations but is worth striving for.
+
 In pursuit of the second aim we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
 PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including typical sections like Introduction, Methods, and Results.
 The resulting dynamic document closely resembles the final manuscript, but temporarily uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
