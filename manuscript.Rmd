@@ -913,8 +913,8 @@ Such retrospective summary already serves to put changes into context, however, 
 Each entry in the change log should explain the reasoning of the changes and link to the changes made by including the the commit id that applied the changes.
 The interested reader is also in a position to inspects the changes one by one and can therefore make an informed judgment about their implications for the inferences drawn.
 
-Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study.
-However, we share the common view that a deviation from a preregistration is not a problem; it is a problem if these changes are not made transparent.
+Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study [@szollosi_is_2020].
+However, we share the common view that a deviation from a preregistration is not a problem [@nosekPreregistrationHardWorthwhile2019]; it is a problem if these changes are not made transparent.
 In fact, we expect that most PACs will require changes after data have been collected.
 Often deviations provide an opportunity to learn from the unexpected.
 Transparency is essential in this regard because an empirical test of a theory can not test the theory alone but tests it in conjunction with auxiliary assumption [@meehlTheoreticalRisksTabular1978].
@@ -923,7 +923,7 @@ Take the following example: A preregistration intended to include "working memor
 However, after fitting the model on the actual data, both constructs exhibit high collinearity.
 The authors decide that for their purpose, these variables are interchangeable and remove one.
 For them, this change simply does not affect the core of their theory but was an auxiliary assumption, and they might be right.
-Another researcher, however, who, e.g. hopes to incorporate exactly this result into a theory about intelligence, might disagree about the importance of this assumption and would accordingly view the finding as more explorative because of the change to the preregistrations.
+Another researcher, however, who, e.g. hopes to incorporate exactly this result into a theory about intelligence, might disagree about the importance of this assumption and would accordingly view the finding as more explorative because the change to the preregistration affects their theory directly.
 With transparent reporting, it is left to the reader to make up their own judgement.
 
 [^summarize-changes]: In section [Preregistration as Code --- a Tutorial] we have conducted an actual PAC and summarize the changes we made to the preregistered code in the discussion.
@@ -931,8 +931,8 @@ With transparent reporting, it is left to the reader to make up their own judgem
 Another common misunderstanding is that preregistration, and therefore PAC, preclude exploratory analyses.
 We must differentiate here between two kinds of exploration, and neither of them is limited by PAC.
 The first and more traditional meaning refers to ad hoc statistical procedures and post hoc explanations of the results.
-Such traditional exploratory results should merely be explicitly declared in the manuscript to allow appropriate judgment of the results. <!-- citation? The Nosek paper?-->
-The second kind of exploration is through procedurally well-defined exploration with exploratory statistical models, which are standard in machine learning. <!--citation? reproducibility in machine learning research? maybe cite the Brandmaier (in press) chapter, where I suggest to use PAC for these kinds of models? -->
+Such traditional exploratory results should merely be explicitly declared in the manuscript to allow appropriate judgment of the results [@NosekRevolution2018; @nosekPreregistrationHardWorthwhile2019].
+The second kind of exploration is through procedurally well-defined exploration with exploratory statistical models, which are standard in machine learning [@brandmaier2021].
 These highly-parameterized models, which are difficult to preregister traditionally, can be preregistered with PAC like any other model.
 We specifically recommend PAC for those exploratory statistical models.
 The merit of preregistration in such cases is to communicate precisely how much exploration was done, a piece of information that is crucial for assessing the uncertainty of such now "preregisterable" but still exploratory results.
