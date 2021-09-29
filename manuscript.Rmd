@@ -352,6 +352,8 @@ The first step is to install the required software.
 We assume that you have installed R [@R-base, version `r with(R.version, paste0(major, ".", minor))`] and RStudio [@rstudio, version 1.4] already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
 In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
 The [installation advice]((https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)) may also help Windows users who have problems installing `Docker`.
+Unfortunately, Docker requires administrative rights to run.
+We recommend [`renv`](https://rstudio.github.io/renv/articles/renv.html) [@R-renv] in cases where no administrative rights can be obtained but can not detail its use in this document.
 Start RStudio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
 
