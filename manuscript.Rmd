@@ -848,6 +848,7 @@ These templates seek to improve the specificity of study plans by imposing struc
 However, templates cannot remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the most straightforward analysis.
 This ambiguity causes a second problem, that is comparing the preregistration and the resulting publication to decide if and how researcher deviated from the preregistration.
 This task is difficult because it impossible to decide without additional information if the analysis actually was carried out differently or just described differently.
+The comparison is made impossible if the authors of the preregistration were intentionally vague.
 Even when the researcher was faithful in each aspect to the preregistration the reader may reach opposite conclusions, because the reader has to compare to different texts which may be worded differently or describe the same thing in varying level of detail.
 A third limitation is that, just like primary research, preregistrations are susceptible to non-reproducibility.
 To illustrate, a review of 210 preregistrations found that, even though 174 (67%) included a formal power analysis, only 34 (20%) of these could be reproduced [@bakkerRecommendationsPreregistrationsInternal2020].
