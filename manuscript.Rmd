@@ -1208,7 +1208,7 @@ usethis::browse_github()
 ```
 
 And click on Releases → Draft a new release.
-Here you can add all relevant binary files but at least a rendered version of the manuscript and the docker image.
+Here you can add all relevant binary files but at least a rendered version of the manuscript and the Docker image.
 
 We realize that PACs are challenging.
 Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
