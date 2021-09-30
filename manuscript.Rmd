@@ -406,6 +406,28 @@ options(opts)
 The messages from `repro` try to take the user by the hand to help them solve problems.
 These messages are adjusted to your specific operating system and installed dependencies.
 Before you continue, we ask you to run the above commands to check `Git`, `Make`, and `Docker`---both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
+
+After you have installed the necessary software we suggest that you set up a secure connection to GitHub:
+
+```{r, include=FALSE}
+opts <- options()
+```
+
+```{r}
+repro::check_github()
+```
+
+If you know what SSH is and want to use it, you may alternatively use:
+
+```{r}
+# only an alternative: DO NOT USE if you are unsure what SSH means
+repro::check_github(auth_method = "ssh")
+```
+
+```{r, include=FALSE}
+options(opts)
+```
+
 If necessary, follow any instructions presented until all checks pass.
 
 ## Implementing version control
