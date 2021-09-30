@@ -450,6 +450,8 @@ usethis::use_git_ignore("private.md")
 ```
 
 Now the file `private.md` will not be committed to `Git` and will not be made public.
+Please consider carefully if you can include data in the repository without violating privacy rights.
+If you can not share your data publicly add it to the `.gitignore` file and share it on request.
 
 Especially for new users, it is recommended to follow this procedure and exclude sensitive files before proceeding.
 When you are ready, you can begin tracking your files using `Git` by running:
