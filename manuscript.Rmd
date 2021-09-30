@@ -961,7 +961,7 @@ To write a PAC, researchers should start by drafting a manuscript in the form of
 When they have have outlined the studies design, they should begin writing code.
 We suggest writing three functions for each planned hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
 For each study these tasks have to specifically coded.
-While capture the tasks here in the form of explicit R-functions but researcher may use any form (e.g. scripts) as long as it serves to simulate, analyze, and report.
+We capture the tasks here in the form of explicit R-functions but researcher may use any form (e.g. scripts) as long as it serves to simulate, analyze, and report.
 The functions shown here are empty (they do not contain executable code) and the interested reader may find function filled with some life in the [online supplementary materials](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R) that power the example below.
 
 At the heart of a PAC lies the planned analysis, so researchers should first draft a function called `planned_analysis()` from which they later derive the method section.
