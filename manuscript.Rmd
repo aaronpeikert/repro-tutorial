@@ -247,12 +247,16 @@ In practice, dependencies between project files (for example, the information wh
 
 To automatically resolve dependencies between project files, we rely on *dependency tracking*.
 In essence, researchers provide a collection of *computational recipes*.
-A computational recipe describes how inputs are processed to create a specific output in a way that is automatically executable.
+A computational recipe describes how inputs are processed to deterministically create a specific output in a way that is automatically executable.
 The concept of computational recipes is central to our understanding of reproducibility because it enables a unified way to automatically reproduce a project.
 Similar to a collection of cooking recipes, we can have multiple products (_targets_) with different ingredients (_requirements_) and different steps of preparation (_recipes_).
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, and analysis results).
 One noteworthy property of computational recipes is that they require a textual representation and the ability of a program to make sense of this textual representation.
 A workflow that includes, e.g. renaming variable names by hand in a graphical spreadsheet application is therefore incompatible with automated reproducibility.
+Another property of a computational recipe is that the same inputs of should always result in the same outputs.
+Fo most computer code (given the same software is used) this property is fulfilled, however, one noteworthy exception are pseudo random numbers.
+Whenever random numbers are used in a computation, this computation is only reproducible when the same random numbers are used.
+To ensure identical random numbers, users may fix the state of the random number generate with a so called seed (e.g. in R with `set.seed()`).
 
 We recommend using *Make* for dependency tracking because it is language independent.
 The following hypothetical example illustrates the utility of `Make` and a suitable `Makefile`.
