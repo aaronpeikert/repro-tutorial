@@ -1026,7 +1026,7 @@ The goal is that the output of `simulate_data()` works as input to the function 
 If simulating data proves to be too challenging, researcher can delay their preregistration till they have gathered data and repurpose the actual data.
 In order to do so researcher must walk a fine but utmost important line.
 Of course researcher must not analyze the data before they write the preregistration.
-Nevertheless, they may obfuscate the real data by shuffling all variables or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
+Nevertheless, they may obfuscate the real data by shuffling all variables columnwise (independently from each other) or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
 Preregistration after data collection is common when reanalyzing data from another research group [@westonRecommendationsIncreasingTransparency2019] but not so much within the same research project.
 We argue that it is still an eligible preregistration.
 Since the data is obfuscated, almost no results are revealed and the researchers can not employ their researcher degrees of freedom effectively to influence the results.
