@@ -1029,6 +1029,10 @@ Since the data is obfuscated, almost no results are revealed and the researchers
 Shuffling leaves only univariate information, so this procedure is only applicable for bi-or multivariate hypotheses.
 Researcher still can access the information about means or proportions (e.g. how many participants belonging to group "A" are in the dataset) but are unbiased for all relations between variables (e.g. members of group "A" have a greater mean in variable "Z").
 
+Another approach that can replace but also complement simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the resulting data to preregister.
+A pilot study has obvious advantages for study planning, since it lets researcher evaluate the feasibility of many assumptions.
+However, we must warn our readers, while piloting is more traditional than our approach of obfuscating the data before preregistration it may not be innocuous to use the resulting data and care must be taken to avoid errors of sequential testing [@whiteheadBiasMaximumLikelihood1986].
+
 When the researchers are satisfied with the function `planned_analysis()`, they can think about how they would like to report the analysis results via tables, plots, and text.
 The implementation of this reporting should be in the function `report_analysis()`.
 
