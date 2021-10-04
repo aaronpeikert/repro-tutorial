@@ -147,9 +147,10 @@ With regard to the first goal, we discuss how to combat four common threats to r
 Then we present a tutorial on how to employ these tools to achieve automated reproducibility.
 This tutorial can not introduce the reader comprehensively into each tool but intents to help readers who have picked up bits and pieces to build a coherent workflow.
 This tutorial is aimed at researchers who regularly write code to analyze their data and who are willing to make relevant code, data, and materials available, either publicly or on request.
-Ideally, our reader already has created a dynamic document (e.g. with RMarkdown or Jupyter) and has tried their hand once at version control (e.g. with Git). 
+Ideally, our reader already has created a dynamic document at some point (e.g. with RMarkdown or Jupyter) and has tried their hand once at version control (e.g. with Git). 
 The R package `repro` supports researchers in setting up the required software and in adopting this workflow.
-We present the automated reproducibility as best practice, a goal that is not always archived because of limited resources, technical restrictions or practical considerations but is worth striving for.
+We present automated reproducibility as best practice, a goal that is not always archived because of limited resources, technical restrictions or practical considerations but is worth striving for.
+If, due to whatever reason, some parts of the workflow proof to be unfeasible, we encourage the reader to find their own suitable solutions and to concentrate on the feasible parts.
 
 In pursuit of the second aim we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
 PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including typical sections like Introduction, Methods, and Results.
