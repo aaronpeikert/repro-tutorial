@@ -126,6 +126,9 @@ knit_print.data.frame = function(x, ...) {
 registerS3method("knit_print", "data.frame", knit_print.data.frame)
 ```
 
+\captionsetup{labelformat=empty}
+
+
 # Introduction
 
 Scientists increasingly strive to make research data, materials, and analysis code openly available.
