@@ -417,6 +417,10 @@ After you have installed the necessary software we suggest that you set up a sec
 
 ```{r, include=FALSE}
 opts <- options()
+options(repro.github = TRUE,
+        repro.github.ssh = TRUE,
+        repro.ssh = TRUE,
+        repro.github.token = TRUE)
 ```
 
 ```{r}
@@ -666,10 +670,22 @@ install.packages('repro')
 
 2. Check the required software:
 
+```{r, include=FALSE}
+opts <- options()
+options(repro.github = TRUE,
+        repro.github.ssh = TRUE,
+        repro.github.token = TRUE)
+```
+
 ```{r}
 repro::check_git()
+repro::check_github()
 repro::check_make()
 repro::check_docker()
+```
+
+```{r, include=FALSE}
+options(opts)
 ```
 
 3. Create an R project or use an existing one. Do not forget to add `repro` metadata (i.e. packages, scripts, data).
