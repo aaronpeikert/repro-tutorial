@@ -1032,6 +1032,7 @@ We argue that it is still an eligible preregistration.
 Since the data is obfuscated, almost no results are revealed and the researchers can not employ their researcher degrees of freedom effectively to influence the results.
 Shuffling leaves only univariate information, so this procedure is only applicable for bi-or multivariate hypotheses.
 Researcher still can access the information about means or proportions (e.g. how many participants belonging to group "A" are in the dataset) but are unbiased for all relations between variables (e.g. members of group "A" have a greater mean in variable "Z").
+To be clear, any exploration of the data before preregistration renders the preregistration invalid and amounts to grave scientific (albeit sometime unintentional) misconduct.
 
 Another approach that can replace but also complement simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the resulting data to preregister.
 A pilot study has obvious advantages for study planning, since it lets researcher evaluate the feasibility of many assumptions.
