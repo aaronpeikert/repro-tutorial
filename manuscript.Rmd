@@ -143,11 +143,15 @@ With the technological advancement, it is now possible to make all digital produ
 We pursue two aims.
 First, we want to introduce researchers to a notion of automated reproducibility that requires, apart from the setup of software, no manual steps.
 Second, we discuss opportunities such automated reproducibility affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
-With regard to the first goal, we present a tutorial that is aimed at researchers who intend to ensure the reproducibility of a research project and are willing to make relevant code, data, and materials available, whether publicly or on request.
-In this tutorial, we introduce the reader to a workflow that maximizes the potential reproducibility of a research project.
-The proposed workflow builds on several technical solutions originating from software engineering to automate reproduction. 
-We discuss how these solutions address four common threats to reproducibility [see @Peikert2019 for details] and how they interact to form a coherent workflow.
-We further demonstrate how the R package `repro` supports researchers in setting up the required software and in adopting this workflow.
+With regard to the first goal, we discuss how to combat four common threats to reproducibility with tools originating from software engineering [see @Peikert2019 for details].
+Then we present a tutorial on how to employ these tools to achieve automated reproducibility.
+This tutorial can not introduce the reader comprehensively into each tool but intents to help readers who have picked up bits and pieces to build a coherent workflow.
+This tutorial is aimed at researchers who regularly write code to analyze their data and who are willing to make relevant code, data, and materials available, either publicly or on request.
+Ideally, our reader already has created a dynamic document at some point (e.g. with RMarkdown or Jupyter) and has tried their hand once at version control (e.g. with Git). 
+The R package `repro` supports researchers in setting up the required software and in adopting this workflow.
+We present automated reproducibility as best practice, a goal that is not always archived because of limited resources, technical restrictions or practical considerations but is worth striving for.
+If, due to whatever reason, some parts of the workflow proof to be unfeasible, we encourage the reader to find their own suitable solutions and to concentrate on the feasible parts.
+
 In pursuit of the second aim we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
 PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including typical sections like Introduction, Methods, and Results.
 The resulting dynamic document closely resembles the final manuscript, but temporarily uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
@@ -301,7 +305,8 @@ There are two ways to build a `Docker` image.
 First users can manually install whatever software they like from within the virtual environment.
 Such manually build environment can still be ported to all computers which support `Docker`.
 We, however, prefer the second way of building images automatically from a textual description called `Dockerfile`.
-Because the `Dockerfile` clearly describes which software is installed how, users can quickly change the software environment e.g. update to another R or package version without being "stuck" with an unmaintainable because manually build `Docker` image.
+Because the `Dockerfile` clearly describes which software is installed how the installation process can be repeated automatically.
+Users can therefore quickly change the software environment e.g. update to another R or package version without being "stuck" with an `Docker` image they do not know how to rebuild.
 
 Packaging all required software in such an image requires considerable amounts of storage space.
 Two major strategies help to keep the storage requirements reasonable.
@@ -349,6 +354,8 @@ The first step is to install the required software.
 We assume that you have installed R [@R-base, version `r with(R.version, paste0(major, ".", minor))`] and RStudio [@rstudio, version 1.4] already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
 In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
 The [installation advice]((https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)) may also help Windows users who have problems installing `Docker`.
+Unfortunately, Docker requires administrative rights to run.
+We recommend [`renv`](https://rstudio.github.io/renv/articles/renv.html) [@R-renv] in cases where no administrative rights can be obtained but can not detail its use in this document.
 Start RStudio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
 
@@ -401,6 +408,28 @@ options(opts)
 The messages from `repro` try to take the user by the hand to help them solve problems.
 These messages are adjusted to your specific operating system and installed dependencies.
 Before you continue, we ask you to run the above commands to check `Git`, `Make`, and `Docker`---both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
+
+After you have installed the necessary software we suggest that you set up a secure connection to GitHub:
+
+```{r, include=FALSE}
+opts <- options()
+```
+
+```{r}
+repro::check_github()
+```
+
+If you know what SSH is and want to use it, you may alternatively use:
+
+```{r}
+# only an alternative: DO NOT USE if you are unsure what SSH means
+repro::check_github(auth_method = "ssh")
+```
+
+```{r, include=FALSE}
+options(opts)
+```
+
 If necessary, follow any instructions presented until all checks pass.
 
 ## Implementing version control
@@ -421,7 +450,10 @@ You can add something to the `.gitignore` file directly or with this command:
 ```{r, eval=FALSE}
 usethis::use_git_ignore("private.md")
 ```
+
 Now the file `private.md` will not be committed to `Git` and will not be made public.
+Please consider carefully if you can include data in the repository without violating privacy rights.
+If you can not share your data publicly add it to the `.gitignore` file and share it on request.
 
 Especially for new users, it is recommended to follow this procedure and exclude sensitive files before proceeding.
 When you are ready, you can begin tracking your files using `Git` by running:
@@ -490,6 +522,7 @@ To do list:
 ```
 
 One advantage of this type of markup for formatting is that it can be rendered to many different output formats---both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
+Noteworthy is the package output format supplied by the [`papaja`](https://github.com/crsh/papaja) package [@papaja] which produces APA compliant manuscripts [@apa7].
 Another advantage is that, because `R Markdown` files are in plain text, they are more suitable for version control using `Git`.
 Some users might find it easier to activate the "Visual Editor" of RStudio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the `R Markdown` document) which features more graphical elements like a traditional word processor but still creates an `R Markdown` underneath with all of its flexibility.
 The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions)
@@ -579,6 +612,12 @@ This information makes explicit what dependencies (in form of files and R packag
 These two files together form the basis for consistency within a research project and consistency across different systems.
 The function `repro::automate()` converts the metadata from all `R Markdown` files in the project (all files with the ending `.Rmd`) to a `Makefile` and a `Dockerfile`.
 Together, these files allow users (including your future self) to reproduce every step in the analysis automatically.
+Please run `repro::automate()` in your project:
+
+```{r, eval=FALSE}
+repro::automate()
+```
+
 It is important to re-run `repro::automate()` whenever you change the `repro`-metadata, change the output format, or add a new `R Markdown` file to the project, to keep the `Makefile` and `Dockerfile` up to date.
 There is no harm in running it too often.
 Other than the `Makefile` and the `Dockerfile`, which are created in the document root path, repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to `Git`.
@@ -809,6 +848,7 @@ These templates seek to improve the specificity of study plans by imposing struc
 However, templates cannot remove researchers degrees of freedoms completely, because it is impossible to verbally describe every detail of an analysis for all but the most straightforward analysis.
 This ambiguity causes a second problem, that is comparing the preregistration and the resulting publication to decide if and how researcher deviated from the preregistration.
 This task is difficult because it impossible to decide without additional information if the analysis actually was carried out differently or just described differently.
+The comparison is made impossible if the authors of the preregistration were intentionally vague.
 Even when the researcher was faithful in each aspect to the preregistration the reader may reach opposite conclusions, because the reader has to compare to different texts which may be worded differently or describe the same thing in varying level of detail.
 A third limitation is that, just like primary research, preregistrations are susceptible to non-reproducibility.
 To illustrate, a review of 210 preregistrations found that, even though 174 (67%) included a formal power analysis, only 34 (20%) of these could be reproduced [@bakkerRecommendationsPreregistrationsInternal2020].
@@ -870,11 +910,11 @@ We would like to note that in the PAC paradigm, the direct comparison of the pre
 Because there is a single unambiguous reference point, that is the dynamic document, including code, under version control, changes can be inspected by authors and readers alike.
 Authors should at least review all changes made to the preregistered plan to summarize and justify them for their reader, e.g. in the discussion of the final manuscript [^summarize-changes].
 Such retrospective summary already serves to put changes into context, however, a change log that is kept continually and where changes are explained when they are made, provides more immediate and detailed information.
-Each entry in the change log should contain the commit id to the respective changes.
-The reader is also in a position to inspects the changes one by one and can therefore make an informed judgment about their implications for the inferences drawn.
+Each entry in the change log should explain the reasoning of the changes and link to the changes made by including the the commit id that applied the changes.
+The interested reader is also in a position to inspects the changes one by one and can therefore make an informed judgment about their implications for the inferences drawn.
 
-Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study.
-However, we share the common view that a deviation from a preregistration is not a problem; it is a problem if these changes are not made transparent.
+Deviations from the preregistration are sometimes demonized as if encountering unexpected aspects would invalidate a whole carefully crafted study [@szollosi_is_2020].
+However, we share the common view that a deviation from a preregistration is not a problem [@nosekPreregistrationHardWorthwhile2019]; it is a problem if these changes are not made transparent.
 In fact, we expect that most PACs will require changes after data have been collected.
 Often deviations provide an opportunity to learn from the unexpected.
 Transparency is essential in this regard because an empirical test of a theory can not test the theory alone but tests it in conjunction with auxiliary assumption [@meehlTheoreticalRisksTabular1978].
@@ -883,7 +923,7 @@ Take the following example: A preregistration intended to include "working memor
 However, after fitting the model on the actual data, both constructs exhibit high collinearity.
 The authors decide that for their purpose, these variables are interchangeable and remove one.
 For them, this change simply does not affect the core of their theory but was an auxiliary assumption, and they might be right.
-Another researcher, however, who, e.g. hopes to incorporate exactly this result into a theory about intelligence, might disagree about the importance of this assumption and would accordingly view the finding as more explorative because of the change to the preregistrations.
+Another researcher, however, who, e.g. hopes to incorporate exactly this result into a theory about intelligence, might disagree about the importance of this assumption and would accordingly view the finding as more explorative because the change to the preregistration affects their theory directly.
 With transparent reporting, it is left to the reader to make up their own judgement.
 
 [^summarize-changes]: In section [Preregistration as Code --- a Tutorial] we have conducted an actual PAC and summarize the changes we made to the preregistered code in the discussion.
@@ -891,8 +931,8 @@ With transparent reporting, it is left to the reader to make up their own judgem
 Another common misunderstanding is that preregistration, and therefore PAC, preclude exploratory analyses.
 We must differentiate here between two kinds of exploration, and neither of them is limited by PAC.
 The first and more traditional meaning refers to ad hoc statistical procedures and post hoc explanations of the results.
-Such traditional exploratory results should merely be explicitly declared in the manuscript to allow appropriate judgment of the results. <!-- citation? The Nosek paper?-->
-The second kind of exploration is through procedurally well-defined exploration with exploratory statistical models, which are standard in machine learning. <!--citation? reproducibility in machine learning research? maybe cite the Brandmaier (in press) chapter, where I suggest to use PAC for these kinds of models? -->
+Such traditional exploratory results should merely be explicitly declared in the manuscript to allow appropriate judgment of the results [@NosekRevolution2018; @nosekPreregistrationHardWorthwhile2019].
+The second kind of exploration is through procedurally well-defined exploration with exploratory statistical models, which are standard in machine learning [@brandmaier22mlsem].
 These highly-parameterized models, which are difficult to preregister traditionally, can be preregistered with PAC like any other model.
 We specifically recommend PAC for those exploratory statistical models.
 The merit of preregistration in such cases is to communicate precisely how much exploration was done, a piece of information that is crucial for assessing the uncertainty of such now "preregisterable" but still exploratory results.
@@ -911,13 +951,17 @@ Standards for scientific writing [e.g. @apa7] require that research articles are
 They provide, hence, an excellent vehicle for planning a study.
 One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
 Nevertheless, it can be fruitful to consult preregistration templates because of their strong focus on formulating a comprehensive methods section.
-If the PAC is submitted as a registered report [an article format in which the preregistration is reviewed and the article accepted "in principle", @nosekRegisteredReports2014; @chambersWhatNextRegistered2019] a journal article might be more familiar to the reviewers that ensure a comprehensive study plan.
+One factor that reduces comprehensiveness of such manuscript style but that is absent in standard preregistrations are strict word count limits that some journals impose.
+In such case we suggest using appendix materials to keep the manuscript concise, yet the preregistration comprehensive.
 
 Another factor that ensures a comprehensive plan is writing the analysis based on simulated data.
 Simulating data offers various benefits in the planning phase of a study.
 It forces the researcher to think about and address data analytic problems on a conceptual level before they make the effort to acquire data [@axelrodAdvancingArtSimulation1997].
 It also affords researchers with a simple technical check whether the analysis code runs without failure [@braiekTestingMachineLearning2020] (for example, does the code work with missing values, extreme outliers, etc.).
 Writing incomplete code is technically impossible, or at least researchers would notice if something is omitted (e.g. if they forgot to aggregate the data).
+
+Peer review of preregistration is a method that also can ensure comprehensiveness e.g. a registered report [an article format in which the preregistration is reviewed and the article accepted "in principle", @nosekRegisteredReports2014; @chambersWhatNextRegistered2019].
+In such registered report peer reviewing a manuscript styled PAC might be more familiar to the reviewers that ensure a comprehensive study plan.
 
 ### Effectiveness
 
@@ -944,7 +988,7 @@ To write a PAC, researchers should start by drafting a manuscript in the form of
 When they have have outlined the studies design, they should begin writing code.
 We suggest writing three functions for each planned hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
 For each study these tasks have to specifically coded.
-While capture the tasks here in the form of explicit R-functions but researcher may use any form (e.g. scripts) as long as it serves to simulate, analyze, and report.
+We capture the tasks here in the form of explicit R-functions but researcher may use any form (e.g. scripts) as long as it serves to simulate, analyze, and report.
 The functions shown here are empty (they do not contain executable code) and the interested reader may find function filled with some life in the [online supplementary materials](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R) that power the example below.
 
 At the heart of a PAC lies the planned analysis, so researchers should first draft a function called `planned_analysis()` from which they later derive the method section.
@@ -1205,7 +1249,7 @@ usethis::browse_github()
 ```
 
 And click on Releases → Draft a new release.
-Here you can add all relevant binary files but at least a rendered version of the manuscript and the docker image.
+Here you can add all relevant binary files but at least a rendered version of the manuscript and the Docker image.
 
 We realize that PACs are challenging.
 Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
