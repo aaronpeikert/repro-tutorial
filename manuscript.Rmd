@@ -470,6 +470,10 @@ When you are ready, you can begin tracking your files using `Git` by running:
 usethis::use_git()
 ```
 
+```{r modified, eval = TRUE, echo = FALSE, fig.cap="The Git pane in R Studio, showing `manuscript.Rmd` modified but unstaged and `modified.png` newly added and staged.  "}
+knitr::include_graphics(here::here("images", "modified.png"), auto_pdf = TRUE)
+```
+
 For `Git` to recognize changes to a given file, you have to stage and then commit these changes (this is the basic save action for a project snapshot).
 One way to do this is through the visual user interface in the RStudio `Git` pane.
 Click on the empty box next to the file you want to stage.
