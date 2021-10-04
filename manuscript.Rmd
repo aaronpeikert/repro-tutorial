@@ -76,7 +76,7 @@ repro:
     - tidyverse
     - usethis
     - gert
-    - aaronpeikert/repro@27e7d22
+    - aaronpeikert/repro@15a069
     - here
     - rstudio/webshot2@f62e743
     - targets
