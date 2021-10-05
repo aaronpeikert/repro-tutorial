@@ -1086,6 +1086,22 @@ Ideally, these three functions can be composed to create a "fake" results sectio
 To summarize, researchers write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as a preregistration.
 After they gathered the actual data, they replace the simulated data, render the dynamic manuscript (therefore run `planned_analysis()` on the actual data) and write the discussion.
 
+#### When is PAC applicable
+
+Every study that can be preregistered, can be preregistered with PAC.
+One significant difference is that PAC demands a comprehensive analysis plan.
+With traditional preregistration, however, the researcher gets away with deciding details later.
+Some researchers may not feel ready to decide every detail.
+In such case, we recommend to decide based on the best available knowledge and if these decisions prove infeasible, revise and explain them later as described in the section [Deviating from the preregistration and exploration].
+
+Two applications, however, lend themselves to PAC.
+First, registrations of clinical trials typically describe analyses in excruciating detail.
+Those registrations typically contain a detailed description of how results will be presented, including example tables and graphics.
+PAC may significantly reduce the required workload while maintaining (and exceeding) the required standards for registering a clinical trial.
+
+Second, preregistering explorative statistical models (i.e. machine learning) is hardly feasible with standard preregistrations since they are too complex to describe and depend strongly on their software implementation verbally.
+PAC, however, captures the precise algorithmic model, including its software implementation and is ideal for preregistering these models.
+
 # Preregistration as Code --- a Tutorial
 
 We argued that PAC has several advantages over classic preregistration and have outlined how to implement it.
