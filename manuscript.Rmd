@@ -1089,17 +1089,17 @@ After they gathered the actual data, they replace the simulated data, render the
 #### When is PAC applicable
 
 Every study that can be preregistered, can be preregistered with PAC.
-One significant difference is that PAC demands a comprehensive analysis plan.
-With traditional preregistration, however, the researcher gets away with deciding details later.
-Some researchers may not feel ready to decide every detail.
-In such case, we recommend to decide based on the best available knowledge and if these decisions prove infeasible, revise and explain them later as described in the section [Deviating from the preregistration and exploration].
+The only difference is that PAC demands a comprehensive and complete analysis plan.
+With traditional preregistration, researchers may omit details and get away with decision that are made only after having seen the data, thus, potentially biasing statistical results.
+Some researchers may not feel ready to decide every detail of the analysis plan before data collection.
+In such case, we recommend to make decisions based on the best available knowledge and if these decisions still prove infeasible, make simple assumptions and revise and explain them later as described in the section [Deviating from the preregistration and exploration] of the final manuscript.
 
-Two applications, however, lend themselves to PAC.
-First, registrations of clinical trials typically describe analyses in excruciating detail.
-Those registrations typically contain a detailed description of how results will be presented, including example tables and graphics.
+Beyond standard preregistrations in psychological research, we believe that two applications specifically lend themselves to PAC.
+First, registrations of clinical trials typically describe analyses in exhaustive detail.
+Those registrations typically contain a detailed description of how results will be presented, including example tables and graphics. <!--citation needed-->
 PAC may significantly reduce the required workload while maintaining (and exceeding) the required standards for registering a clinical trial.
 
-Second, preregistering explorative statistical models (i.e. machine learning) is hardly feasible with standard preregistrations since they are too complex to describe and depend strongly on their software implementation verbally.
+Second, preregistering exploratory statistical models (i.e., those with large numbers of competing models or those inspired by machine learning) is hardly feasible with standard preregistrations since they are too complex to describe and depend strongly on their software implementation.
 PAC, however, captures the precise algorithmic model, including its software implementation and is ideal for preregistering these models [@brandmaier22mlsem].
 
 # Preregistration as Code --- a Tutorial
