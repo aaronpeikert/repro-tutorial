@@ -1100,7 +1100,7 @@ Those registrations typically contain a detailed description of how results will
 PAC may significantly reduce the required workload while maintaining (and exceeding) the required standards for registering a clinical trial.
 
 Second, preregistering explorative statistical models (i.e. machine learning) is hardly feasible with standard preregistrations since they are too complex to describe and depend strongly on their software implementation verbally.
-PAC, however, captures the precise algorithmic model, including its software implementation and is ideal for preregistering these models.
+PAC, however, captures the precise algorithmic model, including its software implementation and is ideal for preregistering these models [@brandmaier22mlsem].
 
 # Preregistration as Code --- a Tutorial
 
