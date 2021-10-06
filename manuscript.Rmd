@@ -38,7 +38,7 @@ status: submit
 bibliography: temp.bib
 simplesummary: |
   Reproducibility has long been considered integral to the scientific method.
-  A scientific analysis is called reproducible when an independent person obtains the same results from the same data. <!--AB something seems to generic; we could generalize this to digital objects, though-->
+  An analysis is called reproducible when an independent person obtains the same results from the same data.
   Until recently, detailed descriptions of methods and analyses were the primary instrument for ensuring scientific reproducibility.
   Technological advancements now enable scientists to achieve a more comprehensive standard;
   a standard where anyone can access a digital research repository and reproduce all computational steps from raw data to final report including all relevant statistical analyses, with a single command.
@@ -141,20 +141,20 @@ To some extent these potential benefits are contingent on whether these digital 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
 The credibility of empirical research results hinges on their objectivity.
 Objectivity in this context means "in principle it [the research finding] can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper].
-Only a reproducible object can be tested and understood by anyone.
+Only a reproducible result can be tested and understood by anyone.
 Therefore, reproducibility has long been considered integral to empirical research.
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
 This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges (e.g., missing software dependencies or ambiguous documentation of the exact computational steps taken), and there is a dire need for reproducibility standards.
-With the technological advancement, it is now possible to make all digital products related to a research project available so that a research project can be automatically reproduced with minimal effort.<!--AB I don't understand: why is availabbility based on technological advancement? aren't there still be legal restrictions?-->
+With the technological advancement, it is now possible to make all digital products related to a research project available in a way that enables automatic reproduction of the research project with minimal effort.
 
 With this paper we pursue two aims.
 First, we want to introduce researchers to a notion of automated reproducibility that requires, apart from the setup of software, no manual steps. 
 Second, we discuss opportunities such automated reproducibility affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
-With regard to the first goal, we discuss how to address <!--AB please avoid military wordings--> four common threats to reproducibility with tools originating from software engineering [see @Peikert2019 for details].
+With regard to the first goal, we discuss how to address four common threats to reproducibility with tools originating from software engineering [see @Peikert2019 for details].
 Then we present a tutorial on how to employ these tools to achieve automated reproducibility.
 A single tutorial cannot comprehensively introduce the reader to the individual tools, but this tutorial is intended to help readers to build a coherent workflow.
 This tutorial is aimed at researchers who regularly write code to analyze their data and who are willing to make relevant code, data, and materials available, either publicly or on request.
-Ideally, our target reader already has created a dynamic document at some point in time (e.g. with RMarkdown or Jupyter) and knows the basic ideas behind version control (e.g. with Git). 
+Ideally, our reader already has created a dynamic document at some point in time (e.g. with RMarkdown or Jupyter) and attempted to track a file with version control (e.g. with Git). 
 The R package `repro` supports researchers in setting up the required software and in adopting this workflow.
 We present automated reproducibility as best practice, a goal that is not always archived because of limited resources, technical restrictions or practical considerations but is worth striving for.
 If, due to whatever reason, some parts of the workflow proof to be unfeasible, we encourage the reader to find their own suitable solutions and to concentrate on the feasible parts.
@@ -260,10 +260,10 @@ Similar to a collection of cooking recipes, we can have multiple products (_targ
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, and analysis results).
 One noteworthy property of computational recipes is that they require a textual representation and the ability of a program to make sense of this textual representation.
 A workflow that includes, e.g. renaming variable names by hand in a graphical spreadsheet application is therefore incompatible with automated reproducibility.
-Another property of a computational recipe is that the same inputs <!--AB of what? I deleted 'of'--> should always result in the same outputs.
+Another property of a computational recipe is that the same inputs should always result in the same outputs.
 Fo most computer code (given the same software is used) this property is fulfilled, however, one noteworthy exception are pseudo random numbers.
-Whenever random numbers are used in a computation, this computation is only reproducible when the samerandom numbers are used.
-To ensure identical random numbers, users may fix the state of the random number generate with a so called seed (e.g. in R with `set.seed()`) but they also need to guarantee that the pseudo random number generator is unchanged (see @Peikert2019). <!--AB please check if citation is rendered correctly-->
+Whenever random numbers are used in a computation, this computation is only reproducible when the same random numbers are used.
+To ensure identical random numbers, users may fix the state of the random number generate with a so called seed (e.g. in R with `set.seed()`) but they also need to guarantee that the pseudo random number generator is unchanged [see @Peikert2019].
 
 We recommend using *Make* for dependency tracking because it is language independent.
 The following hypothetical example illustrates the utility of `Make` and a suitable `Makefile`.
@@ -365,8 +365,13 @@ The first step is to install the required software.
 We assume that you have installed R [@R-base, version `r with(R.version, paste0(major, ".", minor))`] and RStudio [@rstudio, version 1.4] already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
 In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
 The [installation advice]((https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)) may also help Windows users who have problems installing `Docker`.
+
 Unfortunately, Docker requires administrator rights to run, which may not be available to all researchers.
-We recommend [`renv`](https://rstudio.github.io/renv/articles/renv.html) [@R-renv] in cases where no administrator rights can be obtained but can not detail its use in this document. <!-- add a half sentence about what R-env is-->
+We recommend [`renv`](https://rstudio.github.io/renv/articles/renv.html) [@R-renv] in cases where no administrator rights can be obtained but can not detail its use in this document.
+`renv` tracks which R package is installed from which source in which version in a so called [`lockfile`](https://rstudio.github.io/renv/articles/lockfile.html).
+This lockfile is than used to reinstall the same packages on other computers or later in time.
+For a more thorogh discussion see @vanlissa2020worcs.
+
 Start RStudio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
 
@@ -904,7 +909,8 @@ For guidance on how to simulate data, see @morrisUsingSimulationStudies2019, @pa
 Once the preregistration is submitted and real data have been collected or made available,
 the document can be reproduced with a single command, thus updating the Results section to the final version.
 Reproducibility is of utmost importance at this stage since the preregistration must produce valid results at two points in time, once before data collection and once after data collection.
-We can only recommend PAC when the dangers to reproducibility we described above are eliminated and a state of automated reproducibility is reached. <!--AB I do not understand this last sentence-->
+As outlined before, reproducibility builds upon four pillars (Version control, Dynamic document generation, Dependency tracking, Software management)
+We can therefore only recommend PAC when the dangers to reproducibility we described above are eliminated.
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
@@ -1053,18 +1059,18 @@ The goal is that the output of `simulate_data()` works as input to the function 
 If simulating data proves to be too challenging, researcher can delay their preregistration until they have gathered data and repurpose the empirical data.
 In order to do so researcher must walk a fine but important line.
 Of course, researcher must not analyze the data before they write the preregistration.
-Nevertheless, they may obfuscate the real data (before actually looking at it) by shuffling all variables per each colum (independently from each other) in cross-sectional data <!--AB would not work well in longitudinal data--> or otherwise creating synthetic data that allows them to test the function `planned_analysis()` without actually revealing the observed research outcomes.
+Nevertheless, they may obfuscate the real data (before actually looking at it) by shuffling all variables per each colum (independently from each other) in cross-sectional data or otherwise creating synthetic data that allows them to test the function `planned_analysis()` without actually revealing the observed research outcomes.
 Preregistration after data collection is common for secondary data analysis of data obtained by other research groups [@westonRecommendationsIncreasingTransparency2019] but not so much within the same research project.
 We argue that it is still an eligible preregistration.
-Guidelines for clinical trials also recommend analysis of blinded data <!--AB I added data here?!--> to test the practicality of the preregistration [@ICH1998].
-Since the data is obfuscated, virtually no results<!--AB do you mean observed data? what are results here?--> are revealed and the researchers do not gain researcher degrees of freedom.
+Guidelines for clinical trials also recommend analysis of blinded data  to test the practicality of the preregistration [@ICH1998].
+Since the data is obfuscated, virtually no information are revealed to the researchers and they can not employ their researcher degrees of freedom effectively to influence the results.
 Shuffling leaves only univariate information, so this procedure is only applicable for bi-or multivariate hypotheses.
 Researcher still can access the information about means or proportions (e.g. how many participants belonging to group "A" are in the dataset) but are unbiased for all relations between variables (e.g. members of group "A" have a greater mean in variable "Z").
-To be clear, any exploration of the data before preregistration renders the preregistration invalid and amounts to scientific (albeit sometime unintentional) misconduct.
+To be clear, any exploration of the data before preregistration (PAC or otherwise) renders the preregistration invalid and amounts to scientific (albeit sometime unintentional) misconduct.
 
 Another approach that can replace but also complement simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the resulting data to preregister.
 A pilot study has obvious advantages for study planning, since it lets researcher evaluate the feasibility of many assumptions.
-However, we must warn our readers, while piloting is more traditional than our approach of obfuscating the data before preregistration, it may not be innocuous to use the resulting data and care must be taken to avoid errors of sequential testing [@whiteheadBiasMaximumLikelihood1986]. <!-- this may not be clear to everyone... do you mean that you cannot reuse the pilot data?-->
+However, we must warn our readers, while piloting is more traditional than our approach of obfuscating the data before preregistration, it is not innocuous to use the data resulting from the pilot.
 
 When the researchers are satisfied with the function `planned_analysis()`, they can think about how they would like to report the analysis results via tables, plots, and text.
 The implementation of this reporting should be in the function `report_analysis()`.
