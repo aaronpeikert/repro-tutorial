@@ -1052,6 +1052,7 @@ Of course researcher must not analyze the data before they write the preregistra
 Nevertheless, they may obfuscate the real data by shuffling all variables columnwise (independently from each other) or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
 Preregistration after data collection is common when reanalyzing data from another research group [@westonRecommendationsIncreasingTransparency2019] but not so much within the same research project.
 We argue that it is still an eligible preregistration.
+Guidelines for clinical trials also recommend analysis of blinded blinded to test the practicality of the preregistration [@ICH1998].
 Since the data is obfuscated, almost no results are revealed and the researchers can not employ their researcher degrees of freedom effectively to influence the results.
 Shuffling leaves only univariate information, so this procedure is only applicable for bi-or multivariate hypotheses.
 Researcher still can access the information about means or proportions (e.g. how many participants belonging to group "A" are in the dataset) but are unbiased for all relations between variables (e.g. members of group "A" have a greater mean in variable "Z").
@@ -1096,7 +1097,7 @@ In such case, we recommend to make decisions based on the best available knowled
 
 Beyond standard preregistrations in psychological research, we believe that two applications specifically lend themselves to PAC.
 First, registrations of clinical trials typically describe analyses in exhaustive detail.
-Those registrations typically contain a detailed description of how results will be presented, including example tables and graphics. <!--citation needed-->
+Those registrations typically contain a detailed description of how results will be presented, including example tables and graphics [@ICH1998].
 PAC may significantly reduce the required workload while maintaining (and exceeding) the required standards for registering a clinical trial.
 
 Second, preregistering exploratory statistical models (i.e., those with large numbers of competing models or those inspired by machine learning) is hardly feasible with standard preregistrations since they are too complex to describe and depend strongly on their software implementation.
