@@ -8,7 +8,7 @@ author:
     affil: 2, 3
     orcid: 0000-0002-0808-5024
   - name: Andreas M. Brandmaier
-    affil: 1, 4
+    affil: 1, 4, 5
     orcid: 0000-0001-8765-6982
 affiliation:
   - num: 1
@@ -25,6 +25,10 @@ affiliation:
     address: |
       Max Planck UCL Centre for Computational Psychiatry and Ageing Research
       Berlin, Germany and London, UK
+  - num: 5
+    address: |
+      MSB Medical School Berlin,
+      Berlin, Germany
 # firstnote to eighthnote
 correspondence: |
   peikert@mpib-berlin.mpg.de
@@ -34,21 +38,21 @@ status: submit
 bibliography: temp.bib
 simplesummary: |
   Reproducibility has long been considered integral to the scientific method.
-  Something is called reproducible when an independent person obtains the same results from the same data.
+  A scientific analysis is called reproducible when an independent person obtains the same results from the same data. <!--AB something seems to generic; we could generalize this to digital objects, though-->
   Until recently, detailed descriptions of methods and analyses were the primary instrument for ensuring scientific reproducibility.
   Technological advancements now enable scientists to achieve a more comprehensive standard;
-  one in which any individual can be granted access to a digital research repository, and reproduce the analyses from the raw data to the final report including all relevant statistical analyses with a single command.
+  a standard where anyone can access a digital research repository and reproduce all computational steps from raw data to final report including all relevant statistical analyses, with a single command.
   This method has far-reaching implications for scientific archiving,
   reproducibility and replication,
   scientific productivity,
-  and the credibility and reliability of scientific findings.
-  One obstacle preventing the widespread adoption of this method is that the underlying technological advancements
-  are complicated to use.
-  This paper introduces `repro`, an R-package, which guides researchers in the installation and use of the tools required for making a research project reproducible.
-  Finally, we suggest the use of the proposed tools for the preregistration of study plans as reproducible computer code (preregistration as code; PAC).
-  Since computer code represents the planned analyses exactly as they will be executed, it is more precise than natural language descriptions of those analyses, which merely complement the PAC as a more readable summary. 
-  PAC circumvents the shortcomings of ambiguous preregistrations that may give researchers undesired degrees of freedom.
-  Hence, reproducibility made convenient with automation has a wide range of applications to accelerate scientific progress.
+  and the credibility and reliability of scientific knowledge.
+  One obstacle to the widespread use of this method is that the underlying tools
+  are complex and not part of the regular training of most researchers.
+  This paper introduces `repro`, an R-package, which guides researchers in installing and using the tools needed to make a research project reproducible.
+  Finally, we suggest the use of the proposed workflow for the preregistration of study plans as reproducible computer code (preregistration as code; PAC).
+  Since computer code represents the planned analyses exactly as they will be executed, it is more precise than natural language descriptions of those analyses, which then merely complement the PAC as a more readable summary. 
+  PAC circumvents the shortcomings of ambiguous preregistrations that may give researchers undesired degrees of freedom in the execution of their analysis.
+  Reproducibility, facilitated by automation, therefore has a wide range of applications to accelerate scientific progress.
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
   open science; compuational reproducibility; preregistration; R; R Markdown; Make; GitHub; Docker
