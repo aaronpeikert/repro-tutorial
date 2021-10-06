@@ -1,29 +1,40 @@
 #----simulate_data----
 simulate_data <- function(n, df, d, i){
+  # groups have same size
   stopifnot(n %% 2L == 0L)
   gender <- rep(c(0L, 1L), each = n/2)
+  # use Chi^2 distributed random data for some skew
   rand <-  matrix(rchisq(n * i, df/i), ncol = i) # sum of n chisq has df of n*df
   d_scaled <- d * sqrt(2*df)/i # scale d to express sd units (var(chisq) = 2df)
+  # add difference only to group coded with `1`
   effect <- rand + d_scaled * gender
+  # name items
   colnames(effect) <- paste0("mach", seq_len(i))
   effect <- as.data.frame(effect)
+  # recode gender from numeric to factor
   effect$gender <- factor(gender, levels = c(1L, 0L), labels = c("male", "female"))
   return(effect)
 }
 
 #----planned_analysis----
 planned_analysis <- function(data, use_rank = "skew", skew_cutoff = 1){
+  # average over all variable supplied, except gender
   machiavellianism <- rowMeans(data["gender" != names(data)], na.rm = TRUE)
+  # discard rows that only contain NAs
   data <- data[!is.na(machiavellianism),]
   machiavellianism <- machiavellianism[!is.na(machiavellianism)]
+  # assure gender is factor
   gender <- as.factor(data$gender)
+  # note skewness and decide t.test vs wilcox based on it
   skew <- moments::skewness(machiavellianism)
   # skewness cutoff
   if(use_rank == "skew")use_rank <- abs(skew) > skew_cutoff
   if(use_rank){
+    # t.test + rank = wilcox test
     machiavellianism <- rank(machiavellianism)
   }
   test <- t.test(machiavellianism ~ gender)
+  # return a bunch of information
   list(test = test, skew = skew, use_rank = use_rank, n = length(gender))
 }
 
