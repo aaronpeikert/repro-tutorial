@@ -141,29 +141,29 @@ To some extent these potential benefits are contingent on whether these digital 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
 The credibility of empirical research results hinges on their objectivity.
 Objectivity in this context means "in principle it [the research finding] can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper].
-Only something reproducible can be tested and understood by anyone.
+Only a reproducible object can be tested and understood by anyone.
 Therefore, reproducibility has long been considered integral to empirical research.
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
-This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges (e.g., missing software or ambiguous documentation of all steps taken), and there is a dire need for reproducibility standards.
-With the technological advancement, it is now possible to make all digital products related to a research project available so that a research project can be automatically reproduced with minimal effort.
+This is because making a research project with all code, data, and materials reproducible comes with a variety of challenges (e.g., missing software dependencies or ambiguous documentation of the exact computational steps taken), and there is a dire need for reproducibility standards.
+With the technological advancement, it is now possible to make all digital products related to a research project available so that a research project can be automatically reproduced with minimal effort.<!--AB I don't understand: why is availabbility based on technological advancement? aren't there still be legal restrictions?-->
 
-We pursue two aims.
-First, we want to introduce researchers to a notion of automated reproducibility that requires, apart from the setup of software, no manual steps.
+With this paper we pursue two aims.
+First, we want to introduce researchers to a notion of automated reproducibility that requires, apart from the setup of software, no manual steps. 
 Second, we discuss opportunities such automated reproducibility affords to improve not only how research outputs are created and recreated, but also how research itself is conducted.
-With regard to the first goal, we discuss how to combat four common threats to reproducibility with tools originating from software engineering [see @Peikert2019 for details].
+With regard to the first goal, we discuss how to address <!--AB please avoid military wordings--> four common threats to reproducibility with tools originating from software engineering [see @Peikert2019 for details].
 Then we present a tutorial on how to employ these tools to achieve automated reproducibility.
-This tutorial can not introduce the reader comprehensively into each tool but intents to help readers who have picked up bits and pieces to build a coherent workflow.
+A single tutorial cannot comprehensively introduce the reader to the individual tools, but this tutorial is intended to help readers to build a coherent workflow.
 This tutorial is aimed at researchers who regularly write code to analyze their data and who are willing to make relevant code, data, and materials available, either publicly or on request.
-Ideally, our reader already has created a dynamic document at some point (e.g. with RMarkdown or Jupyter) and has tried their hand once at version control (e.g. with Git). 
+Ideally, our target reader already has created a dynamic document at some point in time (e.g. with RMarkdown or Jupyter) and knows the basic ideas behind version control (e.g. with Git). 
 The R package `repro` supports researchers in setting up the required software and in adopting this workflow.
 We present automated reproducibility as best practice, a goal that is not always archived because of limited resources, technical restrictions or practical considerations but is worth striving for.
 If, due to whatever reason, some parts of the workflow proof to be unfeasible, we encourage the reader to find their own suitable solutions and to concentrate on the feasible parts.
 
-In pursuit of the second aim we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
-PAC involves preregistering the intended analysis code and the bulk of the manuscript as a dynamic document, including typical sections like Introduction, Methods, and Results.
+In pursuit of the second aim, we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon an implementation of this reproducible workflow, the so-called *preregistration as code* (PAC).
+PAC involves preregistering the intended analysis code and the major part of the final scientific report as a dynamic document, including typical sections like Introduction, Methods, and Results.
 The resulting dynamic document closely resembles the final manuscript, but temporarily uses simulated data to generate placeholder results (e.g. figures, tables and statistics).
 With these placeholders, authors preregister the exact presentation of their results without having seen real data yet.
-Once the empirical data are analyzed, the Results are then updated automatically, and the Discussion can be written to finalize the report.
+Once the empirical data are available, they replace the simulated data, the results are then updated automatically, and the discussion can be written to finalize the report.
 
 [^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept which he later generalized to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication".
 
@@ -260,10 +260,10 @@ Similar to a collection of cooking recipes, we can have multiple products (_targ
 In the context of scientific data analysis, the targets are typically the final scientific report (e.g., the one to be submitted to a journal) and possibly intermediate results (such as preprocessed data files, simulation results, and analysis results).
 One noteworthy property of computational recipes is that they require a textual representation and the ability of a program to make sense of this textual representation.
 A workflow that includes, e.g. renaming variable names by hand in a graphical spreadsheet application is therefore incompatible with automated reproducibility.
-Another property of a computational recipe is that the same inputs of should always result in the same outputs.
+Another property of a computational recipe is that the same inputs <!--AB of what? I deleted 'of'--> should always result in the same outputs.
 Fo most computer code (given the same software is used) this property is fulfilled, however, one noteworthy exception are pseudo random numbers.
-Whenever random numbers are used in a computation, this computation is only reproducible when the same random numbers are used.
-To ensure identical random numbers, users may fix the state of the random number generate with a so called seed (e.g. in R with `set.seed()`).
+Whenever random numbers are used in a computation, this computation is only reproducible when the samerandom numbers are used.
+To ensure identical random numbers, users may fix the state of the random number generate with a so called seed (e.g. in R with `set.seed()`) but they also need to guarantee that the pseudo random number generator is unchanged (see @Peikert2019). <!--AB please check if citation is rendered correctly-->
 
 We recommend using *Make* for dependency tracking because it is language independent.
 The following hypothetical example illustrates the utility of `Make` and a suitable `Makefile`.
@@ -317,7 +317,7 @@ First users can manually install whatever software they like from within the vir
 Such manually build environment can still be ported to all computers which support `Docker`.
 We, however, prefer the second way of building images automatically from a textual description called `Dockerfile`.
 Because the `Dockerfile` clearly describes which software is installed how the installation process can be repeated automatically.
-Users can therefore quickly change the software environment e.g. update to another R or package version without being "stuck" with an `Docker` image they do not know how to rebuild.
+Users can therefore quickly change the software environment, e.g. update to another R version or given package version.
 
 Packaging all required software in such an image requires considerable amounts of storage space.
 Two major strategies help to keep the storage requirements reasonable.
@@ -365,8 +365,8 @@ The first step is to install the required software.
 We assume that you have installed R [@R-base, version `r with(R.version, paste0(major, ".", minor))`] and RStudio [@rstudio, version 1.4] already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
 In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
 The [installation advice]((https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)) may also help Windows users who have problems installing `Docker`.
-Unfortunately, Docker requires administrative rights to run.
-We recommend [`renv`](https://rstudio.github.io/renv/articles/renv.html) [@R-renv] in cases where no administrative rights can be obtained but can not detail its use in this document.
+Unfortunately, Docker requires administrator rights to run, which may not be available to all researchers.
+We recommend [`renv`](https://rstudio.github.io/renv/articles/renv.html) [@R-renv] in cases where no administrator rights can be obtained but can not detail its use in this document. <!-- add a half sentence about what R-env is-->
 Start RStudio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
 
@@ -420,7 +420,7 @@ The messages from `repro` try to take the user by the hand to help them solve pr
 These messages are adjusted to your specific operating system and installed dependencies.
 Before you continue, we ask you to run the above commands to check `Git`, `Make`, and `Docker`---both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
 
-After you have installed the necessary software we suggest that you set up a secure connection to GitHub:
+After you have installed the necessary software, we suggest that you set up a secure connection to GitHub:
 
 ```{r, include=FALSE}
 opts <- options()
@@ -468,7 +468,7 @@ usethis::use_git_ignore("private.md")
 
 Now the file `private.md` will not be committed to `Git` and will not be made public.
 Please consider carefully if you can include data in the repository without violating privacy rights.
-If you can not share your data publicly add it to the `.gitignore` file and share it on request.
+If you are not allowed to share your data publicly, add the data file(s) to the `.gitignore` file and only share them on request.
 
 Especially for new users, it is recommended to follow this procedure and exclude sensitive files before proceeding.
 When you are ready, you can begin tracking your files using `Git` by running:
@@ -541,7 +541,7 @@ To do list:
 ```
 
 One advantage of this type of markup for formatting is that it can be rendered to many different output formats---both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
-Noteworthy is the package output format supplied by the [`papaja`](https://github.com/crsh/papaja) package [@papaja] which produces APA compliant manuscripts [@apa7].
+Of particular note is the package output format supplied by the [`papaja`](https://github.com/crsh/papaja) package [@papaja] which produces APA compliant manuscripts [@apa7].
 Another advantage is that, because `R Markdown` files are in plain text, they are more suitable for version control using `Git`.
 Some users might find it easier to activate the "Visual Editor" of RStudio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the `R Markdown` document) which features more graphical elements like a traditional word processor but still creates an `R Markdown` underneath with all of its flexibility.
 The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions)
@@ -880,7 +880,7 @@ However, templates cannot remove researchers degrees of freedoms completely, bec
 This ambiguity causes a second problem, that is comparing the preregistration and the resulting publication to decide if and how researcher deviated from the preregistration.
 This task is difficult because it impossible to decide without additional information if the analysis actually was carried out differently or just described differently.
 The comparison is made impossible if the authors of the preregistration were intentionally vague.
-Even when the researcher was faithful in each aspect to the preregistration the reader may reach opposite conclusions, because the reader has to compare two different texts which may be worded differently or describe the same thing in varying level of detail.
+Even when the researcher was faithful to the preregistration, the reader may reach opposite conclusions, because the reader has to compare two different texts, which may be worded differently or describe the same thing in varying levels of detail.
 A third limitation is that, just like primary research, preregistrations are susceptible to non-reproducibility.
 To illustrate, a review of 210 preregistrations found that, even though 174 (67%) included a formal power analysis, only 34 (20%) of these could be reproduced [@bakkerRecommendationsPreregistrationsInternal2020].
 Even when researchers have gone to great length in preregistering an analysis script,
@@ -902,9 +902,9 @@ This already includes most typical sections, such as Introduction, Methods, and 
 These results are initially based on simulated data with the same structure as the data they expect to obtain from their experiments.
 For guidance on how to simulate data, see @morrisUsingSimulationStudies2019, @paxtonMonteCarloExperiments2001 and @skrondalDesignAnalysisMonte2000.
 Once the preregistration is submitted and real data have been collected or made available,
-the document can be reproduced with a single command, thus updating the Results to their final version.
-Reproducibility is of utmost importance at this stage since the preregistration must produce valid results at two points in time.
-We can only recommend PAC when the dangers to reproducibility we described above are eliminated and a state of automated reproducibility is reached.
+the document can be reproduced with a single command, thus updating the Results section to the final version.
+Reproducibility is of utmost importance at this stage since the preregistration must produce valid results at two points in time, once before data collection and once after data collection.
+We can only recommend PAC when the dangers to reproducibility we described above are eliminated and a state of automated reproducibility is reached. <!--AB I do not understand this last sentence-->
 
 The idea of submitting code as part of a preregistration is not new.
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
@@ -982,8 +982,9 @@ Standards for scientific writing [e.g. @apa7] require that research articles are
 They provide, hence, an excellent vehicle for planning a study.
 One particular advantage is the foundation in existing literature where the introduction and theoretical background provide the basis for the studies' design.
 Nevertheless, it can be fruitful to consult preregistration templates because of their strong focus on formulating a comprehensive methods section.
-One factor that reduces comprehensiveness of such manuscript style but that is absent in standard preregistrations are strict word count limits that some journals impose.
-In such case we suggest using appendix materials to keep the manuscript concise, yet the preregistration comprehensive.
+The comprehensiveness and completeness of published scientific reports is sometimes limited by strict word count limits that some journals impose.
+One may argue that PAC inherit this limitation if the same word count limit applies.
+However, in such case we suggest using reproducible appendix materials to keep the core manuscript concise, yet the preregistration comprehensive and exhaustive.
 
 Another factor that ensures a comprehensive plan is writing the analysis based on simulated data.
 Simulating data offers various benefits in the planning phase of a study.
@@ -1017,8 +1018,7 @@ Researchers may also evaluate how the data analysis copes with expected data com
 
 To write a PAC, researchers should start by drafting a manuscript in the form of an `R Markdown`.
 When they have have outlined the studies design, they should begin writing code.
-We suggest writing three functions for each planned hypothesis, one for the planned analysis, one for simulating the data and one for reporting the results.
-For each study these tasks have to specifically coded.
+If there is no other code structure available, we suggest writing a minimum of three functions for each planned hypothesis, one for the planned analysis, one for simulating the respective data and one for reporting the results.
 We capture the tasks here in the form of explicit R-functions but researcher may use any form (e.g. scripts) as long as it serves to simulate, analyze, and report.
 The functions shown here are empty (they do not contain executable code) and the interested reader may find function filled with some life in the [online supplementary materials](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R) that power the example below.
 
@@ -1050,21 +1050,21 @@ The goal is that the output of `simulate_data()` works as input to the function 
 
 #### Alternatives to simulated data
 
-If simulating data proves to be too challenging, researcher can delay their preregistration till they have gathered data and repurpose the actual data.
-In order to do so researcher must walk a fine but utmost important line.
-Of course researcher must not analyze the data before they write the preregistration.
-Nevertheless, they may obfuscate the real data by shuffling all variables columnwise (independently from each other) or otherwise create synthetic data that allows them to test the function `planned_analysis()` without actually revealing the research outcomes.
-Preregistration after data collection is common when reanalyzing data from another research group [@westonRecommendationsIncreasingTransparency2019] but not so much within the same research project.
+If simulating data proves to be too challenging, researcher can delay their preregistration until they have gathered data and repurpose the empirical data.
+In order to do so researcher must walk a fine but important line.
+Of course, researcher must not analyze the data before they write the preregistration.
+Nevertheless, they may obfuscate the real data (before actually looking at it) by shuffling all variables per each colum (independently from each other) in cross-sectional data <!--AB would not work well in longitudinal data--> or otherwise creating synthetic data that allows them to test the function `planned_analysis()` without actually revealing the observed research outcomes.
+Preregistration after data collection is common for secondary data analysis of data obtained by other research groups [@westonRecommendationsIncreasingTransparency2019] but not so much within the same research project.
 We argue that it is still an eligible preregistration.
-Guidelines for clinical trials also recommend analysis of blinded blinded to test the practicality of the preregistration [@ICH1998].
-Since the data is obfuscated, almost no results are revealed and the researchers can not employ their researcher degrees of freedom effectively to influence the results.
+Guidelines for clinical trials also recommend analysis of blinded data <!--AB I added data here?!--> to test the practicality of the preregistration [@ICH1998].
+Since the data is obfuscated, virtually no results<!--AB do you mean observed data? what are results here?--> are revealed and the researchers do not gain researcher degrees of freedom.
 Shuffling leaves only univariate information, so this procedure is only applicable for bi-or multivariate hypotheses.
 Researcher still can access the information about means or proportions (e.g. how many participants belonging to group "A" are in the dataset) but are unbiased for all relations between variables (e.g. members of group "A" have a greater mean in variable "Z").
-To be clear, any exploration of the data before preregistration renders the preregistration invalid and amounts to grave scientific (albeit sometime unintentional) misconduct.
+To be clear, any exploration of the data before preregistration renders the preregistration invalid and amounts to scientific (albeit sometime unintentional) misconduct.
 
 Another approach that can replace but also complement simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the resulting data to preregister.
 A pilot study has obvious advantages for study planning, since it lets researcher evaluate the feasibility of many assumptions.
-However, we must warn our readers, while piloting is more traditional than our approach of obfuscating the data before preregistration it may not be innocuous to use the resulting data and care must be taken to avoid errors of sequential testing [@whiteheadBiasMaximumLikelihood1986].
+However, we must warn our readers, while piloting is more traditional than our approach of obfuscating the data before preregistration, it may not be innocuous to use the resulting data and care must be taken to avoid errors of sequential testing [@whiteheadBiasMaximumLikelihood1986]. <!-- this may not be clear to everyone... do you mean that you cannot reuse the pilot data?-->
 
 When the researchers are satisfied with the function `planned_analysis()`, they can think about how they would like to report the analysis results via tables, plots, and text.
 The implementation of this reporting should be in the function `report_analysis()`.
@@ -1264,12 +1264,12 @@ show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FAL
 ```
 
 This example preregistration covers a single study with a single hypothesis.
-To organize studies with multi hypotheses we suggest multiple (possibly numbered in accord with the hypotheses, e.g. 1.2, 2.3 etc.) `planned_analysis()` and `report_analysis()` functions.
-Steps that apply to multiple analyses should be extracted into their own function e.g. `discard_outliers()` or `extract_scores()`.
+To organize studies with multiple hypotheses, we suggest multiple (possibly numbered in accordance with the hypotheses, e.g. 1.2, 2.3 etc.) `planned_analysis()` and `report_analysis()` functions.
+Computational steps that apply to multiple analyses should be extracted into their own function, for example, those that perform data cleaning or extract results from a statistical model in an identical way.
 Preregistrations that cover multiple distinct data sources may employ multiple `simulate_data()` functions.
-These are merely suggestions, researcher who are more comfortable with another programming style will surely find an appropriate system.
+These are merely suggestions and researchers are encouraged to find their own way of how to best organize their analysis code.
 
-Of course it is likely that the preregistered code has to be adapted to the actual data.
+Of course, it is likely that the preregistered code has to be adapted to the actual data.
 Changing the preregistration must be discussed.
 This is our summary of what we changed:
 
@@ -1279,9 +1279,9 @@ show_prereg("discuss-changes")
 
 But readers can inspect and judge the changes for themselves on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
 
-The interested reader can find the example rendered as a pdf file with actual data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
+The interested reader can find the example rendered as a PDF file with real data in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.2.0-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
 
-After the researcher is satisfied with their draft preregistration, they should create an archived and unchangeable version of the project that serves as the preregistration.
+After researchers are satisfied with their draft preregistration, they should create an archived and unchangeable version of the project that serves as the preregistration.
 zenodo.org [@zenodo] is a publicly funded service provider that archives digital artifacts for research and provides digital object identifiers (DOI) for these archives.
 While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
 Please note that you can only link public GitHub repositories to zenodo.
@@ -1352,7 +1352,7 @@ The `Docker` approach has two vulnerabilities.
 First, and more important, the `Docker` image for the project and the `Git` repository have to remain available.
 The `Dockerfile` (the plain text description to build a `Docker` image) as opposed to the image is insufficient because it relies on too many service providers (e.g. Microsoft R Application Network, Ubuntu Package Archive).
 We recommend to archive the `Git` repository and the `Docker` image with zenodo.org, a non-profit long-term storage for scientific data.
-The necessary steps for archival on zenodo.org are described in at the end of section [Preregistration as Code --- a Tutorial].
+The necessary steps for archival on zenodo.org are described at the end of section [Preregistration as Code --- a Tutorial].
 The second vulnerability is that even if the existence of the `Docker` image and `Git` repository is guaranteed, future researchers still require software to run the image.
 To that end they can either rely on `Docker` itself or `Docker`-compatible alternatives (e.g. CoreOS rkt, Mesos Containerizer, Singularity).
 The only way to remove the reliance on such external software is to turn the `Docker` image into a full operating system that subsequently can be installed and run on almost any modern computer.
