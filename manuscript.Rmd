@@ -736,32 +736,32 @@ repro::reproduce()
 # Advanced Features
 
 This section is only for advanced users who want to overcome some limitations of `repro`.
-If you read this paper the first time you probably want to skip this section and continue reading at the section "Preregistration as Code".
+If you read this paper the first time, you probably want to skip this section and continue reading at the section "Preregistration as Code".
 As explained above, `repro` is merely a simplified interface that enables a high level of reproducibility for simple projects.
 The simplification of `Docker` and `Make` are possible because of two restrictions.
-Users who ask themselves either "How can I install software dependencies outside of R in the `Docker` image?" or "How can I express complex dependencies between files, e.g. hundreds of data files are preprocessed and combined?") need to be aware of these restriction and require a deeper understanding of the inner workings of `repro`.
-Other users may safely skip this section, or return to it if they encounter such challenges.
+Users who ask themselves either "How can I install software dependencies outside of R in the `Docker` image?" or "How can I express complex dependencies between files, e.g. hundreds of data files are preprocessed and combined?") need to be aware of these restrictions and require a deeper understanding of the inner workings of `repro`.
+Other users may safely skip this section or return to it if they encounter such challenges.
 
 The metadata the `repro::automate()` function relies on can only express R packages as dependencies for the `Dockerfile` and only trivial dependencies (in the form of "file must exist") for the `Makefile`. 
 The first limitation means that users must rely on software that is either already provided by the base `Dockerimage` "rocker/verse" or the R packages they list in the metadata.
-Other software that users might need like other programming languages, not already installed LaTeX packages etc. have to be added manually.
+Other software that users might need, like other programming languages, not already installed LaTeX packages, etc., must be added manually.
 We plan to add support for commonly used ways to install software beyond R packages via the metadata and `repro::automate()` e.g. for system libraries (via `apt` the Ubuntu package manager), LaTeX packages (via `tlmgr` the Tex Live package manager), python packages (via `pip` the python package manager).
 The second limitation is about dependencies.
 `Make` can represent complex dependencies like in this example: A depends on B, which in turn depends on C and D.
 If B is missing in this example, `Make` would know how to recreate it from C and D.
 These dependencies and especially how these dependencies should be resolved are difficult to represent in the metadata.
-Users therefore have to either "flatten" the dependency structure, by simply stating that A depends on B, C and D, therefore leaving out important information or express the dependencies directly within the `Makefile`.
+Users, therefore, have to either "flatten" the dependency structure by simply stating that A depends on B, C and D, therefore leaving out important information or express the dependencies directly within the `Makefile`.
 
-The following section explains how to overcome these limitations while still relying on the automations afforded by `repro`.
+The following section explains how to overcome these limitations while still relying on the automation afforded by `repro`.
 Lifting these restrictions requires the user to interact more directly with `Make` or `Docker`.
-To satisfy more complicated requirements users need to understand how repro utilizes `Make` and `Docker` internally.
+Users need to understand how repro utilizes `Make` and `Docker` internally to satisfy more complicated requirements.
 
 Let us have a closer look at the command for reproducing a repro project: `make docker && make -B DOCKER=TRUE`; it consists of two processing steps.
-First it recreates the virtual software environment (`Docker`) and then it executes computational recipes in the virtual software environment (`Make`).
+First, it recreates the virtual software environment (`Docker`), and then it executes computational recipes in the virtual software environment (`Make`).
 The first step is done by the command `make docker`.
 The command `make docker` will trigger `Make` to build the target called `docker`.
 The recipe for this target builds an image from the `Dockerfile` of the repository.
-The `&&` concatenates both commands and only runs the second command if the first was successful.
+The `&&` concatenates both commands and only runs the second command if the first is successful.
 Therefore, the computational steps are only executed when the software environment is set up.
 The second step executes the actual reproduction and is again a call to `Make` in the form of `make -B DOCKER=TRUE` with three noteworthy parts.
 First, a call to `make` without any explicit target will build the `Make` target `all`.
@@ -780,8 +780,9 @@ It contains information about the base image on which all the remaining software
 By default we rely on the "verse" images provided by the Rocker project [@boettigerIntroductionRockerDocker2017].
 These contain (among other software) the packages `tidyverse`, `rmarkdown` and a complete LaTeX installation, which makes these images ideal for the creation of scientific manuscripts.
 Users can choose which R version they want to have inside the container by changing the version number in line 1 to the desired R version number.
-By default the R version corresponds to the locally installed version on which `repro::automate()` was called the first time.
-The build date is used to install packages in the version which was available on CRAN on this specific date and can also be changed, by default this date is set to the date on which `repro::automate()` was called the first time. 
+By default, the R version corresponds to the locally installed version on which `repro::automate()` was called the first time.
+The build date is used to install packages in the version which was available on CRAN on this specific date and can also be changed.
+By default, this date is set to the date on which `repro::automate()` was called the first time. 
 This way, the call to the automate function virtually freezes the R environment to the state it was called the first time inside the container. 
 Below, you see the `Docker` base file we used to create this manuscript:
 
@@ -798,7 +799,7 @@ The second automatically generated `Dockerfile` is `.repro/Dockerfile_packages`.
 Whenever `repro::automate()` is called, repro gathers all R packages from all `.Rmd` files and figures out whether they should be installed from CRAN or GitHub fixed to the date specified in `Dockerfile_base`.
 
 Finally, there is one manually edited `Dockerfile`: `.repro/Dockerfile_manual`.
-It is blank by default, and can be used to add further dependencies outside of R, like system libraries or external software. 
+It is blank by default and can be used to add further dependencies outside of R, like system libraries or external software. 
 
 Using `Docker` may require you to install software on an operating system that may not be familiar to you.
 The images supplied by [@boettigerIntroductionRockerDocker2017], for example, are based on the Ubuntu operating system.
@@ -813,11 +814,11 @@ RUN apt-get update && apt-get install -y python3
 
 `Docker` eventually requires a single `Dockerfile` to run, so `repro::automate()` simply concatenates the three `Dockerfiles` and saves the result into the main `Dockerfile` at the top level of the R project.
 
-With this approach, users of `repro` can not only build complex software environments but they can also implement complex file dependencies.
+With this approach, users of `repro` can build complex software environments and implement complex file dependencies.
 The standard `repro` metadata only makes sure that all dependencies are available but does not allow you to specify custom recipes for them in the metadata.
 If you can formulate the creation of dependencies in terms of computational steps, e.g. the file `data/clean.csv` is created from `data/raw.csv` by script `R/preprocess.R`, you should include these in the `Makefile`.
-The `Makefile` that `repro` creates is only a template and you are free to change it.
-However, make sure to never remove the following two lines:
+The `Makefile` that `repro` creates is only a template, and you are free to change it.
+However, make sure never to remove the following two lines:
 
 ```bash
 include .repro/Makefile_Rmds
@@ -826,13 +827,13 @@ include .repro/Makefile_Docker
 
 The file `.repro/Makefile_Rmds` contains the automatically generated targets from `repro::automate()` for the `R Markdown` files.
 This file should not be altered manually.
-If you are not satisfied with the automatically generated target simply provide an alternative target in the main `Makefile`.
+If you are not satisfied with the automatically generated target, simply provide an alternative target in the main `Makefile`.
 Targets in the main `Makefile` take precedent.
 
 The file `.repro/Makefile_Docker` does again contain a rather complicated template which you could but usually should not modify.
 This `Makefile` coordinates the interplay between `Make` and `Docker` and contains targets for building (with `make docker`) and saving (with `make save-docker`) the `Docker` image.
 Additionally, it provides facilities to execute commands within the container.
-If you write a computational recipe for a target it will be by default evaluated using the locally installed software.
+If you write a computational recipe for a target, it will be by default evaluated using the locally installed software.
 To instead evaluate commands inside the `Docker` image, you should wrap them in `$(RUN1) command $(RUN2)`, like in this example, which is identical to the first `Make` example we gave above except for the addition of `$(RUN1)` and `$(RUN2)` in l. 2:
 ```bash
 simulated_data.csv: R/simulate.R
@@ -867,8 +868,8 @@ cat("```bash",
   "```", sep = "\n")
 ```
 
-To summarise, `repro` provides researchers with an easy to use solution for dependency tracking (in form of `Make`) and software management (using `Docker`) without the necessity to learn both tools.
-Users with more advanced requirements can manually change all aspects of both programs while still profiting from `repro`'s automations.
+To summarise, `repro` provides researchers with an easy to use solution for dependency tracking (in the form of `Make`) and software management (using `Docker`) without the necessity to learn both tools.
+Users with more advanced requirements can manually change all aspects of both programs while still profiting from `repro`'s automation.
 
 # Preregistration as Code 
 
