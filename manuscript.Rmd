@@ -350,8 +350,8 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 # Creating reproducible research projects
 
 One impediment to the widespread adoption of a standard for reproducible research is that learning to use the required tools can be quite time-intensive.
-To lower the threshold to adoption, the R-package `repro` introduces helper functions that wraps and hides the complexity of the necessary more complicated (and powerful) tools.
-The provided wrapper functions guide end-users in the use of reproducibility tools, provide feedback about what the computer does, and suggest what the user is supposed to do next.
+To lower the threshold to adoption, the R-package `repro` introduces helper functions that wrap and hide the complexity of the necessary more complicated (and powerful) tools.
+The provided wrapper functions guide end-users in the use of reproducibility tools, provide feedback about what the computer does and suggest what the user is supposed to do next.
 The `repro` package extends the [`usethis`](https://usethis.r-lib.org) [@usethis] package.
 While the `usethis` package aims to simplifies the development of R packages, `repro` contains reproducibility specific utilities.
 We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their system's state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
@@ -363,14 +363,14 @@ Of course, your specific situation might involve additional, more specialized st
 After completing the tutorial, you should be able to customize your workflow accordingly.
 The first step is to install the required software.
 We assume that you have installed R [@R-base, version `r with(R.version, paste0(major, ".", minor))`] and RStudio [@rstudio, version 1.4] already but the tutorial will guide you in detail through the installation of other necessary software with the help of the R package [`repro`](https://github.com/aaronpeikert)[@R-repro].
-In case you either have not installed R and RStudio or are unsure if they are up to date you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
+In case you either have not installed R and RStudio or are unsure if they are up to date, you might want to consult our installation advice in the [Online Supplementary Material](https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md) that covers how to install all software necessary for this tutorial in three steps.
 The [installation advice]((https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)) may also help Windows users who have problems installing `Docker`.
 
 Unfortunately, Docker requires administrator rights to run, which may not be available to all researchers.
 We recommend [`renv`](https://rstudio.github.io/renv/articles/renv.html) [@R-renv] in cases where no administrator rights can be obtained but can not detail its use in this document.
-`renv` tracks which R package is installed from which source in which version in a so called [`lockfile`](https://rstudio.github.io/renv/articles/lockfile.html).
-This lockfile is than used to reinstall the same packages on other computers or later in time.
-For a more thorogh discussion see @vanlissa2020worcs.
+`renv` tracks which R package is installed from which source in which version in a so-called [`lockfile`](https://rstudio.github.io/renv/articles/lockfile.html).
+This lockfile is then used to reinstall the same packages on other computers or later in time.
+For a more thorough discussion, see @vanlissa2020worcs.
 
 Start RStudio and install the package [`repro`](https://github.com/aaronpeikert)[@R-repro]. 
 It will assist you while you follow the tutorial.
@@ -384,8 +384,8 @@ options(
 install.packages('repro')
 ```
 
-An example of the assistance that `repro` provides are the check functions.
-These verify that you indeed have installed and setup the required pieces of software for this workflow (here, we use the double-colon operator to access functions from the `repro` namespace; we chose to do so to make clear which functions are native `repro` functions) :
+An example of the assistance that `repro` provides is the check functions.
+These verify that you indeed have installed and set up the required pieces of software for this workflow (here, we use the double-colon operator to access functions from the `repro` namespace; we chose to do so to make clear which functions are native `repro` functions) :
 
 ```{r, include=FALSE}
 opts <- options()
@@ -423,7 +423,7 @@ options(opts)
 
 The messages from `repro` try to take the user by the hand to help them solve problems.
 These messages are adjusted to your specific operating system and installed dependencies.
-Before you continue, we ask you to run the above commands to check `Git`, `Make`, and `Docker`---both to become familiar with the functionality of the `check_*()` functions, and to prepare your system for creating reproducible projects.
+Before you continue, we ask you to run the above commands to check `Git`, `Make`, and `Docker`---both to become familiar with the functionality of the `check_*()` functions and to prepare your system for creating reproducible projects.
 
 After you have installed the necessary software, we suggest that you set up a secure connection to GitHub:
 
@@ -463,7 +463,7 @@ We start by creating such a project folder with RStudio by clicking the menu ite
 This creates a project containing an example analysis, but you may use any other template or existing R Project to turn into a reproducible research project using the functionality of `repro`.
 
 `Git` tracks any files that you manually add to the repository.
-To make sure you do not accidentally add files that you do not wish to share (e.g., privacy sensitive data),
+To make sure you do not accidentally add files that you do not wish to share (e.g., privacy-sensitive data),
 you can list specific files that you do not want to track in the `.gitignore` file.
 You can add something to the `.gitignore` file directly or with this command:
 
@@ -489,7 +489,7 @@ knitr::include_graphics(here::here("images", "modified.png"), auto_pdf = TRUE)
 For `Git` to recognize changes to a given file, you have to stage and then commit these changes (this is the basic save action for a project snapshot).
 One way to do this is through the visual user interface in the RStudio `Git` pane.
 Click on the empty box next to the file you want to stage.
-A check mark appears to indicate that the file is staged.
+A checkmark appears to indicate that the file is staged.
 After you have staged all files you want, click on the commit button, explain in the commit message why you made those changes, and then click on commit.
 This stores a snapshot of the current state of the project.
 
@@ -497,7 +497,7 @@ The files you created and the changes you made still have not left your computer
 All snapshots are stored in a local repository in your project folder.
 To back up and/or share the files online, you can push your local repository to a remote repository.
 While you can choose any `Git` service (like GitLab or BitBucket), we will use GitHub in this tutorial.
-Before you upload your project to `Git`, you need to decide if you would like the project publically accessable (viewable by anyone, editable by selected collaborators) or if you want to keep it private (only viewable and editable by selected collaborators).
+Before you upload your project to `Git`, you need to decide if you would like the project publically accessible (viewable by anyone, editable by selected collaborators) or if you want to keep it private (only viewable and editable by selected collaborators).
 To upload the project publically to GitHub use:
 
 ```{r, eval=FALSE}
@@ -511,11 +511,11 @@ usethis::use_github(private = TRUE)
 ```
 
 Depending on your computer configuration, this may ask to set up a secure connection to GitHub.
-In this case first follow the suggestions shown on the R console.
+In this case, first, follow the suggestions shown on the R console.
 
 ## Using dynamic document generation
 
-Now that you have created a version controlled project, we will proceed with dynamic document generation.
+Now that you have created a version-controlled project, we will proceed with dynamic document generation.
 A dynamic document has three elements:
 
 1. Text (prose; e.g., a scientific paper or presentation)
@@ -546,13 +546,12 @@ To do list:
 ```
 
 One advantage of this type of markup for formatting is that it can be rendered to many different output formats---both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
-Of particular note is the package output format supplied by the [`papaja`](https://github.com/crsh/papaja) package [@papaja] which produces APA compliant manuscripts [@apa7].
+Of particular note is the package output format supplied by the [`papaja`](https://github.com/crsh/papaja) package [@papaja], which produces APA compliant manuscripts [@apa7].
 Another advantage is that, because `R Markdown` files are in plain text, they are more suitable for version control using `Git`.
-Some users might find it easier to activate the "Visual Editor" of RStudio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the `R Markdown` document) which features more graphical elements like a traditional word processor but still creates an `R Markdown` underneath with all of its flexibility.
-The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a newline, which eases tracking changes across versions)
-and easing the generation of citations and references to Tables and Figures.
+Some users might find it easier to activate the "Visual Editor" of RStudio (Ctrl + Shift + F4 or click on the icon that resembles drawing materials or a compass in the upper right corner of the `R Markdown` document), which features more graphical elements like a traditional word processor but still creates an `R Markdown` underneath with all of its flexibility.
+The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a new line, which eases tracking changes across versions) and easing the generation of citations and references to Tables and Figures.
 
-Now that you are familiar with the basics of `Markdown` formatting, we turn our attention to including code into the text.
+Now that you are familiar with `Markdown` formatting basics, we turn our attention to including code and its results in the text.
 Code is separated by three backticks (and the programming language in curly braces) like here:
 
 ````markdown
@@ -566,12 +565,12 @@ This is normal text, written in Markdown.
 
 The hotkey [Control]+[Alt]+[i] inserts a block of code in the file.
 The results of code enclosed in such backticks will be dynamically inserted into the document (depending on specific settings).
-This means that, whenever you render the `R Markdown` to its intended output format, the code will be executed and the results updated.
-The resulting output document will be static, e.g. a pdf document, and can be shared wherever you like, e.g on a preprint server.
+This means that whenever you render the `R Markdown` to its intended output format, the code will be executed and the results updated.
+The resulting output document will be static, e.g. a pdf document, and can be shared wherever you like, e.g. on a preprint server.
 
 Once the `R Markdown` file has been rendered to a static document, the resulting file is decoupled from the `R Markdown` and the code that created it.
 This introduces a risk that multiple versions of the static document are disseminated, each with slightly different results.
-To avoid ambiguity, we therefore recommend referencing the identifier of the `Git` commit at the time of rendering in the static document.
+To avoid ambiguity, we, therefore, recommend referencing the identifier of the `Git` commit at the time of rendering in the static document.
 Simply put, a static document should link to the version of the code that was used to create it.
 The `repro` package comes with the function `repro::current_hash()` for this purpose.
 This document was created from the commit with the hash [``r repro::current_hash()`` (view on GitHub)](`r stringr::str_c("https://github.com/aaronpeikert/repro-tutorial/tree/", repro::current_hash(40))`).
@@ -631,7 +630,7 @@ repro:
 ---
 ```
 
-This information makes explicit what dependencies (in form of files and R packages) a project relies on .
+This information clarifies what dependencies (in the form of files and R packages) a project relies on.
 `repro` uses this information to construct a `Makefile` for the dependencies on other files and a `Dockerfile` that includes all required packages.
 These two files together form the basis for consistency within a research project and consistency across different systems.
 The function `repro::automate()` converts the metadata from all `R Markdown` files in the project (all files with the ending `.Rmd`) to a `Makefile` and a `Dockerfile`.
@@ -642,7 +641,7 @@ Please run `repro::automate()` in your project:
 repro::automate()
 ```
 
-It is important to re-run `repro::automate()` whenever you change the `repro`-metadata, change the output format, or add a new `R Markdown` file to the project, to keep the `Makefile` and `Dockerfile` up to date.
+It is important to re-run `repro::automate()` whenever you change the `repro`-metadata, change the output format, or add a new `R Markdown` file to the project to keep the `Makefile` and `Dockerfile` up to date.
 There is no harm in running it too often.
 Other than the `Makefile` and the `Dockerfile`, which are created in the document root path, repro generates a few more files in the `.repro` directory (which we will explain in detail later), all of which you should add and commit to `Git`.
 
