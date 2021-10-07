@@ -1347,6 +1347,30 @@ This analysis plan may contain data-dependent decisions to increase flexibility 
 
 ## Limitations
 
+We have to distinguish two kinds of limitations.
+First, some limitations are by design and are unlikely to be changed soon.
+Our workflow does inherit these from the software it relies on and the fundamental design principles these share with the workflow and `repro`.
+Second, there are other limitations that we hope development effort of the open-source community and, concerning `repro`, us will ease.
+
+As a principle, this workflow is incompatible with steps that cannot be automated.
+This principle is at odds with some ingrained habits of researchers to mix and match manual and automated steps in data analysis.
+To allow for automation, many researchers will have to search for alternative software.  
+The automation friendly software we present here has several technical but critical limitations.
+`Git` can track any files (files bigger than 1GB only with extensions) but can only compare text files (with endings like, `.txt`, `.csv`, `.R`,  or `.Rmd`), not binary files (with endings like `.docx`, `.exe` or `.zip`).
+With `R Markdown`, tables and graphics are dynamically generated from code but cannot be crafted by hand.
+`Make` can orchestrate any programmable software but fails to automate software that will only obey a user clicking at the right buttons.
+`Docker` can ship software that runs on Linux and can be automatically installed, but that requirement precludes many commercial or closed source software.
+
+This move away from software that has served researchers well for decades is understandably difficult and presents us with a conundrum.
+On the one hand, we firmly believe that automated reproducibility makes research more productive and collaboration easier.
+But, on the other hand, we expect researchers to invest considerable time in learning new tools and than must persuade their collaborators to do the same.
+Three arguments reconcile this apparent paradox.
+First, this change will not happen all at once.
+Automated reproducibility is an ideal that we believe has many advantages, but it is not an all or nothing decision.
+Researchers can pick up one skill at a time and then help their fellow collaborators do the same.
+Second, the upfront investment is one time (and efforts such as `repro` are underway to reduce it) and will pay dividends over many research projects.
+Third, the move towards open software for research offers several benefits beyond enabling automated reproducibility [@schaffnerFutureScientificJournals1994; @fitzgeraldTransformationOpenSource2006; @chaldecottHistoryScientificTechnical1965; @sonnenburgNeedOpenSource2007].
+
 `repro`'s primary goal is to increase the user-friendliness of reproducibility tools for researchers.
 Despite our efforts to ensure this goal, the package is still in development and undoubtedly has limitations.
 The workflow we present here introduces several software solutions, which in itself present a threat to long-term reproducibility.
