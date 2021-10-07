@@ -51,7 +51,7 @@ reporting of statistical and computational results. In this tutorial, we
 demonstrate how the R package `repro` supports researchers in creating
 fully computationally reproducible research projects with tools from the
 software engineering community. Building upon this notion of fully
-automated reproducibility we present several application including the
+automated reproducibility we present several applications including the
 preregistration of research plans with code (Preregistration as Code,
 PAC). PAC eschews all ambiguity of traditional preregistration and
 offers several other advantages. Making technical advancements that

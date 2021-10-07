@@ -22,3 +22,7 @@ temp.bib
 *.log
 *.zip
 data/data.csv
+*.aux
+*.out
+.bash_history
+.wget-hsts
