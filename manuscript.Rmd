@@ -905,7 +905,8 @@ A preregistration *and* a manuscript.
 For a PAC, researchers can write a reproducible, dynamically generated draft of their intended manuscript at the preregistration stage.
 This already includes most typical sections, such as Introduction, Methods, and Results.
 These results are initially based on simulated data with the same structure as the data they expect to obtain from their experiments.
-For guidance on how to simulate data, see @morrisUsingSimulationStudies2019, @paxtonMonteCarloExperiments2001 and @skrondalDesignAnalysisMonte2000.
+For guidance on how to simulate data, see @morrisUsingSimulationStudies2019, @paxtonMonteCarloExperiments2001 and @skrondalDesignAnalysisMonte2000 as well as the R packages [`simstudy`](https://cran.r-project.org/web/packages/simstudy/vignettes/simstudy.html)[@simstudy] and [`psych`](https://personality-project.org/r/psych/help/sim.html)[@psych].
+
 Once the preregistration is submitted and real data have been collected or made available,
 the document can be reproduced with a single command, thus updating the Results section to the final version.
 Reproducibility is of utmost importance at this stage since the preregistration must produce valid results at two points in time, once before data collection and once after data collection.
