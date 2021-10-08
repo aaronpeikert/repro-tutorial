@@ -1259,13 +1259,23 @@ As soon as the actual data are available, the simulated data is no longer used, 
 show_prereg("results", wrap = FALSE)
 ```
 
-The last thing we need to do is to report our results with the combination of the functions `planned_analysis()` and `report_analysis()`.
+Naturally we did not access the data when we wrote this code initially.
+We therefore did not know is the exact format the data would have.
+So we did need to change our preregistration after accessing the data to include i.a. the recoding of gender (lines 17-22) and the items (lines 23-26).
+We invite the reader to evaluate the changes we made to the preregistratered code on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
+
+The last thing we need to preregister is the reporting of our results with the combination of the functions `planned_analysis()` and `report_analysis()`.
 
 ```{r, echo=FALSE, results='asis'}
 show_prereg("report", wrap = FALSE)
 ```
 
 This is an example of how the results could be reported (based on simulated data):
+
+```{r, eval=FALSE, echo=-1}
+# this is a fake chunk, the faked output comes the chunk below
+report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)
+```
 
 ```{r, echo=FALSE, results='asis'}
 set.seed(1234)
