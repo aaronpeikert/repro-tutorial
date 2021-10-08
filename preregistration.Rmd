@@ -103,7 +103,7 @@ if(simulated){
   set.seed(1234)
   mach <- simulate_data(900, 8, 0.3, 10)
 } else {
-  mach <- readr::read_delim(real_data, delim = "\t")
+  mach <- readr::read_delim(real_data, delim = "\t", na = c("", "NA", "NULL"))
   # only keep MACH items + gender
   mach <- dplyr::select(mach, dplyr::matches("^Q\\d+A$"), gender)
   # code gender according to codebook (3 would be other)
@@ -113,6 +113,10 @@ if(simulated){
       levels = 1:2,
       labels = c("male", "female")
     ))
+  # some items are reversed, see https://core.ac.uk/download/pdf/38810542.pdf
+  reversed_nr <- c(1, 15, 2, 12, 4, 11, 14, 19)
+  reversed <- stringr::str_c("Q", reversed_nr, "A")
+  mach <- dplyr::mutate(mach, dplyr::across(one_of(reversed), ~ 6 - .x))
 }
 ```
 <!--end-results-->
@@ -123,12 +127,14 @@ report_analysis(planned_analysis(mach))
 ```
 <!--end-report-->
 
+<!--begin-discuss-changes-->
 # Discussion
 
 This document only serves to illustrate Preregistration as Code.
 We, therefore, do not discuss the results.
-After we have acquired the data, we realized that we had to change the code for reading the data (see commit [6556a93](https://github.com/aaronpeikert/repro-tutorial/commit/6556a9395fcdd600b5b0c5358f92a2c6635ae360)).
+After we have acquired the data, we realized that we had to change the code for reading the data, including recoding gender, missing values and reversed items (see commit [6556a93](https://github.com/aaronpeikert/repro-tutorial/commit/6556a9395fcdd600b5b0c5358f92a2c6635ae360) and commit [9f7ab21](https://github.com/aaronpeikert/repro-tutorial/commit/9f7ab212dfaf84a0398752a4b80cf14c71000d00)).
 We do not believe that these changes influence the results substantively.
+<!--end-discuss-changes-->
 
 \newpage
 # References
