@@ -1305,14 +1305,24 @@ zenodo.org [@zenodo] is a publicly funded service provider that archives digital
 While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
 Please note that you can only link public GitHub repositories to zenodo.org.
 You may log into zenodo.org through your GitHub account.
+To log in with your GitHub account:
+
+> Navigate to https://zenodo.org/login/ →  Log in with GitHub
+
+\noindent{}To link zenodo.org and GitHub
 
 > Log into zenodo.org → Account → GitHub[^zenodo-github]
+
+\noindent{}Or:
+
+> Navigate to https://zenodo.org/account/settings/github/
+
 [^zenodo-github]: https://zenodo.org/account/settings/github/
 
 After you have linked a GitHub repository, you trigger the archivation by creating a GitHub release.
 To create GitHub release, navigate to GitHub:
 
-```{r}
+```{r, eval=FALSE}
 usethis::browse_github()
 ```
 
