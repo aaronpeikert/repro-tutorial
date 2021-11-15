@@ -1278,9 +1278,9 @@ show_prereg("report", wrap = FALSE)
 
 This is an example of how the results could be reported (based on simulated data):
 
-```{r, eval=FALSE, echo=-1}
+```{r, eval=TRUE, echo=-1, results='hide'}
 # this is a fake chunk, the faked output comes the chunk below
-report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)
+report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)))
 ```
 
 ```{r, echo=FALSE, results='asis'}
