@@ -1026,7 +1026,7 @@ A single simulated dataset already helps to ensure that the plan is viable under
 However, repeated simulation with varying parameters, a so-called Monte Carlo simulation, lets researchers play through several scenarios.
 Monte Carlo simulation lets researchers navigate several trade-offs regarding their resources.
 In the simplest case, they can assess the power (the probability to detect an effect of a given size) for varying numbers of observations in the simulation to determine the required sample size for their study [@brandmaier2018precision].
-@bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis does not increase the planned sample size on average but can help to invest resources more efficiently.
+@bakkerRecommendationsPreregistrationsInternal2020 found that a formal power analysis may help researchers to invest resources more efficiently.
 Researchers may also evaluate how the data analysis copes with expected data complications, e.g. non-normal data [@harrisonIntroductionMonteCarlo2010; @raychaudhuriIntroductionMonteCarlo2008].
 
 ### The Writing Process
