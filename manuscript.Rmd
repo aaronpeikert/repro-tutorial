@@ -2,13 +2,13 @@
 title: "Reproducible Research in R: A Tutorial on how to Do the Same Thing More Than Once"
 author:
   - name: Aaron Peikert
-    affil: 1, *
+    affil: 1, 2, *
     orcid: 0000-0001-7813-818X
   - name: Caspar J. van Lissa
-    affil: 2, 3
+    affil: 3, 4
     orcid: 0000-0002-0808-5024
   - name: Andreas M. Brandmaier
-    affil: 1, 4, 5
+    affil: 1, 5, 6
     orcid: 0000-0001-8765-6982
 affiliation:
   - num: 1
@@ -16,15 +16,18 @@ affiliation:
       Center for Lifespan Psychology---Max Planck Institute for Human Development, Lentzeallee 94, 14195 Berlin, Germany
   - num: 2
     address: |
-      Department of Methodology & Statistics---Utrecht University, Faculty of Social and Behavioral Sciences, Utrecht, Netherlands
+      Humboldt-Universität zu Berlin, Berlin, Germany
   - num: 3
     address: |
-      Open Science Community Utrecht, Utrecht, Netherlands
+      Department of Methodology & Statistics---Utrecht University, Faculty of Social and Behavioral Sciences, Utrecht, Netherlands
   - num: 4
+    address: |
+      Open Science Community Utrecht, Utrecht, Netherlands
+  - num: 5
     address: |
       Max Planck UCL Centre for Computational Psychiatry and Ageing Research
       Berlin, Germany, and London, UK
-  - num: 5
+  - num: 6
     address: |
       MSB Medical School Berlin,
       Berlin, Germany
