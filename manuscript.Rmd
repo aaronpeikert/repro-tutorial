@@ -139,7 +139,7 @@ Sharing these digital research products can increase scientific efficiency by en
 To some extent, these potential benefits are contingent on whether these digital research products are reproducible. 
 Reproducibility can be defined as the ability of anyone to obtain identical results from the *same* data with the *same* computer code [see @Peikert2019 for details].
 The credibility of empirical research results hinges on their objectivity.
-Objectivity in this context means, "in principle it [the research finding] can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22][^popper].
+Objectivity in this context means, "in principle it [the research finding] can be tested and understood by anybody." [@popperLogicScientificDiscovery2002, p. 22].
 Only a reproducible result can be tested and understood by anyone.
 Therefore, reproducibility has long been considered integral to empirical research.
 Unfortunately, despite increasing commitment to open science practices and good will, many projects can not yet be reproduced by other research teams [@obels2020].
@@ -163,8 +163,6 @@ PAC involves preregistering the intended analysis code and the major part of the
 The resulting dynamic document closely resembles the final manuscript but temporarily uses simulated data to generate placeholder results (e.g., figures, tables, and statistics).
 With these placeholders, authors preregister the exact presentation of their results without having seen real data yet.
 Once the empirical data are available, they replace the simulated data, the results are then updated automatically, and the discussion can be written to finalize the report.
-
-[^popper]: In fact, @popperLogicScientificDiscovery2002's famous criterion of demarcation is built around "inter-subjective testing", a concept that he later generalized to inter-subjective criticism (Footnote *1, p. 22). Somewhat confusingly, @popperLogicScientificDiscovery2002 uses the term "Reproducibility" for what we would call "Replication."
 
 Scientific organizations and funding bodies increasingly demand transparent sharing of digital research products, and researchers are increasingly willing to do so.
 However, although the sharing of such digital research products is a necessary condition for reproducibility, it is not a sufficient one.
