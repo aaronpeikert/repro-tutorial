@@ -152,8 +152,8 @@ This is because making a research project reproducible with all code, data, and 
 With technological advancement, however, it is now possible to make all digital products related to a research project available in a manner that enables automatic reproduction of the research project with minimal effort.
 
 With this paper, we pursue two aims.
-First, we want to introduce researchers to a notion of automated reproducibility that requires no manual steps, apart from the setup of the software. 
-Second, we present the opportunities such automated reproducibility affords to improve not only how research outputs are created and recreated but also how research itself is conducted.
+First, we want to introduce researchers to a notion of automated reproducibility that requires no manual steps, apart from the initial setup of the software environment. 
+Secondly, we discuss the possibilities that such automated reproducibility offers to improve not only the way research results are created and recovered, but also how this may change the general approach to a research project.
 With regard to the first goal, we show how to address four common threats to reproducibility with tools originating from software engineering [see @Peikert2019 for details].
 Then we present a tutorial on how to employ these tools to achieve automated reproducibility.
 A single tutorial cannot comprehensively introduce the reader to the individual tools, but this tutorial is intended to help readers to build a coherent workflow.
