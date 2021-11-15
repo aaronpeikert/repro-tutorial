@@ -27,12 +27,8 @@ simulated_data.csv: R/simulation.R
 data/sd3.csv: R/simulation_funs.R
 	$(RUN1) Rscript -e 'source("$<"); set.seed(1235); readr::write_csv(generate_data(500), "data/sd3.csv")' $(RUN2)
 
-images/nutshell.svg:
-	$(RUN1) mkdir -p images && \
-	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.svg $(RUN2)
-images/nutshell.pdf:
-	$(RUN1) mkdir -p images && \
-	wget -O $@ https://github.com/aaronpeikert/reproducible-research/raw/master/Images/nutshell.pdf $(RUN2)
+images/nutshell.pdf: images/nutshell.svg
+	inkscape --export-area-page --export-filename=$@ $<
 
 apa7.csl:
 	$(RUN1) wget -O $@ https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl $(RUN2)

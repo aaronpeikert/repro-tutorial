@@ -347,7 +347,7 @@ Users do not have to have `repro` installed to reproduce a project;
 in fact, they do not even need to have R installed because the entire project can be rebuilt inside a container with R installed.
 In the remainder, we will walk you through the creation of a reproducible research project with the package `repro`.
 
-```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed columns) central to the reproducible workflow: version control (`Git`), dependency tracking (`Make`), software management (`Docker`), and dynamic document generation (`R Markdown`). `Git` tracks changes to the project over time. `Make` manages dependencies among the files. `Docker` provides a container in which the final report is built using dynamic document generation in `R Markdown`. Reproduced from @Peikert2019 licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0).  "}
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components (in dashed columns) central to the reproducible workflow: version control (`Git`), dependency tracking (`Make`), software management (`Docker`), and dynamic document generation (`R Markdown`). `Git` tracks changes to the project over time. `Make` manages dependencies among the files. `Docker` provides a container in which the final report is built using dynamic document generation in `R Markdown`. Adapted from @Peikert2019 licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0).  "}
 # file gets downloaded in Makefile
 knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 ```
