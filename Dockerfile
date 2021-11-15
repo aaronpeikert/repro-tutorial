@@ -8,6 +8,7 @@ RUN MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE} \
   && export MRAN=$MRAN \
   && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site
 RUN Rscript -e 'tinytex::tlmgr_install(c("epstopdf-pkg", "mdwtools", "booktabs", "framed", "fancyvrb", "geometry", "infwarerr", "pdftexcmds", "xcolor", "etoolbox", "kvsetkeys", "ltxcmds", "kvoptions", "iftex", "amsmath", "auxhook", "auxhook", "bigintcalc", "bitset", "etexcmds", "gettitlestring", "hycolor", "hyperref", "intcalc", "kvdefinekeys", "letltxmacro", "pdfescape", "refcount", "rerunfilecheck", "stringenc", "uniquecounter", "zapfding", "colortbl", "soul", "multirow", "microtype", "totcount", "amscls", "hyphenat", "natbib", "footmisc", "newfloat", "caption", "texlive-scripts", "fancyhdr", "grfext", "lastpage", "palatino", "ec", "lineno", "float", "setspace", "enumitem", "psnfss", "symbol", "titlesec", "tabto-ltx", "fp", "ms", "pgf", "fpl", "mathpazo", "dvips", "upquote", "draftwatermark"))'
+RUN apt-get update -y && apt-get install -y inkscape
 RUN install2.r --error --skipinstalled \ 
   furrr \ 
   future.batchtools \ 

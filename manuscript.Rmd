@@ -108,6 +108,8 @@ repro:
     - images/nutshell.pdf
   files:
     - references.bib
+  apt:
+    - inkscape
 output:
   bookdown::markdown_document2:
     base_format: rticles::mdpi_article
