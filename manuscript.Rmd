@@ -1082,6 +1082,7 @@ Since the data is obfuscated, virtually no information is revealed to the resear
 Shuffling leaves only univariate information, so this procedure is only applicable for bi- or multivariate hypotheses.
 The researcher can still access the information about means or proportions (e.g., the number of participants belonging to group "A" are in the dataset), but are unbiased for all relations between variables (e.g., members of group "A" have a greater mean in variable "Z").
 To be clear, any exploration of the data before preregistration (PAC or otherwise) renders the preregistration invalid and amounts to (albeit sometimes unintentional) scientific misconduct.
+The aim is transparency and the line that shall not be crossed is learning about the research outcomes, but what this means differs for each research project.
 
 Another approach that can replace but also complement simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the collected data to preregister.
 A pilot study has obvious advantages for study planning, since it lets the researcher evaluate the feasibility of many assumptions.
