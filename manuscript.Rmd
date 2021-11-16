@@ -161,7 +161,6 @@ It is aimed at researchers who regularly write code to analyze their data and ar
 Ideally, our reader has already created a dynamic document at some point in time (e.g., with R Markdown or Jupyter) and attempted to track a file with version control (e.g., with Git). 
 The R package `repro` supports researchers in setting up the required software and in adopting this workflow.
 We present automated reproducibility as best practice, a goal that is not always achieved due to limited resources, technical restrictions, or practical considerations, but is very much worth striving for.
-If some parts of the workflow prove to be unfeasible, we encourage the reader to find their own solutions and to concentrate on the feasible parts.
 
 In pursuit of the second aim, we present a strictly reproducible and unambiguous form of preregistration [@NosekRevolution2018] that builds upon implementing this reproducible workflow, the so-called *Preregistration as Code* (PAC).
 PAC involves preregistering the intended analysis code and the major part of the final scientific report as a dynamic document, including typical sections like introduction, methods, and results.
