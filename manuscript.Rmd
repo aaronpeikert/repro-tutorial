@@ -1118,10 +1118,13 @@ After they gathered the actual data, they can replace the simulated data, render
 
 #### When Is PAC Applicable?
 
-Every study that can be preregistered can also be preregistered with code.
+Every study that can be preregistered and ultimately uses computer code for the statistical analysis, can also be preregistered with code.
 The only difference is that PAC demands a comprehensive and complete analysis plan.
-With traditional preregistration, researchers are able to omit details and get away with decisions that are made only after having seen the data, thus, potentially introducing opportunistic bias in statistical results.
-Some researchers may not feel ready to decide on every detail of the analysis plan before data collection.
+With traditional preregistration, researchers may (unintentionally) omit details and thus introduce decisions that need to be made only after having seen the data.
+We emphasize again that deviations from the preregistration are not only possible but actually likely.
+The advtange of PAC is that all deviations from the planned analysis as implemented in code are tracked, and the final analysis can be easily compared to the PAC.
+Importantly, we see PAC as a means to increase transparency not as a means to limit researchers in their statistical analyses.
+In practice, researchers may not feel ready to decide on every detail of the analysis plan before data collection.
 In such cases, we recommend making decisions based on the best available knowledge, and if these decisions still prove infeasible, make simple assumptions and revise and explain them later as described in Section [Deviating from the preregistration and exploration] in the final manuscript.
 
 Beyond standard preregistrations in psychological research, we believe that two applications specifically lend themselves to PAC.
@@ -1219,7 +1222,7 @@ One example would be using the function `wilcox.test` instead of the combination
 Either of them is a valid implementation of the Mann–Whitney–Wilcoxon test, but the first assumes equal variance.
 In contrast, the second applies Welch's correction by default and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
 Mentioning every such minute implementation detail is almost impossible and would result in overly verbose preregistrations.
-Still, these details can make a difference and provide undisclosed researchers' degrees of freedom.
+Still, these details can make a difference in the interpretation of statistical results and, thus, represent undisclosed researchers' degrees of freedom.
 
 Together with the function `simulate_data()` (not shown here), the function `planned_analysis()` can be used to justify the planned sample size.
 To that end, `simulate_data()` is repeatedly called with increased sample sizes and the proportion of significant results (power) is recorded.
