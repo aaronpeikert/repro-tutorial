@@ -363,7 +363,7 @@ We hope this makes reproducibility tools more accessible by enabling beginner-le
 These wrappers are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
 
 This tutorial assumes that the user is predominantly working in R, with the help of RStudio.
-It describes basic steps that we expect to be representative of a small-scale psychological research project. 
+It describes basic steps that we expect to be representative of a small-scale psychological research project that relies on no external software or multistage data processing (for those requirements see section [Advanced Features]). 
 Of course, your specific situation might involve additional, more specialized steps. 
 After completing the tutorial, you should be able to customize your workflow accordingly.
 
