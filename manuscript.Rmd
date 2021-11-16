@@ -1272,8 +1272,10 @@ show_prereg("results", wrap = FALSE)
 
 Naturally we did not access the data when we initially wrote this code.
 We therefore did not know the exact format the data would have.
-This means that we did need to change our preregistration after accessing the data to include i.e. the recoding of gender (lines 17-22) and the items (lines 23-26).
-We invite the reader to evaluate the changes we made to the preregistered code on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
+This means that we did need to change our preregistration after accessing the data to include i.e. the recoding of gender (lines 17-22) and the items (lines 23-26).[^prereg-changes]
+
+[^prereg-changes]: We invite the reader to evaluate the changes we made to the preregistered code.
+Either on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg...main) → "Files changed" or directly in Git with `git diff v0.0.1.1-prereg preregistration.Rmd`.
 
 The last thing we need to preregister is the reporting of our results with the combination of the functions `planned_analysis()` and `report_analysis()`.
 
