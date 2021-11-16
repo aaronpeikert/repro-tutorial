@@ -53,7 +53,7 @@ simplesummary: |
   This paper introduces `repro`, an R package that guides researchers through installation and use of the tools required to make a research project reproducible.
   We also suggest the utilization of the proposed workflow for the preregistration of study plans as reproducible computer code (preregistration as code; PAC).
   Since computer code represents the planned analyses exactly as they will be executed, it is more precise than natural language descriptions of those analyses, which then merely complement the PAC as a more readable summary. 
-  PAC circumvents the shortcomings of ambiguous preregistrations that may give researchers undesired degrees of freedom in the execution of their analysis.
+  PAC circumvents the shortcomings of ambiguous preregistrations that may give researchers undisclosed degrees of freedom in the execution of their analysis.
   Reproducibility facilitated by automation therefore has a wide range of applications to accelerate scientific progress.
 abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
@@ -887,13 +887,17 @@ Users with more advanced requirements can manually change all aspects of both pr
 
 Defining the research questions and planning data analysis before observing the research outcomes is referred to as *preregistration* [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results by separating a-priori planned and theory-driven analyses from those conducted unplanned and post-hoc, that is, after having seen the data.
-Preregistration seeks to reduce researchers' degrees of freedom [@NosekRevolution2018] in the execution of a planned study by limiting the number of decisions to be made after data has been collected, that could bias the reported results.
+In designing, executing, and analyzing a study, researchers are faced with a myriad of choices, often called researchers degrees of freedom.
+These may be used to reach statistical significance or inflate effect size estimates introducing opportunistic bias [@decosterOpportunisticBiasesTheir2015].
+Preregistration clarifies when and how researchers employ their degrees of freedom; otherwise, readers of a manuscript must presume what liberties the researchers took.
+The goal is transparency and not to restrict what researchers may do to gather or analyze their data.
+
 Preregistration, however, have several shortcomings.
-One is that written study plans are often interpretable in multiple ways and often do not achieve the level of unambiguity that is required to effectively set the researcher degrees of freedom, to zero.
+One is that written study plans are often interpretable in multiple ways.
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis, their results vary considerably [@silberzahnManyAnalystsOne2018].
 The current best practice to ensure that the preregistrations are comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
 These templates seek to improve the specificity of study plans by imposing structure [@bakkerEnsuringQualitySpecificity2020].
-However, such templates cannot remove the degrees of freedom completely because it is impossible to verbally describe every detail of an analysis for any but the most straightforward analysis.
+However, such templates cannot ensure full transparency because it is impossible to verbally describe every detail of an analysis for any but the most straightforward analysis.
 This ambiguity causes a second problem, namely, comparing the initial plan and the resulting publication to decide if and how researchers deviated from the preregistration.
 This task is difficult because it is impossible to decide without additional information weather the analysis was actually carried out differently or just described differently.
 The comparison is made impossible if the authors of the preregistration were intentionally vague.
@@ -911,7 +915,7 @@ Many researchers would only realize that such a model cannot be estimated once t
 The workflow described in this paper facilitates a rigorous solution to this problem:
 Instead of describing the analysis in prose, researchers include the code required to conduct the analysis in the preregistration.
 We term this approach of writing and publishing code at the preregistration stage *Preregistration as Code (PAC)*.
-PAC has the potential to eliminate researchers degrees of freedom to a much greater extent than, e.g., preregistration templates.
+PAC has the potential to eliminate undisclosed researchers degrees of freedom to a much greater extent than, e.g., preregistration templates.
 Moreover, it removes the necessity to write two separate documents:
 A preregistration *and* a manuscript.
 For a PAC, researchers can write a reproducible, dynamically generated draft of their intended manuscript at the preregistration stage.
@@ -925,7 +929,7 @@ Reproducibility is of utmost importance at this stage since the preregistration 
 As outlined before, reproducibility builds upon four pillars (version control, dynamic document generation, dependency tracking, and software management).
 To use PAC the dangers to reproducibility we described must be  eliminated.
 
-The idea of submitting code as part of a preregistration is not new.
+The idea of submitting code as part of a preregistration is not new [e.g. @wichertsDegreesFreedomPlanning2016].
 A prominent preregistration platform, [The Open Science Framework](https://osf.io/), suggests submitting scripts alongside the preregistration of methods.
 In an informal literature search (we skimmed the first 300 results of Google Scholar with the keywords `("pre registration"|"pre-registration"|preregistration)&(code|script|matlab|python|"R")`) we only found close to a dozen published articles that did include some form of script as part of their preregistration.
 Though the notion of preregistering code has been around for a while [cf. @steegenMeasuringCrowdAgain2014],
@@ -944,7 +948,7 @@ If all steps to be executed are documented clearly, the carrying out of the stud
 Third, PAC removes any ambiguity regarding the translation of verbal analysis plans into code.
 PAC is more comprehensive by design because its completeness can be empirically checked with simulated data.
 Evaluating the intended analysis code on simulated data will help identify missing steps or ambiguous decisions.
-PAC, therefore, minimizes researchers degrees of freedom more effectively than standard preregistration does [@bakkerEnsuringQualitySpecificity2020].
+PAC, therefore, minimizes undisclosed researchers degrees of freedom more effectively than standard preregistration does [@bakkerEnsuringQualitySpecificity2020; @wichertsDegreesFreedomPlanning2016].
 Fourth, despite its rigor, PAC accommodates data-dependent decisions if these can be formulated as code.
 Researchers can, for example, formulate conditions (e.g., in the form of if-else-blocks) under which they prefer one analysis type over the other.
 For example, if distributional assumptions are not met, the code may branch out to employ robust methods; or, an analysis may perform automated variable selection mechanisms before running the final model.
@@ -1080,7 +1084,7 @@ We argue that it is still an eligible preregistration.
 In fact, guidelines for clinical trials also recommend analysis of blinded data  to test the practicality of the preregistration [@ICH1998].
 Since the data is obfuscated, virtually no information is revealed to the researchers, and they can not employ their degrees of freedom effectively to influence the results (see section above).
 Shuffling leaves only univariate information, so this procedure is only applicable for bi- or multivariate hypotheses.
-The researcher can still access the information about means or proportions (e.g., the number of participants belonging to group "A" are in the dataset), but are unbiased for all relations between variables (e.g., members of group "A" have a greater mean in variable "Z").
+The researcher can still access the information about means or proportions (e.g., the number of participants belonging to group "A" are in the dataset), but remain uninformed about relations between variables (e.g., members of group "A" have a greater mean in variable "Z").
 To be clear, any exploration of the data before preregistration (PAC or otherwise) renders the preregistration invalid and amounts to (albeit sometimes unintentional) scientific misconduct.
 
 Another approach that can replace but also complement simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the collected data to preregister.
@@ -1116,7 +1120,7 @@ After they gathered the actual data, they can replace the simulated data, render
 
 Every study that can be preregistered can also be preregistered with code.
 The only difference is that PAC demands a comprehensive and complete analysis plan.
-With traditional preregistration, researchers are able to omit details and get away with decisions that are made only after having seen the data, thus, potentially biasing statistical results.
+With traditional preregistration, researchers are able to omit details and get away with decisions that are made only after having seen the data, thus, potentially introducing opportunistic bias in statistical results.
 Some researchers may not feel ready to decide on every detail of the analysis plan before data collection.
 In such cases, we recommend making decisions based on the best available knowledge, and if these decisions still prove infeasible, make simple assumptions and revise and explain them later as described in Section [Deviating from the preregistration and exploration] in the final manuscript.
 
@@ -1215,7 +1219,7 @@ One example would be using the function `wilcox.test` instead of the combination
 Either of them is a valid implementation of the Mann–Whitney–Wilcoxon test, but the first assumes equal variance.
 In contrast, the second applies Welch's correction by default and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
 Mentioning every such minute implementation detail is almost impossible and would result in overly verbose preregistrations.
-Still, these details can make a difference and unwanted researchers' degrees of freedom.
+Still, these details can make a difference and provide undisclosed researchers' degrees of freedom.
 
 Together with the function `simulate_data()` (not shown here), the function `planned_analysis()` can be used to justify the planned sample size.
 To that end, `simulate_data()` is repeatedly called with increased sample sizes and the proportion of significant results (power) is recorded.
@@ -1371,7 +1375,7 @@ such as preregistration as code (PAC).
 A PAC incorporates all planned analysis code into a reproducible manuscript that already renders the expected results.
 These results are based on simulated data, so that there is no danger of peeking at the real data while writing the scripts.
 The entire manuscript, including planned analyses, is preregistered.
-This way, all researcher's degrees of freedom are eliminated.
+This way, every use of a researchers' degree of freedom is disclosed.
 Once real data is gathered, the reproducible manuscript is (re-)created with the real data.
 Because the same dynamic document serves as preregistration and final manuscript, researchers, reviewers and, editors only have to revise one document.
 To editors, reviewers, and readers, it is obvious how the researchers deviated from the preregistration because everything there is a single "source of truth"---dynamic manuscript including code---under version control.
