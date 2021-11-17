@@ -1120,9 +1120,10 @@ After they gathered the actual data, they can replace the simulated data, render
 
 Every study that can be preregistered and ultimately uses computer code for the statistical analysis, can also be preregistered with code.
 The only difference is that PAC demands a comprehensive and complete analysis plan.
-With traditional preregistration, researchers may (unintentionally) omit details and thus introduce decisions that need to be made only after having seen the data.
-We emphasize again that deviations from the preregistration are not only possible but actually likely.
-The advtange of PAC is that all deviations from the planned analysis as implemented in code are tracked, and the final analysis can be easily compared to the PAC.
+With traditional preregistration, researchers may (unintentionally) omit details and thus introduce decisions that appear to be made after having seen the data.
+We emphasize again that deviations from the preregistration are not only possible but likely.
+The advantage of PAC is transparency.
+All deviations from the planned analysis as implemented in code are tracked, and the final analysis can be easily compared to the PAC.
 Importantly, we see PAC as a means to increase transparency not as a means to limit researchers in their statistical analyses.
 In practice, researchers may not feel ready to decide on every detail of the analysis plan before data collection.
 In such cases, we recommend making decisions based on the best available knowledge, and if these decisions still prove infeasible, make simple assumptions and revise and explain them later as described in Section [Deviating from the preregistration and exploration] in the final manuscript.
