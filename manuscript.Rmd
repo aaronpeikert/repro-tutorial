@@ -1368,18 +1368,10 @@ These are important building blocks for transparent and cumulative science becau
 The workflow we present here rests on four software solutions, (1) version control, (2) dynamic document generation, (3) dependency tracking and (4) software management to guarantee reproducibility.
 We first demonstrated how to create a reproducible research project.
 Then, we illustrated how such a project could be reproduced---either by the original author and/or collaborators or by a third party.
-We finally presented an example of how the rigorous and automated reproducibility workflow introduced by `repro` may enable other innovations,
-such as preregistration as code (PAC).
-A PAC incorporates all planned analysis code into a reproducible manuscript that already renders the expected results.
-These results are based on simulated data, so that there is no danger of peeking at the real data while writing the scripts.
-The entire manuscript, including planned analyses, is preregistered.
-This way, all researcher's degrees of freedom are eliminated.
+We finally presented an example of how the rigorous and automated reproducibility workflow introduced by `repro` may enable other innovations, such as preregistration as code (PAC).
+In PAC the entire reproducible manuscript, including planned analyses adn results based on simulated data, is preregistered.
 Once real data is gathered, the reproducible manuscript is (re-)created with the real data.
-Because the same dynamic document serves as preregistration and final manuscript, researchers, reviewers and, editors only have to revise one document.
-To editors, reviewers, and readers, it is obvious how the researchers deviated from the preregistration because everything there is a single "source of truth"---dynamic manuscript including code---under version control.
-
-The likelihood of such deviations, remains unavoidable, but is decreased by using simulated data to verify the suitability of the proposed analysis plan.
-This analysis plan may contain data-dependent decisions to increase the flexibility of research plans.
+PAC only becomes possible because reproducibility is ensured and leverages version control and dynamic document generation as key features of the workflow.
 
 ## Limitations
 
