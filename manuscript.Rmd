@@ -848,7 +848,7 @@ To evaluate commands inside the `Docker` image instead, you should wrap them in 
 
 ```bash
 simulated_data.csv: R/simulate.R
-  $(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN1)
+  $(RUN1) Rscript -e 'source("R/simulate.R")' $(RUN2)
 ```
 
 If users execute this in the terminal:
