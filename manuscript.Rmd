@@ -492,7 +492,7 @@ knitr::include_graphics(here::here("images", "modified.png"), auto_pdf = TRUE)
 ```
 
 For `Git` to recognize changes to a given file, you have to stage and then commit these changes (this is the basic save action for a project snapshot).
-One way to do this is through the visual user interface in the RStudio `Git` pane.
+One way to do this is through the visual user interface in the RStudio `Git` pane (see Figure \@ref(fig:modified)).
 Click on the empty box next to the file you want to stage.
 A checkmark then indicates that the file is staged.
 After you have staged all of the files you want, click on the commit button, explain in the commit message why you made those changes, and then click on commit.
