@@ -59,7 +59,7 @@ abstract: "`r tryCatch(trimws(readr::read_file(here::here('abstract.Rmd'))))`"
 keywords: |
   open science; computational reproducibility; preregistration; R; R Markdown; Make; GitHub; Docker
 acknowledgement: |
-  We would like to thank Maximilian Stefan Ernst for his contributions to the code for the simulation study. We are grateful to Julia Delius for her helpful assistance in language and style editing.
+  We would like to thank Maximilian Stefan Ernst for his contributions to the code for the simulation study. We are grateful to Julia Delius for her helpful assistance in language and style editing. The R package `repro` was developed as part of the [first author's master thesis](https://aaronpeikert.github.io/repro-thesis/) at the Humboldt-Universität zu Berlin.
 authorcontributions: |
   Aaron Peikert took the lead in writing and provided the initial draft of the manuscript.
   Andreas Brandmaier and Caspar J. Van Lissa contributed further ideas, critical feedback, and revisions of the original manuscript.
