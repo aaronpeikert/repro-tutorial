@@ -354,15 +354,15 @@ knitr::include_graphics(here::here("images/nutshell.svg"), auto_pdf = TRUE)
 # Creating Reproducible Research Projects
 
 One impediment to the widespread adoption of a standard for reproducible research is that learning to use the required tools can be quite time-intensive.
-To lower the threshold, the R package `repro` introduces helper functions that wrap and hide the complexity of the necessary more complicated (and powerful) tools.
-The provided wrapper functions guide end-users in the use of reproducibility tools, provide feedback about what the computer is doing and suggest what the user should do next.
-The `repro` package extends the [`usethis`](https://usethis.r-lib.org) [@usethis] package.
-While the `usethis` package aims to simplifys the development of R packages, `repro` contains reproducibility-specific utilities.
+To lower the threshold, the R package `repro` introduces helper functions that simplify the use of complicated and powerful tools.
+The `repro` package follows the format of the [`usethis`](https://usethis.r-lib.org) [@usethis] package, which provides helper functions to simplify the development of R packages.
+These helper functions guide end-users in the use of reproducibility tools, provide feedback about what the computer is doing and suggest what the user should do next.
+The `repro` package provides similar helper functions, but focuses on reproducibility-specific utilities.
 We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their system's state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
-These wrappers are merely an assistance system, and as users get more and more comfortable, they can use the underlying tools directly to solve more complex problems.
+These wrappers are merely a support system; as users learn to use the underlying tools, they can rely less on `repro` and use these ttools directly to solve more complex problems.
 
-This tutorial assumes that the user is predominantly working in R, with the help of RStudio.
-It describes basic steps that we expect to be representative of a small-scale psychological research project that relies on no external software or multistage data processing (for those requirements see section [Advanced Features]). 
+This tutorial assumes that the user will be working predominantly in R, with the help of RStudio.
+It describes basic steps that we expect to be relevant for small-scale psychological research projects that do not rely on external software or multistage data processing (for those requirements see section [Advanced Features]). 
 Of course, your specific situation might involve additional, more specialized steps. 
 After completing the tutorial, you should be able to customize your workflow accordingly.
 
@@ -389,8 +389,11 @@ options(
 install.packages('repro')
 ```
 
-The the check functions represent an example of the assistance that `repro` provides is .
-They verify that you have indeed installed and set up the required pieces of software for this workflow (here, we use the double-colon operator to access functions from the `repro` namespace; we chose to do so to clarify which functions are native `repro` functions):
+To verify that you have indeed installed and set up the required software for this workflow,
+you can use the "check functions".
+These also illlustrate how `repro` assists the user in setting up a reproducible workflow.
+In the example below, we use the double-colon operator to explicitly indicate which functions originate in the `repro` package.
+If the package is loaded (using `library(repro)`), it is not necessary to use this double-colon notation.
 
 ```{r, include=FALSE}
 opts <- options()
@@ -410,7 +413,7 @@ options(opts)
 ```
 
 These functions check whether specific dependencies are available on the user's system, and if not, explain what further action is needed to obtain it.
-Sometimes they ask the user to do something, for example, the following happens if you are a Windows user who does not have `Git` installed:
+Sometimes they ask the user to take action; for example, the following happens if you are a Windows user who does not have `Git` installed:
 
 ```{r, include=FALSE}
 opts <- options()
@@ -426,9 +429,9 @@ repro::check_git()
 options(opts)
 ```
 
-The messages from `repro` try to take the user by the hand to help them solve problems.
+The messages from `repro` try to help the user solve problems.
 They are adjusted to your specific operating system and installed dependencies.
-Before you continue, we ask you to run the above commands to check `Git`, `Make`, and `Docker`---both to become familiar with the functionality of the `check_*()` functions and to prepare your system for the creation of reproducible projects.
+Before you continue, we ask you to run the above commands to check `Git`, `Make`, and `Docker`---both to become familiar with the functionality of the `check_*()` functions and to make sure your system is prepared for the remainder of this tutorial.
 
 After you have installed the necessary software, we suggest that you set up a secure connection to GitHub:
 
@@ -447,7 +450,7 @@ repro::check_github()
 If you know what Secure Shell (SSH) is and want to use it, you may alternatively use:
 
 ```{r}
-# only an alternative: DO NOT USE if you are unsure what SSH means
+# only an alternative: DO NOT USE if you are unsure what SSH means<!--CJ: Does the default method above use HTTPS? This is deprecated by GitHub-->
 repro::check_github(auth_method = "ssh")
 ```
 
@@ -457,31 +460,35 @@ options(opts)
 
 If necessary, follow any instructions presented until all checks are passed.
 
-## Implementing Version Control
+## Creating an RStudio Project
 
-Now that your system is set up for this tutorial, we will introduce you to version control with `Git`.
-`Git` tracks files within one project folder.
+<!-- CJ Explain what the repro project template does -->
 We start by creating such a project folder with RStudio by clicking the menu item:
 
 > File → New Project... → New Directory → Example Repro Template
 
 This creates a project containing a sample analysis, but you may turn any other template or existing R project into a reproducible research project using the functionality of `repro`.
 
-`Git` tracks any files that you manually add to the repository.
+## Implementing Version Control
+
+Now that your project is set up, we will introduce you to version control with `Git`.
+`Git` does not automatically track all files in your project folder;
+rather, you must manually add files to the `Git` repository.
 To make sure you do not accidentally add files that you do not wish to share (e.g., privacy-sensitive data),
 you can list specific files that you do not want to track in the `.gitignore` file.
+You can also block specific filetypes; for example, to prevent accidentally sharing raw data.
 You can add something to the `.gitignore` file directly or with this command:
 
 ```{r, eval=FALSE}
 usethis::use_git_ignore("private.md")
 ```
 
-Now the file `private.md` will not be committed to `Git` and will not be made public.
+Now the file `private.md` will not be added to the `Git` repository, and hence also not be made public if you push the repository to a remote service like GitHub.
 Please also consider carefully whether you can include data in the repository without violating privacy rights.
 If you are not allowed to share your data publicly, add the data file(s) to the `.gitignore` file and only share them on request.
 
-New users, in particular, are advised it is recommended to follow this procedure and exclude sensitive files before proceeding.
-When you are ready, you can begin tracking your files using `Git` by running:
+New users are advised to explicitly exclude any sensitive files before proceeding.
+When you are ready, you can begin tracking your remaining files using `Git` by running:
 
 ```{r, eval=FALSE}
 usethis::use_git()
@@ -517,6 +524,8 @@ usethis::use_github(private = TRUE)
 
 Depending on your computer's configuration, it may ask you to set up a secure connection to GitHub.
 In this case, first, follow the suggestions shown on the R console.
+Note that the `worcs` R-package contains a convenience function `worcs::git_update("commit message")` which adds, commits, and pushes files to a remote repository,
+thus functioning as a kind of 'quick save' <!--CJ reference worcs package-->.
 
 ## Using Dynamic Document Generation
 
@@ -551,8 +560,8 @@ To do list:
 ```
 
 One advantage of this type of markup for formatting is that it can be rendered to many different output formats---both in terms of file types, like `.docx`, `.html`, `.pdf`, and in terms of style, e.g. specific journal requirements.
-Of particular note is the package output format supplied by the [`papaja`](https://github.com/crsh/papaja) package [@papaja], which produces manuscripts that follow the American Psychological Association formatting requirements [@apa7].
-`R Markdown` files are in plain text, with the advantage that they are more suitable for version control using `Git`.
+For social scientists, the [`papaja`](https://github.com/crsh/papaja) package [@papaja] may be relevant, as it produces manuscripts that follow the American Psychological Association formatting requirements [@apa7].
+`R Markdown` files are plain text, which is more suitable for version control using `Git` than binary files generated by some word processors.
 Some users might find it easier to activate the "Visual Editor" of RStudio ([Ctrl] + [Shift] + [F4] or click on the icon that resembles drawing materials or a compass in the upper right corner of the `R Markdown` document), which features more graphical elements like a traditional word processor but still creates an `R Markdown` underneath with all of its flexibility.
 The visual editor has some additional benefits, such as promoting best practices (for example, each sentence should be written on a new line, which makes it easier to track changes across versions) and improving the generation of citations and references to tables and figures.
 
@@ -584,6 +593,8 @@ Now that you know how to write text and R code in an `R Markdown`, you need to k
 These metadata contain information about the document, like the title and the output format.
 Metadata are placed at the beginning of the document and are separated from the document body by three dashes.
 The following example is a full markdown document where the metadata (the "YAML front matter") are in lines 1--6.
+Some metadata fields are self-explanatory (like the author field), and exist across all output formats (like the title field).
+Others are specific to certain output formats or R packages.
 
 ````markdown
 ---
@@ -610,11 +621,7 @@ t.test(extra ~ group, data = sleep)
 
 ## Manage Software and File Dependencies
 
-Some metadata fields are self-explanatory (like the author field), and exist across all output formats (like the title field).
-However, `R Markdown` has been extended to hundreds of document formats that are often highly configurable by their metadata.
-Some R packages add additional metadata fields.
-The `repro` package adds fields to the metadata to help make the research project reproducible.
-These fields are used to list all dependencies of the research project.
+The `repro` package adds fields to the metadata to list all dependencies of the research project.
 This includes R scripts, data files, and external packages.
 The format is as follows (see everything below the line *repro:*):
 
@@ -670,7 +677,7 @@ repro::check_docker()
 options(opts)
 ```
 
-When they are set up, they can ask `repro` to explain how they should use `Make` and `Docker` to reproduce the project (or you could explain it to them):
+When these are set up, they can ask `repro` to explain how they should use `Make` and `Docker` to reproduce the project (or you could explain it to them):
 
 ```{r}
 repro::reproduce()
@@ -683,7 +690,7 @@ system(repro::reproduce())
 ```
 
 The only "hard" software requirement for reproducing a project is `Docker`, assuming users know how to build a `Docker` image and run `Make` within the container.
-However, if they have installed `Make` in addition to `Docker`, they do not even need to know how to use `Docker` and can simply rely on the two `Make` commands "`make docker`" and "`make -B DOCKER=TRUE`".
+However, if they have installed `Make` in addition to `Docker`, they do not even need to know how to use `Docker` and can simply rely on the two `Make` commands "`make docker`" and "`make -B DOCKER=TRUE`".<!-- CJ Is this information in the default readme?-->
 
 ## Summary
 
@@ -751,13 +758,13 @@ repro::reproduce()
 
 This section is for advanced users who want to overcome some limitations of `repro`.
 If you read this paper the first time, you will probably want to skip this section and continue reading from the section "Preregistration as Code."
-As explained above, `repro` is merely a simplified interface that enables a high level of reproducibility for simple projects.
-The simplification of `Docker` and `Make` are possible because of two restrictions.
+As explained above, `repro` is merely a simplified interface to the tools that enable reproducibility.
+This simplified interface imposes two restrictions.
 Users who ask themselves either, "How can I install software dependencies outside of R in the `Docker` image?" or "How can I express complex dependencies between files (e.g., hundreds of data files are preprocessed and combined)?" need to be aware of these restrictions and require a deeper understanding of the inner workings of `repro`.
 Other users may safely skip this section or return to it if they encounter such challenges.
 
+The first restriction is that users must rely on software that is either already provided by the base `Dockerimage` "rocker/verse" or the R packages they list in the metadata.
 The metadata the `repro::automate()` function relies on can only express R packages as dependencies for the `Dockerfile` and only trivial dependencies (in the form of "file must exist") for the `Makefile`. 
-The first limitation means that users must rely on software that is either already provided by the base `Dockerimage` "rocker/verse" or the R packages they list in the metadata.
 Other software that users might need, like other programming languages, not yet installed LaTeX packages, etc., must be added manually.
 We plan to add support for commonly used ways to install software beyond R packages via the metadata and `repro::automate()`, for example, for system libraries (via `apt` the Ubuntu package manager), LaTeX packages (via `tlmgr` the Tex Live package manager), Python packages (via `pip` the python package manager).
 The second limitation is related to dependencies.
@@ -780,9 +787,9 @@ Therefore, the computational steps are only executed when the software environme
 The second step executes the actual reproduction and is again a call to `Make` in the form of `make -B DOCKER=TRUE` with three noteworthy parts.
 First, a call to `make` without any explicit target will build the `Make` target `all`.
 Second, the flag `-B` means that `Make` will consider all dependencies as outdated and will hence rebuild everything.
-Third, repro constructs `Make` targets so that if you supply `DOCKER=TRUE` they are executed within the `Docker` image of the project.
+Third, repro constructs `Make` targets so that if you supply `DOCKER=TRUE` they are executed within the `Docker` image of the project.<!-- CJ This paragraph is VERY hard to follow without knowing how make and docker work (you've explained docker a bit, but make not so much). I think you can remove this, it's too technical and not clear why you're explaining this-->
 
-This interplay between `Docker` and `Make` is relatively complicated because it resembles a chicken or egg problem.
+The interplay between `Docker` and `Make` resembles a chicken or egg problem.
 We have computational steps (`Make`) that depend on the software environment (`Docker`) for which we again have computational steps that create it.
 Users only require a deeper understanding of this interdependence when they either want to have more complex computational recipes than rendering an `R Markdown` or require other software than R packages.
 
@@ -879,23 +886,21 @@ cat("```bash",
   "```", sep = "\n")
 ```
 
-To summarize, `repro` provides researchers with an easy-to-use solution for dependency tracking (in the form of `Make`) and software management (using `Docker`) without the necessity to learn both tools.
-Users with more advanced requirements can manually change all aspects of both programs while still profiting from `repro`'s automation.
+To summarize, `repro` automates dependency tracking (in the form of `Make`) and software management (using `Docker`) without the necessity to learn both tools,
+but users with advanced requirements can still customize all aspects of both programs.
 
 # Preregistration as Code 
 
 Defining the research questions and planning data analysis before observing the research outcomes is referred to as *preregistration* [@NosekRevolution2018].
 Preregistration increases the credibility of empirical results by separating a-priori planned and theory-driven analyses from those conducted unplanned and post-hoc, that is, after having seen the data.
-Preregistration seeks to reduce researchers' degrees of freedom [@NosekRevolution2018] in the execution of a planned study by limiting the number of decisions to be made after data has been collected, that could bias the reported results.
-Preregistration, however, have several shortcomings.
-One is that written study plans are often interpretable in multiple ways and often do not achieve the level of unambiguity that is required to effectively set the researcher degrees of freedom, to zero.
+Preregistration seeks to reduce researchers' degrees of freedom [@NosekRevolution2018]<!--CJ this is not exactly true; the explicit goal of preregistration is to distinguish exploratory research from confirmatory research. Reducing researcher degrees of freedom is a side effect, not the goal--> in the execution of a planned study by limiting the number of decisions to be made after data has been collected, that could bias the reported results.
+Preregistrations have several shortcomings, however.
+One is that written study plans can be interpreted in multiple ways and often do not achieve the level of unambiguity that is required to effectively set the researcher degrees of freedom, to zero.<!--CJ I don't think you've defined researcher degrees of freedom? And why is it important to reduce these to zero? Because that blurs the line between exploratory and confirmatory!-->
 Even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis, their results vary considerably [@silberzahnManyAnalystsOne2018].
 The current best practice to ensure that the preregistrations are comprehensive and specific enough is to use preregistration templates [like @bowmanOSFPreregTemplate2020].
 These templates seek to improve the specificity of study plans by imposing structure [@bakkerEnsuringQualitySpecificity2020].
-However, such templates cannot remove the degrees of freedom completely because it is impossible to verbally describe every detail of an analysis for any but the most straightforward analysis.
-This ambiguity causes a second problem, namely, comparing the initial plan and the resulting publication to decide if and how researchers deviated from the preregistration.
-This task is difficult because it is impossible to decide without additional information weather the analysis was actually carried out differently or just described differently.
-The comparison is made impossible if the authors of the preregistration were intentionally vague.
+However, the effectiveness of such templates is limited by the ambiguity of using language to describe analytical procedures.
+The use of language to describe analytical procedures also complicates comparing the initial plan with the resulting analyses to decide if and how researchers deviated from the preregistration.
 Even if the researchers were faithful to the preregistration, readers may reach opposite conclusions because they have to compare two different text that may be worded differently or describe the same thing in varying levels of detail.
 A third limitation is that preregistrations are susceptible to non-reproducibility, just like primary research.
 To illustrate, a review of 210 preregistrations found that, even though 174 (67%) included a formal power analysis, only 34 (20%) of these could be reproduced [@bakkerRecommendationsPreregistrationsInternal2020].
