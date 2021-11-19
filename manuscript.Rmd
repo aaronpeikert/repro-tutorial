@@ -1108,26 +1108,6 @@ planned_analyis <- function(data){
 
 As soon as we have written `planned_anaylsis()` and `simulate_data()` we can iteratively improve both functions, e.g. until `planned_analysis()` runs without error and recovers the correct parameters from `simulate_data()`.
 The goal is to ensure that the output of `simulate_data()` works as input to the function `planned_analysis()`.
-Then, using the simulated dataset as a placeholder, one can write a scientific report including all analysis code blocks and the presentation of results.
-
-### Alternatives to simulated data
-
-If simulating data proves to be too challenging, researchers can delay their preregistration until they have gathered data and repurpose the empirical data.
-In doing so, the researchers must walk a fine but important line.
-Of course, they must not analyze the data before they write the preregistration.
-Nevertheless, they may obfuscate the real data (before actually looking at them) by shuffling the order of rows for each variable (independently of each other) in cross-sectional data or otherwise by creating synthetic data that allow them to test the function `planned_analysis()` without actually revealing the observed research outcomes.
-Preregistration after data collection is common for secondary data analysis of data obtained by other research groups [@westonRecommendationsIncreasingTransparency2019] but not so much within the same research project.
-We argue that it is still an eligible preregistration.
-In fact, guidelines for clinical trials also recommend analysis of blinded data  to test the practicality of the preregistration [@ICH1998].
-Since the data is obfuscated, virtually no information is revealed to the researchers, and they can not employ their degrees of freedom effectively to influence the results (see section above).
-Shuffling leaves only univariate information, so this procedure is only applicable for bi- or multivariate hypotheses.
-The researcher can still access the information about means or proportions (e.g., the number of participants belonging to group "A" are in the dataset), but remain uninformed about relations between variables (e.g., members of group "A" have a greater mean in variable "Z").
-To be clear, any exploration of the data before preregistration (PAC or otherwise) renders the preregistration invalid and amounts to (albeit sometimes unintentional) scientific misconduct.
-The aim is transparency and the line that shall not be crossed is learning about the research outcomes, but what this means differs for each research project.
-
-Another approach that can replace but also complement simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the collected data to preregister.
-A pilot study has obvious advantages for study planning, since it lets the researcher evaluate the feasibility of many assumptions.
-However, we must warn our readers, that while piloting is more traditional than our approach of obfuscating the data before preregistration, it is not innocuous to use the data resulting from the pilot study.
 
 When the researchers are satisfied with the function `planned_analysis()`, they can think about the way the would they would like to report the analysis results via tables, plots, and text.
 The implementation of this reporting should be in the function `report_analysis()`.
@@ -1154,9 +1134,33 @@ Ideally, these three functions can be composed to create a "fake" results sectio
 To summarize, researchers need to write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as a preregistration.
 After they gathered the actual data, they can replace the simulated data, render the dynamic manuscript (therefore run `planned_analysis()` on the actual data), and write the discussion.
 
+### Alternatives to simulated data
+
+Simulating data may prove challenging to applied researchers.
+In the spirit of team science and collaboration, one feasible solution is to involve a statistical co-author.
+However, several easy alternatives exist. 
+The downside of these alternatives is that they all rely indirectly on the use of real data.
+This introduces a risk that the planned analyses may be cross-contaminated by any exploratory findings.
+It is crucial to disclose any exposure to the data in preparation of the preregistration (PAC or otherwise).
+This exposure to the data may decrease trust in the objectivity of the preregistration.
+Moreover, researchers should take rigorous measures to prevent exposure to exploratory findings that may unintentionally influence their decision making.
+
+The simplest method is to collect empirical data first, but set it aside and proceed with a copy of the data that is blinded by randomly shuffling the order of rows for each variable (independently of each other).
+Shuffling removes any associations between variables, while retaining information about the level of measurement and marginal distribution of each variable.
+If the hypotheses pertain to associations between variables, this treatment should thus be sufficient to revent cross-contamination.
+The researcher can still access the information about means or proportions (e.g., the number of participants belonging to group "A" are in the dataset), but remain uninformed about relations between variables (e.g., members of group "A" have a greater mean in variable "Z").
+<!-- CJ: This is really a different issue. You should not bring it up in relation to alternatives to simulated data. Preregistration after data collection is common for secondary data analysis of data obtained by other research groups [@westonRecommendationsIncreasingTransparency2019] but not so much within the same research project.
+We argue that it is still an eligible preregistration.-->
+Guidelines for clinical trials already recommend analysis of blinded data  to test the feasibility of a preregistration [@ICH1998].
+
+Another alternative to simulated data is to conduct a pilot study [@thabaneTutorialPilotStudies2010] and use the pilot data to develop the preregistration.
+A pilot study has obvious advantages for study planning, since it lets the researcher evaluate the feasibility of many assumptions.
+However, we must warn our readers, that while piloting is more traditional than our approach of blinding the data before preregistration, it is not innocuous to use the data resulting from the pilot study.<!--CJ What do you mean: innocuous!?-->
+
 #### When Is PAC Applicable?
 
-Every study that can be preregistered and ultimately uses computer code for the statistical analysis, can also be preregistered with code.
+PAC is applicable to every study that can be preregistered and ultimately uses computer code for the statistical analysis.
+<!-- This is all repetition of the rest of the paper. Cut it.
 The only difference is that PAC demands a comprehensive and complete analysis plan.
 With traditional preregistration, researchers may (unintentionally) omit details and thus introduce decisions that appear to be made after having seen the data.
 We emphasize again that deviations from the preregistration are not only possible but likely.
@@ -1164,20 +1168,18 @@ The advantage of PAC is transparency.
 All deviations from the planned analysis as implemented in code are tracked, and the final analysis can be easily compared to the PAC.
 Importantly, we see PAC as a means to increase transparency not as a means to limit researchers in their statistical analyses.
 In practice, researchers may not feel ready to decide on every detail of the analysis plan before data collection.
-In such cases, we recommend making decisions based on the best available knowledge, and if these decisions still prove infeasible, make simple assumptions and revise and explain them later as described in Section [Deviating from the preregistration and exploration] in the final manuscript.
-
-Beyond standard preregistrations in psychological research, we believe that two applications specifically lend themselves to PAC.
+In such cases, we recommend making decisions based on the best available knowledge, and if these decisions still prove infeasible, make simple assumptions and revise and explain them later as described in Section [Deviating from the preregistration and exploration] in the final manuscript.-->
+Two types of preregistrations are particularly amenable to PAC.
 First, pregistrations of clinical trials (called statistical analysis plans, @ICH1998) typically describe analyses in exhaustive detail and typically contain a detailed description of how results will be presented, including shells of tables and graphics [@yuanGuideStatisticalAnalysis2019].
 PAC may significantly reduce the required workload while maintaining (and exceeding) the required standards for preregistering a clinical trial.
-
 Second, preregistering exploratory statistical models (i.e., those with large numbers of competing models or those inspired by machine learning) is hardly feasible with standard preregistrations since they are too complex to describe and depend strongly on their software implementation.
 PAC, however, captures the precise algorithmic model, including its software implementation and is ideal for preregistering these models [@brandmaier22mlsem].
 
 # Preregistration as Code: Tutorial
 
 We ahve argued that PAC has several advantages over classic preregistration and have outlined its implementation.
-To illustrate how PAC works in practice and help researchers to implement PAC themselves, we have conducted one that serves as a guiding example.
-We will use an exemplary research question that was based on openly available data and merely chosen for simplicity of illustration:
+To illustrate how PAC works in practice and help researchers to implement PAC themselves, we provide a worked example.
+We will use an exemplary research question that was based on openly available data:
 
 > "Is there a mean difference in the personality trait 'Machiavellism' between self-identified females and males?"
 
@@ -1246,7 +1248,7 @@ show_prereg("ttest")
 ```
 
 [^caution-mww]: The t-test and Mann-Whitney-Wilcoxon test are arguably the most often used hypothesis tests (according to [@fagerlandTtestsNonparametricTests2012; @hortonStatisticalMethodsJournal2005] reports that 26% of all studies employed a t-test and 27% employed a rank-based alternative in the *New England Journal of Medicine* in 2005).
-The analytical strategy presented here is, in fact, suboptimal concerning several criteria (untested assumption of measurement invariance [@putnickMeasurementInvarianceConventions2016], underestimation of effect size in the presence of measurement error [@frostCorrectingRegressionDilution2000], overestimation of effect size for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). The interested reader can use the [provided code for the simulation](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R) to verify that the t-test provides unbiased effect sizes but the Mann-Whitney-Wilcoxon overestimates effect size with increasing sample size and skewness.
+The analytical strategy presented here is, in fact, suboptimal in several respects (the assumption of measurement invariance is untested [@putnickMeasurementInvarianceConventions2016], the effect size is underestimated in the presence of measurement error [@frostCorrectingRegressionDilution2000], the effect size is overestimated for highly skewed distributions [@stonehouseRobustnessTestsCombined1998]). The interested reader can use the [provided code for the simulation](https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R) to verify that the t-test provides unbiased effect sizes but the Mann-Whitney-Wilcoxon overestimates effect sizes with increasing sample size and skewness.
 
 The methods section is the translation of the following `planned_analysis()` function:
 
@@ -1256,7 +1258,7 @@ The methods section is the translation of the following `planned_analysis()` fun
 This function illustrates two advantages of PAC.
 First, a PAC can easily include data-dependent decisions by creating different analysis branches under different conditions.
 Second, it highlights how difficult it is to describe a statistical analysis precisely.
-The same verbal descriptions may be implemented differently by different persons depending on their statistical and programming knowledge and their expectations and beliefs.
+The same verbal descriptions may be implemented differently by different persons depending on their statistical and programming knowledge and assumptions.
 One example would be using the function `wilcox.test` instead of the combinations of the functions `rank` and `t.test`.
 Either of them is a valid implementation of the Mann–Whitney–Wilcoxon test, but the first assumes equal variance.
 In contrast, the second applies Welch's correction by default and hence is robust even with unequal variances across groups [@zimmermanRankTransformationsPower1993].
@@ -1316,9 +1318,16 @@ As soon as the actual data are available, the simulated data are no longer used,
 show_prereg("results", wrap = FALSE)
 ```
 
-Naturally we did not access the data when we initially wrote this code.
+Following the recommendations outlined in this paper, we did not access the data when we initially wrote this code.
 We therefore did not know the exact format the data would have.
 This means that we did need to change our preregistration after accessing the data to include i.e. the recoding of gender (lines 17-22) and the items (lines 23-26).[^prereg-changes]
+This is our summary of what we changed:
+
+```{r, echo=FALSE, results='asis'}
+show_prereg("discuss-changes")
+```
+
+Readers can inspect and judge the changes for themselves on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
 
 [^prereg-changes]: We invite the reader to evaluate the changes we made to the preregistered code.
 Either on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg...main) → "Files changed" or directly in Git with `git diff v0.0.1.1-prereg preregistration.Rmd`.
@@ -1343,23 +1352,14 @@ show(report_analysis(planned_analysis(simulate_data(900, 8, 0.3, 10)), cat = FAL
 
 This example of a preregistration covers a single study with a single hypothesis.
 To organize studies with multiple hypotheses, we suggest multiple `planned_analysis()` and `report_analysis()` functions (possibly numbered in accordance with the hypotheses, e.g. 1.2, 2.3 etc.).
-Computational steps that apply to multiple analyses should be extracted into their own function, for example, those that perform data cleaning or extract results from a statistical model in an identical way.
+<!--CJ I would skip this. It is a recommendation rooted in computer science, but without explaining it further, resears will not understand the motivation. Computational steps that apply to multiple analyses should be extracted into their own function, for example, those that perform data cleaning or extract results from a statistical model in an identical way.-->
 Preregistrations that cover multiple distinct data sources may employ multiple `simulate_data()` functions.
 These are merely suggestions, and researchers are encouraged to find their own way of how to best organize their analysis code.
 
-Of course, it is likely that the preregistered code has to be adapted to the actual data.
-Changing the preregistration must be discussed.
-This is our summary of what we changed:
+The example rendered as a [PDF file with real data](https://github.com/aaronpeikert/repro-tutorial/files/7309455/preregistration.pdf) is available in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.3.1-results).
+The changes we made since preregistering it can be inspected on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
 
-```{r, echo=FALSE, results='asis'}
-show_prereg("discuss-changes")
-```
-
-But readers can inspect and judge the changes for themselves on [GitHub](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
-
-The interested reader can find the example rendered as a [PDF file with real data](https://github.com/aaronpeikert/repro-tutorial/files/7309455/preregistration.pdf) in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.3.1-results) and can view the changes we made since preregistering it on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
-
-After researchers are satisfied with their draft preregistration, they should create an archived and unchangeable version of the project that serves as the preregistration.
+After researchers are satisfied with their draft preregistration, they should archive a time-stamped and indelible version of the project that serves as the preregistration.
 zenodo.org [@zenodo] is a publicly funded service provider that archives digital artefacts for research and provides digital object identifiers (DOI) for these archives.
 While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
 Please note that you can only link public GitHub repositories to zenodo.org.
@@ -1387,13 +1387,6 @@ usethis::browse_github()
 
 Then click on Releases → Draft a new release.
 Here you can add all relevant binary files but at least a rendered version of the manuscript and the Docker image.
-
-Taken together, we realize that PACs are challenging.
-Not every research question or project is suitable for preregistration in general, and many analytical strategies could prove impractical for a PAC.
-Therefore, PAC should not be seen as an attempt to invalidate classical preregistration or non-preregistered research but as a rather complementary approach.
-We are convinced that many reasons can justify changing the preregistered code, but equally certain that readers should judge for themselves weather they find these deviations from the preregistration meaningful.
-PAC enables just that.
-Researchers can change their plans and possibly defend their decision to do so, e.g., in the discussion, while readers of the manuscript can clearly see what was changed through version control.
 
 # Discussion
 
@@ -1423,19 +1416,22 @@ PAC only becomes possible because reproducibility is ensured and leverages versi
 
 ## Limitations
 
-We have to distinguish two kinds of limitations.
-First, some limitations are by design and are unlikely to be changed soon.
+We realize that the workflow outlined in this paper, and its application in PAC, remains challenging despite our efforts to simplify the procedure by means of the `repro` package.
+This paper should be considered as a starting point for those seeking to improve the reproducibility of their research.
+Two kinds of limitations can be distinguished.
+The first kind are limitations by design which are unlikely to change.
 Our workflow inherits these from the software it relies on and the fundamental design principles these share with the workflow and `repro`.
-Second, there are other limitations that we hope development efforts of the open-source community and, concerning `repro`, we will solve
+The second kind are limitations in `repro` and its dependencies that may be overcome by our future efforts and those of the open-source development community.
 
-As a principle, this workflow is incompatible with steps that cannot be automated.
-This principle is at odds with some ingrained habits of researchers to mix and match manual and automated steps in data analysis.
+With regard to limitations by design,
+the workflow outlined in this paper is fundamentally incompatible with steps that cannot be automated.
+This principle may be at odds with some ingrained habits of researchers to mix and match manual and automated steps in data analysis.
 To allow for automation, many researchers will have to search for alternative software.  
 The automation-friendly software we present here has several technical but critical limitations.
-`Git` can track any files (files larger than 1 GB only with extensions) but can only compare text files (with endings like, `.txt`, `.csv`, `.R`, `.py`,  or `.Rmd`), not binary files (with endings like `.docx`, `.exe`, or `.zip`).
-With `R Markdown`, tables and graphics are dynamically generated from code but cannot be crafted by hand.
-`Make` can orchestrate any programmable software but fails to automate software that will only obey a user clicking on the right buttons.
-`Docker` can ship software that runs on Linux and can be automatically installed, but that requirement precludes much commercial or closed-source software.
+For example, `Git` can track any filetype, but tracked changes are only meaningful for text files (with endings like, `.txt`, `.csv`, `.R`, `.py`,  or `.Rmd`), not for binary files (with endings like `.docx`, `.exe`, or `.zip`).
+Furthermore, tables and graphics dynamically generated from code are difficult to edit by hand.
+`Make` can automate any programmable software, but not software that is exclusively controlled through a point-and-click user interface.
+Finally, `Docker` can ship software that runs on Linux and can be automatically installed, which precludes much commercial or closed-source software.
 
 This move away from software that has served researchers well for decades is understandably difficult and presents us with a conundrum.
 On the one hand, we firmly believe that automated reproducibility makes research more productive and collaboration easier.
@@ -1445,38 +1441,37 @@ First, this change will not happen all at once.
 Automated reproducibility is an ideal that we believe has many advantages, but it is not an all-or-nothing decision.
 Researchers can pick up one skill at a time and then help their fellow collaborators to do the same.
 Second, the upfront investment is required once (and efforts such as `repro` are underway to reduce it) and will pay dividends over many research projects.
-Third, the move towards open software for research offers several benefits beyond enabling automated reproducibility [@schaffnerFutureScientificJournals1994; @fitzgeraldTransformationOpenSource2006; @chaldecottHistoryScientificTechnical1965; @sonnenburgNeedOpenSource2007].
+Third, the move towards open software for research offers several benefits beyond enabling automated reproducibility [@schaffnerFutureScientificJournals1994; @fitzgeraldTransformationOpenSource2006; @chaldecottHistoryScientificTechnical1965; @sonnenburgNeedOpenSource2007].<!--CJ Summarize these.-->
 
-`repro`'s primary goal is to increase the user-friendliness of reproducibility tools for researchers.
-Despite our best efforts to ensure this goal, the package is still in development and undoubtedly has limitations.
-The workflow we present here introduces several software solutions.
-This sheer number of dependencies represents in itself a threat to long-term reproducibility.
-To benefit from automatic and convenient reproduction, researchers must use `Git`, `Make`, and `Docker`.
+With regard to surmountable limitations, we acknowledge that the `repro` package is still in development.
+One limitation is that `repro` relies on several software dependencies, which represents a threat to long-term reproducibility in itself.
+For example, to benefit from automatic and convenient reproduction, researchers must use `Git`, `Make`, and `Docker`.
 However, `Git` and `Make` are themselves included in the `Docker` image created by `repro`.
 Researchers can therefore employ the `Docker` image manually to download the `Git` repository and execute `Make` for full reproduction.
 In other words, the only hard requirement for reproduction and therefore its Achilles' heel, is `Docker`.
 The `Docker` approach has two vulnerabilities.
 First, and more importantly, the `Docker` image for the project and the `Git` repository have to remain available.
 The `Dockerfile` (the plain text description to build a `Docker` image), as opposed to the image, is insufficient because it relies on too many service providers (e.g., Microsoft R Application Network, Ubuntu Package Archive).
-We recommend archiving the `Git` repository and the `Docker` image with zenodo.org, a non-profit long-term storage for scientific data.
+To overcome this limitation, we recommend archiving the `Git` repository and the `Docker` image with zenodo.org, a non-profit long-term storage for scientific data.
 The necessary steps for archival on zenodo.org are described at the end of Section [Preregistration as Code --- a Tutorial].
+
 The second vulnerability is that even if the existence of the `Docker` image and `Git` repository is guaranteed, future researchers still require software to run the image.
 To that end, they can either rely on `Docker` itself or `Docker`-compatible alternatives (e.g., `CoreOS rkt`, `Mesos Containerizer`, `Singularity`).
 The only way to remove the reliance on such external software is to turn the `Docker` image into a full operating system that subsequently can be installed and run on almost any modern computer.
 This process is technically possible and would guarantee reproducibility for decades without any software dependency, assuming hardware that conforms to the x86 instruction set architecture continues to be available.
 However, this process requires much technical knowledge and is currently not facilitated by `repro`.
-In any case and without such precautions, do the `R Markdown`, the `Makefile` and the `Dockerfile` provide information that allows researchers to trace the computational steps and recreate the computational environment manually.
+With regard to this vulnerability, it is worthwhile to note that the `R Markdown`, `Makefile`, and `Dockerfile` do provide information that allows researchers to trace the computational steps and recreate the computational environment manually.
 The `Makefile`, for example, is written in a way that researchers can manually trace the dependencies and execute commands in the right order, in case they are unable to run `Make` for some reason.
-Hypothetically, even if `Docker` were to become unavailable one day, the `Dockerfile` still serves as unambiguous documentation of how the original system was set up and may help future users to create a software environment that closely resembles the original.
+Thus hypothetically, even if `Docker` were to become unavailable one day, the `Dockerfile` still serves as unambiguous documentation of how the original system was set up and may help future users to create a software environment that closely resembles the original.
 
 ## Outlook
 
 Open science practices are a continually evolving field where technical innovations foster changes in research practice.
-Open data are much more widespread thanks to online storage facilities; preregistration is possible because there are preregistration platforms and so forth.
-Similarly, we hope that fully automatic reproduction, e.g., with `repro` as a technical innovation, increase scientific rigor and efficiency.
+Open data are much more widespread today thanks to online storage facilities; preregistration is possible because there are preregistration platforms and so forth.
+Similarly, we hope that fully automatic reproduction, e.g., with `repro` as a technical innovation, will promote increased scientific rigor, efficiency, and productivity.
 
 In practice, this ideal of a fully automatic reproduction of research projects can conflict with the wide range of demands for more user-friendly and powerful software.
-Some may find `Make` too complicated or that `Docker` requires too much storage space.
+Some may find that `Make` is too complicated or that `Docker` requires too much storage space.
 Yet others may find that they require other programming languages or want to scale their computation across hundreds of computers, e.g., via high-performance computing clusters or cloud computing.
 
 `repro` was designed modularly to meet many such demands.
