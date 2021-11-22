@@ -184,7 +184,7 @@ As researchers become more proficient in using the tools involved, they can thus
 
 We have structured the tutorial with a *learning-by-doing* approach in mind, such that readers can follow along on their own computers.
 We explicitly encourage readers to try out all R commands for themselves.
-Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R (tested with version `r with(R.version, paste0(major, ".", minor))`).
+Unless stated otherwise, all code blocks are meant to be run in the statistical programming language R [@R-base, tested with version `r with(R.version, paste0(major, ".", minor))`].
 
 # Threats to Reproducibility and Appropriate Remedies
 
@@ -309,7 +309,7 @@ This separation is excellent for reproducibility but takes some getting used to.
 For example, it is important to realize that software available on your local computer will *not* be accessible within the confines of the `Docker` image.
 Each dependency that you want to use within the `Docker` image must be explicitly added as a dependency.
 Furthermore, using `Docker` may require you to install software on an operating system that may not be familiar to you.
-The images supplied by @boettigerIntroductionRockerDocker2017, for example, are based on Linux.
+The images supplied by the rocker project [@boettigerIntroductionRockerDocker2017], for example, are based on Linux.
 
 There are two ways to build a `Docker` image.
 First, users can manually install whatever software they like from within the virtual environment.
@@ -356,7 +356,7 @@ The `repro` package follows the format of the [`usethis`](https://usethis.r-lib.
 The `repro` package provides similar helper functions, but focuses on reproducibility-specific utilities.
 These helper functions guide end-users in the use of reproducibility tools, provide feedback about what the computer is doing and suggest what the user should do next.
 We hope this makes reproducibility tools more accessible by enabling beginner-level users to detect their system's state accurately and act correspondingly [@parasuramanAutomationHumanPerformance2018, Chapter 8: "Automation and Situation Awareness"].
-These wrappers are merely a support system; as users learn to use the underlying tools, they can rely less on `repro` and use these ttools directly to solve more complex problems.
+These wrappers are merely a support system; as users learn to use the underlying tools, they can rely less on `repro` and use these tools directly to solve more complex problems.
 
 This tutorial assumes that the user will be working predominantly in R, with the help of RStudio.
 It describes basic steps that we expect to be relevant for small-scale psychological research projects that do not rely on external software or multistage data processing (for those requirements see section [Advanced Features]). 
@@ -579,7 +579,7 @@ The results of code enclosed in such backticks will be dynamically inserted into
 This means that whenever you render the `R Markdown` to its intended output format, the code will be executed and the results updated.
 The resulting output document will be static, e.g., a pdf document, and can be shared wherever you like, e.g., on a preprint server.
 
-Once the `R Markdown` file has been rendered to a static document, the resulting file is decoupled from the `R Markdown` and the code that created it.
+Once the `R Markdown` file has been rendered to a static document (the output, e.g., PDF), the resulting file is decoupled from the `R Markdown` and the code that created it.
 This introduces a risk that multiple versions of the static document are disseminated, each with slightly different results.
 To avoid ambiguity, we, therefore, recommend referencing the identifier of the `Git` commit at the time of rendering in the static document.
 Simply put, a static document should link to the version of the code that was used to create it.
@@ -899,7 +899,7 @@ It expressly does not restrict what researchers may do to gather or analyze thei
 There are still several shortcomings to preregistration.
 One is that written study plans are often interpretable in multiple ways.
 Empirical research has shown that, even when several researchers describe their analysis with the same terms, use the same data, and investigate the same hypothesis, their results vary considerably [@silberzahnManyAnalystsOne2018].
-The current best practice to ensure comprehensive and specific preregistration is to impose structure by following preregistration templates [@bowmanOSFPreregTemplate2020, @bakkerEnsuringQualitySpecificity2020].
+The current best practice to ensure comprehensive and specific preregistration is to impose structure by following preregistration templates [@bowmanOSFPreregTemplate2020; @bakkerEnsuringQualitySpecificity2020].
 However, such templates cannot ensure full transparency because it is impossible to verbally describe every detail of an analysis for any but the most straightforward analysis.
 This ambiguity causes a second problem, namely, comparing the initial plan and the resulting publication to decide if and how researchers deviated from the preregistration.
 This task is difficult because it is impossible to decide without additional information weather the analysis was actually carried out differently or just described differently.
