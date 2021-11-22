@@ -1020,10 +1020,11 @@ For linear models, simulating data is extremely simple:
 
 ```{r, eval=FALSE}
 simulate_data <- function(n, effect_size){
+  warning("This manuscript contains mock results based on simulated data.")
   # Draw n samples from a normal distribution for predictor X
   x <- rnorm(n)
-  # Calculate dependent variable Y
-  # as a function of population effect size and residual error
+  # Calculate dependent variable Y..
+  #.. as a function of population effect size and residual error
   y <- effect_size * x + rnorm(n)
   # Return a data.frame
   data.frame(x = x, y = y)
