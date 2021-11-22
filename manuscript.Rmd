@@ -50,7 +50,7 @@ simplesummary: |
   One obstacle to the widespread use of this method is that the underlying tools
   are complex and not part of most researchers' basic training.
   This paper introduces `repro`, an R package that guides researchers through installation and use of the tools required to make a research project reproducible.
-  We also suggest using the proposed workflow for the preregistration of study plans as reproducible computer code (preregistration as code; PAC).
+  We also suggest using the proposed workflow for the preregistration of study plans as reproducible computer code (Preregistration as Code; PAC).
   Since computer code represents the planned analyses exactly as they will be executed, it is more precise than natural language descriptions. 
   PAC circumvents the shortcomings of ambiguous preregistrations that may result in undisclosed use of researcher degrees of freedom.
   Reproducibility, facilitated by automation, has a wide range of applications and could potentially accelerate scientific progress.
@@ -1344,7 +1344,7 @@ The workflow we present here rests on four software solutions, (1) version contr
 We first demonstrated how to create a reproducible research project.
 Then, we illustrated how such a project could be reproduced---either by the original author and/or collaborators or by a third party.
 
-We finally presented an example of how the rigorous and automated reproducibility workflow introduced by `repro` may enable other innovations, such as preregistration as code (PAC).
+We finally presented an example of how the rigorous and automated reproducibility workflow introduced by `repro` may enable other innovations, such as Preregistration as Code (PAC).
 In PAC the entire reproducible manuscript, including planned analyses and results based on simulated data, is preregistered.
 This way, every use of a researchers' degree of freedom is disclosed.
 Once real data is gathered, the reproducible manuscript is (re-)created with the real data.
