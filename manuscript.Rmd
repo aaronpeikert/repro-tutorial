@@ -1080,7 +1080,7 @@ Ideally, these three functions can be composed to create a "fake" results sectio
 To summarize, researchers need to write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as a preregistration.
 After they gathered the actual data, they can replace the simulated data, render the dynamic manuscript (therefore run `planned_analysis()` on the actual data), and write the discussion.
 
-### Alternatives to simulated data
+## Alternatives to simulated data
 
 Simulating data may prove challenging to applied researchers.
 In the spirit of team science and collaboration, one feasible solution is to involve a statistical co-author.
@@ -1103,7 +1103,7 @@ Another alternative to simulated data is to conduct a pilot study [@thabaneTutor
 A pilot study has obvious advantages for study planning, since it lets the researcher evaluate the feasibility of many assumptions.
 However, we must warn our readers, that while piloting is more traditional than our approach of blinding the data before preregistration, the data from the pilot study must not enter the analysis data set.
 
-#### When Is PAC Applicable?
+## When Is PAC Applicable?
 
 PAC is applicable to every study that can be preregistered and ultimately uses computer code for the statistical analysis.
 Two types of preregistrations are particularly amenable to PAC.
