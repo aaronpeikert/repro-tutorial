@@ -979,7 +979,7 @@ This change pertains to an auxiliary assumption (that working memory and fluid i
 Now imagine that a different researcher is interested in the structure of intelligence.
 This change to the preregistration directly relates to their theory of intelligence.
 That researcher might thus interpret the same result as an explorative finding, suggesting that these aspects of intelligence are unidimensional.
-A deviation from preregistration thus requires a judgement about what changes affect the test of the theory [@meehlTheoreticalRisksTabular1978].
+A deviation from preregistration thus requires a judgement about what changes affect the test of the theory to what extend [@meehlTheoreticalRisksTabular1978].
 Only transparent reporting enables such judgment.
 
 [^summarize-changes]: In section [Preregistration as Code --- a Tutorial] we conducted an actual PAC and summarize the changes we make to the preregistered code in the discussion.
@@ -990,7 +990,7 @@ The first, more traditional kind of exploration involves ad hoc statistical deci
 Such traditional exploratory findings should be explicitly declared in the manuscript to distinguish them from confirmatory findings [@NosekRevolution2018; @nosekPreregistrationHardWorthwhile2019].
 The second kind of exploration is through procedurally well defined exploration with exploratory statistical models are standard in machine learning [@brandmaier22mlsem].
 These models often involve dozens, if not hundreds of predictors, which makes it difficult to describe them verbally.
-With PAC, such models can be preregistered clearly and in comprehensive detail and researcher can therefore precisely calibrate how much they want to explore.
+With PAC, such models can be preregistered clearly and in comprehensive detail and researcher can precisely define a priori how much they want to explore.
 We specifically recommend PAC for such exploratory statistical models.
 The merit of preregistration in these cases is to communicate precisely how much exploration was done;
 a piece of information that is crucial to assess e.g., whether the results might be overfit [@hastieElementsStatisticalLearning2017, p. 220f.].
