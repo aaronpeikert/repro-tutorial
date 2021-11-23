@@ -865,7 +865,7 @@ Because this translates simply to:
 
 ```{r, echo=FALSE, results='asis'}
 cat("```bash",
-  stringi::stri_wrap(system2("make", " --dry-run data/simulation_results.csv", stdout = TRUE)),
+  stringi::stri_wrap(system2("make", "-B --dry-run data/simulation_results.csv", stdout = TRUE)),
   "```", sep = "\n")
 ```
 
@@ -879,7 +879,7 @@ it is evaluated within the `Docker` container using the software within it and n
 
 ```{r, echo=FALSE, results='asis'}
 cat("```bash",
-  stringi::stri_wrap(system2("make", " --dry-run DOCKER=TRUE simulated_data.csv", stdout = TRUE)),
+  stringi::stri_wrap(system2("make", "-B --dry-run DOCKER=TRUE simulated_data.csv", stdout = TRUE)),
   "```", sep = "\n")
 ```
 
@@ -1115,7 +1115,7 @@ PAC, however, captures the precise algorithmic model, including its software imp
 
 # Preregistration as Code: Tutorial
 
-We ahve argued that PAC has several advantages over classic preregistration and have outlined its implementation.
+We have argued that PAC has several advantages over classic preregistration and have outlined its implementation.
 To illustrate how PAC works in practice and help researchers to implement PAC themselves, we provide a worked example.
 We will use an exemplary research question that was based on openly available data:
 
