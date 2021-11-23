@@ -1076,7 +1076,38 @@ The package [`report`](https://github.com/easystats/report) [@report] is particu
 
 Ideally, these three functions can be composed to create a "fake" results section, e.g. when composed to `report_analysis(planned_analysis(simulate_data()))` or `simulate_data() %>% planned_analysis() %>% report_analysis()` outputs a results section.
 
-To summarize, researchers need to write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as a preregistration.
+### Turning a Dynamic Document into a Preregistration
+
+After researchers are satisfied with their draft preregistration, they should archive a time-stamped and uneditable version of the project that serves as the preregistration.
+zenodo.org [@zenodo] is a publicly funded service provider that archives digital artefacts for research and provides digital object identifiers (DOI) for these archives.
+While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
+Please note that you can only link public GitHub repositories to zenodo.org.
+You may log into zenodo.org through your GitHub account.
+To log in with your GitHub account:
+
+> Navigate to https://zenodo.org/login/ →  Log in with GitHub
+
+\noindent{}To link zenodo.org and GitHub
+
+> Log into zenodo.org → Account → GitHub[^zenodo-github]
+
+\noindent{}Or:
+
+> Navigate to https://zenodo.org/account/settings/github/
+
+[^zenodo-github]: https://zenodo.org/account/settings/github/
+
+After you have linked a GitHub repository, you trigger the archival by creating a GitHub release.
+To create GitHub release, navigate to GitHub:
+
+```{r, eval=FALSE}
+usethis::browse_github()
+```
+
+Then click on Releases → Draft a new release.
+Here you can add all relevant binary files but at least a rendered version of the manuscript and the Docker image.
+
+To summarize, researchers need to write three functions, `planned_analysis()`, `simulate_data()`, and `report_analysis()` and embed these into a manuscript that serves as a preregistration in an uneditable online repository.
 After they gathered the actual data, they can replace the simulated data, render the dynamic manuscript (therefore run `planned_analysis()` on the actual data), and write the discussion.
 
 ## Alternatives to simulated data
@@ -1112,7 +1143,7 @@ PAC may significantly reduce the required workload while maintaining (and exceed
 Second, preregistering exploratory statistical models (i.e., those with large numbers of competing models or those inspired by machine learning) is hardly feasible with standard preregistrations since they are too complex to describe and depend strongly on their software implementation.
 PAC, however, captures the precise algorithmic model, including its software implementation and is ideal for preregistering these models [@brandmaier22mlsem].
 
-# Preregistration as Code: Tutorial
+## Preregistration as Code: Tutorial
 
 We have argued that PAC has several advantages over classic preregistration and have outlined its implementation.
 To illustrate how PAC works in practice and help researchers to implement PAC themselves, we provide a worked example.
@@ -1294,35 +1325,6 @@ These are merely suggestions, and researchers are encouraged to find their own w
 
 The example rendered as a [PDF file with real data](https://github.com/aaronpeikert/repro-tutorial/files/7309455/preregistration.pdf) is available in the [online supplementary material](https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.3.1-results).
 The changes we made since preregistering it can be inspected on this [GitHub page](https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b).
-
-After researchers are satisfied with their draft preregistration, they should archive a time-stamped and uneditable version of the project that serves as the preregistration.
-zenodo.org [@zenodo] is a publicly funded service provider that archives digital artefacts for research and provides digital object identifiers (DOI) for these archives.
-While the service is independent of GitHub---in terms of storage facilities and financing---you can link GitHub and zenodo.org.
-Please note that you can only link public GitHub repositories to zenodo.org.
-You may log into zenodo.org through your GitHub account.
-To log in with your GitHub account:
-
-> Navigate to https://zenodo.org/login/ →  Log in with GitHub
-
-\noindent{}To link zenodo.org and GitHub
-
-> Log into zenodo.org → Account → GitHub[^zenodo-github]
-
-\noindent{}Or:
-
-> Navigate to https://zenodo.org/account/settings/github/
-
-[^zenodo-github]: https://zenodo.org/account/settings/github/
-
-After you have linked a GitHub repository, you trigger the archival by creating a GitHub release.
-To create GitHub release, navigate to GitHub:
-
-```{r, eval=FALSE}
-usethis::browse_github()
-```
-
-Then click on Releases → Draft a new release.
-Here you can add all relevant binary files but at least a rendered version of the manuscript and the Docker image.
 
 # Discussion
 
