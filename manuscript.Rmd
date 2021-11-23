@@ -987,7 +987,7 @@ Another common misunderstanding is that preregistration, including PAC, preclude
 We differentiate between two kinds of exploration, neither of which is limited by PAC.
 The first, more traditional kind of exploration involves ad hoc statistical decisions and post hoc explanations of the results.
 Such traditional exploratory findings should be explicitly declared in the manuscript to distinguish them from confirmatory findings [@NosekRevolution2018; @nosekPreregistrationHardWorthwhile2019].
-The second kind of exploration is through procedurally well defined exploration with exploratory statistical models are standard in machine learning [@brandmaier22mlsem].
+The second kind of exploration is through procedurally well defined exploration with exploratory statistical models that are standard in machine learning [@brandmaier22mlsem].
 These models often involve dozens, if not hundreds of predictors, which makes it difficult to describe them verbally.
 With PAC, such models can be preregistered clearly and in comprehensive detail and researcher can precisely define a priori how much they want to explore.
 We specifically recommend PAC for such exploratory statistical models.
