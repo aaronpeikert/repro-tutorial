@@ -890,7 +890,6 @@ but users with advanced requirements can still customize all aspects of both pro
 
 *Preregistration* refers to the practice of defining research questions and planning data analysis before observing the research outcomes [@NosekRevolution2018].
 It serves to separate a-priori planned and theory-driven (confirmatory) analyses from unplanned and post-hoc (exploratory) analyses.
-Exploratory analyses refer to both those aimed at discovering patterns in data, and those aimed at overcoming shortcomings of confirmatory analyses that come to light after seeing the data (e.g., violations of assumptions, modifications to address poor model fit).
 Researchers are faced with a myriad of choices in designing, executing, and analyzing a study, often called researchers degrees of freedom.
 Undisclosed researcher degrees may be used to modify planned analyses until a key finding reaches statistical significance or to inflate effect size estimates, a phenomenon referred to as *opportunistic bias* [@decosterOpportunisticBiasesTheir2015].
 Preregistration increases transparency by clarifying when and how researchers employ their degrees of freedom.
