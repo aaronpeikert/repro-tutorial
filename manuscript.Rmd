@@ -1249,7 +1249,7 @@ minn <- filter(res, d == choosen_d, power > choosen_power) %>%
 ```
 
 ```{r, include=FALSE}
-fig_caption <- str_c("Results of simulation for the power analysis. The cross indicates the sample size that archives ", choosen_power*100, "% assuming a Cohen's D of ", choosen_d, ".")
+fig_caption <- str_c("Results of simulation for the power analysis. The cross indicates the sample size that archives ", choosen_power*100, "% assuming a Cohen's d of ", choosen_d, ".")
 ```
 
 ```{r power, echo=FALSE, fig.cap=fig_caption}
@@ -1267,7 +1267,7 @@ res %>%
   theme(legend.title = element_text()) +
   labs(y = "Power\n(Proportion of significant results)",
        x = "Sample size",
-       color = "Cohen's D") +
+       color = "Cohen's d") +
   NULL
 ```
 
