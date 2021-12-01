@@ -2,15 +2,15 @@
 %  In case you need support, please attach all files that are necessary for compiling as well as the log file, and specify the details of your LaTeX setup (which operating system and LaTeX version / tools you are using).
 
 %=================================================================
-\documentclass[psych,tutorial,submit,moreauthors,pdftex]{mdpi}
+\documentclass[psych,tutorial,accept,moreauthors,pdftex]{Definitions/mdpi} 
 
 % If you would like to post an early version of this manuscript as a preprint, you may use preprint as the journal and change 'submit' to 'accept'. The document class line would be, e.g., \documentclass[preprints,article,accept,moreauthors,pdftex]{mdpi}. This is especially recommended for submission to arXiv, where line numbers should be removed before posting. For preprints.org, the editorial staff will make this change immediately prior to posting.
 
 %% Some pieces required from the pandoc template
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{4pt}}
-\setlist[itemize]{leftmargin=*,labelsep=5.8mm}
-\setlist[enumerate]{leftmargin=*,labelsep=4.9mm}
+%\providecommand{%\tightlist}{%
+ % \setlength{\itemsep}{0pt}\setlength{\parskip}{4pt}}
+%\setlist[itemize]{leftmargin=*,labelsep=5.8mm}
+%\setlist[enumerate]{leftmargin=*,labelsep=4.9mm}
 
 \usepackage{longtable}
 
@@ -92,14 +92,16 @@
 \makeatletter
 \setcounter{page}{\@firstpage}
 \makeatother
-\pubvolume{xx}
+\pubvolume{1}
 \issuenum{1}
 \articlenumber{5}
 \pubyear{2019}
 \copyrightyear{2019}
-%\externaleditor{Academic Editor: name}
-\history{Received: date; Accepted: date; Published: date}
-\updates{yes} % If there is an update available, un-comment this line
+\externaleditor{Academic Editor: {Alexander Robitzsch}} %MDPI: Please add the academic editor.
+\datereceived{} 
+\dateaccepted{} 
+\datepublished{}
+\hreflink{https://doi.org/} % If needed use \linebreak
 
 %% MDPI internal command: uncomment if new journal that already uses continuous page numbers
 %\continuouspages{yes}
@@ -117,44 +119,37 @@
 
 %=================================================================
 % Full title of the paper (Capitalized)
-\Title{Reproducible Research in R: A Tutorial on how to Do the Same
+\Title{Reproducible Research in R: A Tutorial on How to Do the Same
+Thing More \highlighting{Than Once}} %MDPI: the article type in the document is different with that in Susy, please confirm.
+
+
+\TitleCitation{Reproducible Research in R: A Tutorial on How to Do the Same
 Thing More Than Once}
 
 % Authors, for the paper (add full first names)
-\Author{Aaron Peikert$^{1, 2,
-*}$\href{https://orcid.org/0000-0001-7813-818X}{\orcidicon}, Caspar J.
-van Lissa$^{3,
-4}$\href{https://orcid.org/0000-0002-0808-5024}{\orcidicon}, Andreas M.
-Brandmaier$^{1, 5,
-6}$\href{https://orcid.org/0000-0001-8765-6982}{\orcidicon}}
+\Author{\highlighting{Aaron Peikert~$^{1,2,*}$\href{https://orcid.org/0000-0001-7813-818X}{\orcidicon}} %Please carefully check the accuracy of names and affiliations. Changes will not be possible after proofreading.
+, \highlighting{Caspar J. van Lissa~$^{3,4}$\href{https://orcid.org/0000-0002-0808-5024}{\orcidicon}} %MDPI: This author is different from susy. Please check.
+ and Andreas M. Brandmaier~$^{1,5,6}$\href{https://orcid.org/0000-0001-8765-6982}{\orcidicon}}
 
 % Authors, for metadata in PDF
-\AuthorNames{Aaron Peikert, Caspar J. van Lissa, Andreas M. Brandmaier}
+\AuthorNames{Aaron Peikert, Caspar J. van Lissa and Andreas M. Brandmaier}
 
+\AuthorCitation{Peikert, A.;  van Lissa, J.; Brandmaier, A.M.}
 % Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
 \address{%
-$^{1}$ \quad Center for Lifespan Psychology---Max Planck Institute for
-Human Development, Lentzeallee 94, 14195 Berlin, Germany; \\
-$^{2}$ \quad Humboldt-Universität zu Berlin, Berlin, Germany; \\
-$^{3}$ \quad Department of Methodology \& Statistics---Utrecht
-University, Faculty of Social and Behavioral Sciences, Utrecht,
-Netherlands; \\
-$^{4}$ \quad Open Science Community Utrecht, Utrecht, Netherlands; \\
-$^{5}$ \quad Max Planck UCL Centre for Computational Psychiatry and
-Ageing Research Berlin, Germany, and London, UK; \\
-$^{6}$ \quad MSB Medical School Berlin, Berlin, Germany; \\
-}
+$^{1}$ \quad Center for Lifespan Psychology---Max Planck Institute for Human Development, Lentzeallee 94, \mbox{14195 Berlin, Germany;} brandmaier@mpib-berlin.mpg.de\\
+$^{2}$ \quad Humboldt-Universität zu Berlin, \hl{Berlin}, Germany\\%MDPI: Please add the post code.
+$^{3}$ \quad \hl{Department} of Methodology \& Statistics---Utrecht \hl{University}, \hl{Faculty} of Social and Behavioral Sciences%MDPI: Please check the address order.  (order guide: Center / Laboratory / Group / Programme / Unit < Department / Division / Faculty / Campus / Institute / School < College / University / Universiti)
+, \hl{Utrecht}, The Netherlands; C.J.vanLissa@uu.nl\\
+$^{4}$ \quad Open Science Community Utrecht, \hl{Utrecht}, The Netherlands\\
+$^{5}$ \quad Max Planck UCL Centre for Computational Psychiatry and Ageing Research, \mbox{\hl{Berlin, Germany, and London, UK}} %MDPI: 1. Please check if there are two separator affiliations. If so, please split them. 2. Please add the post code.
+\\
+$^{6}$ \quad MSB Medical School Berlin, \hl{Berlin}, Germany}
+
 % Contact information of the corresponding author
-\corres{Correspondence: \href{mailto:peikert@mpib-berlin.mpg.de}{\nolinkurl{peikert@mpib-berlin.mpg.de}}}
+\corres{Correspondence: peikert@mpib-berlin.mpg.de}
 
 % Current address and/or shared authorship
-
-
-
-
-
-
-
 
 % The commands \thirdnote{} till \eighthnote{} are available for further notes
 
@@ -191,22 +186,24 @@ identical results from the \emph{same} data with the \emph{same}
 computer code. It is a building block for transparent and cumulative
 science because it enables the originator and other researchers, on
 other computers and later in time, to reproduce and thus understand how
-results came about while avoiding a variety of errors that may lead to
+results came about, while avoiding a variety of errors that may lead to
 erroneous reporting of statistical and computational results. In this
 tutorial, we demonstrate how the R package \texttt{repro} supports
 researchers in creating fully computationally reproducible research
 projects with tools from the software engineering community. Building
-upon this notion of fully automated reproducibility we present several
+upon this notion of fully automated reproducibility, we present several
 applications including the preregistration of research plans with code
 (Preregistration as Code, PAC). PAC eschews all ambiguity of traditional
 preregistration and offers several more advantages. Making technical
 advancements that serve reproducibility more widely accessible for
-researchers holds the potential to innovate the research process to
-become more productive, credible, and reliable.}
+researchers holds the potential to innovate the research process and to
+help it become more productive, credible, and reliable.}
 
 % Keywords
 \keyword{open science; computational reproducibility; preregistration;
-R; R Markdown; Make; GitHub; Docker}
+R; R Markdown; make; GitHub; docker}%MDPI: 1. The upper case has been removed. Please confirm. 2. Please check if R is duplicated here.
+
+
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
@@ -242,10 +239,10 @@ R; R Markdown; Make; GitHub; Docker}
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\captionsetup{labelformat=empty}
+%\captionsetup{labelformat=empty}
 
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+%\hypertarget{introduction}
+\section{Introduction}\label{introduction}
 
 Scientists increasingly strive to make research data, materials, and
 analysis code openly available. Sharing these digital research products
@@ -255,11 +252,13 @@ facilitating the review and replication of published research results.
 To some extent, these potential benefits are contingent on whether these
 digital research products are reproducible. Reproducibility can be
 defined as the ability of anyone to obtain identical results from the
-\emph{same} data with the \emph{same} computer code \citep[see][ for
-details]{Peikert2019}. The credibility of empirical research results
+\emph{same} data with the \hl{\emph{same}} %MDPI: Is the italic necessary? Can it be deleted?
+ computer code (see~\citep{Peikert2019} \hl{for
+details).} %MDPI: The structure of reference citation has been changed. So as the follows. Please confirm.
+ The credibility of empirical research results
 hinges on their objectivity. Objectivity in this context means, ``in
 principle it {[}the research finding{]} can be tested and understood by
-anybody.'' \citep[p.~22]{popperLogicScientificDiscovery2002}. Only a
+anybody.'' (\citep{popperLogicScientificDiscovery2002} p.~22). Only a
 reproducible result meets these requirements. Therefore, reproducibility
 has long been considered integral to empirical research. Unfortunately,
 despite increasing commitment to open science practices and good will,
@@ -268,7 +267,7 @@ many projects can not yet be reproduced by other research teams
 making a research project reproducible (e.g., missing software
 dependencies or ambiguous documentation of the exact computational steps
 taken), and there is a lack of best practices for overcoming these
-challenges \citep[but see][]{vanlissa2020worcs}. With technological
+challenges (but see~\citep{vanlissa2020worcs}). With technological
 advancement, however, it is now possible to make all digital products
 related to a research project available in a manner that enables
 automatic reproduction of the research project with minimal effort.
@@ -279,8 +278,8 @@ manual steps, apart from the initial setup of the software environment.
 Secondly, we discuss the implications of automated reproducibility for
 changing the general approach to research. With regard to the first
 goal, we discuss how to address four common threats to reproducibility,
-using tools originating from software engineering \citep[see][ for
-details]{Peikert2019}, and present a tutorial on how to employ these
+using tools originating from software engineering (see~\citep{Peikert2019} for
+details), and present a tutorial on how to employ these
 tools to achieve automated reproducibility. A single tutorial cannot
 comprehensively introduce the reader to the detail of individual tools,
 but this tutorial is intended to help readers get started with a basic
@@ -296,7 +295,7 @@ fully achieved due to limited resources, technical restrictions, or
 practical considerations, but is worth striving for nonetheless.
 
 In pursuit of the second aim, we present a strictly reproducible and
-unambiguous form of preregistration \citep{NosekRevolution2018} that
+unambiguous form of preregistration~\citep{NosekRevolution2018} that
 builds upon implementing this reproducible workflow, the so-called
 \emph{Preregistration as Code} (PAC). PAC involves preregistering the
 intended analysis code and the major part of the final scientific report
@@ -317,19 +316,18 @@ digital research products is a necessary condition for reproducibility,
 it is not a sufficient one. This was illustrated by an attempt to
 reproduce results from open materials in the journal \emph{Cognition}
 \citep{hardwicke2018}. Out of 35 published articles with open code and
-data, results of 22 articles could be reproduced, but in 11 of these
-cases, further assistance from the original authors was required. For 13
-articles, at least 1 outcome could not be reproduced-----even with the
-original authors' assistance. Another study of 62 Registered Reports
+data, the results of 22 articles could be reproduced, but further assistance from the original authors was required in 11 of these cases. For 13
+articles, at least one outcome could not be reproduced---even with the
+original authors' assistance. Another study of 62 registered reports
 found that only 41 had data available, and 37 had analysis scripts
-available \citep{obels2020}. The authors could execute only 31 of the
+available~\citep{obels2020}. The authors could execute only 31 of the
 scripts without error and reproduce the results of only 21 articles
 (within a reasonable time). These failed attempts to reproduce findings
 highlight the need for widely accepted reproducibility standards because
 open repositories do not routinely provide sufficient information to
 reproduce relevant computational and statistical results. If digital
 research products are available but not reproducible, their added value
-is limited.
+is~limited.
 
 This tutorial demonstrates how R users can make digital research
 products more reproducible, while striking a balance between rigor and
@@ -347,21 +345,22 @@ We have structured the tutorial with a \emph{learning-by-doing} approach
 in mind, such that readers can follow along on their own computers. We
 explicitly encourage readers to try out all R commands for themselves.
 Unless stated otherwise, all code blocks are meant to be run in the
-statistical programming language R \citep[tested with version
-4.0.4]{R-base}.
+statistical programming language R (\citep{R-base} tested with version
+4.0.4).
 
-\hypertarget{threats-to-reproducibility-and-appropriate-remedies}{%
+%\hypertarget{threats-to-reproducibility-and-appropriate-remedies}
 \section{Threats to Reproducibility and Appropriate
-Remedies}\label{threats-to-reproducibility-and-appropriate-remedies}}
+Remedies}\label{threats-to-reproducibility-and-appropriate-remedies}
 
 From our own experience with various research projects, we have
 identified the following common threats to reproducibility:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
+%\tightlist
 \item
-  \emph{Multiple inconsistent versions of code, data, or both}; for
+  \highlighting{\emph{Multiple inconsistent versions of code, data, or both};} %MDPI: Is the italic necessary? Can it be deleted?
+ for
   example, the data set may have changed over time because outliers were
   removed at a later stage or an item was later recoded; or, the
   analysis code may have been modified during the writing of a paper
@@ -369,13 +368,13 @@ identified the following common threats to reproducibility:
   unclear which version of code and data was used to produce some
   reported set of results.
 \item
-  \emph{Copy-and-paste errors}; for example, results are often manually
+  \highlighting{\emph{Copy-and-paste errors};} for example, results are often manually
   copied from a statistical computing language into a text processor; if
   a given analysis is re-run and results are manually updated in the
   text processor, this may inadvertently lead to inconsistencies between
   the reported result and the reproduced result.
 \item
-  \emph{Undocumented or ambiguous order of computation}; for example,
+  \highlighting{\emph{Undocumented or ambiguous order of computation};} for example,
   with multiple data and code files, it may be unclear which scripts
   should be executed in what order; or, some of the computational steps
   are documented (e.g., final analysis), but other steps were conducted
@@ -383,7 +382,7 @@ identified the following common threats to reproducibility:
   rather than in a script; copy-and-pasting results from one program to
   another).
 \item
-  \emph{Ambiguous software dependencies}; for example, a given analysis
+  \highlighting{\emph{Ambiguous software dependencies};} for example, a given analysis
   may depend on a specific version of a specific software package, or
   rely on software that might not be available on a different computer,
   or no longer exist at all; or a different version of the same software
@@ -394,25 +393,21 @@ We have developed a workflow that achieves long-term and cross-platform
 computational reproducibility of scientific data analyses. It leverages
 established tools and practices from software engineering and rests on
 four pillars that address the aforementioned causes of
-non-reproducibility \citep{Peikert2019}:
+non-reproducibility~\citep{Peikert2019}:
 
 \begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Version control
-\item
-  Dynamic document generation
-\item
-  Dependency tracking
-\item
-  Software management
+%\def\labelenumi{\arabic{enumi}.}
+%%\tightlist
+\item  Version control
+\item  Dynamic document generation
+\item  Dependency tracking
+\item  Software management
 \end{enumerate}
 
 The remainder of this section briefly explains why each of these four
 building blocks is needed and details their role in ensuring
 reproducibility. A more extensive treatment of these tools is given in
-\citet{Peikert2019}.
+Peikert and Brandmaier~\citep{Peikert2019}.
 
 \emph{Version control} prevents the ambiguity that arises when multiple
 versions of code and data are created in parallel during the lifetime of
@@ -427,7 +422,7 @@ its widespread adoption in the R community.
 materials, data, and code) over time. At any stage, individual files or
 the entire project can be compared to, or reverted to, an earlier
 version. Moreover, contributions (e.g., from collaborators) can be
-compared to, and incorporated in the main version of the project.
+compared to and incorporated in the main version of the project.
 Version control thus reduces the risk of losing work and facilitates
 collaboration. \texttt{Git} is built around snapshots that represent the
 project state at a given point in time. These snapshots are called
@@ -446,15 +441,15 @@ preregistration, preprint, or final version of the manuscript as
 accepted by a journal. \texttt{Git} has additional features beyond basic
 version control, such as ``branches'' (parallel versions of a project
 that can later be merged again) to facilitate simultaneous
-collaboration. \citet{vuorreCuratingResearchAssets2018} provide a more
+collaboration. Vuorre and Curley~\citep{vuorreCuratingResearchAssets2018} provide a more
 extensive treatment of how \texttt{Git} functions and how to use
-\texttt{Git} for research. \citet{bryanExcuseMeYou2018} provides
+\texttt{Git} for research. Bryan~\citep{bryanExcuseMeYou2018} provides
 additional information on how to track \texttt{R\ Markdown} documents.
 Collaborating via \texttt{Git} is facilitated by uploading the
 repository to a cloud-based service. We recommend GitHub as a host for
 \texttt{Git} repositories because of its popularity among R users.
-GitHub has many tools that facilitate working with \texttt{Git} --- in
-particular project management and collaboration --- but these are not
+GitHub has many tools that facilitate working with \texttt{Git}---
+particularly in project management and collaboration---but these are not
 central to achieving reproducibility.
 
 Second, we rely on \emph{dynamic document generation}. The traditional
@@ -483,7 +478,7 @@ as HTML websites, a Microsoft Word document, a typeset PDF file (for
 example, via LaTeX journal templates), or a Powerpoint presentation.
 \texttt{Markdown} can be used for all sorts of academic documents,
 ranging from simple sketches of ideas to scientific manuscripts
-\citep{R-rticles} and presentations \citep{revealjs}, or even résumés
+\citep{R-rticles} and presentations~\citep{revealjs}, or even résumés
 \citep{vitae}. \texttt{R\ Markdown} extends regular \texttt{Markdown} by
 allowing users to include R code chunks (in fact, arbitrary computer
 code \citep[Chapter 15, Chapter 15, Other
@@ -494,7 +489,7 @@ creation of (conditionally) formatted text, statistical results, and
 figures that are guaranteed to be up-to-date because they are created
 anew every time the document is rendered to its output format (e.g.,
 presentation slides or a journal article).
-\citet{xieMarkdownCookbook2020} provides an extensive yet practical
+Xie et al.~\citep{xieMarkdownCookbook2020} provides an extensive yet practical
 introduction to most features of \texttt{R\ Markdown}.
 
 While version control and dynamic document generation are becoming more
@@ -518,8 +513,8 @@ collection of cooking recipes, we can have multiple products
 (\emph{targets}) with different ingredients (\emph{requirements}) and
 different steps of preparation (\emph{recipes}). In the context of
 scientific data analysis, targets are typically the final scientific
-report (e.g., the one to be submitted to a journal) and possibly
-intermediate results (such as preprocessed data files, simulation
+report (e.g., the one to be submitted to a journal) and produce possibly
+intermediate %pls check (such as preprocessed data files, simulation
 results, and analysis results). A workflow that involves renaming
 variable names by hand in a graphical spreadsheet application, for
 example, is therefore incompatible with automated reproducibility.
@@ -532,7 +527,7 @@ reproducible if the random number generator generates the same numbers.
 To ensure identical random numbers, users may fix the state of the
 random number generated with a so-called seed (e.g.~\texttt{set.seed()}
 in R), but they also need to guarantee that the pseudo-random number
-generator is unchanged \citep[see][]{Peikert2019}.
+generator is unchanged~(see~\citep{Peikert2019}).
 
 We recommend using \texttt{Make} for dependency tracking because it is
 language independent. The following hypothetical example illustrates the
@@ -542,6 +537,9 @@ research project that contains a script to simulate data
 written in \texttt{R\ Markdown} (\texttt{manuscript.Rmd}). A
 \texttt{Makefile} for this project could look like this:
 
+
+
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ExtensionTok{manuscript.pdf:}\NormalTok{ manuscript.Rmd simulated\_data.csv}
@@ -551,6 +549,23 @@ written in \texttt{R\ Markdown} (\texttt{manuscript.Rmd}). A
   \ExtensionTok{Rscript} \AttributeTok{{-}e} \StringTok{\textquotesingle{}source("simulate.R")\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+
+
+
+%%\begin{figure*}[H]
+%\begin{Shaded}
+%%\begin{Highlighting}[]
+%\noindent\ExtensionTok{\texttt{manuscript.pdf:}}\NormalTok{\texttt{ manuscript.Rmd simulated\_data.csv}}\\[-2ex]
+%
+%\ExtensionTok{\texttt{Rscript}} \AttributeTok{\texttt{{-}e}} \StringTok{\texttt{\textquotesingle{}rmarkdown::render("manuscript.Rmd")\textquotesingle{}}}\\
+%
+%\noindent\ExtensionTok{\texttt{simulated\_data.csv:}}\NormalTok{\texttt{ simulate.R}}\\[-2ex]
+%
+%\ExtensionTok{\texttt{Rscript}} \AttributeTok{\texttt{{-}e}} \StringTok{\texttt{\textquotesingle{}source("simulate.R")\textquotesingle{}}}
+%%\end{Highlighting}
+%\end{Shaded}
+%%\end{figure*}
 
 There are two targets, the final rendered report
 (\texttt{manuscript.pdf}, l. 1) and the simulation results
@@ -560,9 +575,9 @@ target, the recipe will be executed to rebuild the target. If a
 requirement does not exist, \texttt{Make} uses a recipe to build the
 requirement before building the target. Here, if one were to build the
 final \texttt{manuscript.pdf} by rendering the \texttt{R\ Markdown} with
-the command shown in l.2, \texttt{Make} would check whether the file
+the command shown in l.~2, \texttt{Make} would check whether the file
 \texttt{simulation\_results.csv} exists; if not, it would issue the
-command in l.5 to run the simulation before rendering the manuscript.
+command in l.~5 to run the simulation before rendering the manuscript.
 This ensures that the simulated data are present before the manuscript
 is built, and that the simulation is re-run and the manuscript is
 rebuilt if the simulation code was changed. \texttt{Make} therefore
@@ -576,15 +591,15 @@ unambiguous.
 
 A version-controlled dynamic document with dependency tracking still
 relies on external software. Troubleshooting issues specific to a
-particular programming language or dependent tool typically require
-considerable expertise and threaten reproducibility. \emph{Software
+particular programming language or dependent tool typically requires
+considerable expertise and threatens reproducibility. \emph{Software
 management} refers to the act of providing records of, or access to, all
 software packages and system libraries a project depends on. One
 comprehensive approach to software management is containerization. The
 central idea is that by ``{[}..{]} packaging the key elements of the
 computational environment needed to run the desired software {[}makes{]}
 the software much easier to use, and the results easier to reproduce
-{[}\ldots{]}'' \citep[p.~174]{silverSoftwareSimplified2017}.
+{[}\ldots{]}'' (\citep{silverSoftwareSimplified2017} p.~174).
 
 \emph{\texttt{Docker}} is a popular tool for containerization. It
 manages software dependencies by constructing a virtual software
@@ -597,7 +612,7 @@ even the operating system. This is important because low level
 functionality may impact the workings of higher-order software like R,
 such as calls to random number generators or linear algebra libraries.
 All of the differences in computational results that could be caused by
-variation in the software used are hence eliminated.
+variations in the software used are hence eliminated.
 
 Note that the software environment of the Docker image is completely
 separate from the software installed on your computer. This separation
@@ -626,36 +641,34 @@ requires considerable amounts of storage space. Two major strategies
 help to keep the storage requirements reasonable. One is to rely on
 pre-made images that are maintained by a community for particular
 purposes. For example, there are pre-made images that only include what
-is necessary for R, based on Ubuntu containers
-\citep{boettigerIntroductionRockerDocker2017}. Users can then install
+is necessary for R, based on Ubuntu containers~\citep{boettigerIntroductionRockerDocker2017}. Users can then install
 whatever they need in addition to what is provided by these pre-compiled
-images. The image that was used for this article uses 1.35GiB of disk
+images. The image that was used for this article uses 1.35~GiB of disk
 space. The image for this project includes Ubuntu, R, RStudio, LaTeX as
-well as a variety of R packages like tidyverse \citep{tidyverse} and all
+well as a variety of R packages like tidyverse~\citep{tidyverse} and all
 its dependent packages, amounting to 192 R packages.
 
 A second strategy is to save a so-called \texttt{Dockerfile}, which
 contains only a textual description of all commands that need to be
 executed to recreate the software environment. \texttt{Dockerfiles} are
-tiny (the
-\href{https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile}{\texttt{Dockerfile}}
-for this project has a size of only 1.55KiB). However, they rely on the
+tiny (the \hl{\texttt{Dockerfile}} %MDPI: Please add the accessed date.
+ (\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile})
+for this project has a size of only 1.55~KiB). However, they rely on the
 assumption that all software repositories that provide the dependent
 operating systems, pieces of software, and R packages will continue to
 remain accessible and provide historic software versions. For proper
 archiving, we therefore recommend storing a complete image of the
 software environment, in addition to the \texttt{Dockerfile}. A more
 comprehensive overview of the use of containerization in research
-projects is given by
-\citet{wiebelsLeveragingContainersReproducible2021}. Note that WORCS,
-which we presented elsewhere \citep{vanlissa2020worcs} relies on the R
-package \texttt{renv} \citep{R-renv} for software management.
-\texttt{renv} is more lightweight and easier to use than \texttt{Docker}
-on the one hand, but not as comprehensive on the other because it only
+projects is given by Wiebels and Moreau~\citep{wiebelsLeveragingContainersReproducible2021}. Note that WORCS,
+which we presented elsewhere~\citep{vanlissa2020worcs} relies on the R
+package \texttt{renv}~\citep{R-renv} for software management. Although
+\texttt{renv} is more lightweight and easier to use than \texttt{Docker}, it is not as comprehensive because it only
 takes snapshots of the R packages instead of all software used.
 
-To summarize, the workflow by \citet{Peikert2019} requires four
-components (see Figure 2.1) dynamic document generation (using
+To summarize, the workflow by Peikert and Brandmaier~\citep{Peikert2019} requires four
+components (see \highlighting{Figure~\ref{figure1})} %MDPI: Figure 2.1 has been changed into Figure 1. Please confirm.
+ dynamic document generation (using
 \texttt{R\ Markdown}), version control (using \texttt{Git}), dependency
 tracking (using \texttt{Make}), and software management (using
 \texttt{Docker}). While \texttt{R\ Markdown} and \texttt{Git} are well
@@ -673,12 +686,12 @@ Users do not need to have \texttt{repro} installed to reproduce a
 project; in fact, they do not even need to have R installed because the
 entire project can be rebuilt inside a container with R installed. In
 the remainder, we will walk you through the creation of a reproducible
-research project with the package \texttt{repro}.
+research project with the package~\texttt{repro}.
 
-\begin{figure}
-\centering
-\includegraphics{/home/rstudio/images/nutshell.pdf}
-\caption{Figure 2.1: Schematic illustration of the interplay of the four
+\begin{figure}[H]
+%\centering
+\includegraphics[width=13.5cm]{Figures/nutshell.pdf}
+\caption{Schematic illustration of the interplay of the four
 components (in dashed columns) central to the reproducible workflow:
 version control (\texttt{Git}), dependency tracking (\texttt{Make}),
 software management (\texttt{Docker}), and dynamic document generation
@@ -686,20 +699,21 @@ software management (\texttt{Docker}), and dynamic document generation
 time. \texttt{Make} manages dependencies among the files.
 \texttt{Docker} provides a container in which the final report is built
 using dynamic document generation in \texttt{R\ Markdown}. Adapted from
-\citet{Peikert2019} licensed under
-\href{https://creativecommons.org/licenses/by/4.0}{CC BY 4.0}.}
+Peikert and Brandmaier~\citep{Peikert2019} licensed under CC BY 4.0 
+(\url{https://creativecommons.org/licenses/by/4.0}).}
+\label{figure1}
 \end{figure}
 
-\hypertarget{creating-reproducible-research-projects}{%
+%\hypertarget{creating-reproducible-research-projects}
 \section{Creating Reproducible Research
-Projects}\label{creating-reproducible-research-projects}}
+Projects}\label{creating-reproducible-research-projects}
 
 One impediment to the widespread adoption of a standard for reproducible
 research is that learning to use the required tools can be quite
 time-intensive. To lower the threshold, the R package \texttt{repro}
 introduces helper functions that simplify the use of complicated and
-powerful tools. The \texttt{repro} package follows the format of the
-\href{https://usethis.r-lib.org}{\texttt{usethis}} \citep{usethis}
+powerful tools. The \texttt{repro} package follows the format of the{\texttt{usethis}} 
+ \mbox{(\url{https://usethis.r-lib.org})}~\citep{usethis}
 package, which provides helper functions to simplify the development of
 R packages. The \texttt{repro} package provides similar helper
 functions, but focuses on reproducibility-specific utilities. These
@@ -707,52 +721,50 @@ helper functions guide end-users in the use of reproducibility tools,
 provide feedback about what the computer is doing and suggest what the
 user should do next. We hope this makes reproducibility tools more
 accessible by enabling beginner-level users to detect their system's
-state accurately and act correspondingly \citep[Chapter 8: ``Automation
-and Situation Awareness'']{parasuramanAutomationHumanPerformance2018}.
+state accurately and act correspondingly (\citep{parasuramanAutomationHumanPerformance2018} Chapter 8: ``Automation
+and Situation Awareness'').
 These wrappers are merely a support system; as users learn to use the
 underlying tools, they can rely less on \texttt{repro} and use these
 tools directly to solve more complex problems.
 
-This tutorial assumes that the user will be working predominantly in R,
+This tutorial assumes that the user will be working predominantly in R
 with the help of RStudio. It describes basic steps that we expect to be
 relevant for small-scale psychological research projects that do not
 rely on external software or multistage data processing (for those
-requirements see section \protect\hyperlink{advanced-features}{Advanced
-Features}). Of course, your specific situation might involve additional,
+requirements see Section~\ref{advanced-features}). Of course, your specific situation might involve additional,
 more specialized steps. After completing the tutorial, you should be
 able to customize your workflow accordingly.
 
 The first step is to install the required software. We assume that you
-have installed R \citep[version 4.0.4]{R-base} and RStudio
-\citep[version 1.4]{rstudio} already but the tutorial will guide you in
+have installed R (\citep{R-base} version 4.0.4) and RStudio
+(\citep{rstudio} version 1.4) already but the tutorial will guide you in
 detail through the installation of other necessary software with the
-help of the R package
-\href{https://github.com/aaronpeikert/repro}{\texttt{repro}}
-\citep{R-repro}. In case you have either not installed R and RStudio or
+help of the R package {\texttt{repro}} 
+(\url{https://github.com/aaronpeikert/repro})~\citep{R-repro}. In case you have either not installed R and RStudio or
 are unsure if they are up-to-date, you might want to consult our
-installation advice in the
-\href{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md}{Online
-Supplementary Material} that covers the installation of all software
+installation advice in the Online Supplementary Material
+(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md}) that covers the installation of all software
 necessary for this tutorial in three steps. The
-\href{(https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md)}{installation
-advice} may also help Windows users who have problems installing
+\hl{installation advice} %MDPI: Please add the accessed date.
+(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md}) may also help Windows users who have problems installing
 \texttt{Docker}.
 
 Unfortunately, Docker requires administrator rights to run, which may
-not be available to all researchers. We recommend
-\href{https://rstudio.github.io/renv/articles/renv.html}{\texttt{renv}}
+not be available to all researchers. We recommend {\texttt{renv}}
+(\url{https://rstudio.github.io/renv/articles/renv.html})
 \citep{R-renv} in cases where no administrator rights can be obtained
-but can not detail its use in this document. \texttt{renv} tracks which
-R package is installed from which source in which version in a so-called
-\href{https://rstudio.github.io/renv/articles/lockfile.html}{\texttt{lockfile}}.
+but we can not detail its use in this document. \texttt{renv} tracks which
+R package is installed from which source in which version in a so-called \hl{\texttt{lockfile}}
+(\url{https://rstudio.github.io/renv/articles/lockfile.html}).
 This lockfile is then used to reinstall the same packages on other
 computers or later in time. For a more thorough discussion, see
-\citet{vanlissa2020worcs}.
+Lissa~et~al.~\citep{vanlissa2020worcs}.
 
-Start RStudio and install the package
-\href{https://github.com/aaronpeikert}{\texttt{repro}}\citep{R-repro}.
+Start RStudio and install the package \hl{\texttt{repro}}
+(\url{https://github.com/aaronpeikert})~\citep{R-repro}.
 It will assist you while you follow the tutorial.
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# repro is not on CRAN yet}
@@ -763,6 +775,7 @@ It will assist you while you follow the tutorial.
 \FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}repro\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 To verify that you have indeed installed and set up the required
 software for this workflow, you can use the ``check functions''. These
@@ -772,13 +785,19 @@ operator to explicitly indicate which functions originate in the
 \texttt{repro} package. If the package is loaded (using
 \texttt{library("repro")}), it is not necessary to use this double-colon
 notation.
-
+\vspace{+12pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# \textasciigrave{}package::function()\textasciigrave{} → use function from package without \textasciigrave{}library(package)\textasciigrave{}}
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{check\_git}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+
 
 \begin{verbatim}
 ## v Git is installed, don't worry.
@@ -803,6 +822,11 @@ notation.
 \begin{verbatim}
 ## v Docker is installed, don't worry.
 \end{verbatim}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 These functions check whether specific dependencies are available on the
 user's system, and if not, explain what further action is needed to
@@ -810,6 +834,7 @@ obtain it. Sometimes they ask the user to take action; for example, the
 following happens if you are a Windows user who does not have
 \texttt{Git} installed:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{check\_git}\NormalTok{()}
@@ -844,6 +869,7 @@ following happens if you are a Windows user who does not have
 \begin{verbatim}
 ## * Run `choco install -y git` in an admin terminal to install Git.
 \end{verbatim}
+\end{adjustwidth}
 
 The messages from \texttt{repro} try to help the user solve problems.
 They are adjusted to your specific operating system and installed
@@ -856,6 +882,7 @@ this tutorial.
 After you have installed the necessary software, we suggest that you set
 up a secure connection to GitHub:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{check\_github}\NormalTok{()}
@@ -865,10 +892,12 @@ up a secure connection to GitHub:
 \begin{verbatim}
 ## v You and GitHub are on good terms, don't worry.
 \end{verbatim}
+\end{adjustwidth}
 
 If you know what Secure Shell (SSH) is and want to use it, you may
 alternatively use:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# only an alternative: DO NOT USE if you are unsure what SSH means}
@@ -879,13 +908,14 @@ alternatively use:
 \begin{verbatim}
 ## v You and GitHub are on good terms, don't worry.
 \end{verbatim}
+\end{adjustwidth}
 
 If necessary, follow any instructions presented until all checks are
 passed.
 
-\hypertarget{creating-an-rstudio-project}{%
+%\hypertarget{creating-an-rstudio-project}{%
 \subsection{Creating an RStudio
-Project}\label{creating-an-rstudio-project}}
+Project}\label{creating-an-rstudio-project}
 
 We start by creating a project folder with RStudio by clicking the menu
 item:
@@ -897,13 +927,13 @@ File → New Project\ldots{} → New Directory → Example Repro Template
 This creates a project with a sample analysis. This sample analysis
 consists of a single R Markdown document and a single data file. The
 only special thing about the R Markdown document is the \texttt{repro}
-metadata that we will learn later about. However, you may turn any other
+metadata that we will learn about later. However, you may turn any other
 template or existing R project into a reproducible research project by
 adding those \texttt{repro} metadata there.
 
-\hypertarget{implementing-version-control}{%
+%\hypertarget{implementing-version-control}{%
 \subsection{Implementing Version
-Control}\label{implementing-version-control}}
+Control}\label{implementing-version-control}
 
 Now that your project is set up, we will introduce you to version
 control with \texttt{Git}. \texttt{Git} does not automatically track all
@@ -915,11 +945,13 @@ list specific files that you do not want to track in the
 example, to prevent accidentally sharing raw data. You can add something
 to the \texttt{.gitignore} file directly or with this command:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_git\_ignore}\NormalTok{(}\StringTok{"private.md"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 Now the file \texttt{private.md} will not be added to the \texttt{Git}
 repository, and hence also not be made public if you push the repository
@@ -932,29 +964,34 @@ New users are advised to explicitly exclude any sensitive files before
 proceeding. When you are ready, you can begin tracking your remaining
 files using \texttt{Git} by running:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_git}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
-\begin{figure}
-\centering
-\includegraphics{/home/rstudio/images/modified.pdf}
-\caption{Figure 3.1: The Git pane in R Studio, showing
-\texttt{manuscript.Rmd} modified but unstaged and \texttt{modified.png}
-newly added and staged.}
-\end{figure}
 
 For \texttt{Git} to recognize changes to a given file, you have to stage
 and then commit these changes (this is the basic save action for a
 project snapshot). One way to do this is through the visual user
-interface in the RStudio \texttt{Git} pane (see Figure 3.1). Click on
+interface in the RStudio \texttt{Git} pane (see \highlighting{Figure~\ref{figure2}).} %MDPI: Figure 3.1 has been changed into Figure 2. Please confirm.
+ Click on
 the empty box next to the file you want to stage. A checkmark then
 indicates that the file is staged. After you have staged all of the
 files you want, click on the commit button, explain in the commit
 message why you made those changes, and then click on commit. This
 stores a snapshot of the current state of the project.
+
+\begin{figure}[H]
+%\centering
+\includegraphics{Figures/modified.pdf}
+\caption{The Git pane in R Studio, showing
+\texttt{manuscript.Rmd} modified but unstaged and \texttt{modified.png}
+newly added and staged.}
+\label{figure2}
+\end{figure}
 
 The files you created and the changes you made have not yet left your
 computer. All snapshots are stored in a local repository in your project
@@ -967,34 +1004,38 @@ decide whether you would like the project to be publicly accessible
 to keep it private (only viewable and editable by selected
 collaborators). To upload the project publicly to GitHub use:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_github}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 To upload it privately:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_github}\NormalTok{(}\AttributeTok{private =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 Depending on your computer's configuration, it may ask you to set up a
 secure connection to GitHub. In this case, first, follow the suggestions
 shown on the R console.
 
-\hypertarget{using-dynamic-document-generation}{%
+%\hypertarget{using-dynamic-document-generation}{%
 \subsection{Using Dynamic Document
-Generation}\label{using-dynamic-document-generation}}
+Generation}\label{using-dynamic-document-generation}
 
 Now that you have created a version-controlled project, we will proceed
 with dynamic document generation. A dynamic document has three elements:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
+%\tightlist
 \item
   Text (prose; e.g., a scientific paper or presentation)
 \item
@@ -1005,14 +1046,16 @@ with dynamic document generation. A dynamic document has three elements:
 
 \texttt{R\ Markdown} is a type of dynamic document well-suited to the
 RStudio user interface. The text of an \texttt{R\ Markdown} is formatted
-by \texttt{Markdown} (see \citep{xieMarkdownDefinitiveGuide2019} for
-technical details and \citep{xieMarkdownCookbook2020} for practical
+by \texttt{Markdown} (see~\citep{xieMarkdownDefinitiveGuide2019} for
+technical details and~\citep{xieMarkdownCookbook2020} for practical
 guidance). The code mostly consists of R code (although other
 programming languages are supported, like Python, C++, Fortran, etc).
 The following example serves to illustrate the \texttt{Markdown} syntax.
 It shows how to create a heading, a word in bold font, a citation, and a
 list of several items in \texttt{Markdown}:
 
+
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\textless{}!{-}{-}this is a Markdown file {-}{-}\textgreater{}}
@@ -1031,6 +1074,7 @@ list of several items in \texttt{Markdown}:
 \SpecialStringTok{* }\NormalTok{Spend time with family and friends}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 One advantage of this type of markup for formatting is that it can be
 rendered to many different output formats---both in terms of file types,
@@ -1058,6 +1102,7 @@ turn our attention to including code and its results in the text. Code
 is separated by three backticks (and the programming language in curly
 brackets) like this:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{This is normal text, written in Markdown.}
@@ -1068,6 +1113,7 @@ brackets) like this:
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 The hotkey {[}Control{]}+{[}Alt{]}+{[}i{]} inserts a block of code in
 the file. The results of code enclosed in such backticks will be
@@ -1103,6 +1149,7 @@ metadata fields are self-explanatory (like the author field), and exist
 across all output formats (like the title field). Others are specific to
 certain output formats or R packages.
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{{-}{-}{-}}
@@ -1127,16 +1174,18 @@ certain output formats or R packages.
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
-\hypertarget{manage-software-and-file-dependencies}{%
+%\hypertarget{manage-software-and-file-dependencies}{%
 \subsection{Manage Software and File
-Dependencies}\label{manage-software-and-file-dependencies}}
+Dependencies}\label{manage-software-and-file-dependencies}
 
 The \texttt{repro} package adds fields to the metadata to list all
 dependencies of the research project. This includes R scripts, data
 files, and external packages. The format is as follows (see everything
 below the line \emph{repro:}):
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{{-}{-}{-}}
@@ -1155,6 +1204,7 @@ below the line \emph{repro:}):
 \CommentTok{{-}{-}{-}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 This information clarifies what dependencies (in the form of files and R
 packages) a project relies on. \texttt{repro} uses this information to
@@ -1169,11 +1219,13 @@ files allow users (including your future self) to reproduce every step
 in the analysis automatically. Please run \texttt{repro::automate()} in
 your project:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{automate}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 It is important to re-run \texttt{repro::automate()} whenever you change
 the \texttt{repro} metadata, change the output format, or add a new
@@ -1185,19 +1237,21 @@ few more files in the \texttt{.repro} directory (which we will explain
 in detail later), all of which you should add and commit to
 \texttt{Git}.
 
-\hypertarget{reproducing-a-project}{%
-\subsection{Reproducing a project}\label{reproducing-a-project}}
+%\hypertarget{reproducing-a-project}{%
+\subsection{Reproducing a Project}\label{reproducing-a-project}
 
 If someone (including you) wants to reproduce your project, they first
 have to install the required software, that is \texttt{Make}, and
 \texttt{Docker}. Remember, you can use the \texttt{check\_*}-functions
 to test if these are installed:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{check\_make}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+
 
 \begin{verbatim}
 ## v Make is installed, don't worry.
@@ -1212,11 +1266,14 @@ to test if these are installed:
 \begin{verbatim}
 ## v Docker is installed, don't worry.
 \end{verbatim}
+\end{adjustwidth}
+
 
 When these are set up, they can ask \texttt{repro} to explain how they
 should use \texttt{Make} and \texttt{Docker} to reproduce the project
 (or you could explain it to them):
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{reproduce}\NormalTok{()}
@@ -1231,15 +1288,19 @@ should use \texttt{Make} and \texttt{Docker} to reproduce the project
 ##   make docker &&
 ##   make -B DOCKER=TRUE
 \end{verbatim}
+\end{adjustwidth}
+
 
 If you feel uncomfortable using the terminal directly, you can send the
 command to the terminal from within R:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{system}\NormalTok{(repro}\SpecialCharTok{::}\FunctionTok{reproduce}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 The only ``hard'' software requirement for reproducing a project is
 \texttt{Docker}, assuming users know how to build a \texttt{Docker}
@@ -1249,16 +1310,17 @@ need to know how to use \texttt{Docker} and can simply rely on the two
 \texttt{Make} commands ``\texttt{make\ docker}'' and
 ``\texttt{make\ -B\ DOCKER=TRUE}''.
 
-\hypertarget{summary}{%
-\subsection{Summary}\label{summary}}
+%\hypertarget{summary}{%
+\subsection{Summary}\label{summary}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
+%\tightlist
 \item
   Install the \texttt{repro} package:
 \end{enumerate}
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{options}\NormalTok{(}
@@ -1268,15 +1330,18 @@ need to know how to use \texttt{Docker} and can simply rely on the two
 \FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}repro\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{1}
-\tightlist
+%\tightlist
+\newpage
 \item
   Check the required software:
 \end{enumerate}
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{check\_git}\NormalTok{()}
@@ -1316,16 +1381,19 @@ need to know how to use \texttt{Docker} and can simply rely on the two
 \begin{verbatim}
 ## v You are inside a Docker container!
 \end{verbatim}
+\end{adjustwidth}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{2}
-\tightlist
+%\tightlist
 \item
   Create an R project or use an existing one. Do not forget to add
   \texttt{repro} metadata (i.e., packages, scripts, data).
 \end{enumerate}
 
+
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{repro}\KeywordTok{:}
@@ -1337,37 +1405,46 @@ need to know how to use \texttt{Docker} and can simply rely on the two
 \AttributeTok{    }\KeywordTok{{-}}\AttributeTok{ tidyverse}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 The sample \texttt{repro} project already has theese metadata:
 
+
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{use\_repro\_template}\NormalTok{(}\StringTok{"/some/folder"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{3}
-\tightlist
+%\tightlist
 \item
   Let \texttt{repro} generate \texttt{Docker}- and \texttt{Makefile}:
 \end{enumerate}
 
+
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{automate}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{4}
-\tightlist
+%\tightlist
 \item
   Enjoy automated reproducibility:
 \end{enumerate}
 
+
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{repro}\SpecialCharTok{::}\FunctionTok{reproduce}\NormalTok{()}
@@ -1382,9 +1459,10 @@ The sample \texttt{repro} project already has theese metadata:
 ##   make docker &&
 ##   make -B DOCKER=TRUE
 \end{verbatim}
+\end{adjustwidth}
 
-\hypertarget{advanced-features}{%
-\section{Advanced Features}\label{advanced-features}}
+%\hypertarget{advanced-features}
+\section{Advanced Features}\label{advanced-features}
 
 This section is for advanced users who want to overcome some limitations
 of \texttt{repro}. If you read this paper the first time, you will
@@ -1458,7 +1536,7 @@ depend on the software environment (\texttt{Docker}) for which we again
 have computational steps that create it. Users only require a deeper
 understanding of this interdependence when they either want to have more
 complex computational recipes than rendering an \texttt{R\ Markdown} or
-require other software than R packages.
+require software other than R packages.
 
 Users can have full control over the software installed within the image
 of the project. \texttt{repro} creates three \texttt{Dockerfiles} inside
@@ -1483,6 +1561,7 @@ to the automate function virtually freezes the R environment to the
 state it was called the first time inside the container. Below, you see
 the \texttt{Docker} base file we used to create this manuscript:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ExtensionTok{FROM}\NormalTok{ rocker/verse:4.0.4}
@@ -1490,6 +1569,7 @@ the \texttt{Docker} base file we used to create this manuscript:
 \ExtensionTok{WORKDIR}\NormalTok{ /home/rstudio}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 The second automatically generated \texttt{Dockerfile} is
 \texttt{.repro/Dockerfile\_packages}. Whenever
@@ -1509,11 +1589,14 @@ snippet is added to \texttt{.repro/Dockerfile\_manual}, the
 \texttt{Docker} image will have, for example, Python installed. Other
 software is installed identically, only the software name is exchanged.
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ExtensionTok{RUN}\NormalTok{ apt{-}get update }\KeywordTok{\&\&} \ExtensionTok{apt{-}get}\NormalTok{ install }\AttributeTok{{-}y}\NormalTok{ python3}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+
 
 \texttt{Docker} eventually requires a single \texttt{Dockerfile} to run,
 so \texttt{repro::automate()} simply concatenates the three
@@ -1530,12 +1613,15 @@ include these in the \texttt{Makefile}. The \texttt{Makefile} that
 \texttt{repro} creates is only a template, and you are free to change
 it. However, make sure you never remove the following two lines:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ExtensionTok{include}\NormalTok{ .repro/Makefile\_Rmds}
 \ExtensionTok{include}\NormalTok{ .repro/Makefile\_Docker}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+
 
 The file \texttt{.repro/Makefile\_Rmds} contains the automatically
 generated targets from \texttt{repro::automate()} for the
@@ -1558,60 +1644,71 @@ this example, which is identical to the first \texttt{Make} example we
 gave above except for the addition of \texttt{\$(RUN1)} and
 \texttt{\$(RUN2)} in l. 2:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ExtensionTok{simulated\_data.csv:}\NormalTok{ R/simulate.R}
   \VariableTok{$(}\ExtensionTok{RUN1}\VariableTok{)}\NormalTok{ Rscript }\AttributeTok{{-}e} \StringTok{\textquotesingle{}source("R/simulate.R")\textquotesingle{}} \VariableTok{$(}\ExtensionTok{RUN2}\VariableTok{)}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+
 
 If users execute this in the terminal:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{make}\NormalTok{ data/simulation\_results.csv}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 It behaves exactly as in the first \texttt{Make} example, the script
 \texttt{R/simulate.R} is run using the locally installed R. Because this
 translates simply to:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ExtensionTok{Rscript} \AttributeTok{{-}e} \StringTok{\textquotesingle{}source("R/simulation.R")\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 But if users use
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{make}\NormalTok{ DOCKER=TRUE data/simulation\_results.csv}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 it is evaluated within the \texttt{Docker} container using the software
 within it and not the locally installed R version:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ExtensionTok{docker}\NormalTok{ run }\AttributeTok{{-}{-}rm} \AttributeTok{{-}{-}user}\NormalTok{ 1000 }\AttributeTok{{-}v} \StringTok{"/home/rstudio"}\NormalTok{:}\StringTok{"/home/rstudio/"}
 \ExtensionTok{reprotutorial}\NormalTok{ Rscript }\AttributeTok{{-}e} \StringTok{\textquotesingle{}source("R/simulate.R")\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 To summarize, \texttt{repro} automates dependency tracking (in the form
 of \texttt{Make}) and software management (using \texttt{Docker})
 without the necessity to learn both tools, but users with advanced
 requirements can still customize all aspects of both programs.
 
-\hypertarget{preregistration-as-code}{%
-\section{Preregistration as Code}\label{preregistration-as-code}}
+%\hypertarget{preregistration-as-code}
+\section{Preregistration as Code}\label{preregistration-as-code}
 
 \emph{Preregistration} refers to the practice of defining research
 questions and planning data analysis before observing the research
-outcomes \citep{NosekRevolution2018}. It serves to separate a-priori
+outcomes~\citep{NosekRevolution2018}. It serves to separate a-priori
 planned and theory-driven (confirmatory) analyses from unplanned and
 post-hoc (exploratory) analyses. Researchers are faced with a myriad of
 choices in designing, executing, and analyzing a study, often called
@@ -1648,10 +1745,10 @@ levels of detail. A third limitation is that preregistrations are
 susceptible to non-reproducibility, just like primary research. To
 illustrate, a review of 210 preregistrations found that, even though 174
 (67\%) included a formal power analysis, only 34 (20\%) of these could
-be reproduced \citep{bakkerRecommendationsPreregistrationsInternal2020}.
+be reproduced~\citep{bakkerRecommendationsPreregistrationsInternal2020}.
 Even when researchers have gone to great lengths in preregistering an
 analysis script, they sometimes inexplicably fail to reproduce their own
-results. For example, \citet{steegenMeasuringCrowdAgain2014} realized
+results. For example, Steegen~et~al.~\citep{steegenMeasuringCrowdAgain2014} realized
 after publication that part of their preregistered code resulted in
 different test statistics than they reported initially (see their
 Footnote 7). A final limitation is that written plans may turn out to be
@@ -1679,12 +1776,13 @@ at the preregistration stage. This already includes most of the typical
 sections, such as introduction, methods, and results. These results are
 initially based on simulated data with the same structure as the data
 the authors expect to obtain from their experiments. For guidance on how
-to simulate data, see \citet{morrisUsingSimulationStudies2019},
-\citet{paxtonMonteCarloExperiments2001}, and
-\citet{skrondalDesignAnalysisMonte2000}, as well as the R packages
-\href{https://cran.r-project.org/web/packages/simstudy/vignettes/simstudy.html}{\texttt{simstudy}},
-\citep{simstudy} and
-\href{https://personality-project.org/r/psych/help/sim.html}{\texttt{psych}},
+to simulate data, see Morris~et~al.~\citep{morrisUsingSimulationStudies2019},
+Paxton~et~al.~\citep{paxtonMonteCarloExperiments2001}, and
+Skrondal~\citep{skrondalDesignAnalysisMonte2000}, as well as the R packages
+{\texttt{simstudy}} 
+\mbox{ (\url{https://cran.r-project.org/web/packages/simstudy/vignettes/simstudy.html})}
+~\citep{simstudy} and
+{\texttt{psych}} (\url{https://personality-project.org/r/psych/help/sim.html})
 \citep{psych}.
 
 Once the preregistration is submitted and real data have been collected
@@ -1694,29 +1792,15 @@ is of utmost importance at this stage since the preregistration must
 produce valid results at two points in time, once before data collection
 and once after data collection. As outlined before, reproducibility
 builds upon four pillars (version control, dynamic document generation,
-dependency tracking, and software management). To use PAC the dangers to
+dependency tracking, and software management). To use PAC, the dangers to
 reproducibility we described must be eliminated.
 
-The idea of submitting code as part of a preregistration is not new
-\citep[e.g.][]{wichertsDegreesFreedomPlanning2016}. A prominent
-preregistration platform, \href{https://osf.io/}{The Open Science
-Framework}, suggests submitting scripts alongside the preregistration of
-methods. In an informal literature search (we skimmed the first 300
-results of Google Scholar with the keywords
-\texttt{("pre\ registration"\textbar{}"pre-registration"\textbar{}preregistration)\&(code\textbar{}script\textbar{}matlab\textbar{}python\textbar{}"R")})
-we only found close to a dozen published articles that did include some
-form of script as part of their preregistration. Though the notion of
-preregistering code has been around for a while
-\citep[cf.][]{steegenMeasuringCrowdAgain2014}, it has not gained much
-traction---perhaps because, to date, this has constituted an extra
-non-standard step in the research process. This tutorial integrates the
-preregistration of code into the reproducible research workflow by
-encouraging researchers to preregister the whole manuscript as a dynamic
-document.
+\textls[+15]{The idea of submitting code as part of a preregistration is not new (e.g.~\citep{wichertsDegreesFreedomPlanning2016}). A prominent preregistration platform, \hl{The Open Science Framework} %MDPI: Please add the accessed date.
+(\url{https://osf.io/}), suggests submitting scripts alongside the preregistration of methods. In an informal literature search (we skimmed the first 300 results of Google Scholar with the keywords \texttt{\textls[+35]{("pre\ registration"\textbar{}"pre-registration"\textbar{}preregistration)\&(code\textbar{}script\textbar{}matlab\textbar{}}\linebreak python\textbar{}"R")}) we only found close to a dozen published articles that did include some form of script as part of their preregistration. Though the notion of preregistering code has been around for a while (cf.~\citep{steegenMeasuringCrowdAgain2014}), it has not gained much traction---perhaps because, to date, this has constituted an extra non-standard step in the research process. This tutorial integrates the preregistration of code into the reproducible research workflow by encouraging researchers to preregister the whole manuscript as a dynamic document.}
 
-\hypertarget{advantages-of-pac-over-traditional-preregistration}{%
-\subsection{Advantages of PAC Over Traditional
-Preregistration}\label{advantages-of-pac-over-traditional-preregistration}}
+%\hypertarget{advantages-of-pac-over-traditional-preregistration}{%
+\subsection{Advantages of PAC over Traditional
+Preregistration}\label{advantages-of-pac-over-traditional-preregistration}
 
 We believe that pairing PAC with the workflow presented above offers
 five advantages over classical preregistration. First, PAC is merely an
@@ -1740,9 +1824,9 @@ these can be formulated as code. Researchers can, for example, formulate
 conditions (e.g., in the form of if-else-blocks) under which they prefer
 one analysis type over the other. For example, if distributional
 assumptions are not met, the code may branch out to employ robust
-methods; or, an analysis may perform automated variable selection
+methods; or an analysis may perform automated variable selection
 mechanisms before running the final model. Another example of
-data-dependent decisions are more explorative analyses, i.e.~explorative
+data-dependent decisions are more explorative analyses, i.e.,~explorative
 factor analysis or machine learning. Decisions that do not lend
 themselves to formulation in code, e.g.~visual inspection, must still be
 described verbally or be treated as noted in the next section. Fifth,
@@ -1750,21 +1834,21 @@ deviations from the preregistration are clearly documented because they
 are reflected in changes to the code, which are managed and tracked with
 version control.
 
-\hypertarget{deviating-from-the-preregistration-and-exploration}{%
+%\hypertarget{deviating-from-the-preregistration-and-exploration}{%
 \subsection{Deviating from the Preregistration and
-Exploration}\label{deviating-from-the-preregistration-and-exploration}}
+Exploration}\label{deviating-from-the-preregistration-and-exploration}
 
 We would like to note that PAC allows explicit comparison of the
 preregistration and the final publication. Authors should
 retrospectively summarize and justify any changes made to the
-preregistered plan, e.g.~in the discussion of the final manuscript
-\footnote{In section {[}Preregistration as Code --- a Tutorial{]} we
+preregistered plan, e.g.~in the discussion of the \hl{final manuscript} %MDPI: Footnote is not allowed in this journal. The content has been moved here. Please confirm.
+({In section {[}Preregistration as Code---a Tutorial{]} we
   conducted an actual PAC and summarize the changes we make to the
-  preregistered code in the discussion.}. During the analysis process,
+  preregistered code in the discussion}). During the analysis process,
 authors can additionally maintain a running changelog to explain changes
 in detail as they arise. Each entry in the changelog should explain the
 reasoning behind the changes and link to the commit id that applied the
-changes. This enables readers and reviewers to inspects individual
+changes. This enables readers and reviewers to inspect individual
 changes and make an informed judgment about their validity and
 implications.
 
@@ -1772,7 +1856,7 @@ Deviations from the preregistration are sometimes maligned, as if
 encountering unexpected challenges invalidates a carefully crafted study
 \citep{szollosi_is_2020}. However, we share the common view that
 deviation from a preregistration is not a problem
-\citep{nosekPreregistrationHardWorthwhile2019}; rather, a faillure to
+\citep{nosekPreregistrationHardWorthwhile2019}; rather, a failure to
 disclose such deviations is a problem. In fact, it is expected that most
 PACs will require some modification after empirical data becomes
 available. Often, deviations provide an opportunity to learn from the
@@ -1794,7 +1878,7 @@ their theory of intelligence. That researcher might thus interpret the
 same result as an explorative finding, suggesting that these aspects of
 intelligence are unidimensional. A deviation from preregistration thus
 requires a judgement about what changes affect the test of the theory to
-what extend \citep{meehlTheoreticalRisksTabular1978}. Only transparent
+what extend~\citep{meehlTheoreticalRisksTabular1978}. Only transparent
 reporting enables such judgment.
 
 Another common misunderstanding is that preregistration, including PAC,
@@ -1807,31 +1891,31 @@ them from confirmatory findings
 \citep{NosekRevolution2018, nosekPreregistrationHardWorthwhile2019}. The
 second kind of exploration is through procedurally well defined
 exploration with exploratory statistical models that are standard in
-machine learning \citep{brandmaier22mlsem}. These models often involve
+machine learning~\citep{brandmaier22mlsem}. These models often involve
 dozens, if not hundreds of predictors, which makes it difficult to
 describe them verbally. With PAC, such models can be preregistered
-clearly and in comprehensive detail and researcher can precisely define
+clearly and in comprehensive detail, and the researcher can precisely define
 a priori how much they want to explore. We specifically recommend PAC
 for such exploratory statistical models. The merit of preregistration in
 these cases is to communicate precisely how much exploration was done; a
 piece of information that is crucial to assess e.g., whether the results
 might be overfit
-\citep[p.~220f.]{hastieElementsStatisticalLearning2017}.
+(\citep{hastieElementsStatisticalLearning2017}, p.~220f.).
 
-\hypertarget{planned-analyses-as-functions}{%
+%\hypertarget{planned-analyses-as-functions}{%
 \subsection{Planned Analyses as
-Functions}\label{planned-analyses-as-functions}}
+Functions}\label{planned-analyses-as-functions}
 
 Although researchers may use any form to preregister their planned
 analyses (e.g., scripts), we suggest writing three functions for each
 planned hypothesis: one to conduct the planned analysis, one to simulate
-the expected data, and to report the results. Using functions makes the
+the expected data, and one to report the results. Using functions makes the
 analysis more portable (i.e., it can easily be used for other datasets),
 and facilitates repeated evaluation, as is the case in a simulation
 study. The functions shown here do not contain executable code, but the
-interested reader can find working functions in the
-\href{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R}{online
-supplementary materials} that power the example below.
+interested reader can find working functions in the \hl{online
+supplementary materials}% MDPI: Please add the accessed date.
+~(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R}) that power the example below.
 
 It is difficult to write analysis code when it is not clear what the
 expected data will look like. We therefore recommend first simulating a
@@ -1841,6 +1925,7 @@ for specific analyses exist .
 
 The general format of a simulation function might be as follows:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{simulate\_data }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n, effect\_size)\{}
@@ -1850,9 +1935,16 @@ The general format of a simulation function might be as follows:
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 For linear models, simulating data is extremely simple:
 
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{simulate\_data }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n, effect\_size)\{}
@@ -1867,11 +1959,17 @@ For linear models, simulating data is extremely simple:
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 Next, write a function to conduct the planned analysis. This function
 should receive the data and compute all relevant results from it. The
 general format of an analysis function might be:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{planned\_analyis }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data)\{}
@@ -1881,10 +1979,12 @@ general format of an analysis function might be:
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 In the simplest case, an analysis function might already exist in R. For
 the linear model above, the analysis function might be:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{planned\_analyis }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data)\{}
@@ -1892,6 +1992,7 @@ the linear model above, the analysis function might be:
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 As soon as we have written \texttt{planned\_anaylsis()} and
 \texttt{simulate\_data()} we can iteratively improve both functions,
@@ -1906,6 +2007,12 @@ they would like to report the analysis results via tables, plots, and
 text. The implementation of this reporting should be in the function
 \texttt{report\_analysis()}.
 
+\newpage
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{report\_analysis }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(results)\{}
@@ -1916,8 +2023,13 @@ text. The implementation of this reporting should be in the function
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
 
-This function should again accept the output of
+
+\textls[-5]{This function should again accept the output of
 \texttt{planned\_analysis()} as input. The output of this function
 should be formatted in Markdown. The idea is to automatically generate
 the full results section from the analysis. This way, the
@@ -1925,20 +2037,19 @@ preregistration not only specifies the computation but also how the its
 results are reported. Various packages automatically generate
 well-formatted Markdown outputs of statistical reports or even entire
 tables of estimates or figures directly from R goal to help with this
-objective. Packages like
-\href{https://github.com/Rapporter/pander}{\texttt{pander}}
-\citep{pander},
-\href{https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf}{\texttt{stargazer}}
-\citep{stargazer},
-\href{https://dstanley4.github.io/apaTables/articles/apaTables.html}{\texttt{apaTables}}
-\citep{apaTables} and
-\href{http://frederikaust.com/papaja_man/}{\texttt{papaja}}
+objective. Packages like {\texttt{pander}}
+(\url{https://github.com/Rapporter/pander})
+\citep{pander}, {\texttt{stargazer}}
+\mbox{(\url{https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf})}
+\citep{stargazer}, {\texttt{apaTables}}
+(\url{https://dstanley4.github.io/apaTables/articles/apaTables.html})
+\citep{apaTables} and {\texttt{papaja}}
+\mbox{(\url{http://frederikaust.com/papaja_man/})}
 \citep{papaja} help you to create dynamically generated professional
-looking results. The package
-\href{https://github.com/easystats/report}{\texttt{report}}
-\citep{report} is particularly noteworthy because it not only generates
+looking results. The package {\texttt{report}}
+(\url{https://github.com/easystats/report})~\citep{report} is particularly noteworthy because it not only generates
 tables but also a straightforward interpretation of the effects as
-actual prose (e.g., it verbally quantifies the size of an effect).
+actual prose (e.g., it verbally quantifies the size of an effect).}
 
 Ideally, these three functions can be composed to create a ``fake''
 results section, e.g.~when composed to
@@ -1946,13 +2057,13 @@ results section, e.g.~when composed to
 \texttt{simulate\_data()\ \%\textgreater{}\%\ planned\_analysis()\ \%\textgreater{}\%\ report\_analysis()}
 outputs a results section.
 
-\hypertarget{turning-a-dynamic-document-into-a-preregistration}{%
-\subsubsection{Turning a Dynamic Document into a
-Preregistration}\label{turning-a-dynamic-document-into-a-preregistration}}
+%\hypertarget{turning-a-dynamic-document-into-a-preregistration}{%
+\subsubsection*{Turning a Dynamic Document into a
+Preregistration}\label{turning-a-dynamic-document-into-a-preregistration}
 
 After researchers are satisfied with their draft preregistration, they
 should archive a time-stamped and uneditable version of the project that
-serves as the preregistration. zenodo.org \citep{zenodo} is a publicly
+serves as the preregistration. zenodo.org~\citep{zenodo} is a publicly
 funded service provider that archives digital artefacts for research and
 provides digital object identifiers (DOI) for these archives. While the
 service is independent of GitHub---in terms of storage facilities and
@@ -1962,29 +2073,34 @@ zenodo.org through your GitHub account. To log in with your GitHub
 account:
 
 \begin{quote}
-Navigate to \url{https://zenodo.org/login/} → Log in with GitHub
+\hl{Navigate to} %MDPI: Please add the accessed date.
+~\url{https://zenodo.org/login/} → Log in with GitHub
 \end{quote}
 
 \noindent{}To link zenodo.org and GitHub
 
 \begin{quote}
-Log into zenodo.org → Account → GitHub\footnote{\url{https://zenodo.org/account/settings/github/}}
+Log into zenodo.org → Account → \hl{GitHub} %MDPI: 1. Footnote is not allowed in this journal. The content has been moved here. Please confirm. 2. Please add the accessed date
+~({\url{https://zenodo.org/account/settings/github/}})
 \end{quote}
 
 \noindent{}Or:
 
 \begin{quote}
-Navigate to \url{https://zenodo.org/account/settings/github/}
+\hl{Navigate to} %MDPI: Please add the accessed date.
+ \url{https://zenodo.org/account/settings/github/}
 \end{quote}
 
 After you have linked a GitHub repository, you trigger the archival by
 creating a GitHub release. To create GitHub release, navigate to GitHub:
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{browse\_github}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 Then click on Releases → Draft a new release. Here you can add all
 relevant binary files but at least a rendered version of the manuscript
@@ -1999,9 +2115,9 @@ render the dynamic manuscript (therefore run
 \texttt{planned\_analysis()} on the actual data), and write the
 discussion.
 
-\hypertarget{alternatives-to-simulated-data}{%
-\subsection{Alternatives to simulated
-data}\label{alternatives-to-simulated-data}}
+%\hypertarget{alternatives-to-simulated-data}{%
+\subsection{Alternatives to Simulated
+Data}\label{alternatives-to-simulated-data}
 
 Simulating data may prove challenging to applied researchers. In the
 spirit of team science and collaboration, one feasible solution is to
@@ -2028,8 +2144,7 @@ about means or proportions (e.g., the number of participants belonging
 to group ``A'' are in the dataset), but remain uninformed about
 relations between variables (e.g., members of group ``A'' have a greater
 mean in variable ``Z''). Preregistration after data collection is common
-for secondary data analysis of data obtained by other research groups
-\citep{westonRecommendationsIncreasingTransparency2019} but not so much
+for secondary data analysis of data obtained by other research groups~\citep{westonRecommendationsIncreasingTransparency2019} but not so much
 within the same research project. We argue that it is still an eligible
 preregistration. Guidelines for clinical trials already recommend
 analysis of blinded data to test the feasibility of a preregistration
@@ -2039,21 +2154,22 @@ Another alternative to simulated data is to conduct a pilot study
 \citep{thabaneTutorialPilotStudies2010} and use the pilot data to
 develop the preregistration. A pilot study has obvious advantages for
 study planning, since it lets the researcher evaluate the feasibility of
-many assumptions. However, we must warn our readers, that while piloting
+many assumptions. However, we must warn our readers that while piloting
 is more traditional than our approach of blinding the data before
 preregistration, the data from the pilot study must not enter the
 analysis data set.
 
-\hypertarget{when-is-pac-applicable}{%
-\subsection{When Is PAC Applicable?}\label{when-is-pac-applicable}}
+%\hypertarget{when-is-pac-applicable}{%
+\subsection{When Is PAC Applicable?}\label{when-is-pac-applicable}
 
 PAC is applicable to every study that can be preregistered and
 ultimately uses computer code for the statistical analysis. Two types of
 preregistrations are particularly amenable to PAC. First, pregistrations
-of clinical trials (called statistical analysis plans, \citet{ICH1998})
+of clinical trials (called statistical analysis plans, International Council for Harmonisation of Technical Requirements for Registration of
+Pharmaceuticals for Human Use~\citep{ICH1998})
 typically describe analyses in exhaustive detail and typically contain a
 detailed description of how results will be presented, including shells
-of tables and graphics \citep{yuanGuideStatisticalAnalysis2019}. PAC may
+of tables and graphics~\citep{yuanGuideStatisticalAnalysis2019}. PAC may
 significantly reduce the required workload while maintaining (and
 exceeding) the required standards for preregistering a clinical trial.
 
@@ -2062,16 +2178,16 @@ large numbers of competing models or those inspired by machine learning)
 is hardly feasible with standard preregistrations since they are too
 complex to describe and depend strongly on their software
 implementation. PAC, however, captures the precise algorithmic model,
-including its software implementation and is ideal for preregistering
-these models \citep{brandmaier22mlsem}.
+including its software implementation, and is ideal for preregistering
+these models~\citep{brandmaier22mlsem}.
 
-\hypertarget{preregistration-as-code-tutorial}{%
+%\hypertarget{preregistration-as-code-tutorial}{%
 \subsection{Preregistration as Code:
-Tutorial}\label{preregistration-as-code-tutorial}}
+Tutorial}\label{preregistration-as-code-tutorial}
 
 We have argued that PAC has several advantages over classic
 preregistration and have outlined its implementation. To illustrate how
-PAC works in practice and help researchers to implement PAC themselves,
+PAC works in practice and to help researchers implement PAC themselves,
 we provide a worked example. We will use an exemplary research question
 that was based on openly available data:
 
@@ -2084,9 +2200,8 @@ Again, we propose a preregistration format that closely resembles a
 classic journal article but uses simulated data and dynamic document
 generation to create a document that starts out as a preregistration and
 eventually becomes the final report. The complete preregistration source
-is available in the
-\href{https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd}{online
-supplementary material}. In this section, we show code excerpts of this
+is available in the \hl{online supplementary material}%MDPI: Please add the accessed date.
+~(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd}). In this section, we show code excerpts of this
 preregistration (formatted in monospace) and explain the rationale
 behind them.
 
@@ -2096,6 +2211,12 @@ background information and literature to understand the context and
 purpose of the research question. This example is drastically shortened
 for illustration purposes:
 
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{\# Theoretical Background}
@@ -2109,11 +2230,22 @@ for illustration purposes:
 \NormalTok{tend to have higher machiavellianism scores }\CommentTok{[}\OtherTok{@muris2017}\CommentTok{]}\NormalTok{.}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 After researchers have provided the research question, they typically
 proceed to explain how they want to study it. For simplicity, we will
 use already published data that we have not yet analyzed:
 
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{\# Method}
@@ -2126,27 +2258,38 @@ use already published data that we have not yet analyzed:
 \NormalTok{gender as either "male" or "female".}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 We choose the following statistical procedure because many researchers
-are familiar with it\footnote{The t-test and Mann-Whitney-Wilcoxon test
+are familiar \hl{with it} %MDPI: Footnote is not allowed. The content has been moved here. Please confirm.
+~(The \emph{t}-test and Mann-Whitney-Wilcoxon test
   are arguably the most often used hypothesis tests (according to
-  \citep{fagerlandTtestsNonparametricTests2012, hortonStatisticalMethodsJournal2005}
-  reports that 26\% of all studies employed a t-test and 27\% employed a
+ ~\citep{fagerlandTtestsNonparametricTests2012, hortonStatisticalMethodsJournal2005}
+  reports that 26\% of all studies employed a \emph{t}-test and 27\% employed a
   rank-based alternative in the \emph{New England Journal of Medicine}
   in 2005). The analytical strategy presented here is, in fact,
   suboptimal in several respects (the assumption of measurement
   invariance is untested
-  \citep{putnickMeasurementInvarianceConventions2016}, the effect size
+ ~\citep{putnickMeasurementInvarianceConventions2016}, the effect size
   is underestimated in the presence of measurement error
-  \citep{frostCorrectingRegressionDilution2000}, the effect size is
+ ~\citep{frostCorrectingRegressionDilution2000}, the effect size is
   overestimated for highly skewed distributions
-  \citep{stonehouseRobustnessTestsCombined1998}). The interested reader
-  can use the
-  \href{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R}{provided
-  code for the simulation} to verify that the t-test provides unbiased
+ ~\citep{stonehouseRobustnessTestsCombined1998}). The interested reader
+  can use the \hl{provided code for the simulation}
+~\mbox{(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R})} to verify that the \emph{t}-test provides unbiased
   effect sizes but the Mann-Whitney-Wilcoxon overestimates effect sizes
-  with increasing sample size and skewness.}:
+  with increasing sample size and skewness.):
 
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{We conduct a Student\textquotesingle{}s t{-}test }\CommentTok{[}\OtherTok{@studentProbableErrorMean1908}\CommentTok{]}\NormalTok{ with Welch\textquotesingle{}s}
@@ -2156,10 +2299,21 @@ are familiar with it\footnote{The t-test and Mann-Whitney-Wilcoxon test
 \NormalTok{Whitney{-}{-}Wilcoxon test }\CommentTok{[}\OtherTok{@Wilcoxon1945}\CommentTok{]}\NormalTok{ instead.}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 The methods section is the translation of the following
 \texttt{planned\_analysis()} function:
 
+\newpage
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{planned\_analysis }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, }\AttributeTok{use\_rank =} \StringTok{"skew"}\NormalTok{, }\AttributeTok{skew\_cutoff =} \DecValTok{1}\NormalTok{)\{}
@@ -2184,6 +2338,11 @@ The methods section is the translation of the following
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 This function illustrates two advantages of PAC. First, a PAC can easily
 include data-dependent decisions by creating different analysis branches
@@ -2196,33 +2355,34 @@ of the functions \texttt{rank} and \texttt{t.test}. Either of them is a
 valid implementation of the Mann--Whitney--Wilcoxon test, but the first
 assumes equal variance. In contrast, the second applies Welch's
 correction by default and hence is robust even with unequal variances
-across groups \citep{zimmermanRankTransformationsPower1993}. Mentioning
+across groups~\citep{zimmermanRankTransformationsPower1993}. Mentioning
 every such minute implementation detail is almost impossible and would
 result in overly verbose preregistrations. Still, these details can make
 a difference in the interpretation of statistical results and, thus,
 represent undisclosed researchers' degrees of freedom.
 
 Together with the function \texttt{simulate\_data()} (not shown here),
-the function \texttt{planned\_analysis()} can be used to justify the
+the function \texttt{planned\_\linebreak analysis()} can be used to justify the
 planned sample size. To that end, \texttt{simulate\_data()} is
 repeatedly called with increased sample sizes and the proportion of
 significant results (power) is recorded. The results for such a Monte
-Carlo simulation for this example are visualized in Figure 5.1. The code
-for this power analysis can be found in the
-\href{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R}{online
-supplementary material}. The next snippet shows how we integrated the
+Carlo simulation for this example are visualized in \highlighting{Figure~\ref{figure3}.} %MDPI:  Figure 5.1 has been changed into Figure 3. Please confirm.
+ The code
+for this power analysis can be found in the \hl{online supplementary material}
+(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R}). The next snippet shows how we integrated the
 results dynamically into the preregistration (the origin of the
 R-variables \texttt{minn}, \texttt{choosen\_power}, and
 \texttt{choosen\_d} is not shown).
 
-\begin{figure}
-\centering
-\includegraphics{manuscript_files/figure-latex/power-1.pdf}
-\caption{Figure 5.1: Results of simulation for the power analysis. The
-cross indicates the sample size that archives 80\% assuming a Cohen's d
-of 0.2.}
-\end{figure}
 
+
+
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{A simulation we conducted indicated that with a sample size of }\InformationTok{\textasciigrave{}r minn\textasciigrave{}}\NormalTok{ for}
@@ -2230,6 +2390,13 @@ of 0.2.}
 \NormalTok{assuming a standardized effect size of d=}\InformationTok{\textasciigrave{}r choosen\_d\textasciigrave{}}\NormalTok{.}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
+
+
 
 Monte Carlo simulations are, of course, not only applicable for this
 analysis method and also allow researchers to investigate further
@@ -2245,6 +2412,24 @@ actual results. As soon as the actual data are available, the simulated
 data are no longer used, and the results represent the actual empirical
 results of the study.
 
+
+\begin{figure}[H]
+%\widefigure
+\includegraphics[width=12.5cm]{Figures/power-1.pdf}
+\caption{Results of simulation for the power analysis. The
+cross indicates the sample size that archives 80\% assuming a Cohen's d
+of 0.2.}
+\label{figure3}
+\end{figure}
+
+
+
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{\# Results}
@@ -2277,19 +2462,31 @@ results of the study.
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 Following the recommendations outlined in this paper, we did not access
 the data when we initially wrote this code. We therefore did not know
 the exact format the data would have. This means that we did need to
-change our preregistration after accessing the data to include i.e.~the
-recoding of gender (lines 17-22) and the items (lines 23-26).\footnote{We
+change our preregistration after accessing the data to include i.e.,~the
+recoding of gender (lines 17--22) and the items\hl{ (lines 23--26).} %MDPI: Footnote is not allowed. The content has been moved here. Please confirm.
+ ({We
   invite the reader to evaluate the changes we made to the preregistered
-  code. Either on
-  \href{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg...main}{GitHub}
+  code. Either on \hl{GitHub}
+  (\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg...main})
   → ``Files changed'' or directly in Git with
-  \texttt{git\ diff\ v0.0.1.1-prereg\ preregistration.Rmd}.} This is our
+  \texttt{git\ diff\ v0.0.1.1-prereg\ preregistration.Rmd}.}) This is our
 summary of what we changed:
 
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{\# Discussion}
@@ -2304,14 +2501,20 @@ summary of what we changed:
 \NormalTok{influence the results substantively.}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
 
-Readers can inspect and judge the changes for themselves on
-\href{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main\#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b}{GitHub}.
+
+Readers can inspect and judge the changes for themselves on \hl{GitHub}
+\textls[-25]{(\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main\#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b})}.
 
 The last thing we need to preregister is the reporting of our results
 with the combination of the functions \texttt{planned\_analysis()} and
 \texttt{report\_analysis()}.
 
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r, echo=FALSE, results=\textquotesingle{}asis\textquotesingle{}\}}
@@ -2319,10 +2522,17 @@ with the combination of the functions \texttt{planned\_analysis()} and
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
+\end{adjustwidth}
 
 This is an example of how the results could be reported (based on
 simulated data):
 
+\vspace{+6pt}
+% start a new page without indent 4.6cm
+%\clearpage
+\end{paracol}
+\nointerlineskip
+\begin{adjustwidth}{0.5cm}{0cm} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{report\_analysis}\NormalTok{(}\FunctionTok{planned\_analysis}\NormalTok{(}\FunctionTok{simulate\_data}\NormalTok{(}\DecValTok{900}\NormalTok{, }\DecValTok{8}\NormalTok{, }\FloatTok{0.3}\NormalTok{, }\DecValTok{10}\NormalTok{)))}
@@ -2333,9 +2543,14 @@ simulated data):
 The Welch Two Sample t-test testing the difference of machiavellianism by gender
 (mean in group male = 0.96, mean in group female = 0.79) suggests that the
 effect is - negative, statistically significant, and small (difference = -0.17,
-95% CI [0.12, 0.22], t(887.46) = 6.38, p < .001; Cohen's d = 0.43, 95% CI [0.30,
+95% CI [0.12, 0.22], t(887.46) = 6.38, p < 0.001; Cohen's d = 0.43, 95% CI [0.30,
 0.56])
 \end{verbatim}
+\end{adjustwidth}
+\begin{paracol}{2}
+%\linenumbers
+\switchcolumn
+
 
 This example of a preregistration covers a single study with a single
 hypothesis. To organize studies with multiple hypotheses, we suggest
@@ -2346,29 +2561,26 @@ sources may employ multiple \texttt{simulate\_data()} functions. These
 are merely suggestions, and researchers are encouraged to find their own
 way of how to best organize their analysis code.
 
-The example rendered as a
-\href{https://github.com/aaronpeikert/repro-tutorial/files/7309455/preregistration.pdf}{PDF
-file with real data} is available in the
-\href{https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.3.1-results}{online
-supplementary material}. The changes we made since preregistering it can
-be inspected on this
-\href{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main\#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b}{GitHub
-page}.
+The example rendered as a \hl{PDF file with real data}
+(\url{https://github.com/aaronpeikert/repro-tutorial/files/7309455/preregistration.pdf}) is available in the \hl{online supplementary material}
+(\url{https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.3.1-results}). The changes we made since preregistering it can
+be inspected on this \hl{GitHub page}
+(\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main\#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b}).
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+%\hypertarget{discussion}
+\section{Discussion}\label{discussion}
 
 Increased automation is increasingly recognized as a means to improve
-the research process \citep{rouderMinimizingMistakesPsychological2019},
+the research process~\citep{rouderMinimizingMistakesPsychological2019},
 and therefore this workflow fits nicely together with other innovations
 that employ automation, like machine-readable hypothesis tests
 \citep{lakensImprovingTransparencyFalsifiability2021} or automated data
-documentation \citep{arslanHowAutomaticallyDocument2019}. Automated
+documentation~\citep{arslanHowAutomaticallyDocument2019}. Automated
 research projects promise a wide range of applications, among them PAC
 \citep[potentially to be submitted as a registered
 report][]{nosekRegisteredReports2014, chambersWhatNextRegistered2019},
-direct replication \citep{simonsValueDirectReplication2014}, fully
-automated living metanalysis \citep{elliottLivingSystematicReviews2014},
+direct replication~\citep{simonsValueDirectReplication2014}, fully
+automated living metanalysis~\citep{elliottLivingSystematicReviews2014},
 executable research articles
 \citep{elifesciencespublicationsELifeLaunchesExecutable2020}, and other
 innovations such as the live analysis of born open data
@@ -2389,8 +2601,8 @@ that the statistical analysis is correct. Therefore reproducibility
 facilitates traditional good scientific practices and provides the
 foundation for promising innovations.
 
-\hypertarget{summary-1}{%
-\subsection{Summary}\label{summary-1}}
+%\hypertarget{summary-1}{%
+\subsection{Summary}\label{summary-1}
 
 This paper demonstrated how the R package \texttt{repro} supports
 researchers in creating reproducible research projects, including
@@ -2399,7 +2611,7 @@ transparent and cumulative science because they enable others to
 reproduce statistical and computational results and reports later in
 time and on different computers. The workflow we present here rests on
 four software solutions, (1) version control, (2) dynamic document
-generation, (3) dependency tracking and (4) software management to
+generation, (3) dependency tracking, and (4) software management to
 guarantee reproducibility. We first demonstrated how to create a
 reproducible research project. Then, we illustrated how such a project
 could be reproduced---either by the original author and/or collaborators
@@ -2416,15 +2628,15 @@ becomes possible because reproducibility is ensured and leverages
 version control and dynamic document generation as key features of the
 workflow.
 
-\hypertarget{limitations}{%
-\subsection{Limitations}\label{limitations}}
+%\hypertarget{limitations}{%
+\subsection{Limitations}\label{limitations}
 
 We realize that the workflow outlined in this paper, and its application
 in PAC, remains challenging despite our efforts to simplify the
 procedure by means of the \texttt{repro} package. This paper should be
 considered as a starting point for those seeking to improve the
 reproducibility of their research. Two kinds of limitations can be
-distinguished. The first kind are limitations by design which are
+distinguished. The first kind are limitations by design, which are
 unlikely to change. Our workflow inherits these from the software it
 relies on and the fundamental design principles these share with the
 workflow and \texttt{repro}. The second kind are limitations in
@@ -2436,7 +2648,8 @@ paper is fundamentally incompatible with steps that cannot be automated.
 This principle may be at odds with some ingrained habits of researchers
 to mix and match manual and automated steps in data analysis. To allow
 for automation, many researchers will have to search for alternative
-software.\\
+software.
+
 The automation-friendly software we present here has several technical
 but critical limitations. For example, \texttt{Git} can track any
 filetype, but tracked changes are only meaningful for text files (with
@@ -2488,7 +2701,7 @@ Application Network, Ubuntu Package Archive). To overcome this
 limitation, we recommend archiving the \texttt{Git} repository and the
 \texttt{Docker} image with zenodo.org, a non-profit long-term storage
 for scientific data. The necessary steps for archival on zenodo.org are
-described at the end of Section {[}Preregistration as Code --- a
+described at the end of Section {[}Preregistration as Code---a
 Tutorial{]}.
 
 The second vulnerability is that even if the existence of the
@@ -2510,14 +2723,14 @@ provide information that allows researchers to trace the computational
 steps and recreate the computational environment manually. The
 \texttt{Makefile}, for example, is written in a way that researchers can
 manually trace the dependencies and execute commands in the right order,
-in case they are unable to run \texttt{Make} for some reason. Thus
+in case they are unable to run \texttt{Make} for some reason. Thus,
 hypothetically, even if \texttt{Docker} were to become unavailable one
 day, the \texttt{Dockerfile} still serves as unambiguous documentation
-of how the original system was set up and may help future users to
+of how the original system was set up, and may help future users to
 create a software environment that closely resembles the original.
 
-\hypertarget{outlook}{%
-\subsection{Outlook}\label{outlook}}
+%\hypertarget{outlook}{%
+\subsection{Outlook}\label{outlook}
 
 Open science practices are a continually evolving field where technical
 innovations foster changes in research practice. Open data are much more
@@ -2541,13 +2754,13 @@ moment, \texttt{repro} only supports the combination of
 However, there are alternatives for each of these elements that may fit
 better into an individual research project. \texttt{R\ Markdown} could
 be complemented or replaced by a dynamic Microsoft Word document with
-the help of \texttt{officer} \citep{officer} or \texttt{officedown}
+the help of \texttt{officer}~\citep{officer} or \texttt{officedown}
 \citep{officedown} to accommodate a wider range of journal submission
 standards. Instead of using formal version control with \texttt{Git},
 \texttt{repro} could automatically save snapshots for increasing
 user-friendliness. \texttt{Make} could be replaced by the more
 R-centered alternative \texttt{targets} for more convenience.
-\texttt{Docker} could be combined with \texttt{renv} \citep{R-renv} to
+\texttt{Docker} could be combined with \texttt{renv}~\citep{R-renv} to
 control the package versions precisely (our approach fixes the date,
 \texttt{renv} the exact package version). Alternatively, \texttt{Docker}
 could be replaced by the more lightweight \texttt{renv} if no
@@ -2561,38 +2774,42 @@ though they have not yet been implemented. Depending on the demand by
 users, we will implement some of them in \texttt{repro} and hope for
 broad adoption of computational reproducibility in the near future.
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %% optional
-% \supplementary{The following are available online at www.mdpi.com/link, Figure S1: title, Table S1: title, Video S1: title.}
-%
-% % Only for the journal Methods and Protocols:
-% % If you wish to submit a video article, please do so with any other supplementary material.
-% % \supplementary{The following are available at www.mdpi.com/link: Figure S1: title, Table S1: title, Video S1: title. A supporting video article is available at doi: link.}
+
 
 \vspace{6pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Supplementary Materials{\hl{\quad \quad}}%The following are available online at www.mdpi.com/xxx/s1, Figure S1: title, Table S1: title, Video S1: title.
+
+\authorcontributions{A.P. took the lead in writing and provided
+the initial draft of the manuscript. A.M.B. and C.J.v.L. contributed further ideas, critical feedback, and revisions of the original manuscript. All authors have read and agreed to the published version of the manuscript.}
+
+\funding{\hl{\quad \quad}} %This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
+
+\institutionalreview{\hl{\quad \quad}} %In this section, please add the Institutional Review Board Statement and approval number for studies involving humans or animals. Please note that the Editorial Office might ask you for further information. Please add ``The study was conducted according to the guidelines of the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).'' OR ``Ethical review and approval were waived for this study, due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans or animals. You might also choose to exclude this statement if the study did not involve humans or animals.
+
+\informedconsent{\hl{\quad \quad}} %Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans. Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.
+
+\dataavailability{\hl{\quad \quad}} %In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Please refer to suggested Data Availability Statements in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}. You might choose to exclude this statement if the study did not report any data.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \acknowledgments{We would like to thank Maximilian Stefan Ernst for his
 contributions to the code for the simulation study. We are grateful to
 Julia Delius for her helpful assistance in language and style editing.
-The R package \texttt{repro} was developed as part of the
-\href{https://aaronpeikert.github.io/repro-thesis/}{first author's
-master thesis} at the Humboldt-Universität zu Berlin.}
+The R package \texttt{repro} was developed as part of the \hl{first author's
+master thesis}
+\mbox{(\url{https://aaronpeikert.github.io/repro-thesis/})} at the Humboldt-Universität zu Berlin.}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\authorcontributions{Aaron Peikert took the lead in writing and provided
-the initial draft of the manuscript. Andreas Brandmaier and Caspar J.
-Van Lissa contributed further ideas, critical feedback, and revisions of
-the original manuscript.}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\conflictsofinterest{The authors declare no conflict of interest. We
+\conflictsofinterest{The authors declare no conflicts of interest. We
 have received no financial support for the research, authorship, and/or
 publication of this article.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% optional
-\abbreviations{The following abbreviations are used in this manuscript:\\
+\abbreviations{Abbreviations}{The following abbreviations are used in this manuscript:\\
 
 \noindent
 \begin{tabular}{@{}ll}
@@ -2602,44 +2819,455 @@ Kb & Kilobyte \\
 CRAN & Comprehensive R Archive Network \\
 WORCS & Workflow for Open Reproducible Code in Science \\
 \end{tabular}}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Citations and References in Supplementary files are permitted provided that they also appear in the reference list here.
-
-%=====================================
-% References, variant A: internal bibliography
-%=====================================
-%\reftitle{References}
-%\begin{thebibliography}{999}
-% Reference 1
-%\bibitem[Author1(year)]{ref-journal}
-%Author1, T. The title of the cited article. {\em Journal Abbreviation} {\bf 2008}, {\em 10}, 142--149.
-% Reference 2
-%\bibitem[Author2(year)]{ref-book}
-%Author2, L. The title of the cited contribution. In {\em The Book Title}; Editor1, F., Editor2, A., Eds.; Publishing House: City, Country, 2007; pp. 32--58.
-%\end{thebibliography}
-
-% The following MDPI journals use author-date citation: Arts, Econometrics, Economies, Genealogy, Humanities, IJFS, JRFM, Laws, Religions, Risks, Social Sciences. For those journals, please follow the formatting guidelines on http://www.mdpi.com/authors/references
-% To cite two works by the same author: \citeauthor{ref-journal-1a} (\citeyear{ref-journal-1a}, \citeyear{ref-journal-1b}). This produces: Whittaker (1967, 1975)
-% To cite two works by the same author with specific pages: \citeauthor{ref-journal-3a} (\citeyear{ref-journal-3a}, p. 328; \citeyear{ref-journal-3b}, p.475). This produces: Wong (1999, p. 328; 2000, p. 475)
-
-%=====================================
-% References, variant B: external bibliography
-%=====================================
+\end{paracol}
 \reftitle{References}
-\externalbibliography{yes}
-\bibliography{temp.bib}
+%\externalbibliography{yes}
+%\bibliography{temp.bib}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% optional
+\begin{thebibliography}{999}
+% Reference 1
+\bibitem[Peikert and Brandmaier(2021)]{Peikert2019}
+Peikert, A.; Brandmaier, A.M. A Reproducible Data Analysis Workflow with R Markdown, Git, Make, and Docker. \emph{Quant. Comput. Methods Behav. Sci.} \textbf{2021}, \emph{1}, e3763. https://doi.org/10.5964/qcmb.3763.
 
-%% for journal Sci
-%\reviewreports{\\
-%Reviewer 1 comments and authors’ response\\
-%Reviewer 2 comments and authors’ response\\
-%Reviewer 3 comments and authors’ response
-%}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Reference 2
+\bibitem[Popper(2002)]{popperLogicScientificDiscovery2002}
+Popper, K.R. \emph{The Logic of Scientific Discovery}; Routledge: London, UK, 2002.
+
+
+% Reference 3
+\bibitem[Obels \em{et~al.}(2020)Obels, Lakens, Coles, Gottfried, and
+  Green]{obels2020}
+Obels, P.; Lakens, D.; Coles, N.A.; Gottfried, J.; Green, S.A. Analysis of Open Data and Computational Reproducibility in Registered Reports in Psychology. \emph{Adv. Methods Pract. Psychol. Sci.} \textbf{2020}, \emph{3}, 229--237.
+
+
+% Reference 4
+\bibitem[van Lissa \em{et~al.}(2021)van Lissa, Brandmaier, Brinkman, Lamprecht,
+  Peikert, Struiksma, and Vreede]{vanlissa2020worcs}
+van Lissa, C.J.; Brandmaier, A.M.; Brinkman, L.; Lamprecht, A.L.; Peikert, A.; Struiksma, M.E.; Vreede, B.M. WORCS: A Workflow for Open Reproducible Code in Science. \emph{Data Sci.} \textbf{2021}, \emph{4}, 29--49. https://doi.org/10.3233/DS-210031.
+
+
+% Reference 5
+\bibitem[Nosek \em{et~al.}(2018)Nosek, Ebersole, DeHaven, and
+  Mellor]{NosekRevolution2018}
+Nosek, B.A.; Ebersole, C.R.; DeHaven, A.C.; Mellor, D.T. The Preregistration Revolution. \emph{Proc. Natl. Acad. Sci. USA} \textbf{2018}, \emph{115}, 2600--2606. https://doi.org/10.1073/pnas.1708274114.
+
+
+% Reference 6
+\bibitem[Hardwicke \em{et~al.}(2018)Hardwicke, Mathur, MacDonald, Nilsonne,
+  Banks, Kidwell, Hofelich~Mohr, Clayton, Yoon, Henry~Tessler, Lenne, Altman,
+  Long, and Frank]{hardwicke2018}
+Hardwicke, T.E.; Mathur, M.B.; MacDonald, K.; Nilsonne, G.; Banks, G.C.; Kidwell, M.C.; Hofelich Mohr, A.; Clayton, E.; Yoon, E.J.; Henry Tessler, M.; et al. Data Availability, Reusability, and Analytic Reproducibility: Evaluating the Impact of a Mandatory Open Data Policy at the Journal Cognition. \emph{R. Soc. Open Sci.} \textbf{2018}, \emph{5}, 180448. https://doi.org/10.1098/rsos.180448.
+
+
+% Reference 7
+\bibitem[{R Core Team}(2021)]{R-base}
+R Core Team. \emph{R: A Language and Environment for Statistical Computing}; R Foundation for Statistical Computing: Vienna, Austria, 2021.
+
+
+% Reference 8
+\bibitem[Vuorre and Curley(2018)]{vuorreCuratingResearchAssets2018}
+Vuorre, M.; Curley, J.P. Curating Research Assets: A Tutorial on the Git Version Control System. \emph{Adv. Methods Pract. Psychol. Sci.} \textbf{2018}, \emph{1}, 219--236. https://doi.org/10.1177/2515245918754826.
+
+% Reference 9
+\bibitem[Bryan(2018)]{bryanExcuseMeYou2018}
+Bryan, J. Excuse Me, Do You Have a Moment to Talk About Version Control? \emph{Am. Stat.} \textbf{2018}, \emph{72}, 20--27. https://doi.org/10.1080/\linebreak00031305.2017.1399928.
+
+% Reference 10
+\bibitem[Nuijten \em{et~al.}(2016)Nuijten, Hartgerink, {van Assen}, Epskamp,
+  and Wicherts]{nuijtenPrevalenceStatisticalReporting2016}
+Nuijten, M.B.; Hartgerink, C.H.J.; van Assen, M.A.L.M.; Epskamp, S.; Wicherts, J.M. The Prevalence of Statistical Reporting Errors in Psychology (1985--2013). \emph{Behav. Res. Methods} \textbf{2016}, \emph{48}, 1205--1226. https://doi.org/10.3758/s13428-015-0664-2.
+
+% Reference 11
+\bibitem[Knuth and Levy(1994)]{knuthCWEBSystemStructured}
+Knuth, D.E.; Levy, S. \emph{The CWEB System of Structured Documentation}; Addison-Wesley Longman: \hl{Boston, USA, 1994.}%MDPI: Please add the publisher’s location.
+
+
+% Reference 12
+\bibitem[Claerbout and Karrenbach(1992)]{claerboutElectronicDocumentsGive1992}
+Claerbout, J.F.; Karrenbach, M. Electronic Documents Give Reproducible Research a New Meaning. \emph{SEG Tech. Program Expand. Abstr.} \textbf{1992}, 601--604. https://doi.org/10.1190/1.1822162.
+
+
+% Reference 13
+\bibitem[Lamport(1994)]{lamportLATEXDocumentPreparation1994}
+Lamport, L. \emph{LATEX: A Document Preparation System: User’s Guide and Reference Manual}, 2nd ed.; Addison-Wesley: Reading, MA, USA, 1994.
+
+
+% Reference 14
+\bibitem[Allaire \em{et~al.}(2021)Allaire, Xie, {R Foundation}, Wickham,
+  {Journal of Statistical Software}, Vaidyanathan, {Association for Computing
+  Machinery}, Boettiger, {Elsevier}, Broman, Mueller, Quast, Pruim, Marwick,
+  Wickham, Keyes, Yu, Emaasit, Onkelinx, Gasparini, Desautels, Leutnant,
+  {MDPI}, {Taylor and Francis}, Öğreden, Hance, Nüst, Uvesten, Campitelli,
+  Muschelli, Hayes, Kamvar, Ross, Cannoodt, Luguern, Kaplan, Kreutzer, Wang,
+  Hesselberth, and Dervieux]{R-rticles}
+Allaire, J.; Xie, Y.; R Foundation; Wickham, H.; Journal of Statistical Software.; Vaidyanathan, R.; Association for Computing Machinery; Boettiger, C.; Elsevier; Broman, K.; et al. \emph{Articles: Article Formats for R Markdown}; R Package Version 0.19; \hl{2021.}%MDPI: Please add the publisher and its location.
+
+
+% Reference 15
+\bibitem[El~Hattab and Allaire(2017)]{revealjs}
+El Hattab, H.; Allaire, J. Revealjs: R Markdown Format for ’Reveal, Js’ Presentations, \hl{2017.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 16
+\bibitem[{O'Hara-Wild} and Hyndman(2021)]{vitae}
+O’Hara-Wild, M.; Hyndman, R. Vitae: Curriculum Vitae for r Markdown, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 17
+\bibitem[Xie \em{et~al.}(2020)Xie, Dervieux, and
+  Riederer]{xieMarkdownCookbook2020}
+Xie, Y.; Dervieux, C.; Riederer, E. \emph{R Markdown Cookbook}, 1st ed.; The R Series; Taylor and Francis, CRC Press: Boca Raton, FL, USA, 2020.
+
+
+% Reference 18
+\bibitem[Silver(2017)]{silverSoftwareSimplified2017}
+Silver, A. Software Simplified. \emph{Nature} \textbf{2017}, \emph{546}, 173--174.
+
+% Reference 19
+\bibitem[Boettiger and
+  Eddelbuettel(2017)]{boettigerIntroductionRockerDocker2017}
+Boettiger, C.; Eddelbuettel, D. An Introduction to Rocker: Docker Containers for R. \emph{R J.} \textbf{2017}, \emph{9}, 527. https://doi.org/10.32614/RJ-2017-065.
+
+% Reference 20
+\bibitem[Wickham \em{et~al.}(2019)Wickham, Averick, Bryan, Chang, McGowan,
+  Fran{\c c}ois, Grolemund, Hayes, Henry, Hester, Kuhn, Pedersen, Miller,
+  Bache, M{\"u}ller, Ooms, Robinson, Seidel, Spinu, Takahashi, Vaughan, Wilke,
+  Woo, and Yutani]{tidyverse}
+Wickham, H.; Averick, M.; Bryan, J.; Chang, W.; McGowan, L.D.; François, R.; Grolemund, G.; Hayes, A.; Henry, L.; Hester, J.; et al. Welcome to the tidyverse. \emph{J. Open Source Softw.} \textbf{2019}, \emph{4}, 1686. https://doi.org/10.21105/joss.01686.
+
+% Reference 21
+\bibitem[Wiebels and Moreau(2021)]{wiebelsLeveragingContainersReproducible2021}
+Wiebels, K.; Moreau, D. Leveraging Containers for Reproducible Psychological Research. Advances in Methods and Practices in Psychological. \emph{Science} \textbf{2021}, \emph{4}, https://doi.org/10.1177/25152459211017853.
+
+
+% Reference 22
+\bibitem[Ushey(2021)]{R-renv}
+Ushey, K. Renv: Project Environments, 2021. \hl{R Package Version 0.13.2.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 23
+\bibitem[Wickham and Bryan(2021)]{usethis}
+Wickham, H.; Bryan, J. Usethis: Automate Package and Project Setup, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 24
+\bibitem[Parasuraman and
+  Mouloua(2019)]{parasuramanAutomationHumanPerformance2018}
+Parasuraman, R.; Mouloua, M. \emph{Automation and Human Performance: Theory and Applications}, 1st ed.; CRC Press: Boca Raton, FL, USA, 2019.
+
+
+% Reference 25
+\bibitem[{RStudio Team}(2021)]{rstudio}
+RStudio Team. \emph{RStudio: Integrated Development Environment for r. RStudio}; PBC: Boston, MA, USA, 2021.
+
+
+% Reference 26
+\bibitem[Peikert \em{et~al.}(2021)Peikert, Brandmaier, and {van
+  Lissa}]{R-repro}
+Peikert, A.; Brandmaier, A.M.; van Lissa, C.J. Repro: Automated Setup of Reproducible Workflows and Their Dependencies, 2021. \hl{R Package Version 0.1.0.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 27
+\bibitem[Xie \em{et~al.}(2019)Xie, Allaire, and
+  Grolemund]{xieMarkdownDefinitiveGuide2019}
+Xie, Y.; Allaire, J.J.; Grolemund, G. \emph{R Markdown: The Definitive Guide}; CRC Press: Boca Raton, FL, USA, 2019.
+
+
+% Reference 28
+\bibitem[Aust and Barth(2020)]{papaja}
+Aust, F.; Barth, M. Papaja: Create APA Manuscripts with R Markdown, \hl{2020.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 29
+\bibitem[Association(2019)]{apa7}
+Association, A.P. (Ed.) \emph{Publication Manual of the American Psychological Association}, 7th ed.; American Psychological Association: Washington, DC, USA, 2019.
+
+% Reference 30
+\bibitem[DeCoster \em{et~al.}(2015)DeCoster, Sparks, Sparks, Sparks, and
+  Sparks]{decosterOpportunisticBiasesTheir2015}
+DeCoster, J.; Sparks, E.A.; Sparks, J.C.; Sparks, G.G.; Sparks, C.W. Opportunistic Biases: Their Origins, Effects, and an Integrated Solution. \emph{Am. Psychol.} \textbf{2015}, \emph{70}, 499–514. https://doi.org/10.1037/a0039191.
+
+% Reference 31
+\bibitem[Silberzahn \em{et~al.}(2018)Silberzahn, Uhlmann, Martin, Anselmi,
+  Aust, Awtrey, Bahnik, Bai, Bannard, Bonnier, Carlsson, Cheung, Christensen,
+  Clay, Craig, Dalla~Rosa, Dam, Evans, Flores~Cervantes, Fong, {Gamez-Djokic},
+  Glenz, {Gordon-McKeon}, Heaton, Hederos, Heene, Hofelich~Mohr, H{\"o}gden,
+  Hui, Johannesson, Kalodimos, Kaszubowski, Kennedy, Lei, Lindsay, Liverani,
+  Madan, Molden, Molleman, Morey, Mulder, Nijstad, Pope, Pope, Prenoveau, Rink,
+  Robusto, Roderique, Sandberg, Schl{\"u}ter, Sch{\"o}nbrodt, Sherman, Sommer,
+  Sotak, Spain, Sp{\"o}rlein, Stafford, Stefanutti, Tauber, Ullrich, Vianello,
+  Wagenmakers, Witkowiak, Yoon, and Nosek]{silberzahnManyAnalystsOne2018}
+Silberzahn, R.; Uhlmann, E.L.; Martin, D.P.; Anselmi, P.; Aust, F.; Awtrey, E.; Bahnik, S.; Bai, F.; Bannard, C.; Bonnier, E.; et al. Many Analysts, One Data Set: Making Transparent How Variations in Analytic Choices Affect Results. \emph{Adv. Methods Pract. Psychol. Sci.} \textbf{2018}, \emph{1}, 337--356. https://doi.org/10.1177/2515245917747646.
+
+% Reference 32
+\bibitem[Bowman \em{et~al.}(2020)Bowman, DeHaven, Errington, Hardwicke, Mellor,
+  Nosek, and Soderberg]{bowmanOSFPreregTemplate2020}
+Bowman, S.; DeHaven, A.; Errington, T.; Hardwicke, T.E.; Mellor, D.T.; Nosek, B.A.; Soderberg, C.K. OSF Prereg Template 2020. \emph{MetaArXiv}, \textbf{2020}, https://doi.org/10.31222/osf.io/epgjd.
+
+
+% Reference 33
+\bibitem[Bakker \em{et~al.}(2020{\natexlab{a}})Bakker, Veldkamp, {van Assen},
+  Crompvoets, Ong, Nosek, Soderberg, Mellor, and
+  Wicherts]{bakkerEnsuringQualitySpecificity2020}
+Bakker, M.; Veldkamp, C.L.S.; van Assen, M.A.L.M.; Crompvoets, E.A.V.; Ong, H.H.; Nosek, B.A.; Soderberg, C.K.; Mellor, D.; Wicherts, J.M. Ensuring the Quality and Specificity of Preregistrations. \emph{PLoS Biol.} \textbf{2020}, \emph{18}, e3000937. https://doi.org/10.1371/journal.pbio.3000937.
+
+
+% Reference 34
+\bibitem[Bakker \em{et~al.}(2020{\natexlab{b}})Bakker, Veldkamp, {van den
+  Akker}, {van Assen}, Crompvoets, Ong, and
+  Wicherts]{bakkerRecommendationsPreregistrationsInternal2020}
+Bakker, M.; Veldkamp, C.L.S.; van den Akker, O.R.; van Assen, M.A.L.M.; Crompvoets, E.; Ong, H.H.; Wicherts, J.M. Recommendations in Pre-Registrations and Internal Review Board Proposals Promote Formal Power Analyses but Do Not Increase Sample Size. \emph{PLoS ONE} \textbf{2020}, \emph{15}, e0236079. https://doi.org/10.1371/journal.pone.0236079.
+
+
+% Reference 35
+\bibitem[Steegen \em{et~al.}(2014)Steegen, Dewitte, Tuerlinckx, and
+  Vanpaemel]{steegenMeasuringCrowdAgain2014}
+Steegen, S.; Dewitte, L.; Tuerlinckx, F.; Vanpaemel, W. Measuring the Crowd within Again: A Pre-Registered Replication Study. \emph{Front. Psychol.} \textbf{2014}, \emph{5}. https://doi.org/10.3389/fpsyg.2014.00786.
+
+
+% Reference 36
+\bibitem[Morris \em{et~al.}(2019)Morris, White, and
+  Crowther]{morrisUsingSimulationStudies2019}
+Morris, T.P.; White, I.R.; Crowther, M.J. Using Simulation Studies to Evaluate Statistical Methods. \emph{Stat. Med.} \textbf{2019}, \emph{38}, 2074--2102. https://doi.org/10.1002/sim.8086.
+
+
+% Reference 37
+\bibitem[Paxton \em{et~al.}(2001)Paxton, Curran, Bollen, Kirby, and
+  Chen]{paxtonMonteCarloExperiments2001}
+Paxton, P.; Curran, P.J.; Bollen, K.A.; Kirby, J.; Chen, F. Monte Carlo Experiments: Design and Implementation. \emph{Struct. Equ. Modeling: A Multidiscip. J.} \textbf{2001}, \emph{8}, 287--312. https://doi.org/10.1207/S15328007SEM0802\_7.
+
+
+% Reference 38
+\bibitem[Skrondal(2000)]{skrondalDesignAnalysisMonte2000}
+Skrondal, A. Design and Analysis of Monte Carlo Experiments: Attacking the Conventional Wisdom. \emph{Multivar. Behav. Res.} \textbf{2000}, \emph{35}, 137--167. https://doi.org/10.1207/S15327906MBR3502\_1.
+
+
+% Reference 39
+\bibitem[Goldfeld and {Wujciak-Jens}(2020)]{simstudy}
+Goldfeld, K.; Wujciak-Jens, J. Simstudy: Illuminating Research Methods through Data Generation. \emph{J. Open Source Softw.} \textbf{2020}, \emph{5}, 2763. https://doi.org/10.21105/joss.02763.
+
+% Reference 40
+\bibitem[Revelle(2021)]{psych}
+Revelle, W. \emph{Psych: Procedures for Psychological, Psychometric, and Personality Research}; Northwestern University: Evanston, IL, USA, 2021.
+
+% Reference 41
+\bibitem[Wicherts \em{et~al.}(2016)Wicherts, Veldkamp, Augusteijn, Bakker, {van
+  Aert}, and {van Assen}]{wichertsDegreesFreedomPlanning2016}
+Wicherts, J.M.; Veldkamp, C.L.S.; Augusteijn, H.E.M.; Bakker, M.; van Aert, R.C.M.; van Assen, M.A.L.M. Degrees of Freedom in Planning, Running, Analyzing, and Reporting Psychological Studies: A Checklist to Avoid p-Hacking. \emph{Front. Psychol.} \textbf{2016}, \emph{7}, 1832. https://doi.org/10.3389/fpsyg.2016.01832.
+
+% Reference 42
+\bibitem[Szollosi \em{et~al.}(2020)Szollosi, Kellen, Navarro, Shiffrin, {van
+  Rooij}, Van~Zandt, and Donkin]{szollosi_is_2020}
+Szollosi, A.; Kellen, D.; Navarro, D.J.; Shiffrin, R.; van Rooij, I.; Van Zandt, T.; Donkin, C. Is Preregistration Worthwhile? \emph{Trends Cogn. Sci.} \textbf{2020}, \emph{24}, 94--95. https://doi.org/10.1016/j.tics.2019.11.009.
+
+
+% Reference 43
+\bibitem[Nosek \em{et~al.}(2019)Nosek, Beck, Campbell, Flake, Hardwicke,
+  Mellor, {van 't Veer}, and Vazire]{nosekPreregistrationHardWorthwhile2019}
+Nosek, B.A.; Beck, E.D.; Campbell, L.; Flake, J.K.; Hardwicke, T.E.; Mellor, D.T.; van ’t Veer, A.E.; Vazire, S. Preregistration Is Hard, And Worthwhile. \emph{Trends Cogn. Sci.} \textbf{2019}, \emph{23}, 815--818. https://doi.org/10.1016/j.tics.2019.07.009.
+
+
+% Reference 44
+\bibitem[Meehl(1978)]{meehlTheoreticalRisksTabular1978}
+Meehl, P.E. Theoretical Risks and Tabular Asterisks: Sir Karl, Sir Ronald, and the Slow Progress of Soft Psychology. \emph{J. Consult. Clin. Psychol.} \textbf{1978}, \emph{46}, 806--834. https://doi.org/10.1037/0022-006X.46.4.806.
+
+
+% Reference 45
+\bibitem[Brandmaier and Jacobucci(in press)]{brandmaier22mlsem}
+Brandmaier, A.M.; Jacobucci, R. Machine-Learning Approaches to Structural Equation Modeling. In \emph{Handbook of Structural Equation Modeling}, 2nd ed.; Hoyle, R.H., Ed.; \hl{Guilford Press, New York, NY, USA}, in press.%MDPI: Please add the location of the publisher and publication year.
+
+
+% Reference 46
+\bibitem[Hastie \em{et~al.}(2017)Hastie, Tibshirani, and
+  Friedman]{hastieElementsStatisticalLearning2017}
+Hastie, T.; Tibshirani, R.; Friedman, J.H. \emph{The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Second Edition, Corrected at 12th Printing 2017 ed.}; Springer Series in Statisticsl Springer: New York, NY, USA, 2017.
+
+
+% Reference 47
+\bibitem[Dar{\'o}czi and Tsegelskyi(2021)]{pander}
+Daróczi, G.; Tsegelskyi, R. Pander: An R ‘pandoc’ Writer, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 48
+\bibitem[Hlavac(2018)]{stargazer}
+Hlavac, M. \emph{Stargazer: Well-Formatted Regression and Summary Statistics Tables}; Central European Labour Studies Institute (CELSI): Bratislava, Slovakia, 2018.
+
+
+% Reference 49
+\bibitem[Stanley(2021)]{apaTables}
+Stanley, D. apaTables: Create American Psychological Association (APA) Style Tables, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+
+% Reference 50
+\bibitem[Makowski \em{et~al.}(2021)Makowski, {Ben-Shachar}, Patil, and
+  L{\"u}decke]{report}
+Makowski, D.; Ben-Shachar, M.S.; Patil, I.; Lüdecke, D. Automated Results Reporting as a Practical Tool to Improve Reproducibility and Methodological Best Practices Adoption. \hl{CRAN 2021.}%MDPI: Please provide an available website and its accessed date.
+
+% Reference 51
+\bibitem[{European Organization For Nuclear Research} and
+  {OpenAIRE}(2013)]{zenodo}
+European Organization For Nuclear Research. \emph{OpenAIRE}; \hl{Zenodo}, 2013. https://doi.org/10.25495/7GXK-RD71.%MDPI: Please add the location of the publisher.
+
+% Reference 52
+\bibitem[Weston \em{et~al.}(2019)Weston, Ritchie, Rohrer, and
+  Przybylski]{westonRecommendationsIncreasingTransparency2019}
+Weston, S.J.; Ritchie, S.J.; Rohrer, J.M.; Przybylski, A.K. Recommendations for Increasing the Transparency of Analysis of Preexisting Data Sets. \emph{Adv. Methods Pract. Psychol. Sci.} \textbf{2019}, \emph{2}, 214--227. https://doi.org/10.1177/2515245919848684.
+
+
+% Reference 53
+\bibitem[{International Council for Harmonisation of Technical Requirements for
+  Registration of Pharmaceuticals for Human Use}(1998)]{ICH1998}
+International Council for Harmonisation of Technical Requirements for Registration of Pharmaceuticals for Human Use. E 9 Statistical Principles for Clinical Trials, \hl{1998.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 54
+\bibitem[Thabane \em{et~al.}(2010)Thabane, Ma, Chu, Cheng, Ismaila, Rios,
+  Robson, Thabane, Giangregorio, and
+  Goldsmith]{thabaneTutorialPilotStudies2010}
+Thabane, L.; Ma, J.; Chu, R.; Cheng, J.; Ismaila, A.; Rios, L.P.; Robson, R.; Thabane, M.; Giangregorio, L.; Goldsmith, C.H. A Tutorial on Pilot Studies: The What, Why and How. \emph{BMC Med. Res. Methodol.} \textbf{2010}, \emph{10}, 1. https://doi.org/10.1186/1471-2288-10-1.
+
+
+% Reference 55
+\bibitem[Yuan \em{et~al.}(2019)Yuan, Topjian, Kurth, Kirschen, Ward, Zhang, and
+  Mensinger]{yuanGuideStatisticalAnalysis2019}
+Yuan, I.; Topjian, A.A.; Kurth, C.D.; Kirschen, M.P.; Ward, C.G.; Zhang, B.; Mensinger, J.L. Guide to the Statistical Analysis Plan. \emph{Pediatric Anesth.} \textbf{2019}, \emph{29}, 237--242. https://doi.org/10.1111/pan.13576.
+
+
+% Reference 56
+\bibitem[Fagerland(2012)]{fagerlandTtestsNonparametricTests2012}
+Fagerland, M.W. T-Tests, Non-Parametric Tests, and Large Studies—A Paradox of Statistical Practice? \emph{BMC Med Res. Methodol.} \textbf{2012}, \emph{12}, 78. https://doi.org/10.1186/1471-2288-12-78.
+
+
+% Reference 57
+\bibitem[Horton and Switzer(2005)]{hortonStatisticalMethodsJournal2005}
+Horton, N.J.; Switzer, S.S. Statistical Methods in the Journal. \emph{New Engl. J. Med.} \textbf{2005}, \emph{353}, 1977--1979. https://doi.org/10.1056/\linebreak NEJM200511033531823.
+
+
+% Reference 58
+\bibitem[Putnick and
+  Bornstein(2016)]{putnickMeasurementInvarianceConventions2016}
+Putnick, D.L.; Bornstein, M.H. Measurement Invariance Conventions and Reporting: The State of the Art and Future Directions for Psychological Research. \emph{Dev. Rev.} \textbf{2016}, \emph{41}, 71--90, https://doi.org/10.1016/j.dr.2016.06.004.
+
+
+% Reference 59
+\bibitem[Frost and Thompson(2000)]{frostCorrectingRegressionDilution2000}
+Frost, C.; Thompson, S.G. Correcting for Regression Dilution Bias: Comparison of Methods for a Single Predictor Variable. \emph{J. R. Stat. Soc. Ser. A} \textbf{2000}, \emph{163}, 173--189. https://doi.org/10.1111/1467-985x.00164.
+
+% Reference 60
+\bibitem[Stonehouse and Forrester(1998)]{stonehouseRobustnessTestsCombined1998}
+Stonehouse, J.M.; Forrester, G.J. Robustness of the \emph{t} and U Tests under Combined Assumption Violations. \emph{J. Appl. Stat.} \textbf{1998}, \emph{25}, 63--74. https://doi.org/10.1080/02664769823304.
+
+% Reference 61
+\bibitem[Zimmerman and Zumbo(1993)]{zimmermanRankTransformationsPower1993}
+Zimmerman, D.W.; Zumbo, B.D. Rank Transformations and the Power of the Student \emph{t} Test and Welch \emph{t} Test for Non-Normal Populations with Unequal Variances. \emph{Can. J. Exp. Psychol. /Rev. Can. De Psychol. Expérimentale} \textbf{1993}, \emph{47}, 523--539. https://doi.org/10.1037/h0078850.
+
+% Reference 62
+\bibitem[Brandmaier \em{et~al.}(2018)Brandmaier, {von Oertzen}, Ghisletta,
+  Lindenberger, and Hertzog]{brandmaier2018precision}
+Brandmaier, A.M.; von Oertzen, T.; Ghisletta, P.; Lindenberger, U.; Hertzog, C. Precision, Reliability, and Effect Size of Slope Variance in Latent Growth Curve Models: Implications for Statistical Power Analysis. \emph{Front. Psychol.} \textbf{2018}, \emph{9}, 294. https://doi.org/10.3389/fpsyg.2018.00294.
+
+
+% Reference 63
+\bibitem[Harrison(2010)]{harrisonIntroductionMonteCarlo2010}
+Harrison, R.L. Introduction to Monte Carlo Simulation. \emph{AIP Conf. Proc.} \textbf{2010}, \emph{1204}, 17--21. https://doi.org/10.1063/1.3295638.
+
+
+% Reference 64
+\bibitem[Raychaudhuri(2008)]{raychaudhuriIntroductionMonteCarlo2008}
+Raychaudhuri, S. Introduction to Monte Carlo Simulation. In Proceedings of the 2008 Winter Simulation Conference, Miami, FL, USA, 7--10 December 2008; pp. 91--100. https://doi.org/10.1109/WSC.2008.4736059.
+
+
+% Reference 65
+\bibitem[Rouder \em{et~al.}(2019)Rouder, Haaf, and Snyder]{rouderMinimizingMistakesPsychological2019}
+Rouder, J.N.; Haaf, J.M.; Snyder, H.K. Minimizing Mistakes in Psychological Science. \emph{Adv. Methods Pract. Psychol. Sci.} \textbf{2019}, \emph{2}, 3--11. https://doi.org/10.1177/2515245918801915.
+
+
+% Reference 66
+\bibitem[Lakens and DeBruine(2021)]{lakensImprovingTransparencyFalsifiability2021}
+Lakens, D.; DeBruine, L.M. Improving Transparency, Falsifiability, and Rigor by Making Hypothesis Tests Machine-Readable. \emph{Adv. Methods Pract. Psychol. Sci.} \textbf{2021}, \emph{4}, https://doi.org/10.1177/2515245920970949.
+
+
+% Reference 67
+\bibitem[Arslan(2019)]{arslanHowAutomaticallyDocument2019}
+Arslan, R.C. How to Automatically Document Data With the Codebook Package to Facilitate Data Reuse. Advances in Methods and Practices in Psychological. \emph{Science} \textbf{2019}, \emph{2}, 169--187. https://doi.org/10.1177/2515245919838783.
+
+
+% Reference 68
+\bibitem[Nosek and Lakens(2014)]{nosekRegisteredReports2014}
+Nosek, B.A.; Lakens, D. Registered Reports. \emph{Soc. Psychol.} \textbf{2014}, \emph{45}, 137--141. https://doi.org/10.1027/1864-9335/a000192.
+
+
+% Reference 69
+\bibitem[Chambers(2019)]{chambersWhatNextRegistered2019}
+Chambers, C. What’s next for Registered Reports? \emph{Nature} \textbf{2019}, \emph{573}, 187--189. https://doi.org/10.1038/d41586-019-02674-6.
+
+% Reference 70
+\bibitem[Simons(2014)]{simonsValueDirectReplication2014}
+Simons, D.J. The Value of Direct Replication. \emph{Perspect. Psychol. Sci.} \textbf{2014}, \emph{9}, 76--80. https://doi.org/10.1177/1745691613514755.
+
+% Reference 71
+\bibitem[Elliott \em{et~al.}(2014)Elliott, Turner, Clavisi, Thomas, Higgins,
+  Mavergames, and Gruen]{elliottLivingSystematicReviews2014}
+Elliott, J.H.; Turner, T.; Clavisi, O.; Thomas, J.; Higgins, J.P.T.; Mavergames, C.; Gruen, R.L. Living Systematic Reviews: An Emerging Opportunity to Narrow the Evidence-Practice Gap. \emph{PLoS Med.} \textbf{2014}, \emph{11}, e1001603. https://doi.org/10.1371/journal.pmed.\linebreak1001603.
+
+% Reference 72
+\bibitem[{eLife Sciences
+  Publications}(2020)]{elifesciencespublicationsELifeLaunchesExecutable2020}
+eLife Sciences Publications. eLife Launches Executable Research Articles for Publishing Computationally Reproducible Results \hl{2020.}%MDPI: Please provide an available website and its accessed date.
+
+
+% Reference 73
+\bibitem[Rouder(2016)]{rouderWhatWhyHow2016}
+Rouder, J.N. The What, Why, and How of Born-Open Data. \emph{Behav. Res. Methods} \textbf{2016}, \emph{48}, 1062--1069. https://doi.org/10.3758/\linebreak13428-015-0630-z.
+
+
+% Reference 74
+\bibitem[Kekecs \em{et~al.}(2020)Kekecs, Aczel, Palfi, Szaszi, Szecsi, Zrubka,
+  Kovacs, Bakos, Cousineau, Tressoldi, Grassi, Arnold, Evans, Yamada, Miller,
+  Liu, Yonemitsu, and Dubrov]{kekecsRaisingValueResearch2019}
+Kekecs, Z.; Aczel, B.; Palfi, B.; Szaszi, B.; Szecsi, P.; Zrubka, M.; Kovacs, M.; Bakos, B.E.; Cousineau, D.; Tressoldi, P.; et al. Raising the Value of Research Studies in Psychological Science by Increasing the Credibility of Research Reports: The Transparent Psi Project—Preprint. \emph{PsyArXiv} \textbf{2020}. https://doi.org/10.31234/osf.io/uwk7y.
+
+
+% Reference 75
+\bibitem[Lanergan and Grasso(1989)]{lanerganSoftwareEngineeringReusable1989}
+Lanergan, R.G.; Grasso, C.A. Software Engineering with Reusable Designs and Code. In \emph{Software Reusability: Vol. 2, Applications and Experience}; Association for Computing Machinery: New York, NY, USA, 1989; pp. 187--195.
+
+
+% Reference 76
+\bibitem[{Al-Badareen} \em{et~al.}(2010){Al-Badareen}, Selamat, Jabar, Din, and
+  Turaev]{al-badareenReusableSoftwareComponents2010}
+Al-Badareen, A.B.; Selamat, M.H.; Jabar, M.A.; Din, J.; Turaev, S. Reusable Software Components Framework. In Proceedings of the European Conference of Systems, and European Conference of Circuits Technology and Devices, and European Conference of Communications, and European Conference on Computer Science, Kuantan, Pahang, Malaysia, 27--29 June 2011; World Scientific and Engineering Academy and Society (WSEAS): Stevens Point, WI, 2010; ECS’10/ECCTD’10/ECCOM’10/ECCS’10, pp. 126--130.
+
+
+% Reference 77
+\bibitem[Schaffner(1994)]{schaffnerFutureScientificJournals1994}
+Schaffner, A.C. The Future of Scientific Journals: Lessons from the Past. \emph{Inf. Technol. Libr.} \textbf{1994}, \emph{13}, 239--247.
+
+
+% Reference 78
+\bibitem[Fitzgerald(2006)]{fitzgeraldTransformationOpenSource2006}
+Fitzgerald, B. The Transformation of Open Source Software. \emph{MIS Q.} \textbf{2006}, \emph{30}, 587--598. https://doi.org/10.2307/25148740.
+
+
+% Reference 79
+\bibitem[Chaldecott(1965)]{chaldecottHistoryScientificTechnical1965}
+Chaldecott, J.A. A History of Scientific and Technical Periodicals: The Origins and Development of the Scientific and Technological Press. \emph{Br. J. Hist. Sci.} \textbf{1965}, \emph{2}, 360--361. https://doi.org/10.1017/S0007087400002557.
+
+% Reference 80
+\bibitem[Sonnenburg \em{et~al.}(2007)Sonnenburg, Braun, Ong, Bengio, Bottou,
+  Holmes, LeCun, M\"{u}ller, Pereira, Rasmussen, R\"{a}tsch, Sch\"{o}lkopf,
+  Smola, Vincent, Weston, and Williamson]{sonnenburgNeedOpenSource2007}
+Sonnenburg, S.; Braun, M.L.; Ong, C.S.; Bengio, S.; Bottou, L.; Holmes, G.; LeCun, Y.; Müller, K.R.; Pereira, F.; Rasmussen, C.E.;~et~al. The Need for Open Source Software in Machine Learning. \emph{J. Mach. Learn. Res.} \textbf{2007}, \emph{8}, 2443--2466.
+
+% Reference 81
+\bibitem[Gohel(2021)]{officer}
+Gohel, D. Officer: Manipulation of Microsoft Word and PowerPoint Documents, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+
+% Reference 82
+\bibitem[Gohel and Ross(2021)]{officedown}
+Gohel, D.; Ross, N. Officedown: Enhanced ‘R Markdown’ Format for ‘Word’ and ‘PowerPoint’, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+\end{thebibliography}
+
+
 \end{document}
