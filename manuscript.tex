@@ -120,15 +120,15 @@
 %=================================================================
 % Full title of the paper (Capitalized)
 \Title{Reproducible Research in R: A Tutorial on How to Do the Same
-Thing More \highlighting{Than Once}} %MDPI: the article type in the document is different with that in Susy, please confirm.
+Thing More \highlighting{Than Once}}
 
 
 \TitleCitation{Reproducible Research in R: A Tutorial on How to Do the Same
 Thing More Than Once}
 
 % Authors, for the paper (add full first names)
-\Author{\highlighting{Aaron Peikert~$^{1,2,*}$\href{https://orcid.org/0000-0001-7813-818X}{\orcidicon}} %Please carefully check the accuracy of names and affiliations. Changes will not be possible after proofreading.
-, \highlighting{Caspar J. van Lissa~$^{3,4}$\href{https://orcid.org/0000-0002-0808-5024}{\orcidicon}} %MDPI: This author is different from susy. Please check.
+\Author{\highlighting{Aaron Peikert~$^{1,2,*}$\href{https://orcid.org/0000-0001-7813-818X}{\orcidicon}}
+, \highlighting{Caspar J. van Lissa~$^{3,4}$\href{https://orcid.org/0000-0002-0808-5024}{\orcidicon}}
  and Andreas M. Brandmaier~$^{1,5,6}$\href{https://orcid.org/0000-0001-8765-6982}{\orcidicon}}
 
 % Authors, for metadata in PDF
@@ -138,12 +138,11 @@ Thing More Than Once}
 % Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
 \address{%
 $^{1}$ \quad Center for Lifespan Psychology---Max Planck Institute for Human Development, Lentzeallee 94, \mbox{14195 Berlin, Germany;} brandmaier@mpib-berlin.mpg.de\\
-$^{2}$ \quad Humboldt-Universität zu Berlin, \hl{Berlin}, Germany\\%MDPI: Please add the post code.
-$^{3}$ \quad \hl{Department} of Methodology \& Statistics---Utrecht \hl{University}, \hl{Faculty} of Social and Behavioral Sciences%MDPI: Please check the address order.  (order guide: Center / Laboratory / Group / Programme / Unit < Department / Division / Faculty / Campus / Institute / School < College / University / Universiti)
+$^{2}$ \quad Humboldt-Universität zu Berlin, Unter den Linden 6, \mbox{10117 Berlin, Germany}
+$^{3}$ \quad \hl{Department} of Methodology \& Statistics---Utrecht \hl{University}, \hl{Faculty} of Social and Behavioral Sciences
 , \hl{Utrecht}, The Netherlands; C.J.vanLissa@uu.nl\\
 $^{4}$ \quad Open Science Community Utrecht, \hl{Utrecht}, The Netherlands\\
-$^{5}$ \quad Max Planck UCL Centre for Computational Psychiatry and Ageing Research, \mbox{\hl{Berlin, Germany, and London, UK}} %MDPI: 1. Please check if there are two separator affiliations. If so, please split them. 2. Please add the post code.
-\\
+$^{5}$ \quad Max Planck UCL Centre for Computational Psychiatry and Ageing Research, \mbox{\hl{Berlin, Germany, and London, UK}}\\
 $^{6}$ \quad MSB Medical School Berlin, \hl{Berlin}, Germany}
 
 % Contact information of the corresponding author
@@ -201,9 +200,7 @@ help it become more productive, credible, and reliable.}
 
 % Keywords
 \keyword{open science; computational reproducibility; preregistration;
-R; R Markdown; make; GitHub; docker}%MDPI: 1. The upper case has been removed. Please confirm. 2. Please check if R is duplicated here.
-
-
+R; R Markdown; Make; GitHub; Docker}
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
@@ -252,9 +249,9 @@ facilitating the review and replication of published research results.
 To some extent, these potential benefits are contingent on whether these
 digital research products are reproducible. Reproducibility can be
 defined as the ability of anyone to obtain identical results from the
-\emph{same} data with the \hl{\emph{same}} %MDPI: Is the italic necessary? Can it be deleted?
+\emph{same} data with the \hl{\emph{same}}
  computer code (see~\citep{Peikert2019} \hl{for
-details).} %MDPI: The structure of reference citation has been changed. So as the follows. Please confirm.
+details).}
  The credibility of empirical research results
 hinges on their objectivity. Objectivity in this context means, ``in
 principle it {[}the research finding{]} can be tested and understood by
@@ -359,7 +356,7 @@ identified the following common threats to reproducibility:
 \def\labelenumi{\arabic{enumi}.}
 %\tightlist
 \item
-  \highlighting{\emph{Multiple inconsistent versions of code, data, or both};} %MDPI: Is the italic necessary? Can it be deleted?
+  \highlighting{\emph{Multiple inconsistent versions of code, data, or both};}
  for
   example, the data set may have changed over time because outliers were
   removed at a later stage or an item was later recoded; or, the
@@ -513,8 +510,8 @@ collection of cooking recipes, we can have multiple products
 (\emph{targets}) with different ingredients (\emph{requirements}) and
 different steps of preparation (\emph{recipes}). In the context of
 scientific data analysis, targets are typically the final scientific
-report (e.g., the one to be submitted to a journal) and produce possibly
-intermediate %pls check (such as preprocessed data files, simulation
+report (e.g., the one to be submitted to a journal) and possibly
+intermediate results (such as preprocessed data files, simulation
 results, and analysis results). A workflow that involves renaming
 variable names by hand in a graphical spreadsheet application, for
 example, is therefore incompatible with automated reproducibility.
@@ -651,7 +648,7 @@ its dependent packages, amounting to 192 R packages.
 A second strategy is to save a so-called \texttt{Dockerfile}, which
 contains only a textual description of all commands that need to be
 executed to recreate the software environment. \texttt{Dockerfiles} are
-tiny (the \hl{\texttt{Dockerfile}} %MDPI: Please add the accessed date.
+tiny (the \hl{\texttt{Dockerfile}}
  (\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/Dockerfile})
 for this project has a size of only 1.55~KiB). However, they rely on the
 assumption that all software repositories that provide the dependent
@@ -667,7 +664,7 @@ package \texttt{renv}~\citep{R-renv} for software management. Although
 takes snapshots of the R packages instead of all software used.
 
 To summarize, the workflow by Peikert and Brandmaier~\citep{Peikert2019} requires four
-components (see \highlighting{Figure~\ref{figure1})} %MDPI: Figure 2.1 has been changed into Figure 1. Please confirm.
+components (see \highlighting{Figure~\ref{figure1})}
  dynamic document generation (using
 \texttt{R\ Markdown}), version control (using \texttt{Git}), dependency
 tracking (using \texttt{Make}), and software management (using
@@ -745,7 +742,7 @@ are unsure if they are up-to-date, you might want to consult our
 installation advice in the Online Supplementary Material
 (\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md}) that covers the installation of all software
 necessary for this tutorial in three steps. The
-\hl{installation advice} %MDPI: Please add the accessed date.
+\hl{installation advice}
 (\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md}) may also help Windows users who have problems installing
 \texttt{Docker}.
 
@@ -976,7 +973,7 @@ files using \texttt{Git} by running:
 For \texttt{Git} to recognize changes to a given file, you have to stage
 and then commit these changes (this is the basic save action for a
 project snapshot). One way to do this is through the visual user
-interface in the RStudio \texttt{Git} pane (see \highlighting{Figure~\ref{figure2}).} %MDPI: Figure 3.1 has been changed into Figure 2. Please confirm.
+interface in the RStudio \texttt{Git} pane (see \highlighting{Figure~\ref{figure2}).}
  Click on
 the empty box next to the file you want to stage. A checkmark then
 indicates that the file is staged. After you have staged all of the
@@ -1795,8 +1792,8 @@ builds upon four pillars (version control, dynamic document generation,
 dependency tracking, and software management). To use PAC, the dangers to
 reproducibility we described must be eliminated.
 
-\textls[+15]{The idea of submitting code as part of a preregistration is not new (e.g.~\citep{wichertsDegreesFreedomPlanning2016}). A prominent preregistration platform, \hl{The Open Science Framework} %MDPI: Please add the accessed date.
-(\url{https://osf.io/}), suggests submitting scripts alongside the preregistration of methods. In an informal literature search (we skimmed the first 300 results of Google Scholar with the keywords \texttt{\textls[+35]{("pre\ registration"\textbar{}"pre-registration"\textbar{}preregistration)\&(code\textbar{}script\textbar{}matlab\textbar{}}\linebreak python\textbar{}"R")}) we only found close to a dozen published articles that did include some form of script as part of their preregistration. Though the notion of preregistering code has been around for a while (cf.~\citep{steegenMeasuringCrowdAgain2014}), it has not gained much traction---perhaps because, to date, this has constituted an extra non-standard step in the research process. This tutorial integrates the preregistration of code into the reproducible research workflow by encouraging researchers to preregister the whole manuscript as a dynamic document.}
+\textls[+15]{The idea of submitting code as part of a preregistration is not new (e.g.~\citep{wichertsDegreesFreedomPlanning2016}). A prominent preregistration platform, \href{https://osf.io/}{The Open Science
+Framework}, suggests submitting scripts alongside the preregistration of methods. In an informal literature search (we skimmed the first 300 results of Google Scholar with the keywords \texttt{\textls[+35]{("pre\ registration"\textbar{}"pre-registration"\textbar{}preregistration)\&(code\textbar{}script\textbar{}matlab\textbar{}}\linebreak python\textbar{}"R")}) we only found close to a dozen published articles that did include some form of script as part of their preregistration. Though the notion of preregistering code has been around for a while (cf.~\citep{steegenMeasuringCrowdAgain2014}), it has not gained much traction---perhaps because, to date, this has constituted an extra non-standard step in the research process. This tutorial integrates the preregistration of code into the reproducible research workflow by encouraging researchers to preregister the whole manuscript as a dynamic document.}
 
 %\hypertarget{advantages-of-pac-over-traditional-preregistration}{%
 \subsection{Advantages of PAC over Traditional
@@ -1841,7 +1838,7 @@ Exploration}\label{deviating-from-the-preregistration-and-exploration}
 We would like to note that PAC allows explicit comparison of the
 preregistration and the final publication. Authors should
 retrospectively summarize and justify any changes made to the
-preregistered plan, e.g.~in the discussion of the \hl{final manuscript} %MDPI: Footnote is not allowed in this journal. The content has been moved here. Please confirm.
+preregistered plan, e.g.~in the discussion of the \hl{final manuscript}
 ({In section {[}Preregistration as Code---a Tutorial{]} we
   conducted an actual PAC and summarize the changes we make to the
   preregistered code in the discussion}). During the analysis process,
@@ -1914,7 +1911,7 @@ analysis more portable (i.e., it can easily be used for other datasets),
 and facilitates repeated evaluation, as is the case in a simulation
 study. The functions shown here do not contain executable code, but the
 interested reader can find working functions in the \hl{online
-supplementary materials}% MDPI: Please add the accessed date.
+supplementary materials}
 ~(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R}) that power the example below.
 
 It is difficult to write analysis code when it is not clear what the
@@ -2037,17 +2034,17 @@ preregistration not only specifies the computation but also how the its
 results are reported. Various packages automatically generate
 well-formatted Markdown outputs of statistical reports or even entire
 tables of estimates or figures directly from R goal to help with this
-objective. Packages like {\texttt{pander}}
-(\url{https://github.com/Rapporter/pander})
-\citep{pander}, {\texttt{stargazer}}
-\mbox{(\url{https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf})}
-\citep{stargazer}, {\texttt{apaTables}}
-(\url{https://dstanley4.github.io/apaTables/articles/apaTables.html})
-\citep{apaTables} and {\texttt{papaja}}
-\mbox{(\url{http://frederikaust.com/papaja_man/})}
+objective. Packages like
+\href{https://github.com/Rapporter/pander}{\texttt{pander}}
+\citep{pander},
+\href{https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf}{\texttt{stargazer}}
+\citep{stargazer},
+\href{https://dstanley4.github.io/apaTables/articles/apaTables.html}{\texttt{apaTables}}
+\citep{apaTables} and
+\href{http://frederikaust.com/papaja_man/}{\texttt{papaja}}
 \citep{papaja} help you to create dynamically generated professional
-looking results. The package {\texttt{report}}
-(\url{https://github.com/easystats/report})~\citep{report} is particularly noteworthy because it not only generates
+looking results. The package
+\href{https://github.com/easystats/report}{\texttt{report}}~\citep{report} is particularly noteworthy because it not only generates
 tables but also a straightforward interpretation of the effects as
 actual prose (e.g., it verbally quantifies the size of an effect).}
 
@@ -2073,15 +2070,14 @@ zenodo.org through your GitHub account. To log in with your GitHub
 account:
 
 \begin{quote}
-\hl{Navigate to} %MDPI: Please add the accessed date.
+\hl{Navigate to}
 ~\url{https://zenodo.org/login/} → Log in with GitHub
 \end{quote}
 
 \noindent{}To link zenodo.org and GitHub
 
 \begin{quote}
-Log into zenodo.org → Account → \hl{GitHub} %MDPI: 1. Footnote is not allowed in this journal. The content has been moved here. Please confirm. 2. Please add the accessed date
-~({\url{https://zenodo.org/account/settings/github/}})
+Log into zenodo.org → Account → \hl{GitHub}~({\url{https://zenodo.org/account/settings/github/}})
 \end{quote}
 
 \noindent{}Or:
@@ -2200,7 +2196,7 @@ Again, we propose a preregistration format that closely resembles a
 classic journal article but uses simulated data and dynamic document
 generation to create a document that starts out as a preregistration and
 eventually becomes the final report. The complete preregistration source
-is available in the \hl{online supplementary material}%MDPI: Please add the accessed date.
+is available in the \hl{online supplementary material}
 ~(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd}). In this section, we show code excerpts of this
 preregistration (formatted in monospace) and explain the rationale
 behind them.
@@ -2265,7 +2261,7 @@ use already published data that we have not yet analyzed:
 
 
 We choose the following statistical procedure because many researchers
-are familiar \hl{with it} %MDPI: Footnote is not allowed. The content has been moved here. Please confirm.
+are familiar \hl{with it}
 ~(The \emph{t}-test and Mann-Whitney-Wilcoxon test
   are arguably the most often used hypothesis tests (according to
  ~\citep{fagerlandTtestsNonparametricTests2012, hortonStatisticalMethodsJournal2005}
@@ -2366,7 +2362,7 @@ the function \texttt{planned\_\linebreak analysis()} can be used to justify the
 planned sample size. To that end, \texttt{simulate\_data()} is
 repeatedly called with increased sample sizes and the proportion of
 significant results (power) is recorded. The results for such a Monte
-Carlo simulation for this example are visualized in \highlighting{Figure~\ref{figure3}.} %MDPI:  Figure 5.1 has been changed into Figure 3. Please confirm.
+Carlo simulation for this example are visualized in \highlighting{Figure~\ref{figure3}.}
  The code
 for this power analysis can be found in the \hl{online supplementary material}
 (\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R}). The next snippet shows how we integrated the
@@ -2472,13 +2468,10 @@ Following the recommendations outlined in this paper, we did not access
 the data when we initially wrote this code. We therefore did not know
 the exact format the data would have. This means that we did need to
 change our preregistration after accessing the data to include i.e.,~the
-recoding of gender (lines 17--22) and the items\hl{ (lines 23--26).} %MDPI: Footnote is not allowed. The content has been moved here. Please confirm.
- ({We
-  invite the reader to evaluate the changes we made to the preregistered
-  code. Either on \hl{GitHub}
-  (\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg...main})
+recoding of gender (lines 17--22) and the items\hl{ (lines 23--26).}
+We invite the reader to evaluate the changes we made to the preregistered code. Either on \hl{GitHub} (\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg...main})
   → ``Files changed'' or directly in Git with
-  \texttt{git\ diff\ v0.0.1.1-prereg\ preregistration.Rmd}.}) This is our
+  \texttt{git\ diff\ v0.0.1.1-prereg\ preregistration.Rmd}.) This is our
 summary of what we changed:
 
 \vspace{+6pt}
@@ -2543,7 +2536,7 @@ simulated data):
 The Welch Two Sample t-test testing the difference of machiavellianism by gender
 (mean in group male = 0.96, mean in group female = 0.79) suggests that the
 effect is - negative, statistically significant, and small (difference = -0.17,
-95% CI [0.12, 0.22], t(887.46) = 6.38, p < 0.001; Cohen's d = 0.43, 95% CI [0.30,
+95% CI [0.12, 0.22], t(887.46) = 6.38, p < .001; Cohen's d = 0.43, 95% CI [0.30,
 0.56])
 \end{verbatim}
 \end{adjustwidth}
@@ -2779,18 +2772,16 @@ broad adoption of computational reproducibility in the near future.
 \vspace{6pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Supplementary Materials{\hl{\quad \quad}}%The following are available online at www.mdpi.com/xxx/s1, Figure S1: title, Table S1: title, Video S1: title.
+Supplementary Materials{All materials (i.e., the source code, all figures, and the data) that are neccesary for reproducing the submitted version of this article are availible at \url{https://github.com/aaronpeikert/repro-tutorial} and archived under \url{https://doi.org/10.5281/zenodo.5724454}.
 
 \authorcontributions{A.P. took the lead in writing and provided
 the initial draft of the manuscript. A.M.B. and C.J.v.L. contributed further ideas, critical feedback, and revisions of the original manuscript. All authors have read and agreed to the published version of the manuscript.}
 
-\funding{\hl{\quad \quad}} %This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
+\funding{This research received no external funding}
 
-\institutionalreview{\hl{\quad \quad}} %In this section, please add the Institutional Review Board Statement and approval number for studies involving humans or animals. Please note that the Editorial Office might ask you for further information. Please add ``The study was conducted according to the guidelines of the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).'' OR ``Ethical review and approval were waived for this study, due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans or animals. You might also choose to exclude this statement if the study did not involve humans or animals.
+\institutionalreview{Not applicable.}
 
-\informedconsent{\hl{\quad \quad}} %Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans. Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.
-
-\dataavailability{\hl{\quad \quad}} %In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Please refer to suggested Data Availability Statements in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}. You might choose to exclude this statement if the study did not report any data.
+\informedconsent{Not applicable.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \acknowledgments{We would like to thank Maximilian Stefan Ernst for his
