@@ -95,12 +95,12 @@
 \pubvolume{1}
 \issuenum{1}
 \articlenumber{5}
-\pubyear{2019}
-\copyrightyear{2019}
+\pubyear{2021}
+\copyrightyear{2021}
 \externaleditor{Academic Editor: {Alexander Robitzsch}}
-\datereceived{} 
-\dateaccepted{} 
-\datepublished{}
+\datereceived{11 October 2021} 
+\dateaccepted{25 November 2021} 
+\datepublished{7 December 2021}
 \hreflink{https://doi.org/} % If needed use \linebreak
 
 %% MDPI internal command: uncomment if new journal that already uses continuous page numbers
@@ -138,13 +138,12 @@ Thing More Than Once}
 % Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
 \address{%
 $^{1}$ \quad Center for Lifespan Psychology---Max Planck Institute for Human Development, Lentzeallee 94, \mbox{14195 Berlin, Germany;} brandmaier@mpib-berlin.mpg.de\\
-$^{2}$ \quad Humboldt-Universität zu Berlin, Unter den Linden 6, \mbox{10117 Berlin, Germany}
-
-$^{3}$ \quad \hl{Department} of Methodology \& Statistics---Utrecht {University}, {Faculty} of Social and Behavioral Sciences
+$^{2}$ \quad Humboldt-Universität zu Berlin, Unter den Linden 6, \mbox{10117 Berlin, Germany}\\
+$^{3}$ \quad {Department} of Methodology \& Statistics---Utrecht {University}, {Faculty} of Social and Behavioral Sciences
 , Heidelberglaan 8, 3584 CS Utrecht, The Netherlands; C.J.vanLissa@uu.nl\\
 $^{4}$ \quad Open Science Community Utrecht, Heidelberglaan 8, 3584 CS Utrecht, The Netherlands\\
-$^{5}$ \quad Max Planck UCL Centre for Computational Psychiatry and Ageing Research, \mbox{\hl{Lentzeallee 94
-14195 Berlin, Germany, and London, WC1B 5EH, UK}}\\
+$^{5}$ \quad Max Planck UCL Centre for Computational Psychiatry and Ageing Research, \mbox{{Lentzeallee 94,
+14195 Berlin, Germany, and London WC1B 5EH, UK}}\\
 $^{6}$ \quad MSB Medical School Berlin, Rüdesheimer Str. 50, 14197 Berlin, Germany}
 
 % Contact information of the corresponding author
@@ -480,8 +479,8 @@ ranging from simple sketches of ideas to scientific manuscripts
 \citep{R-rticles} and presentations~\citep{revealjs}, or even résumés
 \citep{vitae}. \texttt{R\ Markdown} extends regular \texttt{Markdown} by
 allowing users to include R code chunks (in fact, arbitrary computer
-code \citep[Chapter 15, Chapter 15, Other
-Languages]{xieMarkdownCookbook2020}) into a \texttt{Markdown} document.
+code (\citep{xieMarkdownCookbook2020} Chapter 15, Chapter 15, Other
+Languages)) into a \texttt{Markdown} document.
 Upon rendering the document, the code blocks are executed, and their
 output is dynamically inserted into the document. This allows the
 creation of (conditionally) formatted text, statistical results, and
@@ -699,7 +698,7 @@ time. \texttt{Make} manages dependencies among the files.
 \texttt{Docker} provides a container in which the final report is built
 using dynamic document generation in \texttt{R\ Markdown}. Adapted from
 Peikert and Brandmaier~\citep{Peikert2019} licensed under CC BY 4.0 
-(\url{https://creativecommons.org/licenses/by/4.0}).}
+(\url{https://creativecommons.org/licenses/by/4.0} accessed on 4 December 2021).}
 \label{figure1}
 \end{figure}
 
@@ -735,14 +734,14 @@ more specialized steps. After completing the tutorial, you should be
 able to customize your workflow accordingly.
 
 The first step is to install the required software. We assume that you
-have installed R (\citep{R-base} version 4.0.4) and RStudio
+have installed R~(\citep{R-base} version 4.0.4) and RStudio
 (\citep{rstudio} version 1.4) already but the tutorial will guide you in
 detail through the installation of other necessary software with the
 help of the R package {\texttt{repro}} 
-(\url{https://github.com/aaronpeikert/repro})~\citep{R-repro}. In case you have either not installed R and RStudio or
+(\url{https://github.com/aaronpeikert/repro} accessed on 4 December 2021)~\citep{R-repro}. In case you have either not installed R and RStudio or
 are unsure if they are up-to-date, you might want to consult our
 installation advice in the Online Supplementary Material
-(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md}) that covers the installation of all software
+(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md} accessed on 4 December 2021) that covers the installation of all software
 necessary for this tutorial in three steps. The
 {installation advice}
 (\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/install.md} accessed on 11 October 2021) may also help Windows users who have problems installing
@@ -1040,7 +1039,7 @@ with dynamic document generation. A dynamic document has three elements:
 \item
   Executable code (e.g., analyses)
 \item
-  Metadata (e.g.~title, authors, document format)
+  Metadata (e.g.,~title, authors, document format)
 \end{enumerate}
 
 \texttt{R\ Markdown} is a type of dynamic document well-suited to the
@@ -1079,8 +1078,7 @@ One advantage of this type of markup for formatting is that it can be
 rendered to many different output formats---both in terms of file types,
 like \texttt{.docx}, \texttt{.html}, \texttt{.pdf}, and in terms of
 style, e.g.~specific journal requirements. For social scientists, the
-\href{https://github.com/crsh/papaja}{\texttt{papaja}} package
-\citep{papaja} may be relevant, as it produces manuscripts that follow
+\href{https://github.com/crsh/papaja}{\texttt{papaja}} package~\citep{papaja} may be relevant, as it produces manuscripts that follow
 the American Psychological Association formatting requirements
 \citep{apa7}. \texttt{R\ Markdown} files are plain text, which is more
 suitable for version control using \texttt{Git} than binary files
@@ -1114,7 +1112,7 @@ brackets) like this:
 \end{Shaded}
 \end{adjustwidth}
 
-The hotkey {[}Control{]}+{[}Alt{]}+{[}i{]} inserts a block of code in
+The hotkey {[}Control{]} + {[}Alt{]} + {[}i{]} inserts a block of code in
 the file. The results of code enclosed in such backticks will be
 dynamically inserted into the document (depending on specific settings).
 This means that whenever you render the \texttt{R\ Markdown} to its
@@ -1778,8 +1776,7 @@ the authors expect to obtain from their experiments. For guidance on how
 to simulate data, see Morris~et~al.~\citep{morrisUsingSimulationStudies2019},
 Paxton~et~al.~\citep{paxtonMonteCarloExperiments2001}, and
 Skrondal~\citep{skrondalDesignAnalysisMonte2000}, as well as the R packages
-\href{https://cran.r-project.org/web/packages/simstudy/vignettes/simstudy.html}{\texttt{simstudy}},
-\citep{simstudy} and
+\href{https://cran.r-project.org/web/packages/simstudy/vignettes/simstudy.html}{\texttt{simstudy}},~\citep{simstudy} and
 \href{https://personality-project.org/r/psych/help/sim.html}{\texttt{psych}},
 \citep{psych}.
 
@@ -1793,7 +1790,7 @@ builds upon four pillars (version control, dynamic document generation,
 dependency tracking, and software management). To use PAC, the dangers to
 reproducibility we described must be eliminated.
 
-\textls[+15]{The idea of submitting code as part of a preregistration is not new (e.g.~\citep{wichertsDegreesFreedomPlanning2016}). A prominent preregistration platform, \href{https://osf.io/}{The Open Science
+\textls[+15]{The idea of submitting code as part of a preregistration is not new (e.g.,~\citep{wichertsDegreesFreedomPlanning2016}). A prominent preregistration platform, \href{https://osf.io/}{The Open Science
 Framework}, suggests submitting scripts alongside the preregistration of methods. In an informal literature search (we skimmed the first 300 results of Google Scholar with the keywords \texttt{\textls[+35]{("pre\ registration"\textbar{}"pre-registration"\textbar{}preregistration)\&(code\textbar{}script\textbar{}matlab\textbar{}}\linebreak python\textbar{}"R")}) we only found close to a dozen published articles that did include some form of script as part of their preregistration. Though the notion of preregistering code has been around for a while (cf.~\citep{steegenMeasuringCrowdAgain2014}), it has not gained much traction---perhaps because, to date, this has constituted an extra non-standard step in the research process. This tutorial integrates the preregistration of code into the reproducible research workflow by encouraging researchers to preregister the whole manuscript as a dynamic document.}
 
 %\hypertarget{advantages-of-pac-over-traditional-preregistration}{%
@@ -1826,7 +1823,7 @@ methods; or an analysis may perform automated variable selection
 mechanisms before running the final model. Another example of
 data-dependent decisions are more explorative analyses, i.e.,~explorative
 factor analysis or machine learning. Decisions that do not lend
-themselves to formulation in code, e.g.~visual inspection, must still be
+themselves to formulation in code, e.g.,~visual inspection, must still be
 described verbally or be treated as noted in the next section. Fifth,
 deviations from the preregistration are clearly documented because they
 are reflected in changes to the code, which are managed and tracked with
@@ -1912,7 +1909,7 @@ analysis more portable (i.e., it can easily be used for other datasets),
 and facilitates repeated evaluation, as is the case in a simulation
 study. The functions shown here do not contain executable code, but the
 interested reader can find working functions in the {online
-supplementary materials}
+Supplementary Materials}
 ~(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation_funs.R} accessed on 11 October 2021) that power the example below.
 
 It is difficult to write analysis code when it is not clear what the
@@ -2050,8 +2047,8 @@ tables but also a straightforward interpretation of the effects as
 actual prose (e.g., it verbally quantifies the size of an effect).}
 
 Ideally, these three functions can be composed to create a ``fake''
-results section, e.g.~when composed to
-\texttt{report\_analysis(planned\_analysis(simulate\_data()))} or
+results section, e.g.,~when composed to
+\texttt{report\_analysis(planned\_analysis(simulate\_data()))} or\\
 \texttt{simulate\_data()\ \%\textgreater{}\%\ planned\_analysis()\ \%\textgreater{}\%\ report\_analysis()}
 outputs a results section.
 
@@ -2072,20 +2069,20 @@ account:
 
 \begin{quote}
 {Navigate to}
-~\url{https://zenodo.org/login/ accessed on 11 October 2021} → Log in with GitHub
+~\url{https://zenodo.org/login/} accessed on 11 October 2021 → Log in with GitHub
 \end{quote}
 
 \noindent{}To link zenodo.org and GitHub
 
 \begin{quote}
-Log into zenodo.org → Account → {GitHub}~({\url{https://zenodo.org/account/settings/github/}})
+Log into zenodo.org → Account → {GitHub}~({\url{https://zenodo.org/account/settings/github/} accessed on 4 December 2021 })
 \end{quote}
 
 \noindent{}Or:
 
 \begin{quote}
 {Navigate to}
- \url{https://zenodo.org/account/settings/github/}
+ \url{https://zenodo.org/account/settings/github/} accessed on 4 December 2021
 \end{quote}
 
 After you have linked a GitHub repository, you trigger the archival by
@@ -2104,7 +2101,7 @@ relevant binary files but at least a rendered version of the manuscript
 and the Docker image.
 
 To summarize, researchers need to write three functions,
-\texttt{planned\_analysis()}, \texttt{simulate\_data()}, and
+\texttt{planned\_analysis()}, \\ \texttt{simulate\_data()}, and
 \texttt{report\_analysis()} and embed these into a manuscript that
 serves as a preregistration in an uneditable online repository. After
 they gathered the actual data, they can replace the simulated data,
@@ -2197,7 +2194,7 @@ Again, we propose a preregistration format that closely resembles a
 classic journal article but uses simulated data and dynamic document
 generation to create a document that starts out as a preregistration and
 eventually becomes the final report. The complete preregistration source
-is available in the {online supplementary material}
+is available in the {online Supplementary Material}
 ~(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/preregistration.Rmd} accessed on 11 October 2021). In this section, we show code excerpts of this
 preregistration (formatted in monospace) and explain the rationale
 behind them.
@@ -2277,7 +2274,7 @@ are familiar {with it}
   overestimated for highly skewed distributions
  ~\citep{stonehouseRobustnessTestsCombined1998}). The interested reader
   can use the {provided code for the simulation}
-~\mbox{(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R})} to verify that the \emph{t}-test provides unbiased
+~{(\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R} accessed on 4 December 2021)} to verify that the \emph{t}-test provides unbiased
   effect sizes but the Mann-Whitney-Wilcoxon overestimates effect sizes
   with increasing sample size and skewness.):
 
@@ -2365,7 +2362,7 @@ repeatedly called with increased sample sizes and the proportion of
 significant results (power) is recorded. The results for such a Monte
 Carlo simulation for this example are visualized in {Figure~\ref{figure3}.}
  The code
-for this power analysis can be found in the {online supplementary material}
+for this power analysis can be found in the {online Supplementary Material}
 (\url{https://github.com/aaronpeikert/repro-tutorial/blob/main/R/simulation.R} accessed on 11 October 2021). The next snippet shows how we integrated the
 results dynamically into the preregistration (the origin of the
 R-variables \texttt{minn}, \texttt{choosen\_power}, and
@@ -2502,7 +2499,7 @@ summary of what we changed:
 
 
 Readers can inspect and judge the changes for themselves on {GitHub}
-\textls[-25]{(\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main\#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b})}.
+\textls[-25]{(\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main\#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b} accessed on 4 December 2021)}.
 
 The last thing we need to preregister is the reporting of our results
 with the combination of the functions \texttt{planned\_analysis()} and
@@ -2556,7 +2553,7 @@ are merely suggestions, and researchers are encouraged to find their own
 way of how to best organize their analysis code.
 
 The example rendered as a {PDF file with real data}
-(\url{https://github.com/aaronpeikert/repro-tutorial/files/7309455/preregistration.pdf} accessed on 11 October 2021) is available in the {online supplementary material}
+(\url{https://github.com/aaronpeikert/repro-tutorial/files/7309455/preregistration.pdf} accessed on 11 October 2021) is available in the {online Supplementary Material}
 (\url{https://github.com/aaronpeikert/repro-tutorial/releases/tag/v0.0.3.1-results} accessed on 11 October 2021). The changes we made since preregistering it can
 be inspected on this {GitHub page}
 (\url{https://github.com/aaronpeikert/repro-tutorial/compare/v0.0.1.1-prereg..main\#diff-e21a8fa2e44b297dfefef329a6ef56d283488d467c4b4ffe2a014111e52a170b} accessed on 11 October 2021).
@@ -2571,8 +2568,8 @@ that employ automation, like machine-readable hypothesis tests
 \citep{lakensImprovingTransparencyFalsifiability2021} or automated data
 documentation~\citep{arslanHowAutomaticallyDocument2019}. Automated
 research projects promise a wide range of applications, among them PAC
-\citep[potentially to be submitted as a registered
-report][]{nosekRegisteredReports2014, chambersWhatNextRegistered2019},
+(\citep{nosekRegisteredReports2014, chambersWhatNextRegistered2019} potentially to be submitted as a registered
+report),
 direct replication~\citep{simonsValueDirectReplication2014}, fully
 automated living metanalysis~\citep{elliottLivingSystematicReviews2014},
 executable research articles
@@ -2766,19 +2763,19 @@ being compatible with \texttt{Docker} images.
 \texttt{repro}'s modular structure allows such alternative workflows,
 though they have not yet been implemented. Depending on the demand by
 users, we will implement some of them in \texttt{repro} and hope for
-broad adoption of computational reproducibility in the near future.
+broad adoption of computational reproducibility in the near~future.
 
 
 
 \vspace{6pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Supplementary Materials {All materials (i.e., the source code, all figures, and the data) that are neccesary for reproducing the submitted version of this article are availible at \url{https://github.com/aaronpeikert/repro-tutorial} and archived under \url{https://doi.org/10.5281/zenodo.5724454}}.
+\supplementary{All materials (i.e., the source code, all figures, and the data) that are neccesary for reproducing the submitted version of this article are availible at \url{https://github.com/aaronpeikert/repro-tutorial} and archived under \url{https://doi.org/10.5281/zenodo.5724454} (accessed on 4 December 2021).}
 
 \authorcontributions{A.P. took the lead in writing and provided
 the initial draft of the manuscript. A.M.B. and C.J.v.L. contributed further ideas, critical feedback, and revisions of the original manuscript. All authors have read and agreed to the published version of the manuscript.}
 
-\funding{This research received no external funding}
+\funding{This research received no external funding.}
 
 \institutionalreview{Not applicable.}
 
@@ -2873,7 +2870,7 @@ Nuijten, M.B.; Hartgerink, C.H.J.; van Assen, M.A.L.M.; Epskamp, S.; Wicherts, J
 
 % Reference 11
 \bibitem[Knuth and Levy(1994)]{knuthCWEBSystemStructured}
-Knuth, D.E.; Levy, S. \emph{The CWEB System of Structured Documentation}; Addison-Wesley Longman: \hl{Boston, USA, 1994.}
+Knuth, D.E.; Levy, S. \emph{The CWEB System of Structured Documentation}; Addison-Wesley Longman: {Boston, MA, USA, 1994.}
 
 
 % Reference 12
@@ -2894,17 +2891,19 @@ Lamport, L. \emph{LATEX: A Document Preparation System: User’s Guide and Refer
   {MDPI}, {Taylor and Francis}, Öğreden, Hance, Nüst, Uvesten, Campitelli,
   Muschelli, Hayes, Kamvar, Ross, Cannoodt, Luguern, Kaplan, Kreutzer, Wang,
   Hesselberth, and Dervieux]{R-rticles}
-Allaire, J.; Xie, Y.; R Foundation; Wickham, H.; Journal of Statistical Software.; Vaidyanathan, R.; Association for Computing Machinery; Boettiger, C.; Elsevier; Broman, K.; et al. \emph{Articles: Article Formats for R Markdown}; R Package Version 0.19; \hl{2021.}%MDPI: Please add the publisher and its location.
+Allaire, J.; Xie, Y.; R Foundation; Wickham, H.; Journal of Statistical Software; Vaidyanathan, R.; Association for Computing Machinery; Boettiger, C.; Elsevier; Broman, K.; et al. \emph{Articles: Article Formats for R Markdown}; R Package Version 0.19; {2021.}  Available online: \url{https://pkgs.rstudio.com/rticles/} (accessed on 4 December 2021).
+% access date: 04-12-21%MDPI: Please add the publisher and its location.
 
 
 % Reference 15
 \bibitem[El~Hattab and Allaire(2017)]{revealjs}
-El Hattab, H.; Allaire, J. Revealjs: R Markdown Format for ’Reveal, Js’ Presentations, \hl{2017.}%MDPI: Please provide an available website and its accessed date.
+El Hattab, H.; Allaire, J. Revealjs: R Markdown Format for ’Reveal, Js’ Presentations. {2017.} Available online: \url{https://bookdown.org/yihui/rmarkdown/revealjs.html} (accessed on 4 December 2021).
+% access date: 04-12-21 %MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 16
 \bibitem[{O'Hara-Wild} and Hyndman(2021)]{vitae}
-O’Hara-Wild, M.; Hyndman, R. Vitae: Curriculum Vitae for r Markdown, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+O’Hara-Wild, M.; Hyndman, R. Vitae: Curriculum Vitae for r Markdown. {2021.} Available online: \url{https://cran.r-project.org/web/packages/vitae/vignettes/vitae.html} (accessed on 4 December 2021).%MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 17
@@ -2936,12 +2935,12 @@ Wiebels, K.; Moreau, D. Leveraging Containers for Reproducible Psychological Res
 
 % Reference 22
 \bibitem[Ushey(2021)]{R-renv}
-Ushey, K. Renv: Project Environments, 2021. \hl{R Package Version 0.13.2.}%MDPI: Please provide an available website and its accessed date.
+Ushey, K. Renv: Project Environments, 2021. {R Package Version 0.13.2.} Available online: \url{https://rstudio.github.io/renv/articles/renv.html} (accessed on 4 December 2021).%MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 23
 \bibitem[Wickham and Bryan(2021)]{usethis}
-Wickham, H.; Bryan, J. Usethis: Automate Package and Project Setup, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+Wickham, H.; Bryan, J. Usethis: Automate Package and Project Setup. {2021.} Available online: \url{https://usethis.r-lib.org} (accessed on 4 December 2021).%MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 24
@@ -2958,7 +2957,7 @@ RStudio Team. \emph{RStudio: Integrated Development Environment for r. RStudio};
 % Reference 26
 \bibitem[Peikert \em{et~al.}(2021)Peikert, Brandmaier, and {van
   Lissa}]{R-repro}
-Peikert, A.; Brandmaier, A.M.; van Lissa, C.J. Repro: Automated Setup of Reproducible Workflows and Their Dependencies, 2021. \hl{R Package Version 0.1.0.}%MDPI: Please provide an available website and its accessed date.
+Peikert, A.; Brandmaier, A.M.; van Lissa, C.J. Repro: Automated Setup of Reproducible Workflows and Their Dependencies, 2021. {R Package Version 0.1.0.} Available online: \url{https://github.com/aaronpeikert/repro} (accessed on 4 December 2021).%MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 27
@@ -2969,7 +2968,7 @@ Xie, Y.; Allaire, J.J.; Grolemund, G. \emph{R Markdown: The Definitive Guide}; C
 
 % Reference 28
 \bibitem[Aust and Barth(2020)]{papaja}
-Aust, F.; Barth, M. Papaja: Create APA Manuscripts with R Markdown, \hl{2020.}%MDPI: Please provide an available website and its accessed date.
+Aust, F.; Barth, M. Papaja: Create APA Manuscripts with R Markdown. {2020.}  Available online: \url{http://frederikaust.com/papaja_man/} (accessed on 4 December 2021).%MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 29
@@ -2996,7 +2995,7 @@ Silberzahn, R.; Uhlmann, E.L.; Martin, D.P.; Anselmi, P.; Aust, F.; Awtrey, E.; 
 % Reference 32
 \bibitem[Bowman \em{et~al.}(2020)Bowman, DeHaven, Errington, Hardwicke, Mellor,
   Nosek, and Soderberg]{bowmanOSFPreregTemplate2020}
-Bowman, S.; DeHaven, A.; Errington, T.; Hardwicke, T.E.; Mellor, D.T.; Nosek, B.A.; Soderberg, C.K. OSF Prereg Template 2020. \emph{MetaArXiv}, \textbf{2020}, https://doi.org/10.31222/osf.io/epgjd.
+Bowman, S.; DeHaven, A.; Errington, T.; Hardwicke, T.E.; Mellor, D.T.; Nosek, B.A.; Soderberg, C.K. OSF Prereg Template 2020. \emph{MetaArXiv} \textbf{2020}, https://doi.org/10.31222/osf.io/epgjd.
 
 
 % Reference 33
@@ -3068,18 +3067,18 @@ Meehl, P.E. Theoretical Risks and Tabular Asterisks: Sir Karl, Sir Ronald, and t
 
 % Reference 45
 \bibitem[Brandmaier and Jacobucci(in press)]{brandmaier22mlsem}
-Brandmaier, A.M.; Jacobucci, R. Machine-Learning Approaches to Structural Equation Modeling. In \emph{Handbook of Structural Equation Modeling}, 2nd ed.; Hoyle, R.H., Ed.; \hl{Guilford Press, New York, NY, USA}, in press.
+Brandmaier, A.M.; Jacobucci, R. Machine-Learning Approaches to Structural Equation Modeling. In \emph{Handbook of Structural Equation Modeling}, 2nd ed.; Hoyle, R.H., Ed.; {Guilford Press: New York, NY, USA}, in press.
 
 
 % Reference 46
 \bibitem[Hastie \em{et~al.}(2017)Hastie, Tibshirani, and
   Friedman]{hastieElementsStatisticalLearning2017}
-Hastie, T.; Tibshirani, R.; Friedman, J.H. \emph{The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Second Edition, Corrected at 12th Printing 2017 ed.}; Springer Series in Statisticsl Springer: New York, NY, USA, 2017.
+Hastie, T.; Tibshirani, R.; Friedman, J.H. \emph{The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Second Edition, Corrected at 12th Printing 2017 ed.}; Springer Series in Statisticsl;  Springer: New York, NY, USA, 2017.
 
 
 % Reference 47
 \bibitem[Dar{\'o}czi and Tsegelskyi(2021)]{pander}
-Daróczi, G.; Tsegelskyi, R. Pander: An R ‘pandoc’ Writer, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+Daróczi, G.; Tsegelskyi, R. Pander: An R ‘pandoc’ Writer. {2021.} Available online: \url{https://www.r-project.org/nosvn/pandoc/pander.html} (accessed on 4 December 2021).%MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 48
@@ -3089,17 +3088,17 @@ Hlavac, M. \emph{Stargazer: Well-Formatted Regression and Summary Statistics Tab
 
 % Reference 49
 \bibitem[Stanley(2021)]{apaTables}
-Stanley, D. apaTables: Create American Psychological Association (APA) Style Tables, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+Stanley, D. apaTables: Create American Psychological Association (APA) Style Tables, {2021.} Available online: \url{https://dstanley4.github.io/apaTables/articles/apaTables.html} (accessed on 4 December 2021). %MDPI: Please provide an available website and its accessed date.
 
 % Reference 50
 \bibitem[Makowski \em{et~al.}(2021)Makowski, {Ben-Shachar}, Patil, and
   L{\"u}decke]{report}
-Makowski, D.; Ben-Shachar, M.S.; Patil, I.; Lüdecke, D. Automated Results Reporting as a Practical Tool to Improve Reproducibility and Methodological Best Practices Adoption. \hl{CRAN 2021.}%MDPI: Please provide an available website and its accessed date.
+Makowski, D.; Ben-Shachar, M.S.; Patil, I.; Lüdecke, D. Automated Results Reporting as a Practical Tool to Improve Reproducibility and Methodological Best Practices Adoption. {CRAN 2021.} Available online: \url{https://easystats.github.io/report/} (accessed on 4 December 2021). %MDPI: Please provide an available website and its accessed date.
 
 % Reference 51
 \bibitem[{European Organization For Nuclear Research} and
   {OpenAIRE}(2013)]{zenodo}
-European Organization For Nuclear Research. \emph{OpenAIRE}; \hl{Zenodo}, 2013. https://doi.org/10.25495/7GXK-RD71.%MDPI: Please add the location of the publisher.
+European Organization For Nuclear Research. \emph{OpenAIRE}; {Zenodo}: online, 2013. https://doi.org/10.25495/7GXK-RD71.%MDPI: Please add the location of the publisher.
 
 % Reference 52
 \bibitem[Weston \em{et~al.}(2019)Weston, Ritchie, Rohrer, and
@@ -3110,7 +3109,7 @@ Weston, S.J.; Ritchie, S.J.; Rohrer, J.M.; Przybylski, A.K. Recommendations for 
 % Reference 53
 \bibitem[{International Council for Harmonisation of Technical Requirements for
   Registration of Pharmaceuticals for Human Use}(1998)]{ICH1998}
-International Council for Harmonisation of Technical Requirements for Registration of Pharmaceuticals for Human Use. E 9 Statistical Principles for Clinical Trials, \hl{1998.}%MDPI: Please provide an available website and its accessed date.
+International Council for Harmonisation of Technical Requirements for Registration of Pharmaceuticals for Human Use. E 9 Statistical Principles for Clinical Trials, {1998.} Available online: \url{https://www.ema.europa.eu/en/ich-e9-statistical-principles-clinical-trials} (accessed on 4 December 2021). %MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 54
@@ -3206,7 +3205,7 @@ Elliott, J.H.; Turner, T.; Clavisi, O.; Thomas, J.; Higgins, J.P.T.; Mavergames,
 % Reference 72
 \bibitem[{eLife Sciences
   Publications}(2020)]{elifesciencespublicationsELifeLaunchesExecutable2020}
-eLife Sciences Publications. eLife Launches Executable Research Articles for Publishing Computationally Reproducible Results \hl{2020.}%MDPI: Please provide an available website and its accessed date.
+eLife Sciences Publications. eLife Launches Executable Research Articles for Publishing Computationally Reproducible Results. {2020.} Available online: \url{https://elifesciences.org/for-the-press/eb096af1/elife-launches-executable-research-articles-for-publishing-computationally-reproducible-results}  (accessed on 4 December 2021). %MDPI: Please provide an available website and its accessed date.
 
 
 % Reference 73
@@ -3254,11 +3253,11 @@ Sonnenburg, S.; Braun, M.L.; Ong, C.S.; Bengio, S.; Bottou, L.; Holmes, G.; LeCu
 
 % Reference 81
 \bibitem[Gohel(2021)]{officer}
-Gohel, D. Officer: Manipulation of Microsoft Word and PowerPoint Documents, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+Gohel, D. Officer: Manipulation of Microsoft Word and PowerPoint Documents. {2021.} Available online: \url{https://davidgohel.github.io/officer/} (accessed on 4 December 2021).  %MDPI: Please provide an available website and its accessed date.
 
 % Reference 82
 \bibitem[Gohel and Ross(2021)]{officedown}
-Gohel, D.; Ross, N. Officedown: Enhanced ‘R Markdown’ Format for ‘Word’ and ‘PowerPoint’, \hl{2021.}%MDPI: Please provide an available website and its accessed date.
+Gohel, D.; Ross, N. Officedown: Enhanced ‘R Markdown’ Format for ‘Word’ and ‘PowerPoint’. {2021.} Available online: \url{https://davidgohel.github.io/officedown/} (accessed on 4 December 2021).  %MDPI: Please provide an available website and its accessed date.
 \end{thebibliography}
 
 
