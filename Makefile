@@ -6,7 +6,7 @@ all: install.md README.md manuscript.pdf preregistration.pdf
 
 manuscript.tex: manuscript.pdf
 
-submission.zip: manuscript.pdf manuscript.tex manuscript.Rmd journalnames.tex mdpi.bst mdpi.cls logo-updates.pdf journalnames.tex chicago2.bst manuscript_files/
+submission.zip: manuscript.pdf manuscript.tex manuscript.Rmd journalnames.tex mdpi.bst mdpi.cls logo-updates.pdf journalnames.tex chicago2.bst manuscript_files/ *.bib
 	$(RUN1) zip -r $@ $^ $(RUN2)
 
 figures.zip: images/ manuscript_files/
