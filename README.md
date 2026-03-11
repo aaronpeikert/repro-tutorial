@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# A Hitchhiker’s Guide to Reproducible Research
+# Reproducible Research in R: A Tutorial on how to Do the Same Thing More Than Once
 
 <!-- badges: start -->
 
